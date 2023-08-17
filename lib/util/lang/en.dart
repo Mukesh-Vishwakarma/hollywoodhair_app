@@ -50,4 +50,9 @@ const en_US = {
 //home Screen
   'explore_by_categories': 'Explore by Categories',
   'popular_product': 'Popular product',
+
+  // Favourite screen
+  'favourite':'Favourite',
+  'add_to_cart': 'Add to cart',
+  'all_products':'All products',
 };

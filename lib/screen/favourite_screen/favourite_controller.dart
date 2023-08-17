@@ -2,10 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/assets.dart';
 
-class HomeController extends GetxController with GetTickerProviderStateMixin {
+class FavouriteController extends GetxController with GetTickerProviderStateMixin {
   var searchController = TextEditingController();
 
   RxList<ProductModel> productList = <ProductModel>[
+    ProductModel(
+      selected: false,
+      price: "zł 119.00",
+      image: Assets.p1,
+      oldPrice: "119.00",
+      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
+    ), ProductModel(
+      selected: false,
+      price: "zł 119.00",
+      image: Assets.p1,
+      oldPrice: "119.00",
+      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
+    ), ProductModel(
+      selected: false,
+      price: "zł 119.00",
+      image: Assets.p1,
+      oldPrice: "119.00",
+      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
+    ), ProductModel(
+      selected: false,
+      price: "zł 119.00",
+      image: Assets.p1,
+      oldPrice: "119.00",
+      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
+    ),
     ProductModel(
       selected: false,
       price: "zł 119.00",

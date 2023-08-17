@@ -11,8 +11,12 @@ import 'package:hollywood_hair/screen/auth_screen/signUp/signUp_binding.dart';
 import 'package:hollywood_hair/screen/auth_screen/signUp/signUp_screen.dart';
 import 'package:hollywood_hair/screen/base_screen/base_home_binding.dart';
 import 'package:hollywood_hair/screen/base_screen/base_home_screen.dart';
+import 'package:hollywood_hair/screen/favourite_screen/favourite_binder.dart';
+import 'package:hollywood_hair/screen/favourite_screen/favourite_screen.dart';
 import 'package:hollywood_hair/screen/home_screen/home_binder.dart';
 import 'package:hollywood_hair/screen/home_screen/home_screen.dart';
+import 'package:hollywood_hair/screen/all_products/all_product_binder.dart';
+import 'package:hollywood_hair/screen/all_products/all_product_screen.dart';
 import 'package:hollywood_hair/screen/profile/profile_binding.dart';
 import 'package:hollywood_hair/screen/profile/profile_screen.dart';
 import 'package:hollywood_hair/screen/profile/settings/contact/contact_binding.dart';
@@ -112,6 +116,15 @@ class AppRoutes {
       name: AppPages.homeScreen,
       page: () => HomeScreen(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppPages.favouriteScreen,
+      page: () => FavouriteScreen(),
+      binding: FavouriteBinding(),
+    ),GetPage(
+      name: AppPages.allProductScreen,
+      page: () => AllProductScreen(),
+      binding: AllProductBinding(),
     ),
   ];
 }

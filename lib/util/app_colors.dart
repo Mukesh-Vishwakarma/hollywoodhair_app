@@ -13,6 +13,7 @@ abstract class AppColors {
   static const Color searchBorderColor = Color(0xffCCC8C8);
   static const Color searchHintColor = Color(0xff949494);
   static const Color backGroundColor = Color(0xffFEFEFE);
+  static const Color dividerColor = Color(0xffF0F0F0);
   static const Color colorCD = Color(0xffCDD3CD);
   static const Color color3D = Color(0xff3B4B3D);
   static const Color color7C = Color(0xffEBADB7);
@@ -22,6 +23,7 @@ abstract class AppColors {
 
   static const Color gray99 = Color(0xff999999);
   static const Color grayC4 = Color(0xffC4C4C4);
+  static const Color gray95 = Color(0xff959595);
   static const Color grayEB = Color(0xffEBEBEB);
   static const Color colorE7 = Color(0xffF9EAE7);
   static const Color color66 = Color(0xffFF666666);

@@ -31,7 +31,8 @@ abstract class AppStyles {
     return textSize[key];
   }
 
-  static textStyle({fontSize, color, decoration, height, weight}) {
+  static textStyle(
+      {fontSize, color, decoration, height, weight, decorationColor}) {
     return TextStyle(
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
@@ -39,6 +40,7 @@ abstract class AppStyles {
         fontFamily: AppConstants.appFontFamily,
         color: color ?? AppColors.headingFontColor,
         decoration: decoration ?? TextDecoration.none,
+        decorationColor: decorationColor ?? color ?? AppColors.headingFontColor,
         height: height ?? 1.4);
   }
 }
