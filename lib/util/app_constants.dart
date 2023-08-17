@@ -1,6 +1,6 @@
 class AppConstants {
   static const appName = '';
-  static const appFontFamily = '';
+  static const appFontFamily = 'Josefin Sans';
   static const deviceToken = 'device_id';
   static const deviceType = 'device_type';
   static const isLogged = 'isLogged';

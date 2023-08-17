@@ -4,25 +4,29 @@ const en_US = {
   'email': 'Email',
   'password': 'Password',
   'forgot_password': 'Forgot Password?',
-  'forgot_password_dis': 'To reset your password, we need your email or mobile number that can be authenticated',
+  'forgot_password_dis':
+      'To reset your password, we need your email or mobile number that can be authenticated',
   'sign_in': 'Sign in',
   'sign_up': 'Sign Up',
   'get_otp': 'Get OTP',
   'enter_otp': 'Enter OTP',
   'verify_me': 'Verify me',
-  'enter_otp_des': 'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
+  'enter_otp_des':
+      'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
   'sign_with': 'or sign in with',
   'signUp_with': 'or sign up with',
   'google': 'Google',
   'facebook': 'Facebook',
   'new_user': 'New User?',
   'get_started': 'Get started',
-  'get_started_dis': 'To get started with us, kindly enter your information below.',
+  'get_started_dis':
+      'To get started with us, kindly enter your information below.',
   'already_have_an_account': 'Already have an account?',
   'change_password': 'Change password',
   'new_password': 'new password',
   'confirm_password': 'confirm password',
-  'change_password_des': 'To reset your password, we need your email or mobile number that can be authenticated',
+  'change_password_des':
+      'To reset your password, we need your email or mobile number that can be authenticated',
   'profile': 'Profile',
   'setting': 'Setting',
   'languages': 'Languages',
@@ -36,10 +40,6 @@ const en_US = {
   'name': 'Name',
   'phone_number': 'Phone number',
 
-
-
-
-
   'plz_enter_email': 'Please enter email',
   'plz_enter_name': 'Please enter name',
   'plz_enter_password': 'Please enter password',
@@ -47,7 +47,7 @@ const en_US = {
   'plz_enter_confirm_password': 'Please enter confirm password',
   'plz_enter_phone_number': 'Please enter phone number',
 
-
-
-
+//home Screen
+  'explore_by_categories': 'Explore by Categories',
+  'popular_product': 'Popular product',
 };

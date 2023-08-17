@@ -32,7 +32,7 @@ class LanguageScreen extends GetView<LanguagesController> {
         body: Obx(
           () => Column(
             children: [
-              SizedBox(height:30),
+              SizedBox(height: 30),
               ListView.builder(
                 // scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -54,44 +54,44 @@ class LanguageScreen extends GetView<LanguagesController> {
         controller.selectLang.value =
             controller.languageList[index].text.toString();
       },
-      child:
-      Obx(()=>
-
-      Container(
-        // height: 100,
-        margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        padding: EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 15),
-        width: Get.size.width,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: controller.selectLang.value ==
-                    controller.languageList[index].text
-                ? AppColors.color7C
-                : AppColors.black,
-            // style: BorderStyle.solid,
-            width: 1.0,
-          ),
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-                child: Text(
-              controller.languageList[index].text.toString(),
-              style: AppStyles.textStyle(
-                color: controller.selectLang.value == controller.languageList[index].text
+      child: Obx(() => Container(
+            // height: 100,
+            margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+            padding: EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 15),
+            width: Get.size.width,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: controller.selectLang.value ==
+                        controller.languageList[index].text
                     ? AppColors.color7C
                     : AppColors.black,
-                fontSize: dimen12,
-                weight: FontWeight.normal,
+                // style: BorderStyle.solid,
+                width: 1.0,
               ),
-            )),
-            controller.selectLang.value ==
-                controller.languageList[index].text?Image.asset(Assets.click):SizedBox()
-          ],
-        ),
-      )),
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                    child: Text(
+                  controller.languageList[index].text.toString(),
+                  style: AppStyles.textStyle(
+                    color: controller.selectLang.value ==
+                            controller.languageList[index].text
+                        ? AppColors.color7C
+                        : AppColors.black,
+                    fontSize: dimen12,
+                    weight: FontWeight.normal,
+                  ),
+                )),
+                controller.selectLang.value ==
+                        controller.languageList[index].text
+                    ? Image.asset(Assets.click)
+                    : SizedBox()
+              ],
+            ),
+          )),
     );
   }
 }

@@ -4,6 +4,8 @@ class AppPages {
   static const initialPage = '/';
   static const signInScreen = '/signIn_screen';
   static const signUpScreen = '/signUp_screen';
+  static const baseScreen = '/base_screen';
+  static const homeScreen = '/home_screen';
   static const forgotScreen = '/forgot_screen';
   static const otpScreen = '/otp_screen';
   static const changePasswordScreen = '/change_password_screen';

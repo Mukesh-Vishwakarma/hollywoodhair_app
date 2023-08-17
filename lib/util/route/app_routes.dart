@@ -1,6 +1,3 @@
-
-
-
 import 'package:get/get.dart';
 import 'package:hollywood_hair/screen/auth_screen/change_password/change_password_binding.dart';
 import 'package:hollywood_hair/screen/auth_screen/change_password/change_password_screen.dart';
@@ -12,6 +9,10 @@ import 'package:hollywood_hair/screen/auth_screen/signIn/signIn_binding.dart';
 import 'package:hollywood_hair/screen/auth_screen/signIn/signIn_screen.dart';
 import 'package:hollywood_hair/screen/auth_screen/signUp/signUp_binding.dart';
 import 'package:hollywood_hair/screen/auth_screen/signUp/signUp_screen.dart';
+import 'package:hollywood_hair/screen/base_screen/base_home_binding.dart';
+import 'package:hollywood_hair/screen/base_screen/base_home_screen.dart';
+import 'package:hollywood_hair/screen/home_screen/home_binder.dart';
+import 'package:hollywood_hair/screen/home_screen/home_screen.dart';
 import 'package:hollywood_hair/screen/profile/profile_binding.dart';
 import 'package:hollywood_hair/screen/profile/profile_screen.dart';
 import 'package:hollywood_hair/screen/profile/settings/contact/contact_binding.dart';
@@ -42,14 +43,11 @@ class AppRoutes {
       page: () => SplashScreen(),
       binding: SplashBinding(),
     ),
-
-
     GetPage(
       name: AppPages.signInScreen,
       page: () => SignInScreen(),
       binding: SignINBinding(),
     ),
-
     GetPage(
       name: AppPages.signUpScreen,
       page: () => SignUpScreen(),
@@ -60,7 +58,6 @@ class AppRoutes {
       page: () => ForgotPasswordScreen(),
       binding: ForgotBinding(),
     ),
-
     GetPage(
       name: AppPages.otpScreen,
       page: () => OtpScreen(),
@@ -71,51 +68,50 @@ class AppRoutes {
       page: () => ChangePasswordScreen(),
       binding: ChangePasswordBinding(),
     ),
-
     GetPage(
       name: AppPages.profileScreen,
-      page: () =>ProfileScreen(),
+      page: () => ProfileScreen(),
       binding: ProfileBinding(),
     ),
-
     GetPage(
       name: AppPages.settingScreen,
-      page: () =>SettingScreen(),
+      page: () => SettingScreen(),
       binding: SettingBinding(),
     ),
-
     GetPage(
       name: AppPages.languagesScreen,
-      page: () =>LanguageScreen(),
+      page: () => LanguageScreen(),
       binding: LanguagesBinding(),
     ),
-
     GetPage(
       name: AppPages.staticScreen,
-      page: () =>StaticScreen(),
+      page: () => StaticScreen(),
       binding: StaticBinding(),
     ),
-
     GetPage(
       name: AppPages.contactScreen,
-      page: () =>ContactScreen(),
-      binding:ContactBinding(),
+      page: () => ContactScreen(),
+      binding: ContactBinding(),
     ),
-
     GetPage(
       name: AppPages.faqScreen,
-      page: () =>FaqScreen(),
-      binding:FaqBinding(),
+      page: () => FaqScreen(),
+      binding: FaqBinding(),
     ),
-
-
-
     GetPage(
       name: AppPages.editProfileScreen,
-      page: () =>EditProfileScreen(),
-      binding:EditProfileBinding(),
+      page: () => EditProfileScreen(),
+      binding: EditProfileBinding(),
     ),
-
-
+    GetPage(
+      name: AppPages.baseScreen,
+      page: () => BaseHomeScreen(),
+      binding: BaseHomeBinding(),
+    ),
+    GetPage(
+      name: AppPages.homeScreen,
+      page: () => HomeScreen(),
+      binding: HomeBinding(),
+    ),
   ];
 }
