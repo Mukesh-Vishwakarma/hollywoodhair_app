@@ -53,4 +53,6 @@ class Assets {
   static const String appLogo = 'assets/images/app_logo.png';
   static const String searchIcon = 'assets/images/ic_search.svg';
   static const String trashIcon = 'assets/images/ic_delete.svg';
+  static const String minusIcon = 'assets/images/ic_minus.svg';
+  static const String plusIcon = 'assets/images/ic_plus.svg';
 }

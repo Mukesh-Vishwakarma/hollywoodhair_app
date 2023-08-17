@@ -32,11 +32,12 @@ abstract class AppStyles {
   }
 
   static textStyle(
-      {fontSize, color, decoration, height, weight, decorationColor}) {
+      {fontSize, color, decoration, height, weight, decorationColor,fontStyle}) {
     return TextStyle(
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
         fontSize: fontSize ?? dimen12,
+        fontStyle:fontStyle?? FontStyle.normal,
         fontFamily: AppConstants.appFontFamily,
         color: color ?? AppColors.headingFontColor,
         decoration: decoration ?? TextDecoration.none,

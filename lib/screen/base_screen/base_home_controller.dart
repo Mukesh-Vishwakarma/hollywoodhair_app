@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/cart_screen/cart_controller.dart';
+import 'package:hollywood_hair/screen/cart_screen/cart_screen.dart';
 import 'package:hollywood_hair/screen/home_screen/home_controller.dart';
+import 'package:hollywood_hair/screen/profile/profile_controller.dart';
 import 'package:hollywood_hair/screen/profile/profile_screen.dart';
 
 import '../home_screen/home_screen.dart';
@@ -23,7 +26,7 @@ class BaseHomeController extends GetxController {
       HomeScreen(),
       HomeScreen(),
       HomeScreen(),
-      HomeScreen(),
+      CartScreen(),
       ProfileScreen(),
     ];
 
@@ -32,7 +35,8 @@ class BaseHomeController extends GetxController {
 
   lazyPutScreens() {
     Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => ProfileScreen());
+    Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => CartController());
   }
 
   onItemSelect(index) {

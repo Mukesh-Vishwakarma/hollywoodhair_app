@@ -55,7 +55,8 @@ class HomeScreen extends GetView<HomeController> {
                     Get.toNamed(AppPages.allProductScreen);
                   },
                   child: SvgPicture.asset(Assets.favouriteIcon)),
-            ), Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: InkWell(
                   onTap: () {
@@ -102,59 +103,6 @@ class HomeScreen extends GetView<HomeController> {
           ],
         ),
       ),
-    );
-  }
-
-  appBar() {
-    return Container(
-      height: 8.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 7,
-            offset: Offset(-0.10, 0.5),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 15,
-                ),
-                Image.asset(Assets.appLogo),
-                const SizedBox(
-                  width: 10,
-                ),
-                Image.asset(Assets.appNameVertical),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                    onTap: () {
-                      Get.toNamed(AppPages.allProductScreen);
-                    },
-                    child: SvgPicture.asset(Assets.favouriteIcon)),
-                const SizedBox(
-                  width: 18,
-                ),
-                SvgPicture.asset(Assets.notificationIcon),
-                const SizedBox(
-                  width: 12,
-                ),
-              ],
-            ),
-          ]),
     );
   }
 

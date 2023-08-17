@@ -52,7 +52,18 @@ const en_US = {
   'popular_product': 'Popular product',
 
   // Favourite screen
-  'favourite':'Favourite',
+  'favourite': 'Favourite',
   'add_to_cart': 'Add to cart',
-  'all_products':'All products',
+  'all_products': 'All products',
+  // cart
+  'cart': 'Cart',
+  'promo_code': 'Promo code',
+  'price_details': 'Price Details',
+  'subtotal': 'Subtotal',
+  'discount': 'Discount',
+  'shipping_cost': 'Shipping cost',
+  'tax': 'Tax',
+  'grand_total': 'Grand total',
+  'order_now': 'Order Now',
+  'apply': 'Apply',
 };

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 /// A list of custom color used in the application.
 abstract class AppColors {
-
   static const int hColorPrimary = 0xff6C51A2;
   static const Color lightBackgroundColor = Color(0xffFFFFFF);
 
   static const Color black = Color(0xff000000);
+  static const Color black84 = Color(0xff848484);
   static const Color white = Color(0xffffffff);
   static const Color primaryColor = Color(0xffEBADB7);
   static const Color headingFontColor = Color(0xff262626);
@@ -24,13 +24,13 @@ abstract class AppColors {
   static const Color gray99 = Color(0xff999999);
   static const Color grayC4 = Color(0xffC4C4C4);
   static const Color gray95 = Color(0xff959595);
+  static const Color promoborder = Color(0xffEEF1F4);
+  static const Color promofilled = Color(0xffF0F1F2);
+  static const Color promoHint = Color(0xff252629);
+  static const Color grayDA = Color(0xffDADADA);
   static const Color grayEB = Color(0xffEBEBEB);
   static const Color colorE7 = Color(0xffF9EAE7);
   static const Color color66 = Color(0xffFF666666);
   static const Color color57C = Color(0xff26D0657C);
   static const Color blueFF = Color(0xffECF7FF);
-
-
-
-
 }
