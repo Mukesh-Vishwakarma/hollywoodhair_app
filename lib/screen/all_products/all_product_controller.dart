@@ -1,123 +1,83 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hollywood_hair/util/assets.dart';
+import 'package:hollywood_hair/api_provider/api_provider.dart';
+import 'package:hollywood_hair/model/get_all_product_list_model.dart';
+import 'package:shopify_flutter/models/models.dart';
+import 'package:shopify_flutter/shopify/shopify.dart';
 
-class AllProductController extends GetxController with GetTickerProviderStateMixin {
+class AllProductController extends GetxController
+    with GetTickerProviderStateMixin {
   var searchController = TextEditingController();
 
-  RxList<ProductModel> productList = <ProductModel>[
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ), ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ), ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ), ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p1,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p2,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p3,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p4,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p5,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-    ProductModel(
-      selected: false,
-      price: "zł 119.00",
-      image: Assets.p6,
-      oldPrice: "119.00",
-      title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-    ),
-  ].obs;
-  RxList<CategoriesModel> categoriesList = <CategoriesModel>[
-    CategoriesModel(value: "All", selected: true),
-    CategoriesModel(value: "Conditioner", selected: false),
-    CategoriesModel(value: "Accessories", selected: false),
-    CategoriesModel(value: "Accessories", selected: false),
-    CategoriesModel(value: "Oils", selected: false),
-    CategoriesModel(value: "Perfume", selected: false),
-    CategoriesModel(value: "Supplements", selected: false),
-    CategoriesModel(value: "Trichology", selected: false),
-  ].obs;
+  var productList = <GetAllProductData>[].obs;
+  var isPageLoad = true.obs;
+  var cateName = "".obs;
+  var cateId = "".obs;
+  ShopifyStore shopifyStore = ShopifyStore.instance;
+  RxList<Product> products = <Product>[].obs;
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    cateName.value = Get.arguments['categoryName'] ?? "";
+    cateId.value = Get.arguments['categoryId'] ?? "";
+    print(cateId.value);
+    if (cateId.value == "ALL") {
+      getAllProduct();
+    } else {
+      getCollectionProduct();
+    }
+
     super.onInit();
   }
-}
 
-class CategoriesModel {
-  final String value;
+  getAllProduct() async {
+    try {
+      List<Product> _products = await shopifyStore.getAllProducts();
+      isPageLoad.value = false;
+      products.value = _products;
+    } catch (e) {
+      print("message: $e");
+    }
+  }
 
-  bool selected = false;
+  getCollectionProduct() async {
+    try {
+      List<Product> _products =
+          await shopifyStore.getAllProductsFromCollectionById(cateId.value);
+      isPageLoad.value = false;
+      products.value = _products;
+    } catch (e) {
+      print("message: $e");
+    }
+  }
 
-  CategoriesModel({required this.value, required this.selected});
-}
+  //  ****** all product list
 
-class ProductModel {
-  String title = "";
-  bool selected = false;
-  String price = "";
-  String oldPrice = "";
-  String image = "";
+  allProductApi() async {
+    try {
+      GetAllProductModel getAllProductModel =
+          await ApiProvider.shopify().funProductListShopify(
+        cateId.value,
+      );
 
-  ProductModel(
-      {required this.title,
-      required this.selected,
-      required this.price,
-      required this.oldPrice,
-      required this.image});
+      isPageLoad.value = false;
+      // progressDialog.dismiss();
+      print('create Data');
+      print(getAllProductModel.products);
+      productList.value = getAllProductModel.products!;
+      print("length product list >>> ${productList.length}");
+    } on HttpException catch (exception) {
+      // progressDialog.dismiss();
+      print(exception.message);
+      isPageLoad.value = false;
+      // failedToast(exception.message);
+    } catch (exception) {
+      // progressDialog.dismiss();
+      print(exception.toString());
+      isPageLoad.value = false;
+      // failedToast(exception.toString());
+    }
+  }
 }

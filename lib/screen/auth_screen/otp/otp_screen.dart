@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
@@ -7,7 +6,6 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
-import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -68,9 +66,11 @@ class OtpScreen extends GetView<OtpController> {
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 50),
-                child: const Text(
-                  "user.hollywoodhair@gmail.com",
+                child:  Text(
+                  controller.email.toString()??"",
                   style: TextStyle(
+                      fontFamily: 'JosefinSans',
+
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: AppColors.black),
@@ -111,7 +111,7 @@ class OtpScreen extends GetView<OtpController> {
                     appContext: context,
                     onChanged: (String value) {},
                     onCompleted: (v) {
-                      controller.otp.value = v.toString();
+                      controller.otpCode.value = v.toString();
                       // controller.verifyApi();
 
                       // Get.toNamed(AppRoutes.home);
@@ -119,7 +119,12 @@ class OtpScreen extends GetView<OtpController> {
                   )),
               GestureDetector(
                 onTap: (){
-                  Get.toNamed(AppPages.changePasswordScreen);
+                  if(controller.otpCode.isNotEmpty){
+                    controller.verifyApi();
+                  }else{
+                    successToast("Please enter otp");
+
+                  }
 
                 },
                 child: Padding(
@@ -134,6 +139,8 @@ class OtpScreen extends GetView<OtpController> {
                     "Didn’t Receive The Code?",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
+                      fontFamily: 'JosefinSans',
+
                       fontSize: 14,
                       color: AppColors.black,
                     ),
@@ -152,6 +159,8 @@ class OtpScreen extends GetView<OtpController> {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
+                              fontFamily: 'JosefinSans',
+
                               color: controller.isResend.value
                                   ? AppColors.primaryColor
                                   : AppColors.grayC4,

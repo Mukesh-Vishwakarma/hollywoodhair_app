@@ -4,29 +4,26 @@ const en_US = {
   'email': 'Email',
   'password': 'Password',
   'forgot_password': 'Forgot Password?',
-  'forgot_password_dis':
-      'To reset your password, we need your email or mobile number that can be authenticated',
+  'forgot_password_dis': 'To reset your password, we need your email or mobile number that can be authenticated',
   'sign_in': 'Sign in',
   'sign_up': 'Sign Up',
   'get_otp': 'Get OTP',
   'enter_otp': 'Enter OTP',
   'verify_me': 'Verify me',
-  'enter_otp_des':
-      'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
+  'enter_otp_des': 'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
   'sign_with': 'or sign in with',
   'signUp_with': 'or sign up with',
   'google': 'Google',
   'facebook': 'Facebook',
   'new_user': 'New User?',
   'get_started': 'Get started',
-  'get_started_dis':
-      'To get started with us, kindly enter your information below.',
+  'get_started_dis': 'To get started with us, kindly enter your information below.',
   'already_have_an_account': 'Already have an account?',
   'change_password': 'Change password',
   'new_password': 'new password',
+  'old_password': 'old password',
   'confirm_password': 'confirm password',
-  'change_password_des':
-      'To reset your password, we need your email or mobile number that can be authenticated',
+  'change_password_des': 'To reset your password, we need your email or mobile number that can be authenticated',
   'profile': 'Profile',
   'setting': 'Setting',
   'languages': 'Languages',
@@ -38,14 +35,44 @@ const en_US = {
   'edit_profile': 'Edit profile',
   'save': 'Save',
   'name': 'Name',
+  'date': 'Name',
   'phone_number': 'Phone number',
+  'select_address': 'Select address',
+  'add_new_address': 'Add new address',
+  'edit_address': 'Edit address',
+  'address_name': 'Address Name',
+  'recipient_name': 'Recipient Name',
+  'floor': 'floor',
+  'zip_code': 'Zip code',
+  'full_address': 'Full address',
+  'address_type': 'Address Type',
+  'notification': 'Notification',
+  'booking': 'Booking',
+  'book_appointment': 'Book appointment',
+  'age': 'Age',
+  'gender': 'Gender',
+  'service': 'Service',
+  'show_room_location': 'Showroom Location',
+  'next': 'Next',
+  'my_appointment': 'My appointment',
+  'log_out': 'Log out',
+  'cancel': 'Cancel',
+  'log_out_dis': 'Are our sure you want to Log out?',
+  'my_orders': 'My orders',
+
+
+
+
 
   'plz_enter_email': 'Please enter email',
   'plz_enter_name': 'Please enter name',
   'plz_enter_password': 'Please enter password',
   'plz_enter_new_password': 'Please enter new password',
+  'plz_enter_old_password': 'Please enter old password',
   'plz_enter_confirm_password': 'Please enter confirm password',
   'plz_enter_phone_number': 'Please enter phone number',
+
+
 
 //home Screen
   'explore_by_categories': 'Explore by Categories',
@@ -66,4 +93,5 @@ const en_US = {
   'grand_total': 'Grand total',
   'order_now': 'Order Now',
   'apply': 'Apply',
+
 };

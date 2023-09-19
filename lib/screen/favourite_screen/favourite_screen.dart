@@ -18,7 +18,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.lightBackgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
         child: AppBar(
@@ -78,7 +78,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
           shrinkWrap: true,
           itemCount: controller.productList.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2 / 3,
+              childAspectRatio: 2 / 3.1,
               crossAxisCount: 2,
               crossAxisSpacing: 1,
               mainAxisSpacing: 1),
@@ -92,7 +92,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
     return Container(
       width: 47.w,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      color: AppColors.white,
+      color: AppColors.lightBackgroundColor,
       child: Column(
         children: [
           ClipRRect(
@@ -128,7 +128,8 @@ class FavouriteScreen extends GetView<FavouriteController> {
                     weight: FontWeight.w300,
                     fontSize: 11.0,
                     decoration: TextDecoration.lineThrough,
-                    decorationColor: AppColors.gray95),
+                    // decorationColor: AppColors.gray95
+                ),
               ),
             ],
           ),
@@ -138,7 +139,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
                   decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: AppColors.lightBackgroundColor,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                           color: AppColors.dividerColor, width: 1.0)),
@@ -163,14 +164,14 @@ class FavouriteScreen extends GetView<FavouriteController> {
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: AppColors.primaryColor, width: 1.0)),
         // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-        padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Center(
           child: Text(
             "add_to_cart".tr,
             style: AppStyles.textStyle(
                 weight: FontWeight.w600,
                 fontSize: 14.0,
-                color: AppColors.white),
+                color: AppColors.lightBackgroundColor),
           ),
         ),
       ),

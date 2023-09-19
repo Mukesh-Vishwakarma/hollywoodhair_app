@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_constants.dart';
+
 import 'res_dimens.dart';
+import 'theme_service.dart';
 
 abstract class AppStyles {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: AppConstants.appFontFamily,
+    primarySwatch:  const MaterialColor(
+      AppColors.hColorPrimary,
+      AppColors.primaryColorSwatch,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: const TextTheme(),
   );
@@ -15,6 +21,10 @@ abstract class AppStyles {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     fontFamily: AppConstants.appFontFamily,
+    primarySwatch: const MaterialColor(
+      AppColors.hColorPrimary,
+      AppColors.primaryColorSwatch,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
@@ -31,17 +41,15 @@ abstract class AppStyles {
     return textSize[key];
   }
 
-  static textStyle(
-      {fontSize, color, decoration, height, weight, decorationColor,fontStyle}) {
+  static textStyle({fontSize, color, decoration, height, weight}) {
     return TextStyle(
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
         fontSize: fontSize ?? dimen12,
-        fontStyle:fontStyle?? FontStyle.normal,
-        fontFamily: AppConstants.appFontFamily,
-        color: color ?? AppColors.headingFontColor,
+        fontFamily: 'JosefinSans',
+        color: color ?? Colors.black,
         decoration: decoration ?? TextDecoration.none,
-        decorationColor: decorationColor ?? color ?? AppColors.headingFontColor,
         height: height ?? 1.4);
   }
+
 }

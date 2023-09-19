@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'assets.dart';
-
+import 'package:sizer/sizer.dart';
 
 
 enum ProgressDialogType { Normal, Download }
-
 
 bool _isShowing = false;
 bool _barrierDismissible = true, _showLogs = false;
@@ -15,30 +12,25 @@ double _borderRadius = 8.0;
 Color _backgroundColor = Colors.transparent;
 Curve _insetAnimCurve = Curves.easeInOut;
 
-// Widget _progressWidget = Lottie.asset(Assets.videoProgressbar);
-// Widget _progressWidget = Image.asset(Assets.imagesAppLogo);
-
-
 class ProgressDialog {
   late _Body _dialog;
-  ProgressDialog(
-      {  bool isDismissible = false,  bool showLogs = false}) {
+
+  ProgressDialog({bool isDismissible = false, bool showLogs = false}) {
     _barrierDismissible = true;
-    _showLogs = showLogs ;
+    _showLogs = showLogs;
   }
 
   bool isShowing() {
     return _isShowing;
   }
 
-
-
-  Future<bool> dismiss(context) {
+  Future<bool> dismiss() {
     if (_isShowing) {
       try {
         _isShowing = false;
         // Get.back();
-        Navigator.pop(context);
+        Get.back();
+        // Navigator.pop(context);
         if (_showLogs) debugPrint('ProgressDialog dismissed');
         return Future.value(true);
       } catch (_) {
@@ -52,7 +44,7 @@ class ProgressDialog {
 
   void show() {
     if (!_isShowing) {
-      _dialog = new _Body();
+      _dialog = _Body();
       _isShowing = true;
       if (_showLogs) debugPrint('ProgressDialog shown');
       Get.dialog(
@@ -98,13 +90,13 @@ class _BodyState extends State<_Body> {
     if (_showLogs) debugPrint('ProgressDialog dismissed by back button');
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double width = 100.w;
 
-    var paddingContainer = width/3.5;
-    var paddingLottie = width/5.3;
-
+    var paddingContainer = width / 3.5;
+    var paddingLottie = width / 5.3;
     return Stack(
       children: [
         Center(
@@ -120,19 +112,18 @@ class _BodyState extends State<_Body> {
             // margin: EdgeInsets.all(paddingContainer),
           ),
         ),
-        // Align(
-        //   alignment: Alignment.center,
-        //
-        //   child: Lottie.asset(Assets.videoProgressbarBarLoader,height: 150,width:150),)
-        // Container(
-        //
-        //   margin: EdgeInsets.all(paddingLottie),
-        //
-        //   child: Lottie.asset(Assets.videoProgressbarBarLoader),
-        // ),
+
+
+        //***** soon *********
+
+        Align(
+          alignment: Alignment.center,
+
+          child: Image.asset('assets/images/progress.gif',height:50,width:50),)
+
+
       ],
     );
+
   }
 }
-
-

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
@@ -68,19 +70,41 @@ class ForgotPasswordScreen extends GetView<ForgotScreenController> {
                       ),
                       SizedBox(height: 80,),
 
+
+                      Obx(()=>!controller.isPageLoad.value?
                       GestureDetector(
                           onTap: () {
                             if (!controller.formLoginKey.currentState!.validate()) {
                               print("not validate");
                             } else {
-                              Get.toNamed(AppPages.otpScreen);
-                              // controller.loginApi();
+                              // Get.toNamed(AppPages.otpScreen);
+                              controller.otpApi();
                             }
                           },
                           child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20, right: 20, top: 80, bottom: 10),
-                              child: buttom("get_otp".tr))),
+                              padding: EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 10),
+                              child: buttom("get_otp".tr))):
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 10),                        child: Container(
+                          width: Get.size.width,
+
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: AppColors.color7C,
+                          ),
+                          child:const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 15,bottom: 15),
+                              child: SpinKitThreeBounce(
+                                color: Colors.white,
+                                size: 20.0,
+                              ),
+                            ),
+                          ),),
+                      )),
+
+
+
 
 
 
