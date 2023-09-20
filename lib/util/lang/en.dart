@@ -21,6 +21,7 @@ const en_US = {
   'already_have_an_account': 'Already have an account?',
   'change_password': 'Change password',
   'new_password': 'new password',
+  'old_password': 'old password',
   'confirm_password': 'confirm password',
   'change_password_des': 'To reset your password, we need your email or mobile number that can be authenticated',
   'profile': 'Profile',
@@ -34,7 +35,30 @@ const en_US = {
   'edit_profile': 'Edit profile',
   'save': 'Save',
   'name': 'Name',
+  'date': 'Name',
   'phone_number': 'Phone number',
+  'select_address': 'Select address',
+  'add_new_address': 'Add new address',
+  'edit_address': 'Edit address',
+  'address_name': 'Address Name',
+  'recipient_name': 'Recipient Name',
+  'floor': 'floor',
+  'zip_code': 'Zip code',
+  'full_address': 'Full address',
+  'address_type': 'Address Type',
+  'notification': 'Notification',
+  'booking': 'Booking',
+  'book_appointment': 'Book appointment',
+  'age': 'Age',
+  'gender': 'Gender',
+  'service': 'Service',
+  'show_room_location': 'Showroom Location',
+  'next': 'Next',
+  'my_appointment': 'My appointment',
+  'log_out': 'Log out',
+  'cancel': 'Cancel',
+  'log_out_dis': 'Are our sure you want to Log out?',
+  'my_orders': 'My orders',
 
 
 
@@ -44,10 +68,30 @@ const en_US = {
   'plz_enter_name': 'Please enter name',
   'plz_enter_password': 'Please enter password',
   'plz_enter_new_password': 'Please enter new password',
+  'plz_enter_old_password': 'Please enter old password',
   'plz_enter_confirm_password': 'Please enter confirm password',
   'plz_enter_phone_number': 'Please enter phone number',
 
 
 
+//home Screen
+  'explore_by_categories': 'Explore by Categories',
+  'popular_product': 'Popular product',
+
+  // Favourite screen
+  'favourite': 'Favourite',
+  'add_to_cart': 'Add to cart',
+  'all_products': 'All products',
+  // cart
+  'cart': 'Cart',
+  'promo_code': 'Promo code',
+  'price_details': 'Price Details',
+  'subtotal': 'Subtotal',
+  'discount': 'Discount',
+  'shipping_cost': 'Shipping cost',
+  'tax': 'Tax',
+  'grand_total': 'Grand total',
+  'order_now': 'Order Now',
+  'apply': 'Apply',
 
 };

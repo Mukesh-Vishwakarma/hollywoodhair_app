@@ -3,52 +3,44 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-
 String tag = 'api_provider';
 
 
-// const baseUrl = 'http://52.73.22.86/api/';
-// const baseUrl = 'https://designoweb.co/seriousdating/api/';
-// const baseUrl = 'http://34.206.46.120/api/';
-const baseUrl = 'http://16.171.168.73/api/';
+const baseUrl = 'https://designoweb.co/hollywoodhair/api/';
+const shopifyUrl = 'https://a02f54.myshopify.com/admin/';
+const shopifyTokenUrl = 'https://a02f54.myshopify.com/';
+//https://a02f54.myshopify.com/api/2023-07/graphql.json
+const shopifyStorefrontUrl = 'https://a02f54.myshopify.com/api/2023-07/';
+const shopifyCustomerUrl = 'https://a02f54.myshopify.com/';
 
-const String strGetRegister = 'register';
-const String strGetSocialLogin = 'socialLogin';
-const String strGetOtpVerification = 'otpVerification';
-const String strGetPersonalDetails = 'personalDetails';
-const String strGetAllCountries = 'getAllCountries';
-const String strGetMoreAboutDetails = 'moreAboutDetails';
-const String strGetInterestList = 'getInterestList';
-const String strGetHeightList = 'getHeightList';
-const String strGetUserDetails = 'getUserDetails';
-const String strGetCityByCountryId = 'getCityByCountryId';
-const String strGetChooseYourInterest = 'chooseYourInterest';
-const String strGetLatLong = 'setLatLong';
-const String strGetProfileImages = 'setProfileImages';
-const String strGetUpdateProfile = 'updateProfile';
-const String strGetHomeApi = 'homeApi';
-const String strGetStaticPages = 'staticPages';
-const String strSetProfileImages = 'setProfileImages';
-const String strSetOrDeleteProfileImage = 'setOrDeleteProfileImage';
-const String strSetSwipeLeftRight = 'swipeLeftRight';
-const String strAddSuperLike = 'addSuperlike';
-const String strJobActivityList = 'jobActivityList';
-const String strSetRequestMatch = 'requestMatch';
-const String strGetNotifications = 'getNotifications';
-const String strDeleteOrDisableAccount = 'deleteOrDisableAccount';
-const String strGetChatList = 'getChatList';
-const String strGetChatDetails = 'getchatDetails';
-const String strSendMessage = 'sendMessage';
-const String strUserReport = 'userReport';
-const String strUserBlock = 'userblock';
-const String strGetBlockUsers = 'getBlockUsers';
-const String strGetSubscriptionList = 'subscriptionList';
-const String strGetUpgradePlan = 'upgradePlan';
-const String strGetSubscription = 'getSubscription';
-const String strTotalMessages = 'getTotalMessages';
-const String strUserStatus = 'setUserstatus';
-const String strOnlineStaus = 'getOnlineStaus';
-const String strFirebaseToken = 'setFirebaseToken';
+
+const String strGetRegister = 'user-signup';
+const String strGetOtpLogin = 'otp-login';
+const String strGetOtpVerify = 'otpverify';
+const String strGetEmailLogin = 'email-login';
+const String strGetProfileDetails = 'get-profile-details';
+const String strUpdateProfileDetails = 'update-profile-details';
+const String strNewPassword = 'change-password';
+const String strGetAllAddress = 'get-all-address';
+const String strAddAddress = 'add-address';
+const String strGetAddressByID = 'get-address';
+const String strDeleteAddress = 'delete-address';
+const String strUpdateAddress = 'update-address';
+const String strGetStaticPage = 'get-site-setting';
+const String strChangePassword = 'change-customer-password';
+const String strGetProductList = 'getProductList';
+const String strGetProductByID = 'getProductById';
+
+
+//shopify end points
+
+const String loginShopify = 'graphql.json';
+const String userDetailsShopify = 'customers.json';
+const String addCartShopify = 'cart/add.json';
+const String categoryShopify = 'custom_collections.json';
+const String getCartShopify = 'cart.json';
+
+
 
 
 handleException(error,stacktrace,DioError dioError){

@@ -46,7 +46,7 @@ abstract class AppStyles {
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
         fontSize: fontSize ?? dimen12,
-        fontFamily: 'TT Firs Neue Trl',
+        fontFamily: 'JosefinSans',
         color: color ?? Colors.black,
         decoration: decoration ?? TextDecoration.none,
         height: height ?? 1.4);

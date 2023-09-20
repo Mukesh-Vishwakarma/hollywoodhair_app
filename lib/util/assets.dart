@@ -22,8 +22,77 @@ class Assets {
   static const String cameraPng = 'assets/images/camera.png';
   static const String upload = 'assets/images/Upload_Image.png';
   static const String editText = 'assets/images/edit_text.png';
-  static const String dropDown = 'assets/images/dropDown.png';
+  // static const String dropDown = 'assets/images/dropDown.png';
+  static const String dropDown = 'assets/images/drop_down1.png';
+  static const String add = 'assets/images/add.png';
+
+  static const String navBar = 'assets/images/nav_bar.png';
 
 
+  static const String homeIconUl = 'assets/images/home_icon_ul.svg';
+  static const String homeIconSl = 'assets/images/home_icon_sl.svg';
+
+  static const String bookingIconUl = 'assets/images/calender_icon_ul.svg';
+  static const String bookingIconSl = 'assets/images/calender_icon_sl.svg';
+
+  static const String cartIconUl = 'assets/images/bag_icon_ul.svg';
+  static const String cartIconSl = 'assets/images/bag_icon_sl.svg';
+
+  static const String profileIconUl = 'assets/images/profile_icon_ul.svg';
+  static const String profileIconSl = 'assets/images/profile_icon_sl.svg';
+
+  static const String scanIcon = 'assets/images/scan_icon.svg';
+  static const String search = 'assets/images/search.png';
+  static const String demo1 = 'assets/images/demo1.png';
+  static const String demo2 = 'assets/images/demo2.png';
+  static const String demo3 = 'assets/images/demo3.png';
+  static const String arrowRight = 'assets/images/arrow_right.png';
+  static const String calender = 'assets/images/calender.png';
+  static const String backBackground = 'assets/images/back_background.png';
+  static const String user = 'assets/images/user.png';
+  static const String clock = 'assets/images/clock.png';
+  static const String whiteArrow = 'assets/images/white_arrow.png';
+
+  // home_scrrens
+  static const String dummyBanner = 'assets/dummy_images/home_banner.png';
+  static const String p1 = 'assets/dummy_images/p1.png';
+  static const String p2 = 'assets/dummy_images/p2.png';
+  static const String p3 = 'assets/dummy_images/p3.png';
+  static const String p4 = 'assets/dummy_images/p4.png';
+  static const String p5 = 'assets/dummy_images/p5.png';
+  static const String p6 = 'assets/dummy_images/p6.png';
+  static const String notificationIcon = 'assets/images/ic_bell.svg';
+  static const String favouriteIcon = 'assets/images/ic_heart.svg';
+  static const String appNameVertical = 'assets/images/app_logo_vertical.png';
+  static const String appLogo = 'assets/images/app_logo.png';
+  static const String searchIcon = 'assets/images/ic_search.svg';
+  static const String trashIcon = 'assets/images/ic_delete.svg';
+  static const String minusIcon = 'assets/images/ic_minus.svg';
+  static const String plusIcon = 'assets/images/ic_plus.svg';
+  static const String bag = 'assets/images/bag.png';
+  static const String likeCard = 'assets/images/like_card.png';
+  static const String notification1 = 'assets/dummy_images/notification1.png';
+  static const String notification2 = 'assets/dummy_images/notification2.png';
+  static const String notification3 = 'assets/dummy_images/notification3.png';
+  static const String cancel = 'assets/images/cancel.png';
+  static const String cross = 'assets/images/cross.svg';
+  static const String progressBarLoader = 'assets/video/progress_bar_loader.json';
+  static const String videoProgressbarBarLoader = 'assets/json/progress_bar_loader.json';
+
+
+  //Try On Screen
+  static const String pic1 = 'assets/dummy_images/Pic 1.svg';
+  static const String pic2 = 'assets/dummy_images/Pic 2.svg';
+  static const String pic3 = 'assets/dummy_images/Pic 3.svg';
+  static const String pic4 = 'assets/dummy_images/Pic 4.svg';
+  static const String pic5 = 'assets/dummy_images/Pic 5.svg';
+  static const String pic6 = 'assets/dummy_images/Pic 6.svg';
+  static const String ellipse1 = 'assets/dummy_images/Ellipse 175.png';
+  static const String ellipse2 = 'assets/dummy_images/Ellipse 176.png';
+  static const String ellipse3 = 'assets/dummy_images/Ellipse 177.png';
+  static const String ellipse4 = 'assets/dummy_images/Ellipse 179.png';
+  static const String ellipse5 = 'assets/dummy_images/Ellipse 180.png';
+  static const String ellipse6 = 'assets/dummy_images/Ellipse 181.png';
+  static const String download = 'assets/dummy_images/download.svg';
 
 }
