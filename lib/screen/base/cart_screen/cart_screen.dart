@@ -8,6 +8,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'cart_controller.dart';
 
@@ -107,7 +108,7 @@ class CartScreen extends GetView<CartController> {
   }
 
   cartitemWidget(LineItem item) {
-    print(item);
+    RxInt quantity = (item.quantity).obs;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -118,8 +119,8 @@ class CartScreen extends GetView<CartController> {
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 item.variant!.image!.originalSrc,
-                width: 22.w,
-                height: 10.h,
+                width: 70,
+                height: 70,
                 fit: BoxFit.cover,
               )),
           Expanded(
@@ -136,6 +137,13 @@ class CartScreen extends GetView<CartController> {
                       fontSize: 14.0,
                     ),
                   ),
+                  Text(
+                    item.variant!.product!.compareAtPriceFormatted.toString(),
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -146,24 +154,64 @@ class CartScreen extends GetView<CartController> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: AppColors.grayDA)),
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 9, vertical: 8),
-                  child: SvgPicture.asset(Assets.minusIcon),
-                ),
-                Text(item.quantity.toString(),
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 12.0,
-                    )),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 9, vertical: 8),
-                  child: SvgPicture.asset(Assets.plusIcon),
-                ),
-              ],
+            child: Obx(
+              () => Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (quantity == 1) {
+                        quantity.value = 0;
+                        controller.removeCartItems(item, quantity.value);
+                      } else if (quantity > 1) {
+                        quantity.value = quantity.value - 1;
+                        controller.updateCartItemQuantity(
+                            item, (quantity.value));
+                      }
+                    },
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      child: SvgPicture.asset(Assets.minusIcon, width: 10),
+                    ),
+                  ),
+                  Text(quantity.value.toString(),
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      )),
+                  InkWell(
+                    onTap: () {
+                      quantity.value = quantity.value + 1;
+                      controller.updateCartItemQuantity(item, (quantity.value));
+                    },
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      child: SvgPicture.asset(Assets.plusIcon, width: 12),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
+          InkWell(
+            onTap: () {
+              controller.removeCartItems(item, quantity.value);
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 30, left: 20),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.grayDA)),
+              child: SvgPicture.asset(
+                Assets.trashIcon,
+                width: 17,
+                height: 17.5,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -196,6 +244,7 @@ class CartScreen extends GetView<CartController> {
               child: Center(
                 child: TextFormField(
                   controller: controller.promoCodeController,
+                  textCapitalization: TextCapitalization.characters,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(bottom: 10),
                     hintText: "HHGLAMOUR15",
@@ -219,18 +268,23 @@ class CartScreen extends GetView<CartController> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.black84, width: 1.0),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Center(
-                child: Text('apply'.tr,
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 14.0,
-                    )),
+            InkWell(
+              onTap: () {
+                // controller.applyPromoCode();
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.black84, width: 1.0),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Center(
+                  child: Text('apply'.tr,
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      )),
+                ),
               ),
             )
           ],
@@ -249,15 +303,28 @@ class CartScreen extends GetView<CartController> {
               fontSize: 16.0,
             )),
         const SizedBox(height: 20),
-        priceitemWidget(title: "subtotal".tr, value: "zł 457"),
+        priceitemWidget(
+            title: "subtotal".tr,
+            value: controller.checkout.subtotalPriceV2.formattedPrice),
         const SizedBox(height: 10),
-        priceitemWidget(title: 'discount'.tr, value: "zł 00"),
+        priceitemWidget(
+            title: 'discount'.tr,
+            value: controller.checkout.totalTaxV2.formattedPrice),
         const SizedBox(height: 10),
-        priceitemWidget(title: "shipping_cost".tr, value: "zł 15"),
+        priceitemWidget(
+            title: "shipping_cost".tr,
+            value: controller.checkout.shippingLine?.priceV2.formattedPrice ??
+                "zt0.00"),
         const SizedBox(height: 10),
-        priceitemWidget(title: "tax".tr, value: "zł 3"),
+        priceitemWidget(
+            title: "tax".tr,
+            value: controller.checkout.totalTaxV2.formattedPrice ?? "zt0.00"),
         const SizedBox(height: 10),
-        priceitemWidget(title: "promo_code".tr, value: "zł 3"),
+        priceitemWidget(
+            title: "promo_code".tr,
+            value: controller.checkout.appliedGiftCards.isNotEmpty
+                ? "${controller.checkout.appliedGiftCards[0].amountUsedV2.formattedPrice}"
+                : "zt0.00"),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,7 +337,7 @@ class CartScreen extends GetView<CartController> {
               ),
             ),
             Text(
-              "zł 400",
+              controller.checkout.totalPriceV2.formattedPrice,
               style: AppStyles.textStyle(
                 weight: FontWeight.w600,
                 fontSize: 12.0,
@@ -306,10 +373,7 @@ class CartScreen extends GetView<CartController> {
 
   orderButton() {
     return InkWell(
-      onTap: () {
-        controller.addItemToCart(
-            "f9605f50addfe070acbc1a29120df7c5", 47139383050575, 2);
-      },
+      onTap: () {},
       child: Container(
         color: AppColors.lightBackgroundColor,
         child: Row(
@@ -318,34 +382,43 @@ class CartScreen extends GetView<CartController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('1199.6',
+                Text(controller.checkout.totalPriceV2.amount.toString(),
                     style: AppStyles.textStyle(
                       weight: FontWeight.w700,
                       fontSize: 17.0,
                     )),
-                Text('PLN',
+                Text(controller.checkout.currencyCode.toString(),
                     style: AppStyles.textStyle(
                       weight: FontWeight.w500,
                       fontSize: 12.0,
                     )),
               ],
             ),
-            Container(
-              width: 70.w,
-              height: 52,
-              decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8),
-                  border:
-                      Border.all(color: AppColors.primaryColor, width: 1.0)),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-              child: Center(
-                child: Text(
-                  'order_now'.tr,
-                  style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 16.0,
-                      color: AppColors.lightBackgroundColor),
+            InkWell(
+              onTap: () {
+                try {
+                  launchUrl(Uri.parse(controller.checkout.webUrl.toString()));
+                } catch (e, s) {
+                  print(s);
+                }
+              },
+              child: Container(
+                width: 70.w,
+                height: 52,
+                decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border:
+                        Border.all(color: AppColors.primaryColor, width: 1.0)),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+                child: Center(
+                  child: Text(
+                    'order_now'.tr,
+                    style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 16.0,
+                        color: AppColors.lightBackgroundColor),
+                  ),
                 ),
               ),
             ),

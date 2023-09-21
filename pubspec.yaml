@@ -65,6 +65,7 @@ dependencies:
   # get
   get: ^4.6.1
   get_storage: ^2.0.3
+  url_launcher: ^6.1.14
 
   # dio
   dio: ^5.1.0
