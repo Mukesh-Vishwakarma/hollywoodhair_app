@@ -88,4 +88,28 @@ const es_SP = {
   'grand_total': 'Total general',
   'order_now': 'Ordenar ahora',
   'apply': 'Aplicar',
+
+
+  // Home
+  'product_details': 'Detalles del producto',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Ir al carrito',
+  'Home': 'Inicio',
+  'Booking': 'Reserva',
+  'try_on': 'Prueba',
+  'Cart': 'Carrito',
+  'Profile': 'Perfil',
+
+  // Profile
+  'address': 'Dirección',
+  'chatbot': 'Chatbot',
+  'Wishlist': 'Lista de deseos',
+  'rate_us': 'Califícanos',
+
+  // Booking
+  'my_appointments': 'Moje terminy',
+  'style_selection_consultation': 'Konsultacja wyboru stylu',
+  'consult_with_experts': 'Konsultuj się z ekspertami',
+  'Book_in_Store_appointment': 'Zarezerwuj termin w sklepie stacjonarnym',
+  'Unlock_your_perfect_look': 'Odblokuj swój idealny wygląd',
 };

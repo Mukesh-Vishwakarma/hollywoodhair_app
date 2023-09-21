@@ -25,7 +25,7 @@ const en_US = {
   'confirm_password': 'confirm password',
   'change_password_des': 'To reset your password, we need your email or mobile number that can be authenticated',
   'profile': 'Profile',
-  'setting': 'Setting',
+  'setting': 'Settings',
   'languages': 'Languages',
   'terms_&_condition': 'Terms & condition',
   'privacy_policy': 'Privacy policy',
@@ -54,7 +54,7 @@ const en_US = {
   'service': 'Service',
   'show_room_location': 'Showroom Location',
   'next': 'Next',
-  'my_appointment': 'My appointment',
+  'my_appointment': 'My appointments',
   'log_out': 'Log out',
   'cancel': 'Cancel',
   'log_out_dis': 'Are our sure you want to Log out?',
@@ -94,4 +94,26 @@ const en_US = {
   'order_now': 'Order Now',
   'apply': 'Apply',
 
+  // Home
+  'product_details': 'Product Details',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Go to Cart',
+  'Home': 'Home',
+  'Booking': 'Booking',
+  'try_on': 'Try on',
+  'my_cart': 'My Cart',
+
+  // Profile
+  'Profile':'Profile',
+  'address':'Address',
+  'chatbot':'Chatbot',
+  'my_wishlist':'My Wishlist',
+  'rate_us':'Rate us',
+
+  // Booking
+  'my_appointments': 'My Appointments',
+  'style_selection_consultation': 'Style Selection Consultation',
+  'consult_with_experts': 'Consult with experts',
+  'Book_in_Store_appointment': 'Book In-Store Appointment',
+  'Unlock_your_perfect_look': 'Unlock your perfect look',
 };

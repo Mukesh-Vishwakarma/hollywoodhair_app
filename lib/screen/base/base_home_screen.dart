@@ -70,7 +70,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                                 : Assets.homeIconUl,
                           ),
                         ),
-                        label: "Home",
+                        label: "Home".tr,
                       ),
                       BottomNavigationBarItem(
                         icon: Stack(
@@ -116,7 +116,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                               ),
                           ],
                         ),
-                        label: "Booking",
+                        label: "Booking".tr,
                       ),
                       BottomNavigationBarItem(
                         icon: Container(
@@ -133,7 +133,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                                 : Assets.cartIconUl,
                           ),
                         ),
-                        label: "Try on",
+                        label: "try_on".tr,
                       ),
                       BottomNavigationBarItem(
                         icon: Container(
@@ -150,7 +150,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                                 : Assets.cartIconUl,
                           ),
                         ),
-                        label: "Cart",
+                        label: "Cart".tr,
                       ),
                       BottomNavigationBarItem(
                         icon: Container(
@@ -167,7 +167,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                                 : Assets.profileIconUl,
                           ),
                         ),
-                        label: "Profile",
+                        label: "Profile".tr,
                       ),
                     ],
                     onTap: (index) {

@@ -15,6 +15,8 @@ import 'package:shopify_flutter/shopify/shopify.dart';
 import 'dart:convert';
 import '../../model/metafilds_details_model.dart';
 import '../../translater_service/translatter_service.dart';
+import '../../util/app_style.dart';
+import '../../util/res_dimens.dart';
 
 class ProductDetailsController extends GetxController {
   var current = 0.obs;
@@ -31,24 +33,47 @@ class ProductDetailsController extends GetxController {
   ShopifyStore shopifyStore = ShopifyStore.instance;
   ShopifyCheckout shopifyCheckout = ShopifyCheckout.instance;
   var dataIsLoading = true.obs;
+  RxBool addButtonStatus=false.obs;
 
   final TranslationService translationService = TranslationService();
 
+  var testConvert = "".obs;
   // Instead of this line:
 // var dataIsLoading = true.obs;
 
 // You should define the products list:
   var rootInfo = RootInfo('', []).obs;
 
+  var isLoader = true.obs;
+
+  var targetLanguage = TranslateLanguage.polish.obs;
+
   @override
   void onInit() {
     productId.value = Get.arguments['product_id'] ?? "";
     print("${productId.value}");
-    // productDetailsApi();
+    getLanguage();
+    productDetailsApi();
+    checkIfExitsCart();
     getProductDetails();
-    // productDetailsApi();
     super.onInit();
   }
+
+  Future<void> checkIfExitsCart() async {
+    try {
+      String checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
+      if (checkoutId.isNotEmpty) {
+        Checkout _checkout = await shopifyCheckout
+            .getCheckoutInfoQuery(checkoutId, getShippingInfo: false);
+        _checkout.lineItems.forEach((element) {
+          if (element.variant!.product!.id == productId.value) {
+            addButtonStatus.value = true;
+          }
+        });
+      }
+    } catch (error) {}
+  }
+
 
   getProductDetails() async {
     try {
@@ -70,7 +95,7 @@ class ProductDetailsController extends GetxController {
       print("jbhshdfc==>3 ${products.value[0].description}");
       print("jbhshdfc==>4 ${products.value}");
 
-      productDetailsApi();
+      // productDetailsApi();
 
       dataIsLoading.value = false;
       // for (final product in products) {
@@ -85,6 +110,8 @@ class ProductDetailsController extends GetxController {
       //   }
       // }
     } catch (e) {
+
+      dataIsLoading.value = false;
       print("message: $e");
     }
   }
@@ -106,6 +133,8 @@ class ProductDetailsController extends GetxController {
   // ******* add to cart
 
   addToCart({variantId, id, title}) async {
+
+    isLoader.value = false;
     try {
       var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
       ShopifyUser? shopifyUser = await ShopifyAuth.instance.currentUser();
@@ -132,6 +161,8 @@ class ProductDetailsController extends GetxController {
         )
             .then((value) async {
           GetStorage().write(AppConstants.checkOutID, checkout.id);
+          addButtonStatus.value=true;
+          isLoader.value=true;
         });
       } else {
         print("part 2");
@@ -141,6 +172,8 @@ class ProductDetailsController extends GetxController {
             LineItem(variantId: variantId, title: title, quantity: 1, id: id)
           ],
         );
+        addButtonStatus.value=true;
+        isLoader.value=true;
         print(checkout.lineItems.length);
       }
 
@@ -211,7 +244,42 @@ class ProductDetailsController extends GetxController {
     }
   }
 
-  parseCode(value) {
+  Future<String> translate(test) async {
+    final translatedText = await translationService.translate(
+        test, getLanguage());
+
+
+    if (translatedText != null) {
+      print("Translated Text: $translatedText");
+      testConvert.value = translatedText.toString();
+      return translatedText;
+    } else {
+      print("Translation failed ");
+      return "inputWord";
+    }
+  }
+
+  getLanguage() async {
+    final languageCode = GetStorage().read(AppConstants.languageCode);
+    if (languageCode != null) {
+      if (languageCode == "English") {
+        return targetLanguage.value = TranslateLanguage.english;
+      } else if (languageCode == "Polski") {
+        return targetLanguage.value = TranslateLanguage.polish;
+      } else {
+        return targetLanguage.value = TranslateLanguage.spanish;
+      }
+    } else {
+      return targetLanguage.value = TranslateLanguage.polish;
+    }
+  }
+
+  parseCode(value) async {
+
+    var valueText = await translate(value);
+
+    print("jbzxjnknk===>> $valueText");
+
     try {
       Map<String, dynamic> parsedJson = jsonDecode(value);
       rootInfo.value = RootInfo.fromJson(parsedJson);
@@ -273,8 +341,7 @@ class RootInfo {
 
   factory RootInfo.fromJson(Map<String, dynamic> json) {
     var childrenList = json['children'] as List;
-    List<ParagraphInfo> children =
-        childrenList.map((item) => ParagraphInfo.fromJson(item)).toList();
+    List<ParagraphInfo> children = childrenList.map((item) => ParagraphInfo.fromJson(item)).toList();
 
     return RootInfo(
       json['type'],

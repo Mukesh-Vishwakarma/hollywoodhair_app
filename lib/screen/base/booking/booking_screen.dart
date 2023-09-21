@@ -51,19 +51,19 @@ class BookingScreen extends GetView<BookingController> {
                 itemBuilder: (BuildContext context, int index) {
                   return bookingList(index);
                 }),
-            SizedBox(height: 40),
-            DottedLine(
+            const SizedBox(height: 40),
+            const DottedLine(
               dashColor: AppColors.gray99,
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             GestureDetector(
               onTap: (){
                 Get.toNamed(AppPages.myAppointmentScreen);
 
               },
               child: Container(
-                margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                padding: EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
+                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColors.colorD3,
@@ -80,7 +80,7 @@ class BookingScreen extends GetView<BookingController> {
                         child: Padding(
                       padding: const EdgeInsets.only(left: 100),
                       child: Text(
-                        "My Appointments",
+                        "my_appointments".tr,
                         style: AppStyles.textStyle(
                           color: AppColors.primaryColor,
                           fontSize: dimen12,

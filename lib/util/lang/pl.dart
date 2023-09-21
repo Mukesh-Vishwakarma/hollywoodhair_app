@@ -88,4 +88,29 @@ const pl_PL = {
   'grand_total': 'Suma końcowa',
   'order_now': 'Zamów teraz',
   'apply': 'Zastosuj',
+
+  // Home
+  'product_details': 'Szczegóły produktu',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Przejdź do koszyka',
+  'Home': 'Strona główna',
+  'Booking': 'Rezerwacja',
+  'try_on': 'Przymierz',
+  'Cart': 'Koszyk',
+  'Profile': 'Profil',
+
+  // Profile
+  'address': 'Adres',
+  'chatbot': 'Chatbot',
+  'Wishlist': 'Lista życzeń',
+  'rate_us': 'Oceń nas',
+
+
+  // Booking
+  'my_appointments': 'Mis Citas',
+  'style_selection_consultation': 'Consulta de Selección de Estilo',
+  'consult_with_experts': 'Consulta con Expertos',
+  'Book_in_Store_appointment': 'Reservar Cita en Tienda',
+  'Unlock_your_perfect_look': 'Descubre tu Look Perfecto',
+
 };

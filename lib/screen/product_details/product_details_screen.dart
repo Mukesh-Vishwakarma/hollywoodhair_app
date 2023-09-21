@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/base/base_home_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
@@ -38,7 +40,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
-            title: Text("Product details",
+            title: Text("product_details".tr,
                 style: AppStyles.textStyle(
                     fontSize: dimen14, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
@@ -262,7 +264,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     padding: const EdgeInsets.only(
                                         left: 15, right: 15, top: 0),
                                     child: Text(
-                                      "Product Details",
+                                      "product_details".tr,
                                       style: AppStyles.textStyle(
                                         weight: FontWeight.w500,
                                         fontSize: dimen15,
@@ -283,24 +285,53 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                           itemCount: controller.rootInfo.value.children.length,
                                           itemBuilder: (context, index) {
                                             final paragraph = controller.rootInfo.value.children[index];
+
                                             return Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 const SizedBox(height: 8),
-                                                RichText(
-                                                  text: TextSpan(
-                                                    style: DefaultTextStyle.of(context).style,
-                                                    children: paragraph.children.map((textInfo) {
-                                                      return TextSpan(
-                                                        text: textInfo.value,
-                                                        style: TextStyle(
-                                                          fontWeight: textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal,
-                                                          height: 1.5,
-                                                          wordSpacing: 0.6
+                                                FutureBuilder<List<String>>(
+                                                  future: Future.wait(paragraph.children.map((textInfo) {
+                                                    return controller.translate(textInfo.value);
+                                                  })),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.connectionState == ConnectionState.done) {
+                                                      final translatedTexts = snapshot.data ?? []; // List of translated texts.
+                                                      final concatenatedText = translatedTexts.join(''); // Join the translated texts with no spaces in between.
+
+                                                      final textSpans = <TextSpan>[];
+                                                      for (int i = 0; i < paragraph.children.length; i++) {
+                                                        final textInfo = paragraph.children[i];
+                                                        final translatedText = translatedTexts[i];
+
+                                                        final fontWeight = textInfo.bold ?? false
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal;
+
+                                                        textSpans.add(
+                                                          TextSpan(
+                                                            text: translatedText,
+                                                            style: TextStyle(
+                                                              fontWeight: fontWeight,
+                                                              height: 1.6,
+                                                              wordSpacing: 0.6,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      return RichText(
+                                                        text: TextSpan(
+                                                          style: DefaultTextStyle.of(context).style,
+                                                          children: textSpans,
                                                         ),
                                                       );
-                                                    }).toList(),
-                                                  ),
+                                                    } else {
+                                                      return  Container();
+                                                      // return shimmerDemoTranslate();
+                                                      // return CircularProgressIndicator();
+                                                    }
+                                                  },
                                                 ),
                                                 const SizedBox(height: 16),
                                               ],
@@ -314,13 +345,13 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               ),
 
 
-                              Divider(thickness: 1.0,),
+                              const Divider(thickness: 1.0,),
 
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10),
                                 child: Text(
-                                  "OPIS",
+                                  "OPIS".tr,
                                   style: AppStyles.textStyle(
                                     weight: FontWeight.w500,
                                     fontSize: dimen15,
@@ -451,89 +482,62 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   :  shimmerDemo(),
             ),
             Obx(
-              () => controller.dataIsLoading.isFalse
+                  () => controller.dataIsLoading.isFalse
                   ? Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: Get.size.width,
-                        color: AppColors.lightBackgroundColor,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
+                  alignment: Alignment.bottomCenter,
+                  child: (controller.isLoader.value)?InkWell(
+                    onTap: () {
+                      if (controller.addButtonStatus.isTrue) {
+                        Get.find<BaseHomeController>().selectedIndex.value =
+                        3;
+                        Get.toNamed(AppPages.baseScreen);
+                      } else {
+                        controller.addToCart(
+                            title: controller.products[0].title,
+                            id: controller.products[0].id,
+                            variantId: controller
+                                .products[0].productVariants[0].id);
+                      }
+                    },
+                    child: Container(
+                      width: 95.w,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: AppColors.color7C,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            Assets.bag,
+                            height: 20,
+                            width: 20,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            controller.addButtonStatus.isTrue ? "go_to_cart".tr : "add_to_cart".tr,
+                            style: AppStyles.textStyle(
+                              color: AppColors.lightBackgroundColor,
+                              fontSize: dimen12,
+                              weight: FontWeight.normal,
                             ),
-                            Container(
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  // color:  AppColors.primaryColor,
-
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: AppColors.primaryColor,
-                                      width: 1.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 5, bottom: 5),
-                                child: Image.asset(
-                                  Assets.likeCard,
-                                  height: 30,
-                                  width: 30,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  controller.addToCart(
-                                      title: controller.products[0].title,
-                                      id: controller.products[0].id,
-                                      variantId: controller
-                                          .products[0].productVariants[0].id);
-                                },
-                                child: Container(
-                                  // width:200,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: AppColors.color7C,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Image.asset(
-                                          Assets.bag,
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 15, bottom: 15, left: 10),
-                                        child: Text(
-                                          "Add to cart",
-                                          style: AppStyles.textStyle(
-                                            color:
-                                                AppColors.lightBackgroundColor,
-                                            fontSize: dimen12,
-                                            weight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                      ))
+                          ),
+                        ],
+                      ),
+                    ).paddingOnly(bottom: 10),
+                  ):Container(
+                    width: 95.w,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      color: AppColors.color7C,
+                    ),
+                    child: const SpinKitThreeBounce(
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ).paddingOnly(bottom: 10))
                   : SizedBox(),
             )
           ],
@@ -914,5 +918,28 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       ),
     );
   }
+
+
+  shimmerDemoTranslate() {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: SizedBox(
+        width: 100.h,
+        height: 10.0,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(
+            width: 100.h,
+            height: 10.0,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
 
 }

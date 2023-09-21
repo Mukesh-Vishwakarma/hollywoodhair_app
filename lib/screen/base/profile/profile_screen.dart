@@ -18,7 +18,7 @@ class ProfileScreen extends GetView<ProfileController> {
           preferredSize: Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
-            title: Text("Profile",
+            title: Text("Profile".tr,
                 style: AppStyles.textStyle(
                     fontSize: dimen18, weight: FontWeight.w600)),
             automaticallyImplyLeading: false,
@@ -100,7 +100,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                       Expanded(child: Padding(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Text("My orders",
+                        child: Text("my_orders".tr,
                             style: AppStyles.textStyle(
                                 fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -135,7 +135,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                       Expanded(child: Padding(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Text("My appointment",
+                        child: Text("my_appointment".tr,
                             style: AppStyles.textStyle(
                               fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -171,7 +171,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                       Expanded(child: Padding(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Text("Addresses",
+                        child: Text("address".tr,
                             style: AppStyles.textStyle(
                               fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -204,7 +204,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                       Expanded(child: Padding(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Text("Setting",
+                        child: Text("setting".tr,
                             style: AppStyles.textStyle(
                               fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -227,7 +227,7 @@ class ProfileScreen extends GetView<ProfileController> {
               ),
 
 
-
+/*
               Padding(
                 padding: const EdgeInsets.only(top: 5,bottom: 5),
                 child: Row(
@@ -235,7 +235,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                     Expanded(child: Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text("Chatbot",
+                      child: Text("chatbot".tr,
                           style: AppStyles.textStyle(
                             fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -254,33 +254,9 @@ class ProfileScreen extends GetView<ProfileController> {
               Padding(
                 padding: const EdgeInsets.only(left: 20,right: 20),
                 child: Divider(),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
-                child: Row(
-                  children: [
-
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("Cart",
-                          style: AppStyles.textStyle(
-                            fontSize: dimen15, weight: FontWeight.w400,)
-
-                      ),
-                    )),
+              ),*/
 
 
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20,top: 10),
-                      child: Image.asset(Assets.arrowLeft,height: 30,width: 30,),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20),
-                child: Divider(),
-              ),
 
               Padding(
                 padding: const EdgeInsets.only(top: 5,bottom: 5),
@@ -289,7 +265,7 @@ class ProfileScreen extends GetView<ProfileController> {
 
                     Expanded(child: Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text("Wishlist",
+                      child: Text("my_cart".tr,
                           style: AppStyles.textStyle(
                             fontSize: dimen15, weight: FontWeight.w400,)
 
@@ -316,7 +292,34 @@ class ProfileScreen extends GetView<ProfileController> {
 
                     Expanded(child: Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text("Rate us",
+                      child: Text("my_wishlist".tr,
+                          style: AppStyles.textStyle(
+                            fontSize: dimen15, weight: FontWeight.w400,)
+
+                      ),
+                    )),
+
+
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20,top: 10),
+                      child: Image.asset(Assets.arrowLeft,height: 30,width: 30,),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20),
+                child: Divider(),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                child: Row(
+                  children: [
+
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text("rate_us".tr,
                           style: AppStyles.textStyle(
                             fontSize: dimen15, weight: FontWeight.w400,)
 

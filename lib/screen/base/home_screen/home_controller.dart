@@ -9,6 +9,7 @@ import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/models/src/product/products/products.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 import 'package:sizer/sizer.dart';
+import 'package:shopify_flutter/shopify_flutter.dart';
 
 import '../../../util/app_colors.dart';
 
@@ -58,7 +59,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       print(exception.toString());
     }
   }
-
 
 
   getTopProductApi() async {
@@ -148,6 +148,39 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       },
     );
   }
+
+
+  // final shopify = Shopify(
+  //   apiKey: 'YOUR_SHOPIFY_API_KEY',
+  //   password: 'YOUR_SHOPIFY_PASSWORD',
+  //   store: 'YOUR_SHOPIFY_STORE_NAME',
+  //   domain: 'YOUR_SHOPIFY_DOMAIN',
+  // );
+  //
+  // Future<void> fetchHomeBanner() async {
+  //   final query = r'''
+  //   {
+  //     shop {
+  //       homeBanner {
+  //         id
+  //         image {
+  //           originalSrc
+  //         }
+  //         title
+  //         subtitle
+  //         buttonText
+  //         buttonLink
+  //       }
+  //     }
+  //   }
+  // ''';
+  //
+  //   final result = await shopify.query(query);
+  //   final homeBannerData = result.data['shop']['homeBanner'];
+  //
+  //   // You can now use the homeBannerData in your UI.
+  //   print('Home Banner Data: $homeBannerData');
+  // }
 
 
 }
