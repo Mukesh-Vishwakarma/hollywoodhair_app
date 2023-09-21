@@ -295,6 +295,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                                         text: textInfo.value,
                                                         style: TextStyle(
                                                           fontWeight: textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal,
+                                                          height: 1.5,
+                                                          wordSpacing: 0.6
                                                         ),
                                                       );
                                                     }).toList(),
@@ -637,7 +639,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   borderRadius: BorderRadius.circular(0.0),
                   child: Container(
                     width: 100.w,
-                    height: 45.h,
+                    height: 40.h,
                     color: Colors.white,
                   ),
                 ),

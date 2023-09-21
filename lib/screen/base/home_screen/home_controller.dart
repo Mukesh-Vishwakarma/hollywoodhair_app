@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/model/shopify_model/category_model.dart';
 import 'package:hollywood_hair/util/assets.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/models/src/product/products/products.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../util/app_colors.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
   var searchController = TextEditingController();
@@ -15,69 +19,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   var categoriesId = 0.obs;
   RxList<Product> topProduct = <Product>[].obs;
 
-  // RxList<ProductModel> productList = <ProductModel>[
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p1,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p1,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p2,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p3,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p4,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p5,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  //   ProductModel(
-  //     selected: false,
-  //     price: "zł 119.00",
-  //     image: Assets.p6,
-  //     oldPrice: "119.00",
-  //     title: 'Scalp Peeling - Cleansing peeling for the scalp 500 ml',
-  //   ),
-  // ].obs;
   var categories = <CustomCollections>[].obs;
 
-  // RxList<CategoriesModel> categoriesList = <CategoriesModel>[
-  //   CategoriesModel(value: "All", selected: true),
-  //   CategoriesModel(value: "Conditioner", selected: false),
-  //   CategoriesModel(value: "Accessories", selected: false),
-  //   CategoriesModel(value: "Accessories", selected: false),
-  //   CategoriesModel(value: "Oils", selected: false),
-  //   CategoriesModel(value: "Perfume", selected: false),
-  //   CategoriesModel(value: "Supplements", selected: false),
-  //   CategoriesModel(value: "Trichology", selected: false),
-  // ].obs;
   RxList<Collection> collectionList = <Collection>[
     Collection(
         title: "All",
@@ -116,6 +59,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
+
+
   getTopProductApi() async {
     try {
       List<Product>? _product = await shopifyStore.getNProducts(6);
@@ -127,6 +72,84 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       print(exception.toString());
     }
   }
+
+
+  networkImageWithLoader({required userProfile, height, width}) {
+    return Image.network(
+      userProfile,
+      fit: BoxFit.cover,
+      width: 50.w,
+      height: 17.h,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Shimmer.fromColors(
+          baseColor: const Color.fromRGBO(191, 191, 191, 0.5254901960784314),
+          highlightColor: Colors.white,
+          child: Container(
+              width: 50.w,
+              height: 17.h,
+            color: Colors.grey,
+          ),
+        );
+      },
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Container(
+          width: 50.w,
+          height: 17.h,
+          color: AppColors.lightGrey,
+          child: const Icon(
+            Icons.image_not_supported,
+            color: Colors.white,
+            size: 30,
+          ), // You can use any widget as a placeholder
+        );
+      },
+    );
+  }
+
+
+  networkImageCategory({required userProfile, height, width}) {
+    return Image.network(
+      userProfile,
+      fit: BoxFit.cover,
+      width: 55,
+      height: 55,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Shimmer.fromColors(
+          baseColor: const Color.fromRGBO(191, 191, 191, 0.5254901960784314),
+          highlightColor: Colors.white,
+          child: Container(
+            width: 55,
+            height: 55,
+            color: Colors.grey,
+          ),
+        );
+      },
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Container(
+          width: 55,
+          height: 55,
+          color: AppColors.lightGrey,
+          child: const Icon(
+            Icons.image_not_supported,
+            color: Colors.white,
+            size: 30,
+          ), // You can use any widget as a placeholder
+        );
+      },
+    );
+  }
+
+
 }
 
 class CategoriesModel {

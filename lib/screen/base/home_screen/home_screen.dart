@@ -6,9 +6,11 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../util/theme_service.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -186,7 +188,7 @@ class HomeScreen extends GetView<HomeController> {
                             productList: controller.topProduct.value[index]);
                       }),
                 )
-              : const SizedBox()),
+              : shimmerDemo()),
         ]);
   }
 
@@ -206,12 +208,16 @@ class HomeScreen extends GetView<HomeController> {
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      productList.image,
-                      fit: BoxFit.cover,
-                      width: 50.w,
-                      height: 17.h,
-                    )),
+                    // child: Image.network(
+                    //   productList.image,
+                    //   fit: BoxFit.cover,
+                    //   width: 50.w,
+                    //   height: 17.h,
+                    // )
+                  child: controller.networkImageWithLoader(
+                      userProfile:
+                      productList.image ?? ""),
+                ),
                 // Positioned(
                 //     top: 10,
                 //     right: 10,
@@ -272,7 +278,7 @@ class HomeScreen extends GetView<HomeController> {
         ),
         const SizedBox(height: 20),
         Obx(
-          () => SizedBox(
+          () => controller.collectionList.isNotEmpty?SizedBox(
             height: 100,
             child: ListView.builder(
               shrinkWrap: true,
@@ -284,7 +290,7 @@ class HomeScreen extends GetView<HomeController> {
                     categoriesWidget(controller.collectionList.value[index]));
               },
             ),
-          ),
+          ):shimmerCategory(),
         ),
 
         // Obx(
@@ -334,12 +340,16 @@ class HomeScreen extends GetView<HomeController> {
                       border: Border.all(color: AppColors.primaryColor, width: 1.0)),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Image.network(
-                        categoryItem.imageUrl,
-                        fit: BoxFit.cover,
-                        width: 55,
-                        height: 55,
-                      )).marginAll(3),
+                      // child: Image.network(
+                      //   categoryItem.imageUrl,
+                      //   fit: BoxFit.cover,
+                      //   width: 55,
+                      //   height: 55,
+                      // )
+                    child: controller.networkImageCategory(
+                        userProfile:
+                        categoryItem.imageUrl ?? ""),
+                  ).marginAll(3),
                 ),
                 Flexible(
                   child: Container(
@@ -403,4 +413,334 @@ class HomeScreen extends GetView<HomeController> {
       ),
     );
   }*/
+
+
+  shimmerDemo() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        // width: 100.w,
+        // height: 100.h,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 00),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  shimmerCategory() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        // width: 100.w,
+        // height: 100.h,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: SingleChildScrollView(
+            // scrollDirection: Axis.horizontal,
+            child: Column(
+              children: [
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                  ],
+                ).marginOnly(top: 00),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }
