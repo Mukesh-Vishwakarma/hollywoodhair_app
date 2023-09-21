@@ -40,7 +40,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
-            title: Text("product_details".tr,
+            title: Text("Product details",
                 style: AppStyles.textStyle(
                     fontSize: dimen14, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
@@ -264,7 +264,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     padding: const EdgeInsets.only(
                                         left: 15, right: 15, top: 0),
                                     child: Text(
-                                      "product_details".tr,
+                                      "Product Details",
                                       style: AppStyles.textStyle(
                                         weight: FontWeight.w500,
                                         fontSize: dimen15,

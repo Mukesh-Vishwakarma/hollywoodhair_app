@@ -23,6 +23,7 @@ class ProductDetailsController extends GetxController {
   final CarouselController controller = CarouselController();
   var imageProductList = <Images>[].obs;
   var productDetailsList = <ProductData>[].obs;
+  RxBool addButtonStatus = false.obs;
 
   // var productReviewsList = <Review>[].obs;
   var metaFieldsDetails = MetaFieldsDetails().obs;
@@ -56,6 +57,7 @@ class ProductDetailsController extends GetxController {
     productDetailsApi();
     checkIfExitsCart();
     getProductDetails();
+    // productDetailsApi();
     super.onInit();
   }
 
@@ -287,13 +289,9 @@ class ProductDetailsController extends GetxController {
       // Access values in the Dart model
       print(rootInfo.value.type);
       for (var paragraph in rootInfo.value.children) {
-        print(paragraph.type);
-        for (var textInfo in paragraph.children) {
-          print(textInfo.value);
-          print(textInfo.bold ?? false);
-        }
+        for (var textInfo in paragraph.children) {}
       }
-    } catch (e){
+    } catch (e) {
       print("jsbdnzK==> $e");
     }
   }
