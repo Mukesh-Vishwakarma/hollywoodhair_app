@@ -1,59 +1,57 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:hollywood_hair/util/lang/pl.dart';
 import 'en.dart';
+import 'es.dart';
 
 class LocalizationService extends Translations {
   final _box = GetStorage();
   final _key = 'lang';
 
   // Default locale
-  static final locale = Locale('en', 'US');
-  //Get.deviceLocale
-
-  // fallbackLocale saves the day when the locale gets in trouble
-  static final fallbackLocale = Locale('ge', 'DE');
+  static const Locale fallbackLocale = Locale('en', 'US');
+  late Locale _locale;
 
   // Supported languages
-  // Needs to be same order with locales
-  static final langs = [
-    'en',
-    'ge',
-  ];
+  static final List<String> supportedLanguages = ['en', 'ge'];
 
   // Supported locales
-  // Needs to be same order with langs
-  static final locales = [
-    Locale('en', 'US'),
-    // Locale('ge', 'DE')
+  static final List<Locale> supportedLocales = [
+    const Locale('en', 'US'),
+    const Locale('es', 'SP'),
+    const Locale('pl', 'PL'),
   ];
 
-  // Keys and their translations
-  // Translations are separated maps in `lang` file
+  LocalizationService() {
+    // Initialize the locale from the storage
+    _locale = Locale(loadLangFromBox());
+    // Load the translations for the current locale
+    _loadTranslations();
+  }
+
+  Locale get locale => _locale;
+
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': en_US,
-        // 'ge_DE': ge_DE,
+        'se_SP': es_SP,
+        'pl_PL': pl_PL,
       };
 
-  // Gets locale from language, and updates the locale
-  Future<void> changeLocale(String lang) async {
-    final locale = _getLocaleFromLanguage(lang);
-    saveLangToBox(lang);
-    await Get.updateLocale(locale);
+  // Change the locale and save it to storage
+  Future<void> changeLocale(Locale newLocale) async {
+    _locale = newLocale;
+    saveLangToBox(newLocale.languageCode);
+    await Get.updateLocale(newLocale);
   }
 
-  // Finds language in `langs` list and returns it as Locale
-  Locale _getLocaleFromLanguage(String lang) {
-    for (int i = 0; i < langs.length; i++) {
-      if (lang == langs[i]) return locales[i];
-    }
-    return Get.locale!;
-  }
+  String loadLangFromBox() => _box.read(_key) ?? fallbackLocale.languageCode;
 
-  String loadLangFromBox() => _box.read(_key) ?? 'en';
-
-  /// Save Lang to local storage
   saveLangToBox(String lang) => _box.write(_key, lang);
+
+  _loadTranslations() {
+    // Implement loading translations based on the current locale if needed
+    // You can load translations from your language files here
+  }
 }

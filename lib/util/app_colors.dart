@@ -57,4 +57,13 @@ abstract class AppColors {
   static const Color promoHint = Color(0xff252629);
   static const Color black84 = Color(0xff848484);
 
+  static const Color gray4D = Color(0xff4D4D4D);
+  static const Color red84 = Color(0xffF86484);
+
+  static const Color color4A = Color(0xff4A4A4A);
+
+  static const Color transparentBlack = Color(0x79000000);
+
+  static const Color lightGrey = Color(0xffd7d7d7);
+
 }

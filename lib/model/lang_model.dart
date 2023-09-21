@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 class LanguageModel{
-  final String? text;
+
+  final String? name;
+  final Locale? locale;
 
 
-  LanguageModel({this.text});
+  LanguageModel({this.name, this.locale});
 }

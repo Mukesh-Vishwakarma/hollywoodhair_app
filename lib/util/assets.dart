@@ -77,5 +77,22 @@ class Assets {
   static const String cancel = 'assets/images/cancel.png';
   static const String cross = 'assets/images/cross.svg';
   static const String progressBarLoader = 'assets/video/progress_bar_loader.json';
+  static const String videoProgressbarBarLoader = 'assets/json/progress_bar_loader.json';
+
+
+  //Try On Screen
+  static const String pic1 = 'assets/dummy_images/Pic 1.svg';
+  static const String pic2 = 'assets/dummy_images/Pic 2.svg';
+  static const String pic3 = 'assets/dummy_images/Pic 3.svg';
+  static const String pic4 = 'assets/dummy_images/Pic 4.svg';
+  static const String pic5 = 'assets/dummy_images/Pic 5.svg';
+  static const String pic6 = 'assets/dummy_images/Pic 6.svg';
+  static const String ellipse1 = 'assets/dummy_images/Ellipse 175.png';
+  static const String ellipse2 = 'assets/dummy_images/Ellipse 176.png';
+  static const String ellipse3 = 'assets/dummy_images/Ellipse 177.png';
+  static const String ellipse4 = 'assets/dummy_images/Ellipse 179.png';
+  static const String ellipse5 = 'assets/dummy_images/Ellipse 180.png';
+  static const String ellipse6 = 'assets/dummy_images/Ellipse 181.png';
+  static const String download = 'assets/dummy_images/download.svg';
 
 }

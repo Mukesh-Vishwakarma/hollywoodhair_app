@@ -18,6 +18,7 @@ import 'package:hollywood_hair/model/shopify_model/signUp_model.dart';
 import 'package:hollywood_hair/model/static_model.dart';
 import 'package:hollywood_hair/model/user_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
+import '../model/metafilds_details_model.dart';
 import 'DioLogger.dart';
 import 'api_constants.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,8 @@ class ApiProvider {
         InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
       options.headers = {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': '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'
+        // 'X-Shopify-Access-Token': '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'
+        'X-Shopify-Access-Token': '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'
       };
       DioLogger.onSend(tag, options);
       return handler.next(options);
@@ -483,6 +485,19 @@ class ApiProvider {
       Response response = await _dio.get('api/2023-07/products/$product.json');
       print("response of Collections >>>${response.data!}");
       return ProductDetailsModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  //***** product deatils shop
+
+  Future funMetaFieldsDetailsShopify(product) async {
+    try {
+      //products/8655016329551.json
+      Response response = await _dio.get('api/2023-07/products/$product/metafields.json');
+      print("response of Collections >>>${response.data!}");
+      return MetaFieldsDetails.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

@@ -50,6 +50,11 @@ import 'package:hollywood_hair/screen/product_details/product_details_screen.dar
 import 'package:hollywood_hair/screen/splash/splash_binding.dart';
 import 'package:hollywood_hair/screen/splash/splash_screen.dart';
 
+import '../../screen/base/booking/calendly_screen/calendly_binding.dart';
+import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
+import '../../screen/tryOn_screen/priview_screen.dart';
+import '../../screen/tryOn_screen/tryOn_binder.dart';
+import '../../screen/tryOn_screen/tryOn_screen.dart';
 import 'app_pages.dart';
 
 class AppRoutes {
@@ -189,6 +194,25 @@ class AppRoutes {
       binding:SearchProductBinding(),
     ),
 
+    GetPage(
+      name: AppPages.calendlyScreen,
+      page: () => CalendlyScreen(),
+      binding:CalendlyBinding(),
+    ),
 
+
+    GetPage(
+        name: AppPages.tryOn,
+        page: () => TryOnScreen(),
+        binding:TryOnBinding(),
+        transition: Transition.downToUp,
+        transitionDuration: Duration(milliseconds: 500)
+    ),
+
+    GetPage(
+      name: AppPages.imagePreview,
+      page: () => PreviewScreen(),
+      binding:TryOnBinding(),
+    ),
   ];
 }

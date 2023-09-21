@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+
+import 'assets.dart';
 
 
 enum ProgressDialogType { Normal, Download }
@@ -116,11 +119,17 @@ class _BodyState extends State<_Body> {
 
         //***** soon *********
 
+        // Align(
+        //   alignment: Alignment.center,
+        //
+        //   child: Image.asset('assets/images/progress.gif',height:50,width:50),)
+
+
         Align(
           alignment: Alignment.center,
-
-          child: Image.asset('assets/images/progress.gif',height:50,width:50),)
-
+          child: Lottie.asset(Assets.videoProgressbarBarLoader,
+              height: 150, width: 150),
+        )
 
       ],
     );

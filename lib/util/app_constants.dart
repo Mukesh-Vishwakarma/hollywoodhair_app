@@ -24,4 +24,8 @@ class AppConstants {
   static const tokenShopify = 'tokenShopify';
 
   static const checkOutID = "checkOutID";
+  static const languageCode = "languageCode";
+
+// Calendly
+  static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb';
 }

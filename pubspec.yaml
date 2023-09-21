@@ -55,7 +55,12 @@ dependencies:
   html: ^0.15.0
   flutter_html: ^3.0.0-alpha.3
   add_to_cart_animation: ^2.0.3
-  http: ^1.1.0
+  #  http: ^1.1.0
+
+  # webView for show calendly
+  webview_flutter: ^2.0.13
+  # for translate
+  google_mlkit_translation: ^0.8.0
 
   # get
   get: ^4.6.1
@@ -65,6 +70,12 @@ dependencies:
   dio: ^5.1.0
   logging: ^1.0.2
   shopify_flutter: any
+
+  # try one
+  camera: ^0.10.5+4
+  chips_choice: ^3.0.0
+  dotted_border: ^2.0.0+3
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +102,7 @@ flutter:
     - assets/images/
     - assets/font/
     - assets/dummy_images/
+    - assets/json/
 
   fonts:
     - family: Josefin Sans

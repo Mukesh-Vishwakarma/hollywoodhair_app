@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import '../../util/assets.dart';
+import '../../util/route/app_pages.dart';
 import '../../util/theme_service.dart';
 import 'base_home_controller.dart';
 
@@ -183,7 +184,7 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                       child: FloatingActionButton(
                         elevation: 1,
                         onPressed: () {
-                          // Handle FAB press
+                          Get.toNamed(AppPages.tryOn);
                         },
                         backgroundColor: Colors.black, // Set the background color of the FAB
                         child: SvgPicture.asset(

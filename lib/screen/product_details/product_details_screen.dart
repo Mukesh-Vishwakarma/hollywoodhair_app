@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,16 +10,16 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../util/theme_service.dart';
 import 'product_details_controller.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
-  ProductDetailsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
 
@@ -33,7 +34,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
@@ -92,8 +93,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                             onPageChanged: (index, reason) {
                                               controller.current.value = index;
                                             }),
-                                        items: controller
-                                            .products.value[0].images
+                                        items: controller.products.value[0].images
                                             .map((url) {
                                           return Builder(
                                             builder: (BuildContext context) {
@@ -102,7 +102,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                                     .size
                                                     .width,
                                                 // margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   color: Colors.grey,
                                                 ),
                                                 child: Image.network(
@@ -157,163 +157,196 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
 
-                              Obx(() => controller.products.value[0].title !=
-                                      null
+                              Obx(() => controller.products.value[0].title != null
                                   ? Padding(
                                       padding: const EdgeInsets.only(
                                           left: 15, right: 15, top: 10),
                                       child: Text(
-                                        controller.products.value[0].title ??
-                                            "",
-                                        // "Scalp Peeling - Cleansing peeling for the scalp",
+                                        controller.products.value[0].title ?? "",
                                         style: AppStyles.textStyle(
                                           weight: FontWeight.w500,
                                           fontSize: 16.0,
                                         ),
                                       ),
                                     )
-                                  : SizedBox()),
+                                  : const SizedBox()),
+
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, top: 10),
+                                    child: Text(
+                                      controller.products.value[0].formattedPrice ?? "",
+                                      // "Scalp Peeling - Cleansing peeling for the scalp",
+                                      style: AppStyles.textStyle(
+                                        weight: FontWeight.w500,
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 5, top: 14),
+                                    child: Text(
+                                      controller.products.value[0].compareAtPriceFormatted,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 13.0,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    )
+                                  ),
+                                ],
+                              ),
+
+                              // Padding(
+                              //   padding:
+                              //       const EdgeInsets.only(left: 20, top: 10),
+                              //   child: Row(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       RatingBar.builder(
+                              //         initialRating: 1,
+                              //         minRating: 1,
+                              //         direction: Axis.horizontal,
+                              //         allowHalfRating: true,
+                              //         itemSize: 15.5,
+                              //         itemCount: 1,
+                              //         itemPadding:
+                              //             const EdgeInsets.symmetric(horizontal: 2.0),
+                              //         itemBuilder: (context, _) => const Icon(
+                              //           Icons.star,
+                              //           color: Colors.amber,
+                              //           size: 2,
+                              //         ),
+                              //         onRatingUpdate: (rating) {
+                              //           print(rating);
+                              //         },
+                              //       ),
+                              //       Padding(
+                              //         padding: const EdgeInsets.only(
+                              //             left: 4, top: 0),
+                              //         child: Text("}",
+                              //             style: AppStyles.textStyle(
+                              //               weight: FontWeight.w500,
+                              //               fontSize: dimen12,
+                              //             )),
+                              //       ),
+                              //       Padding(
+                              //         padding: const EdgeInsets.only(
+                              //             left: 7, top: 0),
+                              //         child: Text('(132 Rating)',
+                              //             style: AppStyles.textStyle(
+                              //               weight: FontWeight.normal,
+                              //               color: AppColors.gray99,
+                              //               fontSize: dimen12,
+                              //             )),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Divider(thickness: 1.0,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, right: 15, top: 0),
+                                    child: Text(
+                                      "Product Details",
+                                      style: AppStyles.textStyle(
+                                        weight: FontWeight.w500,
+                                        fontSize: dimen15,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    // height: 500,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      children: [
+                                        ListView.builder(
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: controller.rootInfo.value.children.length,
+                                          itemBuilder: (context, index) {
+                                            final paragraph = controller.rootInfo.value.children[index];
+                                            return Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(height: 8),
+                                                RichText(
+                                                  text: TextSpan(
+                                                    style: DefaultTextStyle.of(context).style,
+                                                    children: paragraph.children.map((textInfo) {
+                                                      return TextSpan(
+                                                        text: textInfo.value,
+                                                        style: TextStyle(
+                                                          fontWeight: textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal,
+                                                          height: 1.5,
+                                                          wordSpacing: 0.6
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 16),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+
+                              Divider(thickness: 1.0,),
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10),
                                 child: Text(
-                                  controller.products.value[0].formattedPrice ??
-                                      "",
-                                  // "Scalp Peeling - Cleansing peeling for the scalp",
+                                  "OPIS",
                                   style: AppStyles.textStyle(
                                     weight: FontWeight.w500,
-                                    fontSize: 16.0,
+                                    fontSize: dimen15,
                                   ),
                                 ),
                               ),
 
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, top: 10),
-                                child: Text(
-                                  "${controller.products.value[0].compareAtPriceFormatted}",
-                                  style: AppStyles.textStyle(
-                                    weight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                  ),
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 0),
+                                child: Html(
+                                  data:controller.products[0].descriptionHtml!,
+                                  // style: AppStyles.textStyle(
+                                  //   weight: FontWeight.w500,
+                                  //   fontSize: dimen15,
+                                  // ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, top: 10),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RatingBar.builder(
-                                      initialRating: 1,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemSize: 15.5,
-                                      itemCount: 1,
-                                      itemPadding:
-                                          EdgeInsets.symmetric(horizontal: 2.0),
-                                      itemBuilder: (context, _) => Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 2,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 4, top: 0),
-                                      child: Text("}",
-                                          style: AppStyles.textStyle(
-                                            weight: FontWeight.w500,
-                                            fontSize: dimen12,
-                                          )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 7, top: 0),
-                                      child: Text('(132 Rating)',
-                                          style: AppStyles.textStyle(
-                                            weight: FontWeight.normal,
-                                            color: AppColors.gray99,
-                                            fontSize: dimen12,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              controller.productDetails.value.product
-                                          ?.bodyHtml ==
-                                      null
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Divider(),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 15, right: 15, top: 0),
-                                          child: Text(
-                                            "Product Details",
-                                            style: AppStyles.textStyle(
-                                              weight: FontWeight.w500,
-                                              fontSize: dimen15,
-                                            ),
-                                          ),
-                                        ),
-                                        controller.productDetails.value.product
-                                                    ?.bodyHtml !=
-                                                null
-                                            ? Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15,
-                                                    right: 15,
-                                                    top: 10),
-                                                child: Text(
-                                                  controller.productDetails
-                                                      .value.product!.bodyHtml
-                                                      .toString(),
-                                                  style: AppStyles.textStyle(
-                                                      weight: FontWeight.normal,
-                                                      fontSize: dimen12,
-                                                      color: AppColors.gray99),
-                                                ),
-                                              )
-                                            : SizedBox(),
-                                      ],
-                                    )
-                                  : Container(),
-                              controller.productDetails.value.product
-                                          ?.variants ==
-                                      null
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 15, right: 15, top: 0),
-                                      child: Text(
-                                        "Specification",
-                                        style: AppStyles.textStyle(
-                                          weight: FontWeight.w500,
-                                          fontSize: dimen15,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                              SizedBox(
-                                height: 20,
-                              ),
+
+
                               Divider(),
-                              SizedBox(
+
+                              const SizedBox(
                                 height: 20,
                               ),
-                              Padding(
+                             /* Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 0),
                                 child: Text(
@@ -323,7 +356,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     fontSize: dimen15,
                                   ),
                                 ),
-                              ),
+                              ),*/
+
                               SizedBox(height: 10),
                               // Row(
                               //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,7 +422,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //     )
                               //   ],
                               // ),
-                              Column(
+                              const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
@@ -414,7 +448,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                             ],
                           )),
                     )
-                  : SizedBox(),
+                  :  shimmerDemo(),
             ),
             Obx(
               () => controller.dataIsLoading.isFalse
@@ -494,7 +528,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                           ],
@@ -586,4 +620,299 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //     ],
 //   );
 // }
+
+  shimmerDemo() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        width: 100.w,
+        height: 100.h,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(0.0),
+                  child: Container(
+                    width: 100.w,
+                    height: 40.h,
+                    color: Colors.white,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeService().theme,
         theme: AppStyles.lightTheme,
         darkTheme: AppStyles.darkTheme,
-        locale: LocalizationService.locale,
+        locale: LocalizationService().locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
         getPages: AppRoutes.pages,

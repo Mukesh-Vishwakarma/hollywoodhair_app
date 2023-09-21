@@ -5,6 +5,7 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 
+import '../../../../util/route/app_pages.dart';
 import 'booking_confirm_controller.dart';
 
 class BookingConfirmScreen extends GetView<BookingConfirmController> {
@@ -80,8 +81,8 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
 
             GestureDetector(
               onTap: (){
-                Get.back();
-
+                // Get.back();
+                Get.toNamed(AppPages.calendlyScreen);
               },
               child: Container(
                 margin: EdgeInsets.only(left: 20, right: 20, top: 15,bottom: 20),

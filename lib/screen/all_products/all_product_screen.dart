@@ -10,6 +10,7 @@ import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../util/theme_service.dart';
 import 'all_product_controller.dart';
 
 class AllProductScreen extends GetView<AllProductController> {
@@ -17,7 +18,7 @@ class AllProductScreen extends GetView<AllProductController> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
@@ -31,7 +32,7 @@ class AllProductScreen extends GetView<AllProductController> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
@@ -73,79 +74,58 @@ class AllProductScreen extends GetView<AllProductController> {
 
   bodyWidget() {
     return SafeArea(
-      child: Obx(() => !controller.isPageLoad.value
-          ? controller.products.value.isEmpty
-              ? Center(
-                  child: NoDataScreen(
-                    title: "No ${'all_products'.tr} Data ",
-                  ),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        color: AppColors.lightBackgroundColor,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [productsWidget()],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-          : shimmerDemo()),
-    );
-  }
-
-  shimmerDemo() {
-    return Container(
-      width: Get.size.width,
-      height: Get.size.height,
-      color: Colors.white,
-      margin: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2 / 2.8,
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10),
-          itemBuilder: (__, _) => Container(
-            width: Get.size.width,
-            height: 150,
-            color: Colors.white,
-          ),
-          // ListView.builder(
-          //   itemBuilder: (__, _) =>
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Obx(() => !controller.isPageLoad.value
+            ? controller.products.value.isEmpty
+                ? Center(
+                    child: NoDataScreen(
+                      title: "Empty",
+                    ),
+                  )
+                : SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: GridView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.products.length,
+                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 270,
+                              childAspectRatio: 3 / 3,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                          itemBuilder: (context, index) {
+                            return commonProductWidget(index);
+                          }),
+                    ),
+                  )
+            : shimmerDemo()),
       ),
     );
   }
 
-  productsWidget() {
-    return Container(
-      // color: AppColors.dividerColor,
-      child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: controller.products.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2 / 2.8,
-              crossAxisCount: 2,
-              crossAxisSpacing: 1,
-              mainAxisSpacing: 1),
-          itemBuilder: (context, index) {
-            return commonProductWidget(index);
-          }),
-    );
-  }
+
+
+
+  // productsWidget() {
+  //   return Container(
+  //     // color: AppColors.dividerColor,
+  //     child: GridView.builder(
+  //         physics: const BouncingScrollPhysics(),
+  //         shrinkWrap: true,
+  //         itemCount: controller.products.length,
+  //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //             childAspectRatio: 4 / 4.4,
+  //             crossAxisCount: 2,
+  //             crossAxisSpacing: 0,
+  //             mainAxisSpacing: 0),
+  //         itemBuilder: (context, index) {
+  //           return commonProductWidget(index);
+  //         }),
+  //   );
+  // }
 
   commonProductWidget(index) {
     return GestureDetector(
@@ -154,81 +134,246 @@ class AllProductScreen extends GetView<AllProductController> {
           "product_id": controller.products[index].id.toString()
         });
       },
-      child: Container(
-        width: 47.w,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        color: AppColors.lightBackgroundColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: AppColors.blueFC,
-                        image: DecorationImage(
-                          image: FadeInImage.assetNetwork(
-                            fit: BoxFit.cover,
-                            placeholder: Assets.upload,
-                            image: controller.products[index].image.isNotEmpty
-                                ? controller.products[index].image!.toString()
-                                : Assets.upload,
-                          ).image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )),
-                Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Container(
-                      padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                          color: AppColors.lightBackgroundColor,
-                          shape: BoxShape.circle),
-                      child: SvgPicture.asset(Assets.favouriteIcon),
-                    )),
-              ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: controller.networkImageWithLoader(
+    userProfile:
+    controller.products[index].image.isNotEmpty
+        ? controller.products[index].image.toString()
+        : Assets.upload ?? "")),
+          const SizedBox(height: 10),
+          Text(
+            controller.products[index].title.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 14.0,
             ),
-            const SizedBox(height: 10),
-            Text(
-              controller.products[index].title.toString(),
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.textStyle(
-                weight: FontWeight.w500,
-                fontSize: 14.0,
+          ),
+          Row(
+            children: [
+              Text(
+                controller.products[index].formattedPrice,
+                // controller.productList[index].variants![0].price.toString(),
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w500,
+                  color: AppColors.black84,
+                  fontSize: 12.0,
+                ),
               ),
-            ),
-            Row(
+              const SizedBox(width: 5),
+              Text(
+                controller.products[index].compareAtPriceFormatted,
+                // controller.productList[index]..toString(),
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w400,
+                  fontSize: 11.0,
+                  color: AppColors.grayC4,
+                  decoration: TextDecoration.lineThrough,
+                  // decorationColor: AppColors.gray95
+                ),
+              ),
+            ],
+          ),
+          // const SizedBox(height: 6),
+        ],
+      ),
+    );
+  }
+
+
+  shimmerDemo() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        // width: 100.w,
+        // height: 100.h,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                Text(
-                  "${controller.products[index].formattedPrice}",
-                  // controller.productList[index].variants![0].price.toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    color: AppColors.black84,
-                    fontSize: 12.0,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  "${controller.products[index].compareAtPriceFormatted}",
-                  // controller.productList[index]..toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w400,
-                    fontSize: 11.0,
-                    color: AppColors.grayC4,
-                    decoration: TextDecoration.lineThrough,
-                    // decorationColor: AppColors.gray95
-                  ),
-                ),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 00),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              width: 50.w,
+                              height: 17.h,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                          Container(
+                            width: 20.w,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
               ],
             ),
-            const SizedBox(height: 6),
-          ],
+          ),
         ),
       ),
     );
