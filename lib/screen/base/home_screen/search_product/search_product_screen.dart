@@ -7,6 +7,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:shopify_flutter/models/models.dart';
 import 'package:sizer/sizer.dart';
 
 import 'search_product_controller.dart';
@@ -63,9 +64,10 @@ class SearchProductScreen extends GetView<SearchProductController> {
                             onTap: () {},
                             controller: controller.searchController,
                             onChanged: (value) {
-                              controller.searchProduct.value = value;
-                              controller.allProductApi(value);
                               // text = value;
+                              if (value.isNotEmpty) {
+                                controller.searchProducts(value);
+                              }
                             },
                             readOnly: false,
                             decoration: InputDecoration(
@@ -89,11 +91,10 @@ class SearchProductScreen extends GetView<SearchProductController> {
                             cursorColor: AppColors.primaryColor,
                           ),
                         ),
-                        Obx(() => controller.searchProduct.value.isEmpty
+                        Obx(() => controller.searchedProduct.value.isEmpty
                             ? Container()
                             : GestureDetector(
                                 onTap: () {
-                                  controller.searchProduct.value = "";
                                   controller.searchController.clear();
                                 },
                                 child: SvgPicture.asset(Assets.cross))),
@@ -112,7 +113,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                 children: [
                   SizedBox(height: 0),
                   Obx(() => !controller.isLoadPage.value
-                      ? controller.productList.isEmpty
+                      ? controller.searchedProduct.isEmpty
                           ? Center(
                               child: NoDataScreen(
                               title: "No Product Found",
@@ -121,19 +122,12 @@ class SearchProductScreen extends GetView<SearchProductController> {
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              controller: controller.listScrollController.value,
-                              itemCount: controller.productList.length,
+                              // controller: controller.listScrollController.value,
+                              itemCount: controller.searchedProduct.length,
                               itemBuilder: (context, index) {
-
-                                if (index < controller.productList.length) {
-                                  return historyText(index);
-                                } else if (index == controller.productList.length) {
-                                  return buildLoader(); // Display a loading indicator at the end
-                                } else {
-                                  return buildEndMessage(); // Display a message when all items are loaded
-                                }
-
-
+                                return listTile(
+                                    item: controller
+                                        .searchedProduct.value[index]);
                                 // return historyText(index);
                               })
                       : shimmerDemo()),
@@ -152,6 +146,19 @@ class SearchProductScreen extends GetView<SearchProductController> {
     );
   }
 
+  listTile({required Product item}) {
+    return Container(
+      child: Row(
+        children: [
+          Image.network(item.image),
+          Column(children: [
+            Text("${item.title}"),
+            Text("${item.formattedPrice}")
+          ]),
+        ],
+      ),
+    );
+  }
 
   Widget buildLoader() {
     return Center(
@@ -215,7 +222,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
     return GestureDetector(
       onTap: () {
         Get.toNamed(AppPages.allProductDetailsScreen, arguments: {
-          "product_id": controller.productList[index].id.toString()
+          "product_id": controller.searchedProduct[index].id.toString()
         });
       },
       child: Container(
@@ -228,7 +235,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                 padding: const EdgeInsets.only(
                     left: 15, right: 15, top: 10, bottom: 10),
                 child: Text(
-                  controller.productList[index].title.toString(),
+                  controller.searchedProduct[index].title.toString(),
                   style: AppStyles.textStyle(
                     weight: FontWeight.w400,
                     fontSize: 16.0,

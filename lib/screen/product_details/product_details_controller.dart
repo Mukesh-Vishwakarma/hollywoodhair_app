@@ -95,7 +95,6 @@ class ProductDetailsController extends GetxController {
           ],
           email: email,
         );
-        print("checkout $checkout");
         shopifyCheckout
             .checkoutCustomerAssociate(
           checkout.id,
