@@ -17,6 +17,7 @@ class LanguageScreen extends GetView<LanguagesController> {
           preferredSize: const Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
@@ -27,7 +28,7 @@ class LanguageScreen extends GetView<LanguagesController> {
                 )),
             title: Text("languages".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen15, weight: FontWeight.normal)),
+                    fontSize: dimen14, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

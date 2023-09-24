@@ -16,6 +16,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -26,7 +27,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
               )),
           title: Text("my_appointment".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: dimen14, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),

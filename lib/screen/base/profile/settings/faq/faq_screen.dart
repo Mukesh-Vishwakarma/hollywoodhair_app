@@ -16,6 +16,7 @@ class FaqScreen extends GetView<FaqController> {
           preferredSize: Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
@@ -26,7 +27,7 @@ class FaqScreen extends GetView<FaqController> {
                 )),
             title: Text('FAQs'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen18, weight: FontWeight.normal)),
+                    fontSize: dimen14, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

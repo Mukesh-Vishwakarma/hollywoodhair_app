@@ -23,7 +23,7 @@ class SignInScreen extends GetView<SignInController> {
               child: Text(
                 "welcome_back".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen20, weight: FontWeight.w600),
+                    fontSize: dimen20, weight: FontWeight.w500),
               ),
             ),
           ),

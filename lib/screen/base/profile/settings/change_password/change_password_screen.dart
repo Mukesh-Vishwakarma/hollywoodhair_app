@@ -17,6 +17,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
           preferredSize: Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
@@ -27,7 +28,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                 )),
             title: Text('change_password'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen18, weight: FontWeight.normal)),
+                    fontSize: dimen14, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

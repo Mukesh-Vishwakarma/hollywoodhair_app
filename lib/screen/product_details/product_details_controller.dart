@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,10 +14,8 @@ import 'package:shopify_flutter/shopify/shopify.dart';
 import 'dart:convert';
 import '../../model/metafilds_details_model.dart';
 import '../../translater_service/translatter_service.dart';
-import '../../util/app_style.dart';
-import '../../util/res_dimens.dart';
 
-class ProductDetailsController extends GetxController {
+class ProductDetailsController extends GetxController with WidgetsBindingObserver {
   var current = 0.obs;
   final CarouselController controller = CarouselController();
   var imageProductList = <Images>[].obs;
@@ -34,11 +31,11 @@ class ProductDetailsController extends GetxController {
   ShopifyStore shopifyStore = ShopifyStore.instance;
   ShopifyCheckout shopifyCheckout = ShopifyCheckout.instance;
   var dataIsLoading = true.obs;
-  RxBool addButtonStatus=false.obs;
 
   final TranslationService translationService = TranslationService();
 
   var testConvert = "".obs;
+
   // Instead of this line:
 // var dataIsLoading = true.obs;
 
@@ -52,16 +49,18 @@ class ProductDetailsController extends GetxController {
   @override
   void onInit() {
     productId.value = Get.arguments['product_id'] ?? "";
-    print("${productId.value}");
+    print("jashdvhbh===> ${productId.value}");
+    checkIfExitsCart();
     getLanguage();
     productDetailsApi();
-    checkIfExitsCart();
     getProductDetails();
-    // productDetailsApi();
     super.onInit();
   }
 
   Future<void> checkIfExitsCart() async {
+
+    addButtonStatus.value = false;
+    print("sajkjnmz===>");
     try {
       String checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
       if (checkoutId.isNotEmpty) {
@@ -70,12 +69,20 @@ class ProductDetailsController extends GetxController {
         _checkout.lineItems.forEach((element) {
           if (element.variant!.product!.id == productId.value) {
             addButtonStatus.value = true;
-          }
-        });
-      }
-    } catch (error) {}
-  }
 
+            print("sajkjnmz===>  ${addButtonStatus.value}");
+          }
+
+          print("sajkjnmz===>  ${addButtonStatus.value}");
+        });
+      } else {
+        print("sajkjnmz===>  ${addButtonStatus.value}");
+        addButtonStatus.value = false;
+      }
+    } catch (error) {
+      print("sajkjnmz===>  $error");
+    }
+  }
 
   getProductDetails() async {
     try {
@@ -112,7 +119,6 @@ class ProductDetailsController extends GetxController {
       //   }
       // }
     } catch (e) {
-
       dataIsLoading.value = false;
       print("message: $e");
     }
@@ -135,7 +141,6 @@ class ProductDetailsController extends GetxController {
   // ******* add to cart
 
   addToCart({variantId, id, title}) async {
-
     isLoader.value = false;
     try {
       var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
@@ -163,8 +168,8 @@ class ProductDetailsController extends GetxController {
         )
             .then((value) async {
           GetStorage().write(AppConstants.checkOutID, checkout.id);
-          addButtonStatus.value=true;
-          isLoader.value=true;
+          addButtonStatus.value = true;
+          isLoader.value = true;
         });
       } else {
         print("part 2");
@@ -174,8 +179,8 @@ class ProductDetailsController extends GetxController {
             LineItem(variantId: variantId, title: title, quantity: 1, id: id)
           ],
         );
-        addButtonStatus.value=true;
-        isLoader.value=true;
+        addButtonStatus.value = true;
+        isLoader.value = true;
         print(checkout.lineItems.length);
       }
 
@@ -247,9 +252,11 @@ class ProductDetailsController extends GetxController {
   }
 
   Future<String> translate(test) async {
-    final translatedText = await translationService.translate(
-        test, getLanguage());
+    final targetLanguage =
+        await getLanguage(); // Wait for getLanguage() to complete.
 
+    final translatedText =
+        await translationService.translate(test, targetLanguage);
 
     if (translatedText != null) {
       print("Translated Text: $translatedText");
@@ -261,23 +268,58 @@ class ProductDetailsController extends GetxController {
     }
   }
 
-  getLanguage() async {
+  Future<TranslateLanguage> getLanguage() async {
     final languageCode = GetStorage().read(AppConstants.languageCode);
     if (languageCode != null) {
       if (languageCode == "English") {
-        return targetLanguage.value = TranslateLanguage.english;
+        return TranslateLanguage.english;
       } else if (languageCode == "Polski") {
-        return targetLanguage.value = TranslateLanguage.polish;
+        return TranslateLanguage.polish;
       } else {
-        return targetLanguage.value = TranslateLanguage.spanish;
+        return TranslateLanguage.spanish;
       }
     } else {
-      return targetLanguage.value = TranslateLanguage.polish;
+      return TranslateLanguage.polish;
     }
   }
 
-  parseCode(value) async {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("Lifecycle state changed to: $state");
+    // Add other logic here
+  }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (state == AppLifecycleState.resumed) {
+  //     print("hsbjxnaksnkxj");
+  //     // productId.value = Get.arguments['product_id'] ?? "";
+  //     // print("jashdvhbh===> ${productId.value}");
+  //     // getLanguage();
+  //     // productDetailsApi();
+  //     // checkIfExitsCart();
+  //     // getProductDetails();
+  //     // productDetailsApi();
+  //   } else if (state == AppLifecycleState.paused) {
+  //
+  //     print("hsbjxnaksnkxj");
+  //     // productId.value = Get.arguments['product_id'] ?? "";
+  //     // print("jashdvhbh===> ${productId.value}");
+  //     // getLanguage();
+  //     // productDetailsApi();
+  //     // checkIfExitsCart();
+  //     // getProductDetails();
+  //     // // productDetailsApi();
+  //   }
+  // }
+
+  parseCode(value) async {
     var valueText = await translate(value);
 
     print("jbzxjnknk===>> $valueText");
@@ -339,7 +381,8 @@ class RootInfo {
 
   factory RootInfo.fromJson(Map<String, dynamic> json) {
     var childrenList = json['children'] as List;
-    List<ParagraphInfo> children = childrenList.map((item) => ParagraphInfo.fromJson(item)).toList();
+    List<ParagraphInfo> children =
+        childrenList.map((item) => ParagraphInfo.fromJson(item)).toList();
 
     return RootInfo(
       json['type'],

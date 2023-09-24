@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 
+import '../tryOn_screen/tryOn_screen.dart';
 import 'booking/booking_screen.dart';
 import 'cart_screen/cart_screen.dart';
 import 'home_screen/home_screen.dart';
@@ -24,7 +25,7 @@ class BaseHomeController extends GetxController {
     baseChildren.value = [
       HomeScreen(),
       BookingScreen(),
-      ProfileScreen(),
+      TryOnScreen(),
       CartScreen(),
       ProfileScreen(),
     ];

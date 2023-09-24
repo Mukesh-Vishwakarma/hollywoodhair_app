@@ -47,7 +47,7 @@ class OtpScreen extends GetView<OtpController> {
                 child: Text(
                   "enter_otp".tr,
                   style: AppStyles.textStyle(
-                      fontSize: dimen20, weight: FontWeight.w600),
+                      fontSize: dimen20, weight: FontWeight.w500),
                 ),
               ),
               Container(

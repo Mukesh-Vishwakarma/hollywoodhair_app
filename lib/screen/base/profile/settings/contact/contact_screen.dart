@@ -15,17 +15,18 @@ class ContactScreen extends GetView<ContactController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
           title: Text("contact_us".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: dimen14, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -40,11 +41,11 @@ class ContactScreen extends GetView<ContactController> {
               children: [
                 Image.asset(
                   Assets.msg,
-                  height: 30,
-                  width: 30,
+                  height: 25,
+                  width: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     'support@hollywoodhair.com',
                     style: TextStyle(
@@ -69,11 +70,11 @@ class ContactScreen extends GetView<ContactController> {
               children: [
                 Image.asset(
                   Assets.phone,
-                  height: 30,
-                  width: 30,
+                  height: 25,
+                  width: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
                     '+48 12349 34823',
                       style: AppStyles.textStyle(

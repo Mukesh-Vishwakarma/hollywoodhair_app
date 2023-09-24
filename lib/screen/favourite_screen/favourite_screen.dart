@@ -169,7 +169,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
           child: Text(
             "add_to_cart".tr,
             style: AppStyles.textStyle(
-                weight: FontWeight.w600,
+                weight: FontWeight.w500,
                 fontSize: 14.0,
                 color: AppColors.lightBackgroundColor),
           ),

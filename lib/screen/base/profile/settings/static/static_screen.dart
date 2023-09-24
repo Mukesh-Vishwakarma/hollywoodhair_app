@@ -17,6 +17,7 @@ class StaticScreen extends GetView<StaticController> {
           preferredSize: Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
@@ -27,10 +28,10 @@ class StaticScreen extends GetView<StaticController> {
                 )),
             // title: Text("setting".tr,
             //     style: AppStyles.textStyle(
-            //         fontSize: dimen18, weight: FontWeight.w600)),
+            //         fontSize: dimen18, weight: FontWeight.w500)),     F
             title: Text(controller.title.value,
                 style: AppStyles.textStyle(
-                    fontSize: dimen18, weight: FontWeight.normal)),
+                    fontSize: dimen14, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

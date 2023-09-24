@@ -93,7 +93,7 @@ class AllProductScreen extends GetView<AllProductController> {
                           itemCount: controller.products.length,
                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 270,
-                              childAspectRatio: 3 / 3,
+                              childAspectRatio: 3 / 3.5,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10),
                           itemBuilder: (context, index) {
@@ -153,30 +153,32 @@ class AllProductScreen extends GetView<AllProductController> {
               fontSize: 14.0,
             ),
           ),
-          Row(
-            children: [
-              Text(
-                controller.products[index].formattedPrice,
-                // controller.productList[index].variants![0].price.toString(),
-                style: AppStyles.textStyle(
-                  weight: FontWeight.w500,
-                  color: AppColors.black84,
-                  fontSize: 12.0,
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  controller.products[index].formattedPrice,
+                  // controller.productList[index].variants![0].price.toString(),
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w500,
+                    color: AppColors.black84,
+                    fontSize: 12.0,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 5),
-              Text(
-                controller.products[index].compareAtPriceFormatted,
-                // controller.productList[index]..toString(),
-                style: AppStyles.textStyle(
-                  weight: FontWeight.w400,
-                  fontSize: 11.0,
-                  color: AppColors.grayC4,
-                  decoration: TextDecoration.lineThrough,
-                  // decorationColor: AppColors.gray95
+                const SizedBox(width: 5),
+                Text(
+                  controller.products[index].compareAtPriceFormatted,
+                  // controller.productList[index]..toString(),
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w400,
+                    fontSize: 11.0,
+                    color: AppColors.grayC4,
+                    decoration: TextDecoration.lineThrough,
+                    // decorationColor: AppColors.gray95
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           // const SizedBox(height: 6),
         ],

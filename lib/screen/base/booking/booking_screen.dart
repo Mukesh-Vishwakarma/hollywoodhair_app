@@ -19,7 +19,7 @@ class BookingScreen extends GetView<BookingController> {
           backgroundColor: AppColors.colorFF,
           title: Text("booking".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen18, weight: FontWeight.w600)),
+                  fontSize: dimen15, weight: FontWeight.w500)),
           actions: <Widget>[
             GestureDetector(
               child: Padding(
@@ -51,53 +51,53 @@ class BookingScreen extends GetView<BookingController> {
                 itemBuilder: (BuildContext context, int index) {
                   return bookingList(index);
                 }),
-            const SizedBox(height: 40),
-            const DottedLine(
-              dashColor: AppColors.gray99,
-            ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: (){
-                Get.toNamed(AppPages.myAppointmentScreen);
-
-              },
-              child: Container(
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.colorD3,
-                    // style: BorderStyle.solid,
-                    width: 1.0,
-                  ),
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  children: [
-                    // Expanded(child: Container(),),
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 100),
-                      child: Text(
-                        "my_appointments".tr,
-                        style: AppStyles.textStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: dimen12,
-                          weight: FontWeight.normal,
-                        ),
-                      ),
-                    )),
-                    Image.asset(
-                      Assets.arrowRight,
-                      height:20,
-                      width: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 130),
+            // const SizedBox(height: 40),
+            // const DottedLine(
+            //   dashColor: AppColors.gray99,
+            // ),
+            // const SizedBox(height: 30),
+            // GestureDetector(
+            //   onTap: (){
+            //     Get.toNamed(AppPages.myAppointmentScreen);
+            //
+            //   },
+            //   child: Container(
+            //     margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+            //     padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
+            //     decoration: BoxDecoration(
+            //       border: Border.all(
+            //         color: AppColors.colorD3,
+            //         // style: BorderStyle.solid,
+            //         width: 1.0,
+            //       ),
+            //       color: Colors.transparent,
+            //       borderRadius: BorderRadius.circular(10.0),
+            //     ),
+            //     child: Row(
+            //       children: [
+            //         // Expanded(child: Container(),),
+            //         Expanded(
+            //             child: Padding(
+            //           padding: const EdgeInsets.only(left: 100),
+            //           child: Text(
+            //             "my_appointments".tr,
+            //             style: AppStyles.textStyle(
+            //               color: AppColors.primaryColor,
+            //               fontSize: dimen12,
+            //               weight: FontWeight.normal,
+            //             ),
+            //           ),
+            //         )),
+            //         Image.asset(
+            //           Assets.arrowRight,
+            //           height:20,
+            //           width: 20,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 130),
           ],
         ),
       ),

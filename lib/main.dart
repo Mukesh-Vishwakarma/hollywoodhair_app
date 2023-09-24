@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hollywood_hair/screen/tryOn_screen/tryOn_controller.dart';
 import 'package:logging/logging.dart';
 import 'package:shopify_flutter/shopify_config.dart';
 import 'package:sizer/sizer.dart';
@@ -26,6 +27,8 @@ Future<void> main() async {
     storeUrl: 'a02f54.myshopify.com',
     // adminAccessToken: "shpat_*******************", // optional
   );
+  WidgetsFlutterBinding.ensureInitialized(); // Register the observ
+  // Get.put(TryOnController());
   runApp(MyApp());
 }
 

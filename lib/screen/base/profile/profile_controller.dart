@@ -53,7 +53,6 @@ class ProfileController extends GetxController {
     try {
       dio.FormData params = dio.FormData.fromMap({
         'customer_id':userID.value,
-
       });
       print('create Data');
       print(params.toString());
@@ -67,9 +66,16 @@ class ProfileController extends GetxController {
         phoneNumber.value = "${userModel.data!.customerCountryCode?? ""}"   "${userModel.data!.customerPhone?? ""
         }";
         urlImage.value = userModel.data!.profileImage??"";
-        print("phone number >>> ${phoneNumber.value}");
+        print("phone number1 >>> ${phoneNumber.value}");
+        print("phone number2 >>> ${userModel.data!.customerName}");
+        print("phone number3 >>> ${userModel.data!.customerCountryCode}");
+        print("phone number3 >>> ${userModel.data!.customerPhone?? ""}");
 
         // successToast(userModel.message!);
+        // userName.value =  GetStorage()
+        //     .read(AppConstants.userName);
+
+
 
 
       } else {

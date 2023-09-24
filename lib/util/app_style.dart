@@ -41,15 +41,27 @@ abstract class AppStyles {
     return textSize[key];
   }
 
-  static textStyle({fontSize, color, decoration, height, weight}) {
+  // static textStyle({fontSize, color, decoration, height, weight,family}) {
+  //   return TextStyle(
+  //       fontWeight: weight ?? FontWeight.w400,
+  //       // overflow: TextOverflow.ellipsis,
+  //       fontSize: fontSize ?? dimen12,
+  //       fontFamily: family??'JosefinSans',
+  //       color: color ?? Colors.black,
+  //       decoration: decoration ?? TextDecoration.none,
+  //       height: height ?? 1.4);
+  // }
+
+  static textStyle({fontSize, color, decoration, height, weight, family}) {
     return TextStyle(
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
         fontSize: fontSize ?? dimen12,
-        fontFamily: 'JosefinSans',
+        fontFamily: family??'DIN Neuzeit Grotesk',
         color: color ?? Colors.black,
         decoration: decoration ?? TextDecoration.none,
         height: height ?? 1.4);
   }
+
 
 }

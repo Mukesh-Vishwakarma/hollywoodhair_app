@@ -88,6 +88,10 @@ const pl_PL = {
   'grand_total': 'Suma końcowa',
   'order_now': 'Zamów teraz',
   'apply': 'Zastosuj',
+  'empty_cart': 'Koszyk jest pusty',
+  'empty_cart_message': 'Wydaje się, że nie dodałeś jeszcze żadnych produktów do koszyka!',
+  'start_shopping': 'Zacznij zakupy teraz',
+
 
   // Home
   'product_details': 'Szczegóły produktu',

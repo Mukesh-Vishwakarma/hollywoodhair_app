@@ -17,6 +17,8 @@ import 'package:shopify_flutter/shopify/shopify.dart';
 
 class AddressController extends GetxController {
   var getAddress = <AllAddressData>[].obs;
+  // var getAddress = <ShopifyUser>[].obs;
+
   final formLoginKey = GlobalKey<FormState>();
 
   // var addressTypeController = TextEditingController();
@@ -43,6 +45,14 @@ class AddressController extends GetxController {
   ShopifyCustomer shopifyCustomer = ShopifyCustomer.instance;
   ShopifyAuth shopifyAuth = ShopifyAuth.instance;
 
+  // RxList<ShopifyUser> collectionList = <ShopifyUser>[
+  //   ShopifyUser(
+  //       title: "All",
+  //       id: "ALL",
+  //       products: Products(productList: [], hasNextPage: false))
+  // ].obs;
+  var selectedCollection = "".obs;
+
   @override
   void onInit() {
     getAllAddressApi();
@@ -63,15 +73,22 @@ class AddressController extends GetxController {
   //  ****** api get all address
 
   getAllAddressApi() async {
-    // isPageLoad.value = true;
-    // var userId = GetStorage().read(AppConstants.userId).toString() ?? "";
-    //
-    // print("User ID>>>>>${userId}");
+    isPageLoad.value = true;
+    var userId = GetStorage().read(AppConstants.userId).toString() ?? "";
+
+    print("User ID>>>>>${userId}");
     try {
-      print("kamal addressh Added");
-      isPageLoad.value = false;
-      ShopifyUser? user = await shopifyAuth.currentUser();
-      print(user!.address);
+      // print("kamal addressh Added");
+      // isPageLoad.value = false;
+      // ShopifyUser? user = await shopifyAuth.currentUser();
+      // print(user!.address);
+
+
+      // user.
+
+      // getAddress.value = getAllAddressModel.data!;
+
+      // print("kamal addressh Added ${user.address}");
       // shopifyCustomer
       //     .customerAddressCreate(
       //     address1: '71 ST. NICHOLAS DRIVE', // Replace with the address
@@ -91,27 +108,27 @@ class AddressController extends GetxController {
       //   print(user!.address);
       // });
 
-      // dio.FormData params = dio.FormData.fromMap({
-      //   'customer_id': userId,
-      // });
-      // print('create Data');
-      // print(params.toString());
-      // GetAllAddressModel getAllAddressModel =
-      //     await ApiProvider.base().funGetAllAddress(params);
-      // isPageLoad.value = false;
-      // // progressDialog.dismiss();
-      // print('create Data');
-      // print(getAllAddressModel.result);
-      // if (getAllAddressModel.result == "1") {
-      //   // successToast(getAllAddressModel.msg!);
-      //   getAddress.value = getAllAddressModel.data!;
-      //
-      //   // Get.back();
-      // } else {
-      //   // successToast(getAllAddressModel.msg!);
-      //   // isPageLoad.value = false;
-      //   // failedToast(userBean.msg!);
-      // }
+      dio.FormData params = dio.FormData.fromMap({
+        'customer_id': userId,
+      });
+      print('create Data');
+      print(params.toString());
+      GetAllAddressModel getAllAddressModel =
+          await ApiProvider.base().funGetAllAddress(params);
+      isPageLoad.value = false;
+      // progressDialog.dismiss();
+      print('create Data');
+      print(getAllAddressModel.result);
+      if (getAllAddressModel.result == "1") {
+        // successToast(getAllAddressModel.msg!);
+        getAddress.value = getAllAddressModel.data!;
+
+        // Get.back();
+      } else {
+        // successToast(getAllAddressModel.msg!);
+        // isPageLoad.value = false;
+        // failedToast(userBean.msg!);
+      }
     } on HttpException catch (exception) {
       // progressDialog.dismiss();
       print(exception.message);
@@ -125,9 +142,12 @@ class AddressController extends GetxController {
     }
   }
 
+
   //  ****** api add address
 
   addAddressApi() async {
+
+
     isPageLoad.value = true;
     var userId = GetStorage().read(AppConstants.userId).toString() ?? "";
 
@@ -139,6 +159,27 @@ class AddressController extends GetxController {
     print("recipient_name>>>>>${recipientNameController.text}");
     print("address_type>>>>>${addressType.value}");
     try {
+
+      // shopifyCustomer
+      //     .customerAddressCreate(
+      //     address1: '71 ST. NICHOLAS DRIVE', // Replace with the address
+      //     address2: 'Apt 4B',     // Replace with address line 2 (optional)
+      //     company: 'Company Inc',  // Replace with the company (optional)
+      //     city: 'FAIRBANKS',            // Replace with the city
+      //     country: 'FAIRBANKS NORTH STAR',// Replace with the country
+      //     firstName: 'John',       // Replace with the first name
+      //     lastName: 'Doe',         // Replace with the last name
+      //     phone: '123-456-7890',   // Replace with the phone number
+      //     province: 'State',       // Replace with the province or state
+      //     zip: '99701',
+      //     customerAccessToken: 'dfa46d08f56c6067d80fd748ed0abad9')
+      //     .then((value) async {
+      //   print("kamal addressh Addedsdhbxzjhb=>");
+      //   ShopifyUser? user = await shopifyAuth.currentUser();
+      //   print(user!.address);
+      //   print("kamal addressh Addedsdhbxzjhb=>${user!.address}");
+      // });
+
       dio.FormData params = dio.FormData.fromMap({
         'customer_id': userId,
         'address': fullAddressController.text.toString(),

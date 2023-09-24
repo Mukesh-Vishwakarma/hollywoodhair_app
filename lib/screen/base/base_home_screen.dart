@@ -54,6 +54,8 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                     elevation: 0,
                     selectedItemColor:AppColors.primaryColorDark ,
                     currentIndex: controller.selectedIndex.value,
+                    selectedFontSize: 13, // Set a custom font size for selected tabs
+                    unselectedFontSize: 13, // Set a custom font size for unselected tabs
                     items: <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
                         icon: Container(
@@ -171,14 +173,16 @@ class BaseHomeScreen extends GetView<BaseHomeController> {
                       ),
                     ],
                     onTap: (index) {
-                      controller.onItemSelect(index);
-                      controller.baseChildren.refresh();
+                      if(index!=2) {
+                        controller.onItemSelect(index);
+                        controller.baseChildren.refresh();
+                      }
                     },
                   ),
 
                   Positioned(
                     // Positioned to adjust the position of the FAB on top of the BottomNavigationBar
-                    bottom: 23.0, // Adjust this value as needed
+                    bottom: 21.0, // Adjust this value as needed
                     child: Transform.scale(
                       scale: 0.95,
                       child: FloatingActionButton(

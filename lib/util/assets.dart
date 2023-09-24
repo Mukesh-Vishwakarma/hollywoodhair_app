@@ -37,6 +37,7 @@ class Assets {
 
   static const String cartIconUl = 'assets/images/bag_icon_ul.svg';
   static const String cartIconSl = 'assets/images/bag_icon_sl.svg';
+  static const String emptyCart = 'assets/images/ic_empty_cart.svg';
 
   static const String profileIconUl = 'assets/images/profile_icon_ul.svg';
   static const String profileIconSl = 'assets/images/profile_icon_sl.svg';
@@ -52,7 +53,8 @@ class Assets {
   static const String user = 'assets/images/user.png';
   static const String clock = 'assets/images/clock.png';
   static const String whiteArrow = 'assets/images/white_arrow.png';
-
+  static const String menuBar = 'assets/images/Menu_Bar.png';
+  static const String profileBackground = 'assets/images/profile_background.svg';
   // home_scrrens
   static const String dummyBanner = 'assets/dummy_images/home_banner.png';
   static const String p1 = 'assets/dummy_images/p1.png';

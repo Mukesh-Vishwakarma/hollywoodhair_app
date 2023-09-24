@@ -6,10 +6,12 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../util/theme_service.dart';
 import 'cart_controller.dart';
 
 class CartScreen extends GetView<CartController> {
@@ -17,7 +19,7 @@ class CartScreen extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
@@ -68,9 +70,9 @@ class CartScreen extends GetView<CartController> {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               color: AppColors.backGroundColor,
               child: Obx(
-                () => controller.noCartCreated.isFalse
-                    ? controller.dataLoading.isFalse
-                        ? Column(
+                () => controller.dataLoading.isFalse
+                    ? controller.noCartCreated.isFalse
+                        ? (controller.checkout.lineItems.isNotEmpty)?Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                                 cartWidget(),
@@ -86,9 +88,12 @@ class CartScreen extends GetView<CartController> {
                                   height: 20,
                                 ),
                                 orderButton(),
-                              ])
-                        : const SizedBox()
-                    : const SizedBox(),
+                              ]):  Container(
+                  child: emptyCartWidget(),
+
+                )
+                        :  const SizedBox()
+                    : shimmerDemo()
               ),
             )
           ],
@@ -223,7 +228,7 @@ class CartScreen extends GetView<CartController> {
       children: [
         Text('promo_code'.tr,
             style: AppStyles.textStyle(
-              weight: FontWeight.w600,
+              weight: FontWeight.w500,
               fontSize: 16.0,
             )),
         const SizedBox(
@@ -299,7 +304,7 @@ class CartScreen extends GetView<CartController> {
       children: [
         Text('price_details'.tr,
             style: AppStyles.textStyle(
-              weight: FontWeight.w600,
+              weight: FontWeight.w500,
               fontSize: 16.0,
             )),
         const SizedBox(height: 20),
@@ -323,7 +328,7 @@ class CartScreen extends GetView<CartController> {
         priceitemWidget(
             title: "promo_code".tr,
             value: controller.checkout.appliedGiftCards.isNotEmpty
-                ? "${controller.checkout.appliedGiftCards[0].amountUsedV2.formattedPrice}"
+                ? controller.checkout.appliedGiftCards[0].amountUsedV2.formattedPrice
                 : "zt0.00"),
         const SizedBox(height: 20),
         Row(
@@ -339,7 +344,7 @@ class CartScreen extends GetView<CartController> {
             Text(
               controller.checkout.totalPriceV2.formattedPrice,
               style: AppStyles.textStyle(
-                weight: FontWeight.w600,
+                weight: FontWeight.w500,
                 fontSize: 12.0,
               ),
             ),
@@ -427,4 +432,484 @@ class CartScreen extends GetView<CartController> {
       ),
     );
   }
+
+  emptyCartWidget(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 11.h,),
+          SvgPicture.asset(Assets.emptyCart),
+          SizedBox(height: 2.h,),
+          Text("empty_cart".tr,
+            style: AppStyles.textStyle(
+                family: "DINNeuzeitGrotes",
+                fontSize: 26.0,
+                weight: FontWeight.w500
+            ),),
+          SizedBox(height: 0.5.h,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0),
+            child: Text("empty_cart_message".tr,
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyle(
+                family: "DINNeuzeitGrotes",
+                fontSize: 15.0,
+                weight: FontWeight.w400,
+                color: AppColors.colorE9,
+              ),),
+          ),
+          SizedBox(height: 15.h,),
+          InkWell(
+            onTap: (){
+              Get.toNamed(AppPages.allProductScreen, arguments: {
+                "categoryName": "All ",
+                "categoryId": "ALL",
+              });            },
+            child: Container(
+              width: 100.w,
+              height: 48,
+              decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(8),
+                  border:
+                  Border.all(color: AppColors.primaryColor, width: 1.0)),
+              child: Center(
+                child: Text(
+                  'start_shopping'.tr,
+                  style: AppStyles.textStyle(
+                      family: "DINNeuzeitGrotes",
+                      weight: FontWeight.w500,
+                      fontSize: 16.0,
+                      color: AppColors.lightBackgroundColor),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  shimmerDemo() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        width: 100.w,
+        height: 100.h,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ).marginOnly(top: 30),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
 }

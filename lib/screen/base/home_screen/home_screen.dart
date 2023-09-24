@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
+import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
@@ -22,43 +23,192 @@ class HomeScreen extends GetView<HomeController> {
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          elevation: 0.4,
-          backgroundColor: AppColors.colorFF,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 15,
-              ),
-              Image.asset(Assets.appLogo),
-              const SizedBox(
-                width: 10,
-              ),
-              Image.asset(Assets.appNameVertical),
-            ],
-          ),
-          automaticallyImplyLeading: false,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
+      key: controller.key,
+
+      appBar: AppBar(
+
+        elevation: 0.4,
+        backgroundColor: AppColors.colorFF,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              width: 15,
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPages.notificationScreen);
-                  },
-                  child: SvgPicture.asset(Assets.notificationIcon)),
+            Image.asset(Assets.appLogo),
+            const SizedBox(
+              width: 10,
+            ),
+            Image.asset(Assets.appNameVertical),
+          ],
+        ),
+        leading: GestureDetector(
+          child: Container(
+            margin: const EdgeInsets.only(left: 23, right: 10),
+            child: const Image(
+              image: AssetImage(Assets.menuBar),
+            ),
+          ),
+          onTap: () {
+            print("hello");
+            controller.key.currentState!.openDrawer();
+          },
+        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: InkWell(
+                onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: InkWell(
+                onTap: () {
+                  Get.toNamed(AppPages.notificationScreen);
+                },
+                child: SvgPicture.asset(Assets.notificationIcon)),
+          ),
+        ],
+      ),
+
+      drawer: Drawer(
+        width: 270,
+
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20.h,
+              child: DrawerHeader(
+                decoration: const BoxDecoration(
+                    color: AppColors.primaryColor,
+                    border: Border(
+                        bottom: BorderSide(width: 2, color: Colors.transparent))),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        child: const Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          Get.back();
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 24),
+                        child: Text("Menu",
+                            style: AppStyles.textStyle(fontSize: dimen15)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              onTap:
+                  (){
+                // Get.toNamed(AppPages.myOrderScreen);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10,bottom: 5),
+                child: Row(
+                  children: [
+
+                    Expanded(child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text("Show Room",
+                          style: AppStyles.textStyle(
+                            fontSize: dimen14, weight: FontWeight.w400,)
+
+                      ),
+                    )),
+
+
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20,top: 10),
+                      child: Image.asset(Assets.arrowLeft,height: 30,width: 30,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+
+
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(AppPages.languagesScreen);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text("languages".tr,
+                              style: AppStyles.textStyle(
+                                fontSize: dimen14,
+                                weight: FontWeight.w400,
+                              )),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 10),
+                      child: Image.asset(
+                        Assets.arrowLeft,
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(AppPages.contactScreen);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text("contact_us".tr,
+                              style: AppStyles.textStyle(
+                                fontSize: dimen14,
+                                weight: FontWeight.w400,
+                              )),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 10),
+                      child: Image.asset(
+                        Assets.arrowLeft,
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
+
       backgroundColor: AppColors.lightBackgroundColor,
       body: bodyWidget(),
     );
@@ -83,10 +233,11 @@ class HomeScreen extends GetView<HomeController> {
                     Assets.dummyBanner,
                     fit: BoxFit.cover,
                     width: 100.w,
+                    height:180,
                   ),
                   const SizedBox(height: 20),
                   categoriesListWidget(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 0),
                   productsWidget(),
                   const SizedBox(height: 20),
                 ],
@@ -105,7 +256,7 @@ class HomeScreen extends GetView<HomeController> {
           color: AppColors.backGroundColor,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.searchBorderColor, width: 1.0)),
-      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 14),
       child: Center(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,7 +314,7 @@ class HomeScreen extends GetView<HomeController> {
           Text(
             'popular_product'.tr,
             style: AppStyles.textStyle(
-              weight: FontWeight.w600,
+              weight: FontWeight.w500,
               fontSize: 16.0,
             ),
           ),
@@ -180,7 +331,7 @@ class HomeScreen extends GetView<HomeController> {
                       itemCount: controller.topProduct.length,
                       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 270,
-                          childAspectRatio: 3 / 3,
+                          childAspectRatio: 3 / 3.5,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10),
                       itemBuilder: (context, index) {
@@ -195,8 +346,10 @@ class HomeScreen extends GetView<HomeController> {
   commonProductWidget({required Product productList}) {
     return GestureDetector(
       onTap: () {
+        print("jhdsvjxzhbjkj===> ${productList.id}");
         Get.toNamed(AppPages.allProductDetailsScreen,
-            arguments: {"product_id": productList.id});
+            arguments: {"product_id": productList.id},);
+        controller.getFindController();
       },
       child: Container(
         width: 20.w,
@@ -239,25 +392,27 @@ class HomeScreen extends GetView<HomeController> {
                 fontSize: 14.0,
               ),
             ),
-            Row(
-              children: [
-                Text(
-                  productList.formattedPrice,
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    fontSize: 12.0,
+            Expanded(
+              child: Row(
+                children: [
+                  Text(
+                    productList.formattedPrice,
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w500,
+                      fontSize: 12.0,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  productList.compareAtPriceFormatted,
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w300,
-                    fontSize: 11.0,
-                    decoration: TextDecoration.lineThrough,
+                  const SizedBox(width: 5),
+                  Text(
+                    productList.compareAtPriceFormatted,
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w300,
+                      fontSize: 11.0,
+                      decoration: TextDecoration.lineThrough,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -272,7 +427,7 @@ class HomeScreen extends GetView<HomeController> {
         Text(
           'explore_by_categories'.tr,
           style: AppStyles.textStyle(
-            weight: FontWeight.w600,
+            weight: FontWeight.w500,
             fontSize: 16.0,
           ),
         ),
@@ -628,6 +783,89 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

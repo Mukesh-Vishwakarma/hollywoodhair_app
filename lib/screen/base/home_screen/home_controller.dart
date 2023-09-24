@@ -3,19 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/model/shopify_model/category_model.dart';
-import 'package:hollywood_hair/util/assets.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/models/src/product/products/products.dart';
-import 'package:shopify_flutter/shopify/shopify.dart';
 import 'package:sizer/sizer.dart';
 import 'package:shopify_flutter/shopify_flutter.dart';
 
 import '../../../util/app_colors.dart';
+import '../../product_details/product_details_controller.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
   var searchController = TextEditingController();
-
+  final GlobalKey <ScaffoldState> key = GlobalKey();
   var selectCategories = RxInt(-1);
   var categoriesId = 0.obs;
   RxList<Product> topProduct = <Product>[].obs;
@@ -35,10 +33,13 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     // TODO: implement onInit
     categoriesListApi();
     getTopProductApi();
+    // getTopshopifyBlog();
     super.onInit();
   }
 
   ShopifyStore shopifyStore = ShopifyStore.instance;
+
+
 
   categoriesListApi() async {
     try {
@@ -66,12 +67,28 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       List<Product>? _product = await shopifyStore.getNProducts(6);
       topProduct.value = [];
       topProduct.value = _product!;
+
     } on HttpException catch (exception) {
       print(exception.message);
     } catch (exception) {
       print(exception.toString());
     }
   }
+
+  // getTopshopifyBlog() async {
+  //   try {
+  //
+  //     print("sajdbjxnj===>  ");
+  //     List<Blog>? _product = await shopifyBlog.getAllBlogs();
+  //
+  //     print("sajdbjxnj===>  $_product");
+  //
+  //   } on HttpException catch (exception) {
+  //     print(exception.message);
+  //   } catch (exception) {
+  //     print(exception.toString());
+  //   }
+  // }
 
 
   networkImageWithLoader({required userProfile, height, width}) {
@@ -149,6 +166,13 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     );
   }
 
+  getFindController() {
+    try {
+      Get.find<ProductDetailsController>().onInit();
+    } catch (e){
+      print("kjashb $e");
+    }
+  }
 
   // final shopify = Shopify(
   //   apiKey: 'YOUR_SHOPIFY_API_KEY',

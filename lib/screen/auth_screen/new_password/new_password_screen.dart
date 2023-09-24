@@ -37,7 +37,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                 child: Text(
                   "new_password".tr,
                   style: AppStyles.textStyle(
-                      fontSize: dimen20, weight: FontWeight.w600),
+                      fontSize: dimen20, weight: FontWeight.w500),
                 ),
               ),
             ),

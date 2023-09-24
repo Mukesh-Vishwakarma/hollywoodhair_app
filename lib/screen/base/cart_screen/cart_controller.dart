@@ -16,6 +16,8 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   var dataLoading = true.obs;
   late Checkout checkout;
 
+  final shopifyStore = ShopifyStore.instance;
+
   @override
   void onInit() async {
     checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
@@ -24,6 +26,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     } else {
       noCartCreated.value = true;
     }
+
     super.onInit();
   }
 
@@ -57,6 +60,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
+
   void removeCartItems(lineItemID, int newQuantity) async {
     try {
       dataLoading.value = true;
@@ -89,4 +93,5 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       print('Error updating cart: $error');
     }
   }
+
 }

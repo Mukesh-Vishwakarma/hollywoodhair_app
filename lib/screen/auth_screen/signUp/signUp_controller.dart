@@ -72,14 +72,14 @@ class SignUpController extends GetxController {
       }
     } on HttpException catch (exception) {
       // progressDialog.dismiss();
-      print(exception.message);
+      print("sdjbhjc===>1  ${exception.message}");
       isPageLoad.value = false;
       // failedToast(exception.message);
     } catch (exception) {
       // progressDialog.dismiss();
-      print(exception.toString());
+      print("sdjbhjc===>2 {exception.toString()}");
       isPageLoad.value = false;
-      // failedToast(exception.toString());
+      failedToast("User already register!");
     }
   }
 
@@ -100,7 +100,9 @@ class SignUpController extends GetxController {
       print('create Data');
       print(baseModel.result);
       if (baseModel.result == "1") {
-        successToast(baseModel.message!);
+        // successToast(baseModel.message!);
+
+        print("sjhdzjbjhbs===>  ");
 
         Get.toNamed(AppPages.otpScreen, arguments: {
           "email": emailController.text.toString(),
@@ -110,7 +112,8 @@ class SignUpController extends GetxController {
               countryCode.value.toString() + contact.value.toString(),
         });
 
-        Get.back();
+        print("object");
+        // Get.back();
       } else {
         successToast(baseModel.message!);
         // isPageLoad.value = false;

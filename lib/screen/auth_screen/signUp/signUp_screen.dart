@@ -36,7 +36,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     child: Text(
                       "get_started".tr,
                       style: AppStyles.textStyle(
-                          fontSize: dimen20, weight: FontWeight.w600),
+                          fontSize: dimen20, weight: FontWeight.w500),
                     ),
                   ),
                 ),

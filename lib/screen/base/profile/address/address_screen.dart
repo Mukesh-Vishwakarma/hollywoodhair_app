@@ -9,10 +9,11 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:shimmer/shimmer.dart';
-
 import 'address_controller.dart';
 
 class AddressScreen extends GetView<AddressController> {
+  const AddressScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +21,7 @@ class AddressScreen extends GetView<AddressController> {
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -88,13 +90,13 @@ class AddressScreen extends GetView<AddressController> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      DottedLine(
+                      const DottedLine(
                         dashColor: AppColors.gray99,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       GestureDetector(
@@ -128,7 +130,7 @@ class AddressScreen extends GetView<AddressController> {
                         ),
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     ],

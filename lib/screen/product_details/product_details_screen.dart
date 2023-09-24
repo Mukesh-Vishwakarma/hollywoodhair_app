@@ -2,11 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/screen/base/base_home_controller.dart';
+import 'package:hollywood_hair/screen/base/cart_screen/cart_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
@@ -487,9 +487,10 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   alignment: Alignment.bottomCenter,
                   child: (controller.isLoader.value)?InkWell(
                     onTap: () {
+
                       if (controller.addButtonStatus.isTrue) {
-                        Get.find<BaseHomeController>().selectedIndex.value =
-                        3;
+                        Get.find<BaseHomeController>().selectedIndex.value = 3;
+                        Get.find<CartController>().onInit();
                         Get.toNamed(AppPages.baseScreen);
                       } else {
                         controller.addToCart(
@@ -525,7 +526,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                           ),
                         ],
                       ),
-                    ).paddingOnly(bottom: 10),
+                    ).paddingOnly(bottom: 1),
                   ):Container(
                     width: 95.w,
                     height: 50,
@@ -537,7 +538,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       color: Colors.white,
                       size: 30,
                     ),
-                  ).paddingOnly(bottom: 10))
+                  ).paddingOnly(bottom: 1))
                   : SizedBox(),
             )
           ],

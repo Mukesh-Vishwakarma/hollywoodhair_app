@@ -88,6 +88,9 @@ const es_SP = {
   'grand_total': 'Total general',
   'order_now': 'Ordenar ahora',
   'apply': 'Aplicar',
+  'empty_cart': 'Koszyk jest pusty',
+  'empty_cart_message': 'Wydaje się, że nie dodałeś jeszcze żadnych produktów do koszyka!',
+  'start_shopping': 'Zacznij zakupy teraz',
 
 
   // Home
