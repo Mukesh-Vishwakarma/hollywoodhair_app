@@ -99,6 +99,7 @@ const pl_PL = {
   'go_to_cart': 'Przejdź do koszyka',
   'Home': 'Strona główna',
   'Booking': 'Rezerwacja',
+  'Booking_new': 'Zarezerwuj konsultację.',
   'try_on': 'Przymierz',
   'Cart': 'Koszyk',
   'Profile': 'Profil',

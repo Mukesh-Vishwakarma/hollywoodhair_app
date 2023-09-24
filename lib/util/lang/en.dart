@@ -48,6 +48,7 @@ const en_US = {
   'address_type': 'Address Type',
   'notification': 'Notification',
   'booking': 'Booking',
+  'booking_new': 'Book a Consultation',
   'book_appointment': 'Book appointment',
   'age': 'Age',
   'gender': 'Gender',

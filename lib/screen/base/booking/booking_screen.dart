@@ -17,23 +17,23 @@ class BookingScreen extends GetView<BookingController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
-          title: Text("booking".tr,
+          title: Text("booking_new".tr,
               style: AppStyles.textStyle(
                   fontSize: dimen15, weight: FontWeight.w500)),
           actions: <Widget>[
-            GestureDetector(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Image.asset(
-                  Assets.search,
-                  height: 30,
-                  width: 30,
-                ),
-              ),
-              onTap: () {
-                // do something
-              },
-            )
+            // GestureDetector(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(right: 20),
+            //     child: Image.asset(
+            //       Assets.search,
+            //       height: 30,
+            //       width: 30,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     // do something
+            //   },
+            // )
           ],
           automaticallyImplyLeading: false,
         ),

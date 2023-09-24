@@ -108,6 +108,7 @@ const es_SP = {
   'chatbot': 'Chatbot',
   'Wishlist': 'Lista de deseos',
   'rate_us': 'Califícanos',
+  'booking_new': 'Agendar una consulta.',
 
   // Booking
   'my_appointments': 'Moje terminy',
