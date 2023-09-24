@@ -133,9 +133,9 @@ class BookingScreen extends GetView<BookingController> {
                   child: Column(
                     children: [
                       Image(
-                          height: 200,
-                          // width: 350,
-                          fit: BoxFit.cover,
+                          height: 270,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
                           image: AssetImage(
                               controller.bookingList[index].image.toString())),
                       Row(
@@ -153,12 +153,12 @@ class BookingScreen extends GetView<BookingController> {
                                       style: AppStyles.textStyle(
                                           fontSize: dimen12,
                                           weight: FontWeight.w500)),
-                                  Text(
-                                      controller.bookingList[index].description
-                                          .toString(),
-                                      style: AppStyles.textStyle(
-                                          fontSize: dimen12,
-                                          weight: FontWeight.normal)),
+                                  // Text(
+                                  //     controller.bookingList[index].description
+                                  //         .toString(),
+                                  //     style: AppStyles.textStyle(
+                                  //         fontSize: dimen12,
+                                  //         weight: FontWeight.normal)),
                                 ],
                               ),
                             ),

@@ -111,7 +111,7 @@ const es_SP = {
 
   // Booking
   'my_appointments': 'Moje terminy',
-  'style_selection_consultation': 'Konsultacja wyboru stylu',
+  'style_selection_consultation': 'Consulta de Selección de Estilo Consulta con expertos.',
   'consult_with_experts': 'Konsultuj się z ekspertami',
   'Book_in_Store_appointment': 'Zarezerwuj termin w sklepie stacjonarnym',
   'Unlock_your_perfect_look': 'Odblokuj swój idealny wygląd',

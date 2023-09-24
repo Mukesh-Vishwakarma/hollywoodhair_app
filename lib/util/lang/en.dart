@@ -115,7 +115,7 @@ const en_US = {
 
   // Booking
   'my_appointments': 'My Appointments',
-  'style_selection_consultation': 'Style Selection Consultation',
+  'style_selection_consultation': 'Style Selection Consultation Consult with experts.',
   'consult_with_experts': 'Consult with experts',
   'Book_in_Store_appointment': 'Book In-Store Appointment',
   'Unlock_your_perfect_look': 'Unlock your perfect look',

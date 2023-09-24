@@ -112,7 +112,7 @@ const pl_PL = {
 
   // Booking
   'my_appointments': 'Mis Citas',
-  'style_selection_consultation': 'Consulta de Selección de Estilo',
+  'style_selection_consultation': 'Konsultacja wyboru stylu Konsultacja z ekspertami.',
   'consult_with_experts': 'Consulta con Expertos',
   'Book_in_Store_appointment': 'Reservar Cita en Tienda',
   'Unlock_your_perfect_look': 'Descubre tu Look Perfecto',

@@ -55,6 +55,7 @@ class Assets {
   static const String whiteArrow = 'assets/images/white_arrow.png';
   static const String menuBar = 'assets/images/Menu_Bar.png';
   static const String profileBackground = 'assets/images/profile_background.svg';
+  static const String bookingImgNew = 'assets/images/booking_img_new.png';
   // home_scrrens
   static const String dummyBanner = 'assets/dummy_images/home_banner.png';
   static const String p1 = 'assets/dummy_images/p1.png';
