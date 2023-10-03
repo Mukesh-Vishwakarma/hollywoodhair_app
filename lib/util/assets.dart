@@ -98,4 +98,19 @@ class Assets {
   static const String ellipse6 = 'assets/dummy_images/Ellipse 181.png';
   static const String download = 'assets/dummy_images/download.svg';
 
+
+  //Salon dummy images
+  static const String salon1 = 'assets/dummy_images/Hollywood_Hair_Katowice.webp';
+  static const String salon2 = 'assets/dummy_images/Hollywood_hair_Szczecin.webp';
+  static const String salon3 = 'assets/dummy_images/Lokalizacja-salonow-Belwederska.webp';
+  static const String salon4 = 'assets/dummy_images/Lokalizacja-salonow-Poznan.webp';
+  static const String salon5 = 'assets/dummy_images/Lokalizacja-salonow-Sobieskiego.webp';
+  static const String salon6 = 'assets/dummy_images/Lokalizacja-salonow-Sopot.webp';
+  static const String salon7 = 'assets/dummy_images/Lokalizacja-salonow-Wilcza.webp';
+  static const String salon8 = 'assets/dummy_images/wroclaw_hollywoodhair_c5ca581a-24c7-481a-84c6-73a2c7d869be.webp';
+  static const String salon9 = 'assets/dummy_images/wroclaw_hollywoodhair_c5ca581a-24c7-481a-84c6-73a2c7d869be (1).webp';
+
+
+
+
 }

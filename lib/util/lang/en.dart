@@ -54,17 +54,13 @@ const en_US = {
   'gender': 'Gender',
   'service': 'Service',
   'show_room_location': 'Showroom Location',
+  'our_saloons': 'Our Salons',
   'next': 'Next',
   'my_appointment': 'My appointments',
   'log_out': 'Log out',
   'cancel': 'Cancel',
   'log_out_dis': 'Are our sure you want to Log out?',
   'my_orders': 'My orders',
-
-
-
-
-
   'plz_enter_email': 'Please enter email',
   'plz_enter_name': 'Please enter name',
   'plz_enter_password': 'Please enter password',

@@ -33,7 +33,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     // TODO: implement onInit
     categoriesListApi();
     getTopProductApi();
-    // getTopshopifyBlog();
     super.onInit();
   }
 

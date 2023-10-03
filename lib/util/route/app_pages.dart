@@ -28,8 +28,7 @@ class AppPages {
   static const myOrderScreen = '/my_order_screen';
   static const searchProductScreen = '/search_product_screen';
   static const calendlyScreen = '/calendly_screen';
-
-
   static const tryOn = '/tryOn_screen';
   static const imagePreview = '/image_preview_screen';
+  static const ourSalons = '/Our_salons_screen';
 }

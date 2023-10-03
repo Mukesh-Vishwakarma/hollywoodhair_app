@@ -24,9 +24,7 @@ class HomeScreen extends GetView<HomeController> {
     ));
     return Scaffold(
       key: controller.key,
-
       appBar: AppBar(
-
         elevation: 0.4,
         backgroundColor: AppColors.colorFF,
         title: Row(
@@ -75,10 +73,6 @@ class HomeScreen extends GetView<HomeController> {
 
       drawer: Drawer(
         width: 270,
-
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -116,95 +110,79 @@ class HomeScreen extends GetView<HomeController> {
             const SizedBox(
               height: 30,
             ),
-            GestureDetector(
-              onTap:
-                  (){
-                // Get.toNamed(AppPages.myOrderScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10,bottom: 5),
-                child: Row(
-                  children: [
-
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("Show Room",
-                          style: AppStyles.textStyle(
-                            fontSize: dimen14, weight: FontWeight.w400,)
-
-                      ),
-                    )),
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20,top: 10),
-                      child: Image.asset(Assets.arrowLeft,height: 30,width: 30,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(AppPages.ourSalons);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("our_saloons".tr,
+                            style: AppStyles.textStyle(
+                              fontSize: dimen12, weight: FontWeight.w400,)
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Icon(Icons.arrow_forward_ios,
+                            size: 14,),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppPages.languagesScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("languages".tr,
+                            style: AppStyles.textStyle(
+                              fontSize: dimen12,
+                              weight: FontWeight.w400,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Icon(Icons.arrow_forward_ios,
+                            size: 14,),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppPages.contactScreen);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("contact_us".tr,
+                            style: AppStyles.textStyle(
+                              fontSize: dimen12,
+                              weight: FontWeight.w400,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Icon(Icons.arrow_forward_ios,
+                            size: 14,),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
 
-
-
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(AppPages.languagesScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text("languages".tr,
-                              style: AppStyles.textStyle(
-                                fontSize: dimen14,
-                                weight: FontWeight.w400,
-                              )),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 10),
-                      child: Image.asset(
-                        Assets.arrowLeft,
-                        height: 30,
-                        width: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(AppPages.contactScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text("contact_us".tr,
-                              style: AppStyles.textStyle(
-                                fontSize: dimen14,
-                                weight: FontWeight.w400,
-                              )),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 10),
-                      child: Image.asset(
-                        Assets.arrowLeft,
-                        height: 30,
-                        width: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -361,26 +339,10 @@ class HomeScreen extends GetView<HomeController> {
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(6),
-                    // child: Image.network(
-                    //   productList.image,
-                    //   fit: BoxFit.cover,
-                    //   width: 50.w,
-                    //   height: 17.h,
-                    // )
                   child: controller.networkImageWithLoader(
                       userProfile:
                       productList.image ?? ""),
                 ),
-                // Positioned(
-                //     top: 10,
-                //     right: 10,
-                //     child: Container(
-                //       padding: EdgeInsets.all(6),
-                //       decoration: BoxDecoration(
-                //           color: AppColors.lightBackgroundColor,
-                //           shape: BoxShape.circle),
-                //       child: SvgPicture.asset(Assets.favouriteIcon),
-                //     )),
               ],
             ),
             const SizedBox(height: 5),
@@ -447,21 +409,6 @@ class HomeScreen extends GetView<HomeController> {
             ),
           ):shimmerCategory(),
         ),
-
-        // Obx(
-        //       () => SizedBox(
-        //     // height: 35,
-        //     child: Wrap(
-        //       spacing: 8, // Adjust spacing between widgets as needed
-        //       runSpacing: 8, // Adjust runSpacing between rows as needed
-        //       children: controller.collectionList.map<Widget>((item) {
-        //         return categoriesWidget(item); // Assuming categoriesWidget returns a Widget
-        //       }).toList(),
-        //     ),
-        //   ),
-        // )
-
-
       ],
     );
   }
@@ -469,7 +416,6 @@ class HomeScreen extends GetView<HomeController> {
   categoriesWidget(Collection categoryItem) {
     return InkWell(
       onTap: () {
-        // controller.selectCategories.value = categoryItem.title.toString();
         Get.toNamed(AppPages.allProductScreen, arguments: {
           "categoryName": categoryItem.title,
           "categoryId": categoryItem.id,
@@ -479,12 +425,6 @@ class HomeScreen extends GetView<HomeController> {
       highlightColor: Colors.transparent,
       child: IntrinsicWidth(
         child: Container(
-          // color: Colors.red,
-          // width: 140,
-          // decoration: BoxDecoration(
-          //     color: AppColors.lightBackgroundColor,
-          //     borderRadius: BorderRadius.circular(8),
-          //     border: Border.all(color: AppColors.primaryColor, width: 1.0)),
           child: Center(
             child: Column(
               children: [
@@ -495,20 +435,12 @@ class HomeScreen extends GetView<HomeController> {
                       border: Border.all(color: AppColors.primaryColor, width: 1.0)),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      // child: Image.network(
-                      //   categoryItem.imageUrl,
-                      //   fit: BoxFit.cover,
-                      //   width: 55,
-                      //   height: 55,
-                      // )
                     child: controller.networkImageCategory(
-                        userProfile:
-                        categoryItem.imageUrl ?? ""),
+                        userProfile: categoryItem.imageUrl ?? ""),
                   ).marginAll(3),
                 ),
                 Flexible(
                   child: Container(
-                    // color: Colors.red,
                     width: 80,
                     child: Text(
                       categoryItem.title,
@@ -529,45 +461,6 @@ class HomeScreen extends GetView<HomeController> {
       ),
     );
   }
-
-  /*categoriesWidget(Collection categoryItem) {
-    return InkWell(
-      onTap: () {
-        // controller.selectCategories.value = categoryItem.title.toString();
-        Get.toNamed(AppPages.allProductScreen, arguments: {
-          "categoryName": categoryItem.title,
-          "categoryId": categoryItem.id,
-        });
-      },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      child: IntrinsicWidth(
-        child: Container(
-          height: 30,
-          decoration: BoxDecoration(
-              color: AppColors.lightBackgroundColor,
-              // controller.selectCategories.value == categoryItem
-              //     ? AppColors.primaryColor
-              //     : AppColors.lightBackgroundColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.primaryColor, width: 1.0)),
-          margin: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          padding: EdgeInsets.only(left: 5, right: 5),
-          child: Center(
-            child: Text(
-              categoryItem.title,
-              style: AppStyles.textStyle(
-                  weight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: controller.selectCategories.value == categoryItem
-                      ? AppColors.lightBackgroundColor
-                      : AppColors.primaryColor),
-            ).marginOnly(left: 10,right: 10),
-          ),
-        ),
-      ),
-    );
-  }*/
 
 
   shimmerDemo() {
