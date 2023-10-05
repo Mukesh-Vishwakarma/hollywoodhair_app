@@ -71,6 +71,8 @@ const pl_PL = {
   // Home Screen
   'explore_by_categories': 'Odkrywaj według kategorii',
   'popular_product': 'Popularne produkty',
+  'our_salons': 'Nasze Salony',
+  'featured_products': 'Wyróżnione produkty',
 
   // Favourite screen
   'favourite': 'Ulubione',
@@ -91,6 +93,7 @@ const pl_PL = {
   'empty_cart': 'Koszyk jest pusty',
   'empty_cart_message': 'Wydaje się, że nie dodałeś jeszcze żadnych produktów do koszyka!',
   'start_shopping': 'Zacznij zakupy teraz',
+  'checkout': 'Checkout',
 
 
   // Home

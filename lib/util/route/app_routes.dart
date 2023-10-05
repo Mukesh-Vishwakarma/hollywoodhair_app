@@ -54,6 +54,8 @@ import 'package:hollywood_hair/screen/splash/splash_screen.dart';
 
 import '../../screen/base/booking/calendly_screen/calendly_binding.dart';
 import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
+import '../../screen/checkout_screen/checkout_binding.dart';
+import '../../screen/checkout_screen/checkout_screen.dart';
 import '../../screen/tryOn_screen/priview_screen.dart';
 import '../../screen/tryOn_screen/tryOn_binder.dart';
 import '../../screen/tryOn_screen/tryOn_screen.dart';
@@ -221,6 +223,12 @@ class AppRoutes {
       name: AppPages.ourSalons,
       page: () => OurSalonsScreen(),
       binding:OurSalonsBinding(),
+    ),
+
+    GetPage(
+      name: AppPages.checkout,
+      page: () => CheckoutScreen(),
+      binding:CheckoutBinding(),
     ),
   ];
 }

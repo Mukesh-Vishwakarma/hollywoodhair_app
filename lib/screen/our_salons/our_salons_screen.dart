@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -14,11 +13,11 @@ import '../../util/theme_service.dart';
 import 'our_salons_controller.dart';
 
 class OurSalonsScreen extends GetView<OurSalonsController> {
-  OurSalonsScreen({super.key});
+  const OurSalonsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(()=>OurSalonsController());
+    Get.lazyPut(() => OurSalonsController());
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
@@ -27,6 +26,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
         child: AppBar(
+          titleSpacing: 0,
           elevation: 0.4,
           backgroundColor: AppColors.colorFF,
           leading: GestureDetector(
@@ -37,10 +37,9 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
-          title:
-          Text("Salon",
-                style: AppStyles.textStyle(
-                    fontSize: 14.0, weight: FontWeight.w500)),
+          title: Text("Salon",
+              style:
+                  AppStyles.textStyle(fontSize: 20.0, weight: FontWeight.w500)),
           automaticallyImplyLeading: false,
           actions: [
             Padding(
@@ -59,68 +58,69 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
           ],
         ),
       ),
-      body: bodyWidget(),
+      body: Obx(() => bodyWidget()),
     );
   }
 
   bodyWidget() {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.salons.length,
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 270,
-                              childAspectRatio: 3 / 3.2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 0),
-                          itemBuilder: (context, index) {
-                            return salonWidget(index);
-                          }),
-                    ),
+          padding: const EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            child: (!controller.pageLoader.value)
+                ? SizedBox(
+                    width: double.infinity,
+                    child: GridView.count(
+                      crossAxisCount: 2, // Set the number of columns as needed
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 0, // Adjust as needed
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: List.generate(controller.allSaloonList.length, (index) {
+                        return salonWidget(index);
+                      }),
+                    )
+              ,
                   )
-            // : shimmerDemo()),
-      ),
+                : shimmerDemo(),
+          )
+          // : shimmerDemo()),
+          ),
     );
   }
 
-
   salonWidget(index) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("sjkhzxnhcnjx");
+        if(controller.allSaloonList[index].latitude!=null) {
+          controller.openMap(controller.allSaloonList[index].latitude,
+              controller.allSaloonList[index].latitude);
+        }
+
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
           ClipRRect(
-            borderRadius: BorderRadius.circular(7),
-              child: Image.asset(controller.salons[index].image.toString())),
-          Text(controller.salons[index].address.toString(),
+              borderRadius: BorderRadius.circular(7),
+              child: controller.networkImageCategory(
+                  image:
+                      controller.allSaloonList[index].salonPicture.toString())),
+          Text(
+            controller.allSaloonList[index].salonAddress.toString(),
             overflow: TextOverflow.ellipsis,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 14.0,
             ),
           ),
-          Text(
-            controller.salons[index].location.toString(),
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              color: AppColors.black84,
-              fontSize: 12.0,
-            ),
-          ),
         ],
       ),
     );
   }
-
 
   shimmerDemo() {
     return Padding(
@@ -136,11 +136,9 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +164,9 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +197,6 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +222,9 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +255,6 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +280,9 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -120,7 +120,7 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
       // }
     } catch (e) {
       dataIsLoading.value = false;
-      print("message: $e");
+      print("messageskhb====> $e");
     }
   }
 
@@ -145,13 +145,13 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
     try {
       var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
       ShopifyUser? shopifyUser = await ShopifyAuth.instance.currentUser();
-      GetStorage()
-          .write(AppConstants.userNameShopify, shopifyUser!.displayName);
+      GetStorage().write(AppConstants.userNameShopify, shopifyUser!.displayName);
       GetStorage().write(AppConstants.emailShopify, shopifyUser.email);
-      GetStorage().write(AppConstants.tokenShopify,
-          await ShopifyAuth.instance.currentCustomerAccessToken);
+      GetStorage().write(AppConstants.tokenShopify, await ShopifyAuth.instance.currentCustomerAccessToken);
       var customerAccessToken = GetStorage().read(AppConstants.tokenShopify);
       var email = GetStorage().read(AppConstants.emailShopify);
+
+      print("kahbdsskl===> $checkOutID");
 
       if (checkOutID == "") {
         final checkout = await shopifyCheckout.createCheckout(
@@ -161,12 +161,10 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
           email: email,
         );
         print("checkout $checkout");
-        shopifyCheckout
-            .checkoutCustomerAssociate(
+        shopifyCheckout.checkoutCustomerAssociate(
           checkout.id,
           customerAccessToken,
-        )
-            .then((value) async {
+        ).then((value) async {
           GetStorage().write(AppConstants.checkOutID, checkout.id);
           addButtonStatus.value = true;
           isLoader.value = true;
@@ -215,10 +213,7 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
       // isPageLoad.value = false;
       // failedToast(exception.message);
     } catch (exception) {
-      // progressDialog.dismiss();
-      print(exception.toString());
-      // isPageLoad.value = false;
-      // failedToast(exception.toString());
+      print("sahgbxzjkhn==> ${exception.toString()}");
     }
   }
 

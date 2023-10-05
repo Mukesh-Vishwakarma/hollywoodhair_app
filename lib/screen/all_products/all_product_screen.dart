@@ -84,23 +84,22 @@ class AllProductScreen extends GetView<AllProductController> {
                     ),
                   )
                 : SingleChildScrollView(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.products.length,
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 270,
-                              childAspectRatio: 3 / 3.5,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
-                          itemBuilder: (context, index) {
-                            return commonProductWidget(index);
-                          }),
-                    ),
-                  )
+          child: SizedBox(
+            width: double.infinity,
+            child: GridView.count(
+              crossAxisCount: 2, // Set the number of columns as needed
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: List.generate(controller.products.length, (index) {
+                return commonProductWidget(index);
+              }),
+            ),
+          ),
+        )
+
             : shimmerDemo()),
       ),
     );

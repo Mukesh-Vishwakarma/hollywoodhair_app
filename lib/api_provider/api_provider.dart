@@ -18,6 +18,8 @@ import 'package:hollywood_hair/model/shopify_model/signUp_model.dart';
 import 'package:hollywood_hair/model/static_model.dart';
 import 'package:hollywood_hair/model/user_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
+import '../model/all_saloon_list_model.dart';
+import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
 import 'DioLogger.dart';
 import 'api_constants.dart';
@@ -526,6 +528,27 @@ class ApiProvider {
       handleException(error, stacktrace, _dioError!);
     }
   }
+
+  Future getAllSaloonList() async {
+    try {
+      Response response = await _dio.get(strGetAllSalons);
+      print("response of otp login >>>${response.data!}");
+      return AllSaloonListModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getFeaturedProducts() async {
+    try {
+      Response response = await _dio.get(strGetFeaturedProducts);
+      print("response of otp login >>>${response.data!}");
+      return FeaturedProductsModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
 }
 
 bool _checkSocketException(DioError err) {
@@ -533,3 +556,4 @@ bool _checkSocketException(DioError err) {
       err.error != null &&
       err.error is SocketException;
 }
+

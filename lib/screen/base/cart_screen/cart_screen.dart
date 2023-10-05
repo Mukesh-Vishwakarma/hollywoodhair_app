@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../util/theme_service.dart';
+import '../../checkout_screen/checkout_controller.dart';
 import 'cart_controller.dart';
 
 class CartScreen extends GetView<CartController> {
@@ -29,7 +30,7 @@ class CartScreen extends GetView<CartController> {
           elevation: 0.4,
           backgroundColor: AppColors.colorFF,
           title: Text(
-            "${'cart'.tr}",
+            'cart'.tr,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 20.0,
@@ -37,20 +38,20 @@ class CartScreen extends GetView<CartController> {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPages.favouriteScreen);
-                  },
-                  child: SvgPicture.asset(Assets.searchIcon)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(Assets.notificationIcon)),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(right: 20.0),
+            //   child: InkWell(
+            //       onTap: () {
+            //         Get.toNamed(AppPages.favouriteScreen);
+            //       },
+            //       child: SvgPicture.asset(Assets.searchIcon)),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(right: 20.0),
+            //   child: InkWell(
+            //       onTap: () {},
+            //       child: SvgPicture.asset(Assets.notificationIcon)),
+            // ),
           ],
         ),
       ),
@@ -69,32 +70,33 @@ class CartScreen extends GetView<CartController> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               color: AppColors.backGroundColor,
-              child: Obx(
-                () => controller.dataLoading.isFalse
-                    ? controller.noCartCreated.isFalse
-                        ? (controller.checkout.lineItems.isNotEmpty)?Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                cartWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                promoCodeWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                priceDetailWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                orderButton(),
-                              ]):  Container(
-                  child: emptyCartWidget(),
-
-                )
-                        :  const SizedBox()
-                    : shimmerDemo()
-              ),
+              child: Obx(() => controller.dataLoading.isFalse
+                  ? controller.noCartCreated.isFalse
+                      ? (controller.checkout.lineItems.isNotEmpty)
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                  cartWidget(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  promoCodeWidget(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  priceDetailWidget(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  orderButton(),
+                                ])
+                          : Container(
+                              child: emptyCartWidget(),
+                            )
+                      : Container(
+                          child: emptyCartWidget(),
+                        )
+                  : shimmerDemo()),
             )
           ],
         ),
@@ -328,7 +330,8 @@ class CartScreen extends GetView<CartController> {
         priceitemWidget(
             title: "promo_code".tr,
             value: controller.checkout.appliedGiftCards.isNotEmpty
-                ? controller.checkout.appliedGiftCards[0].amountUsedV2.formattedPrice
+                ? controller
+                    .checkout.appliedGiftCards[0].amountUsedV2.formattedPrice
                 : "zt0.00"),
         const SizedBox(height: 20),
         Row(
@@ -402,7 +405,8 @@ class CartScreen extends GetView<CartController> {
             InkWell(
               onTap: () {
                 try {
-                  launchUrl(Uri.parse(controller.checkout.webUrl.toString()));
+                  Get.toNamed(AppPages.checkout,arguments: [controller.checkout.webUrl.toString()]);
+                  // launchUrl(Uri.parse(controller.checkout.webUrl.toString()));
                 } catch (e, s) {
                   print(s);
                 }
@@ -415,7 +419,7 @@ class CartScreen extends GetView<CartController> {
                     borderRadius: BorderRadius.circular(8),
                     border:
                         Border.all(color: AppColors.primaryColor, width: 1.0)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                 child: Center(
                   child: Text(
                     'order_now'.tr,
@@ -433,41 +437,53 @@ class CartScreen extends GetView<CartController> {
     );
   }
 
-  emptyCartWidget(){
+  emptyCartWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 11.h,),
+          SizedBox(
+            height: 11.h,
+          ),
           SvgPicture.asset(Assets.emptyCart),
-          SizedBox(height: 2.h,),
-          Text("empty_cart".tr,
+          SizedBox(
+            height: 2.h,
+          ),
+          Text(
+            "empty_cart".tr,
             style: AppStyles.textStyle(
                 family: "DINNeuzeitGrotes",
                 fontSize: 26.0,
-                weight: FontWeight.w500
-            ),),
-          SizedBox(height: 0.5.h,),
+                weight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 0.5.h,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 27.0),
-            child: Text("empty_cart_message".tr,
+            child: Text(
+              "empty_cart_message".tr,
               textAlign: TextAlign.center,
               style: AppStyles.textStyle(
                 family: "DINNeuzeitGrotes",
                 fontSize: 15.0,
                 weight: FontWeight.w400,
                 color: AppColors.colorE9,
-              ),),
+              ),
+            ),
           ),
-          SizedBox(height: 15.h,),
+          SizedBox(
+            height: 15.h,
+          ),
           InkWell(
-            onTap: (){
+            onTap: () {
               Get.toNamed(AppPages.allProductScreen, arguments: {
                 "categoryName": "All ",
                 "categoryId": "ALL",
-              });            },
+              });
+            },
             child: Container(
               width: 100.w,
               height: 48,
@@ -475,7 +491,7 @@ class CartScreen extends GetView<CartController> {
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(8),
                   border:
-                  Border.all(color: AppColors.primaryColor, width: 1.0)),
+                      Border.all(color: AppColors.primaryColor, width: 1.0)),
               child: Center(
                 child: Text(
                   'start_shopping'.tr,
@@ -510,7 +526,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -554,7 +569,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -598,7 +612,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -642,7 +655,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -686,7 +698,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -730,7 +741,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -774,7 +784,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -818,7 +827,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,7 +870,6 @@ class CartScreen extends GetView<CartController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -910,6 +917,4 @@ class CartScreen extends GetView<CartController> {
       ),
     );
   }
-
-
 }

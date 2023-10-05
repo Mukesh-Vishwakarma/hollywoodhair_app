@@ -492,7 +492,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                         Get.find<BaseHomeController>().selectedIndex.value = 3;
                         Get.find<CartController>().onInit();
                         Get.toNamed(AppPages.baseScreen);
+                        print("jnxkzmlk==>1");
                       } else {
+                        print("jnxkzmlk==>2");
                         controller.addToCart(
                             title: controller.products[0].title,
                             id: controller.products[0].id,

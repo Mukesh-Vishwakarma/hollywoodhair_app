@@ -20,25 +20,33 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onInit() async {
-    checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
-    if (checkoutId.isNotEmpty) {
-      getCart();
-    } else {
+    try {
+      checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
+      if (checkoutId.isNotEmpty) {
+        getCart();
+      } else {
+        noCartCreated.value = true;
+      }
+    } catch (e){
       noCartCreated.value = true;
     }
+
+    print("sadzxcksdzx===> $checkoutId");
 
     super.onInit();
   }
 
   Future<void> getCart() async {
+    noCartCreated.value = true;
     try {
-      Checkout _checkout = await shopifyCheckout
-          .getCheckoutInfoQuery(checkoutId, getShippingInfo: false);
-      this.checkout = _checkout;
+      Checkout checkoutModel = await shopifyCheckout.getCheckoutInfoQuery(checkoutId, getShippingInfo: false);
       dataLoading.value = false;
       noCartCreated.value = false;
+      checkout = checkoutModel;
     } catch (error) {
-      print("message: $error");
+      dataLoading.value = false;
+      noCartCreated.value = true;
+      print("message===> $error");
     }
   }
 

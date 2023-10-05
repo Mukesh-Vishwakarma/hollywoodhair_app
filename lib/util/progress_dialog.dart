@@ -116,15 +116,6 @@ class _BodyState extends State<_Body> {
           ),
         ),
 
-
-        //***** soon *********
-
-        // Align(
-        //   alignment: Alignment.center,
-        //
-        //   child: Image.asset('assets/images/progress.gif',height:50,width:50),)
-
-
         Align(
           alignment: Alignment.center,
           child: Lottie.asset(Assets.videoProgressbarBarLoader,

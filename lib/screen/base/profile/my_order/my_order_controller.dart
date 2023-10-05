@@ -20,14 +20,13 @@ class MyOrderController extends GetxController {
   getUsersAllOrders() async {
     try {
       print(userAccessToken.toString());
-      List<Order>? _order =
-          await shopifyCheckout.getAllOrders(userAccessToken.toString());
+      List<Order>? _order = await shopifyCheckout.getAllOrders(userAccessToken.toString());
       print(_order);
-      // if (_order!.isNotEmpty) {
-      //   orderlist.value = [];
-      //   orderlist.value = _order;
-      //   nodatafound.value = false;
-      // }
+      if (_order!.isNotEmpty) {
+        orderlist.value = [];
+        orderlist.value = _order;
+        nodatafound.value = false;
+      }
     } catch (error) {
       print("message:$error");
     }

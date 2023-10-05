@@ -74,6 +74,8 @@ const en_US = {
 //home Screen
   'explore_by_categories': 'Explore by Categories',
   'popular_product': 'Popular product',
+  'our_salons': 'Our Salons',
+  'featured_products': 'Featured Products',
 
   // Favourite screen
   'favourite': 'Favourite',
@@ -93,6 +95,7 @@ const en_US = {
   'empty_cart': 'Empty Cart',
   'empty_cart_message': 'Looks like you haven’t added anything to your cart yet!',
   'start_shopping': 'Start Shopping Now',
+  'checkout': 'Checkout',
 
   // Home
   'product_details': 'Product Details',

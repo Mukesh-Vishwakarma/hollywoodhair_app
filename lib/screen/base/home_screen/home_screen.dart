@@ -11,11 +11,13 @@ import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../model/featured_products_model.dart';
 import '../../../util/theme_service.dart';
+import 'dwawer/drawer.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +57,11 @@ class HomeScreen extends GetView<HomeController> {
         ),
         automaticallyImplyLeading: false,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: InkWell(
-                onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 20.0),
+          //   child: InkWell(
+          //       onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
+          // ),
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: InkWell(
@@ -70,123 +72,7 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ],
       ),
-
-      drawer: Drawer(
-        width: 270,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20.h,
-              child: DrawerHeader(
-                decoration: const BoxDecoration(
-                    color: AppColors.primaryColor,
-                    border: Border(
-                        bottom: BorderSide(width: 2, color: Colors.transparent))),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        child: const Icon(
-                          Icons.arrow_back,
-                          size: 20,
-                        ),
-                        onTap: () {
-                          Get.back();
-                        },
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 24),
-                        child: Text("Menu",
-                            style: AppStyles.textStyle(fontSize: dimen15)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(AppPages.ourSalons);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("our_saloons".tr,
-                            style: AppStyles.textStyle(
-                              fontSize: dimen12, weight: FontWeight.w400,)
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Icon(Icons.arrow_forward_ios,
-                            size: 14,),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppPages.languagesScreen);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("languages".tr,
-                            style: AppStyles.textStyle(
-                              fontSize: dimen12,
-                              weight: FontWeight.w400,
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Icon(Icons.arrow_forward_ios,
-                            size: 14,),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppPages.contactScreen);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("contact_us".tr,
-                            style: AppStyles.textStyle(
-                              fontSize: dimen12,
-                              weight: FontWeight.w400,
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Icon(Icons.arrow_forward_ios,
-                            size: 14,),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-
+      drawer: const DrawerLayout(),
       backgroundColor: AppColors.lightBackgroundColor,
       body: bodyWidget(),
     );
@@ -211,12 +97,16 @@ class HomeScreen extends GetView<HomeController> {
                     Assets.dummyBanner,
                     fit: BoxFit.cover,
                     width: 100.w,
-                    height:180,
+                    height: 180,
                   ),
                   const SizedBox(height: 20),
                   categoriesListWidget(),
                   const SizedBox(height: 0),
                   productsWidget(),
+                  const SizedBox(height: 20),
+                  featuredProductsList(),
+                  const SizedBox(height: 20),
+                  saloonList(),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -284,6 +174,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
+  // Popular products
   productsWidget() {
     return Column(
         mainAxisSize: MainAxisSize.min,
@@ -293,7 +184,7 @@ class HomeScreen extends GetView<HomeController> {
             'popular_product'.tr,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
-              fontSize: 16.0,
+              fontSize: 17.0,
             ),
           ),
           const SizedBox(
@@ -302,20 +193,19 @@ class HomeScreen extends GetView<HomeController> {
           Obx(() => controller.topProduct.isNotEmpty
               ? SizedBox(
                   width: double.infinity,
-                  child: GridView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.topProduct.length,
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 270,
-                          childAspectRatio: 3 / 3.5,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10),
-                      itemBuilder: (context, index) {
-                        return commonProductWidget(
-                            productList: controller.topProduct.value[index]);
-                      }),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    // Change the number of columns as needed
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children:
+                        List.generate(controller.topProduct.length, (index) {
+                      return commonProductWidget(
+                          productList: controller.topProduct.value[index]);
+                    }),
+                  ),
                 )
               : shimmerDemo()),
         ]);
@@ -325,8 +215,10 @@ class HomeScreen extends GetView<HomeController> {
     return GestureDetector(
       onTap: () {
         print("jhdsvjxzhbjkj===> ${productList.id}");
-        Get.toNamed(AppPages.allProductDetailsScreen,
-            arguments: {"product_id": productList.id},);
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          arguments: {"product_id": productList.id},
+        );
         controller.getFindController();
       },
       child: Container(
@@ -338,10 +230,9 @@ class HomeScreen extends GetView<HomeController> {
             Stack(
               children: [
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(6),
                   child: controller.networkImageWithLoader(
-                      userProfile:
-                      productList.image ?? ""),
+                      userProfile: productList.image ?? ""),
                 ),
               ],
             ),
@@ -354,34 +245,33 @@ class HomeScreen extends GetView<HomeController> {
                 fontSize: 14.0,
               ),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Text(
-                    productList.formattedPrice,
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 12.0,
-                    ),
+            Row(
+              children: [
+                Text(
+                  productList.formattedPrice,
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w500,
+                    fontSize: 12.0,
                   ),
-                  const SizedBox(width: 5),
-                  Text(
-                    productList.compareAtPriceFormatted,
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w300,
-                      fontSize: 11.0,
-                      decoration: TextDecoration.lineThrough,
-                    ),
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  productList.compareAtPriceFormatted,
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w300,
+                    fontSize: 11.0,
+                    decoration: TextDecoration.lineThrough,
                   ),
-                ],
-              ),
-            ),
+                ),
+              ],
+            ).marginOnly(top: 5),
           ],
         ),
       ),
     );
   }
 
+  // Category
   categoriesListWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,24 +280,26 @@ class HomeScreen extends GetView<HomeController> {
           'explore_by_categories'.tr,
           style: AppStyles.textStyle(
             weight: FontWeight.w500,
-            fontSize: 16.0,
+            fontSize: 17.0,
           ),
         ),
         const SizedBox(height: 20),
         Obx(
-          () => controller.collectionList.isNotEmpty?SizedBox(
-            height: 100,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.collectionList.length,
-              itemBuilder: (context, index) {
-                return Obx(() =>
-                    categoriesWidget(controller.collectionList.value[index]));
-              },
-            ),
-          ):shimmerCategory(),
+          () => controller.collectionList.isNotEmpty
+              ? SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.collectionList.length,
+                    itemBuilder: (context, index) {
+                      return Obx(() => categoriesWidget(
+                          controller.collectionList.value[index]));
+                    },
+                  ),
+                )
+              : shimmerCategory(),
         ),
       ],
     );
@@ -432,9 +324,10 @@ class HomeScreen extends GetView<HomeController> {
                   decoration: BoxDecoration(
                       color: AppColors.lightBackgroundColor,
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: AppColors.primaryColor, width: 1.0)),
+                      border: Border.all(
+                          color: AppColors.primaryColor, width: 1.0)),
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(50),
                     child: controller.networkImageCategory(
                         userProfile: categoryItem.imageUrl ?? ""),
                   ).marginAll(3),
@@ -448,9 +341,10 @@ class HomeScreen extends GetView<HomeController> {
                       style: AppStyles.textStyle(
                           weight: FontWeight.w500,
                           fontSize: 12.5,
-                          color: controller.selectCategories.value == categoryItem
-                              ? AppColors.lightBackgroundColor
-                              : AppColors.primaryColor),
+                          color:
+                              controller.selectCategories.value == categoryItem
+                                  ? AppColors.lightBackgroundColor
+                                  : AppColors.primaryColor),
                     ),
                   ),
                 ),
@@ -462,6 +356,171 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
+  ///  Saloons
+  saloonList() {
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'our_salons'.tr,
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 17.0,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Obx(() => !controller.pageLoaderSalon.value
+              ? SizedBox(
+                  width: double.infinity,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    // Change the number of columns as needed
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 0,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children:
+                        List.generate(controller.allSaloonList.length, (index) {
+                      return salonWidget(index);
+                    }),
+                  ),
+                )
+              : shimmerDemo()),
+        ]);
+  }
+
+  salonWidget(index) {
+    return GestureDetector(
+      onTap: () {
+        print("sjkhzxnhcnjx");
+        if (controller.allSaloonList[index].latitude != null) {
+          controller.openMap(controller.allSaloonList[index].latitude,
+              controller.allSaloonList[index].latitude);
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(7),
+              child: controller.networkImageSalons(
+                  image:
+                      controller.allSaloonList[index].salonPicture.toString())),
+          Text(
+            controller.allSaloonList[index].salonAddress.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 13.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///  Featured products
+  featuredProductsList() {
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'featured_products'.tr,
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 17.0,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Obx(() => !controller.pageLoaderFeaturedStatus.value
+              ? SizedBox(
+                  width: double.infinity,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    // Change the number of columns as needed
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                        controller.allFeaturedProductsList.length, (index) {
+                      return featuredProductsWidget(
+                          featuredData:
+                              controller.allFeaturedProductsList[index]);
+                    }),
+                  ),
+                )
+              : shimmerDemo()),
+        ]);
+  }
+
+  featuredProductsWidget({required FeaturedData featuredData}) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          // arguments: {"product_id": featuredData.productId.toString()},
+          arguments: {"product_id": "gid://shopify/Product/8678460752207"},// added static product id because upcoming produce id is not valid
+        );
+        controller.getFindController();
+      },
+      child: SizedBox(
+        width: 20.w,
+        height: 20.h,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.grayEB,
+                        // Adjust the color to your preference
+                        width: 1.0, // Adjust the border width
+                      ),
+                      borderRadius: BorderRadius.circular(6)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: controller.networkImageWithLoader(
+                        userProfile: featuredData.productImage ?? ""),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Text(
+              featuredData.productName.toString(),
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.textStyle(
+                weight: FontWeight.w500,
+                fontSize: 14.0,
+              ),
+            ),
+            Row(
+              children: [
+                Text(
+                  featuredData.productPrice.toString(),
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w500,
+                    fontSize: 12.0,
+                  ),
+                ),
+              ],
+            ).marginOnly(top: 5),
+          ],
+        ),
+      ),
+    );
+  }
 
   shimmerDemo() {
     return Padding(
@@ -477,11 +536,9 @@ class HomeScreen extends GetView<HomeController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -507,7 +564,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -538,7 +597,6 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,7 +622,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -595,7 +655,6 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -621,7 +680,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -672,7 +733,6 @@ class HomeScreen extends GetView<HomeController> {
             // scrollDirection: Axis.horizontal,
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -696,68 +756,8 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30.0),
-                            child: Container(
-                              width: 55,
-                              height: 55,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            width: 50,
-                            height: 10.0,
-                            color: Colors.white,
-                          ).marginOnly(top: 10),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30.0),
-                            child: Container(
-                              width: 55,
-                              height: 55,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            width: 50,
-                            height: 10.0,
-                            color: Colors.white,
-                          ).marginOnly(top: 10),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 10,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30.0),
-                            child: Container(
-                              width: 55,
-                              height: 55,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            width: 50,
-                            height: 10.0,
-                            color: Colors.white,
-                          ).marginOnly(top: 10),
-                        ],
-                      ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Expanded(
                       child: Column(
@@ -779,7 +779,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -800,7 +802,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -821,7 +825,6 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -842,7 +845,9 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -863,7 +868,78 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 10.0,
+                            color: Colors.white,
+                          ).marginOnly(top: 10),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                   ],
                 ).marginOnly(top: 00),
               ],
@@ -873,5 +949,4 @@ class HomeScreen extends GetView<HomeController> {
       ),
     );
   }
-
 }
