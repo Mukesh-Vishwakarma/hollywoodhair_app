@@ -345,7 +345,7 @@ class SettingScreen extends GetView<SettingsController> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: dimen12,
-                                    color: AppColors.color2C,
+                                    color: AppColors.red2C,
                                     fontFamily: 'JosefinSans',
                                     decoration: TextDecoration.underline,
                                   )),

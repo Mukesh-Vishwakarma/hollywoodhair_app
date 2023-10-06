@@ -31,5 +31,6 @@ class AppPages {
   static const tryOn = '/tryOn_screen';
   static const imagePreview = '/image_preview_screen';
   static const ourSalons = '/Our_salons_screen';
+  static const ourTransformations = '/Our_transformations_screen';
   static const checkout = '/checkout_screen';
 }

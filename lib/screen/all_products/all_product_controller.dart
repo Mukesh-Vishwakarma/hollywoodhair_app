@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/api_provider/api_provider.dart';
 import 'package:hollywood_hair/model/get_all_product_list_model.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../util/app_colors.dart';
 

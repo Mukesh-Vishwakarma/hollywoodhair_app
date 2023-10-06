@@ -30,8 +30,6 @@ const String strGetStaticPage = 'get-site-setting';
 const String strChangePassword = 'change-customer-password';
 const String strGetProductList = 'getProductList';
 const String strGetProductByID = 'getProductById';
-const String strGetAllSalons = 'getAllSalons';
-const String strGetFeaturedProducts = 'getFeaturedProducts';
 
 
 //shopify end points

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/model/all_saloon_list_model.dart';
 import 'package:hollywood_hair/model/shopify_model/category_model.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/src/product/products/products.dart';
-import 'package:sizer/sizer.dart';
 import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 

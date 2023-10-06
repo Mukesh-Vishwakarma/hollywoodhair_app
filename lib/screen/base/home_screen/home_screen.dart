@@ -536,9 +536,11 @@ class HomeScreen extends GetView<HomeController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -597,6 +599,7 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -655,6 +658,7 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -733,6 +737,7 @@ class HomeScreen extends GetView<HomeController> {
             // scrollDirection: Axis.horizontal,
             child: Column(
               children: [
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

@@ -27,6 +27,6 @@ class AppConstants {
   static const languageCode = "languageCode";
 
 // Calendly
-  static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb';
+  static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb?hide_event_type_details=1';
   // static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb/demo-testing?back=1&month=2023-09';
 }

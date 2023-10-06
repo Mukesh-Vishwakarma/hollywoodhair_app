@@ -13,28 +13,35 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
   Widget build(BuildContext context) {
     return  Stack(
       children: <Widget>[
-    Image.asset(
-      Assets.demo3,
-      height: MediaQuery.of(context).size.height/1.3,
-      width: MediaQuery.of(context).size.width,
-      fit: BoxFit.cover,
-    ),
-
-
+        Image.asset(
+          Assets.demo3,
+          height: MediaQuery.of(context).size.height/1.3,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,),
       Scaffold(
         backgroundColor: Colors.transparent,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20,top: 40),
-            child: GestureDetector(
-                onTap: (){
-                  Get.back();
-                },
-                child: Image.asset(Assets.backBackground,height: 50,width:50,)),
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20,top: 40),
+              child: GestureDetector(
+                  onTap: (){
+                    Get.back();
+                    },
+                  child:
+                  Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: AppColors.black.withOpacity(.35),
+                      shape: BoxShape.circle
+                    ),
+                      child: Icon(Icons.arrow_back,
+                      color: AppColors.lightBackgroundColor,))
+              ),
+            ),
           Align(alignment: Alignment.bottomCenter,
           child: Container(
               margin: EdgeInsets.only(left: 0, right: 0, top: 10),
@@ -60,7 +67,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                   child: Text("Style Selection Consultation",
                       style: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen18,
+                          fontSize: 18.0,
                           weight: FontWeight.w500)
 
                   ),
@@ -73,7 +80,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
 
                   style: AppStyles.textStyle(
                       color: AppColors.gray99,
-                      fontSize: dimen12,
+                      fontSize: 12.0,
                       weight: FontWeight.w500)
 
               ),
@@ -103,7 +110,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                             "book_consultation".tr,
                             style: AppStyles.textStyle(
                               color: AppColors.lightBackgroundColor,
-                              fontSize: dimen12,
+                              fontSize: 12.0,
                               weight: FontWeight.normal,
                             ),
                           ),

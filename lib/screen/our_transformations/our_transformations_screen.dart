@@ -5,19 +5,19 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../util/theme_service.dart';
-import 'all_product_controller.dart';
+import 'our_transformations_controller.dart';
 
-class AllProductScreen extends GetView<AllProductController> {
-  AllProductScreen({super.key});
+class OurTransformationsScreen extends GetView<OurTransformationsController> {
+  OurTransformationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(()=>OurTransformationsController());
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
@@ -26,7 +26,7 @@ class AllProductScreen extends GetView<AllProductController> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(7.h),
         child: AppBar(
-          elevation: 0.4,
+          elevation: 4,
           backgroundColor: AppColors.colorFF,
           leading: GestureDetector(
               onTap: () {
@@ -36,39 +36,21 @@ class AllProductScreen extends GetView<AllProductController> {
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
-          title: Obx(
-            () => Text("${controller.cateName} ${"products".tr}",
+          title:
+          Text("Transformations",
                 style: AppStyles.textStyle(
                     fontSize: 14.0, weight: FontWeight.w500)),
-          ),
-          automaticallyImplyLeading: false,
-          actions: [
-            // GestureDetector(
-            //   onTap: () {
-            //     Get.toNamed(AppPages.favouriteScreen);
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right: 20.0),
-            //     child: SvgPicture.asset(Assets.favouriteIcon),
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset(Assets.searchIcon),
+
             ),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(AppPages.allProductScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: SvgPicture.asset(Assets.notificationIcon),
-              ),
-            ),
-          ],
         ),
-      ),
-      body: bodyWidget(),
+      body: SingleChildScrollView(
+        child: Column(
+            children:[
+              SizedBox(height: 10,),
+              bodyWidget(),
+            ]
+        ),
+      )
     );
   }
 
@@ -76,112 +58,43 @@ class AllProductScreen extends GetView<AllProductController> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Obx(() => !controller.isPageLoad.value
-            ? controller.products.value.isEmpty
-                ? Center(
-                    child: NoDataScreen(
-                      title: "Empty",
+        child: SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Obx(
+                        ()=> ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.transformationData.length,
+                            itemBuilder: (context, index) {
+                              return transformationsWidget(index);
+                            }),
+                      ),
                     ),
                   )
-                : SingleChildScrollView(
-          child: SizedBox(
-            width: double.infinity,
-            child: GridView.count(
-              crossAxisCount: 2, // Set the number of columns as needed
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(controller.products.length, (index) {
-                return commonProductWidget(index);
-              }),
-            ),
-          ),
-        )
-
-            : shimmerDemo()),
+            // : shimmerDemo()),
       ),
     );
   }
 
 
-
-
-  // productsWidget() {
-  //   return Container(
-  //     // color: AppColors.dividerColor,
-  //     child: GridView.builder(
-  //         physics: const BouncingScrollPhysics(),
-  //         shrinkWrap: true,
-  //         itemCount: controller.products.length,
-  //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //             childAspectRatio: 4 / 4.4,
-  //             crossAxisCount: 2,
-  //             crossAxisSpacing: 0,
-  //             mainAxisSpacing: 0),
-  //         itemBuilder: (context, index) {
-  //           return commonProductWidget(index);
-  //         }),
-  //   );
-  // }
-
-  commonProductWidget(index) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppPages.allProductDetailsScreen, arguments: {
-          "product_id": controller.products[index].id.toString()
-        });
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: controller.networkImageWithLoader(
-    userProfile:
-    controller.products[index].image.isNotEmpty
-        ? controller.products[index].image.toString()
-        : Assets.upload ?? "")),
-          const SizedBox(height: 10),
-          Text(
-            controller.products[index].title.toString(),
-            overflow: TextOverflow.ellipsis,
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                Text(
-                  controller.products[index].formattedPrice,
-                  // controller.productList[index].variants![0].price.toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    color: AppColors.black84,
-                    fontSize: 12.0,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  controller.products[index].compareAtPriceFormatted,
-                  // controller.productList[index]..toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w400,
-                    fontSize: 11.0,
-                    color: AppColors.grayC4,
-                    decoration: TextDecoration.lineThrough,
-                    // decorationColor: AppColors.gray95
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // const SizedBox(height: 6),
-        ],
-      ),
+  transformationsWidget(index) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.network(controller.transformationData[index].imageUrl.toString())),
+        const SizedBox(height: 20),
+        // Text(controller.transformationData[index].status.toString(),
+        //   overflow: TextOverflow.ellipsis,
+        //   style: AppStyles.textStyle(
+        //     weight: FontWeight.w500,
+        //     fontSize: 14.0,
+        //   ),
+        // ),
+      ],
     );
   }
 

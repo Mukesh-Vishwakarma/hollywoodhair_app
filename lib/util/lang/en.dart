@@ -55,6 +55,7 @@ const en_US = {
   'service': 'Service',
   'show_room_location': 'Showroom Location',
   'our_saloons': 'Our Salons',
+  'our_transformation': 'Our Transformations',
   'next': 'Next',
   'my_appointment': 'My appointments',
   'log_out': 'Log out',
@@ -112,6 +113,9 @@ const en_US = {
   'chatbot':'Chatbot',
   'my_wishlist':'My Wishlist',
   'rate_us':'Rate us',
+
+  // search
+  'data_not_available': 'No Data Available',
 
   // Booking
   'my_appointments': 'My Appointments',

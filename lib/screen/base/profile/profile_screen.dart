@@ -33,7 +33,7 @@ class ProfileScreen extends GetView<ProfileController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                height: 200,
+                height: 205,
                 width: Get.size.width,
                 child: Stack(
                   children: [
@@ -58,7 +58,7 @@ class ProfileScreen extends GetView<ProfileController> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(top: 8.0),
                             child: Obx(() => Text(
                                 controller.userName.toString(),
                                 style: AppStyles.textStyle(
@@ -67,30 +67,13 @@ class ProfileScreen extends GetView<ProfileController> {
                                     weight: FontWeight.w500))),
                           ),
                           Obx(() => controller.phoneNumber.value != null
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 0),
-                                  child: Text(
-                                      controller.phoneNumber.value.toString(),
-                                      style: AppStyles.textStyle(
-                                          color: Colors.white,
-                                          fontSize: dimen12,
-                                          weight: FontWeight.w400)),
-                                )
+                              ? Text(
+                                  controller.phoneNumber.value.toString(),
+                                  style: AppStyles.textStyle(
+                                      color: Colors.white,
+                                      fontSize: dimen12,
+                                      weight: FontWeight.w400))
                               : Container()),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     controller.editScreenRoute();
-                          //     // Get.toNamed(AppPages.editProfileScreen);
-                          //   },
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(8.0),
-                          //     child: Image.asset(
-                          //       Assets.editText,
-                          //       height: 20,
-                          //       width: 100,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -100,7 +83,8 @@ class ProfileScreen extends GetView<ProfileController> {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(
+              InkWell(
+                splashColor: Colors.transparent,
                 onTap: () {
                   Get.toNamed(AppPages.myOrderScreen);
                 },
@@ -133,7 +117,8 @@ class ProfileScreen extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Divider(),
               ),
-              GestureDetector(
+              InkWell(
+                splashColor: Colors.transparent,
                 onTap: () {
                   Get.toNamed(AppPages.myAppointmentScreen);
                 },
@@ -166,7 +151,8 @@ class ProfileScreen extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Divider(),
               ),
-              GestureDetector(
+              InkWell(
+                splashColor: Colors.transparent,
                 onTap: () {
                   Get.toNamed(AppPages.addAddressScreen);
                 },
@@ -200,6 +186,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 child: Divider(),
               ),
               InkWell(
+                splashColor: Colors.transparent,
                 onTap: () {
                   Get.toNamed(AppPages.settingScreen);
                 },
@@ -232,92 +219,6 @@ class ProfileScreen extends GetView<ProfileController> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Divider(),
               ),
-
-/*
-              Padding(
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
-                child: Row(
-                  children: [
-
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("chatbot".tr,
-                          style: AppStyles.textStyle(
-                            fontSize: dimen12, weight: FontWeight.w400,)
-
-                      ),
-                    )),
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20,top: 10),
-                      child: Image.asset(Assets.arrowLeft,height: 30,width: 30,),
-                    ),
-                  ],
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20),
-                child: Divider(),
-              ),*/
-
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 5, bottom: 5),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //           child: Padding(
-              //         padding: const EdgeInsets.only(left: 20),
-              //         child: Text("my_cart".tr,
-              //             style: AppStyles.textStyle(
-              //               fontSize: dimen12,
-              //               weight: FontWeight.w400,
-              //             )),
-              //       )),
-              //       Padding(
-              //         padding: const EdgeInsets.only(right: 20, top: 10),
-              //         child: Image.asset(
-              //           Assets.arrowLeft,
-              //           height: 30,
-              //           width: 30,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 20, right: 20),
-              //   child: Divider(),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 5, bottom: 5),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //           child: Padding(
-              //         padding: const EdgeInsets.only(left: 20),
-              //         child: Text("my_wishlist".tr,
-              //             style: AppStyles.textStyle(
-              //               fontSize: dimen12,
-              //               weight: FontWeight.w400,
-              //             )),
-              //       )),
-              //       Padding(
-              //         padding: const EdgeInsets.only(right: 20, top: 10),
-              //         child: Image.asset(
-              //           Assets.arrowLeft,
-              //           height: 30,
-              //           width: 30,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 20, right: 20),
-              //   child: Divider(),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 5),
                 child: Row(
