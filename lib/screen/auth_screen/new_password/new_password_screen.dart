@@ -48,7 +48,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                   "change_password_des".tr,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyle(
-                      fontSize: dimen12,
+                      fontSize: 14.0,
                       color: Colors.grey,
                       weight: FontWeight.w400),
                 ),
@@ -86,7 +86,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                               hintText: 'new_password'.tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Obx(() => Padding(
@@ -105,7 +105,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                               labelText: 'new_password'.tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -179,7 +179,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                               hintText: 'confirm_password'.tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Obx(() => Padding(
@@ -199,7 +199,7 @@ class NewPasswordScreen extends GetView<NewPasswordController> {
                               labelText: 'confirm_password'.tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 

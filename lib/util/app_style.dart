@@ -45,7 +45,7 @@ abstract class AppStyles {
   //   return TextStyle(
   //       fontWeight: weight ?? FontWeight.w400,
   //       // overflow: TextOverflow.ellipsis,
-  //       fontSize: fontSize ?? dimen12,
+  //       fontSize: fontSize ?? 14.0,
   //       fontFamily: family??'JosefinSans',
   //       color: color ?? Colors.black,
   //       decoration: decoration ?? TextDecoration.none,
@@ -56,7 +56,7 @@ abstract class AppStyles {
     return TextStyle(
         fontWeight: weight ?? FontWeight.w400,
         // overflow: TextOverflow.ellipsis,
-        fontSize: fontSize ?? dimen12,
+        fontSize: fontSize ?? 14.0,
         fontFamily: family??'DIN Neuzeit Grotesk',
         color: color ?? Colors.black,
         decoration: decoration ?? TextDecoration.none,

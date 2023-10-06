@@ -57,7 +57,7 @@ class OtpScreen extends GetView<OtpController> {
                   "enter_otp_des".tr,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyle(
-                      fontSize: dimen12,
+                      fontSize: 14.0,
                       color: Colors.grey,
                       weight: FontWeight.w400),
                   // textAlign: TextAlign.center,

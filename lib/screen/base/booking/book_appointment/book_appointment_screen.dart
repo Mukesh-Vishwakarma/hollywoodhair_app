@@ -44,7 +44,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Preferred Hairstylist(optional)",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
               Container(
                   margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
@@ -68,7 +68,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       hintText:"name".tr,
                       hintStyle:AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
                       suffixIcon:Padding(
@@ -79,7 +79,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       labelText: "name".tr,
                       labelStyle: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
 
@@ -132,7 +132,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Date",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
               Container(
                   margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
@@ -193,7 +193,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       hintText:"date".tr,
                       hintStyle:AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
                       suffixIcon:const Icon(Icons.calendar_month_outlined),
@@ -201,7 +201,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       labelText: "date".tr,
                       labelStyle: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
 
@@ -255,7 +255,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Available slots",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
 
               Padding(

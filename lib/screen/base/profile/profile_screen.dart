@@ -8,6 +8,7 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'profile_controller.dart';
 
@@ -18,12 +19,12 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.0),
+          preferredSize: Size.fromHeight(7.h),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
             title: Text("Profile".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen15, weight: FontWeight.w500)),
+                    fontSize: 20.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
           ),
         ),
@@ -32,7 +33,7 @@ class ProfileScreen extends GetView<ProfileController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 205,
                 width: Get.size.width,
                 child: Stack(
@@ -71,7 +72,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                   controller.phoneNumber.value.toString(),
                                   style: AppStyles.textStyle(
                                       color: Colors.white,
-                                      fontSize: dimen12,
+                                      fontSize: 16.0,
                                       weight: FontWeight.w400))
                               : Container()),
                         ],
@@ -97,7 +98,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("my_orders".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 16.0,
                               weight: FontWeight.w400,
                             )),
                       )),
@@ -131,7 +132,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("my_appointment".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 16.0,
                               weight: FontWeight.w400,
                             )),
                       )),
@@ -165,7 +166,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("address".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 16.0,
                               weight: FontWeight.w400,
                             )),
                       )),
@@ -199,7 +200,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("setting".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 16.0,
                               weight: FontWeight.w400,
                             )),
                       )),
@@ -228,7 +229,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       padding: const EdgeInsets.only(left: 20),
                       child: Text("rate_us".tr,
                           style: AppStyles.textStyle(
-                            fontSize: dimen12,
+                            fontSize: 16.0,
                             weight: FontWeight.w400,
                           )),
                     )),

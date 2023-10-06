@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/api_provider/api_provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../model/all_saloon_list_model.dart';
 import '../../util/app_colors.dart';

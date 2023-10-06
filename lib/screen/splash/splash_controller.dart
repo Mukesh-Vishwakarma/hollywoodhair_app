@@ -22,7 +22,6 @@ switchScreen() async {
   isFirstTime.value = GetStorage().read(AppConstants.isLogged)??'';
   print("check is first time ${isFirstTime.value}");
   Future.delayed(const Duration(seconds: 2), () {
-    //      Get.toNamed(AppPages.baseScreen,arguments: {"screenType":"product details"});
     return isFirstTime.value=='true'
         ? Get.offNamed(AppPages.baseScreen,arguments: {"screenType":"splash screen"}
     )

@@ -233,7 +233,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //         child: Text("}",
                               //             style: AppStyles.textStyle(
                               //               weight: FontWeight.w500,
-                              //               fontSize: dimen12,
+                              //               fontSize: 14.0,
                               //             )),
                               //       ),
                               //       Padding(
@@ -243,7 +243,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //             style: AppStyles.textStyle(
                               //               weight: FontWeight.normal,
                               //               color: AppColors.gray99,
-                              //               fontSize: dimen12,
+                              //               fontSize: 14.0,
                               //             )),
                               //       )
                               //     ],
@@ -448,7 +448,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //       '${controller.productDetails.value.product.variants![p].rating.toString()}/5',
                               //       style: AppStyles.textStyle(
                               //         weight: FontWeight.w500,
-                              //         fontSize: dimen12,
+                              //         fontSize: 14.0,
                               //       ),
                               //     )
                               //   ],
@@ -522,7 +522,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                             controller.addButtonStatus.isTrue ? "go_to_cart".tr : "add_to_cart".tr,
                             style: AppStyles.textStyle(
                               color: AppColors.lightBackgroundColor,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
                           ),
@@ -570,7 +570,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //                 "${controller.productReviewsList[index].rating.toString()}/5",
 //                 style: AppStyles.textStyle(
 //                     weight: FontWeight.normal,
-//                     fontSize: dimen12,
+//                     fontSize: 14.0,
 //                     color: AppColors.gray99),
 //               ),
 //             ),
@@ -583,7 +583,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //           controller.productReviewsList[index].review.toString(),
 //           style: AppStyles.textStyle(
 //               weight: FontWeight.normal,
-//               fontSize: dimen12,
+//               fontSize: 14.0,
 //               color: AppColors.gray99),
 //         ),
 //       ),
@@ -619,7 +619,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //             '${controller.productReviewsList[index].rating.toString()}/5',
 //             style: AppStyles.textStyle(
 //               weight: FontWeight.w500,
-//               fontSize: dimen12,
+//               fontSize: 14.0,
 //             ),
 //           )
 //         ],

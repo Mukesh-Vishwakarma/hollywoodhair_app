@@ -66,7 +66,7 @@ class AddressScreen extends GetView<AddressController> {
                                   "Add New Address",
                                   style: AppStyles.textStyle(
                                     color: AppColors.black,
-                                    fontSize: dimen12,
+                                    fontSize: 14.0,
                                     weight: FontWeight.normal,
                                   ),
                                 ),
@@ -121,7 +121,7 @@ class AddressScreen extends GetView<AddressController> {
                                 "Add New Address",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.normal,
                                 ),
                               ),
@@ -185,7 +185,7 @@ class AddressScreen extends GetView<AddressController> {
                               color: controller.checkAddress.value == index
                                   ? AppColors.color7C
                                   : AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w400,
                             ),
                           ),
@@ -196,7 +196,7 @@ class AddressScreen extends GetView<AddressController> {
                             controller.getAddress[index].name.toString(),
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w400,
                             ),
                           ),
@@ -207,7 +207,7 @@ class AddressScreen extends GetView<AddressController> {
                             controller.getAddress[index].phone.toString(),
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
                           ),
@@ -218,7 +218,7 @@ class AddressScreen extends GetView<AddressController> {
                             controller.getAddress[index].email.toString(),
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
                           ),
@@ -229,7 +229,7 @@ class AddressScreen extends GetView<AddressController> {
                             controller.getAddress[index].address.toString(),
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                             ),
                           ),
                         ),
@@ -318,7 +318,7 @@ class AddressScreen extends GetView<AddressController> {
                                   child: Text("Add address",
                                       style: AppStyles.textStyle(
                                         color: AppColors.black,
-                                        fontSize: dimen12,
+                                        fontSize: 14.0,
                                         weight: FontWeight.w500,
                                       )),
                                 )
@@ -339,7 +339,7 @@ class AddressScreen extends GetView<AddressController> {
                                         child: Text(
                                           "Select address type",
                                           style: AppStyles.textStyle(
-                                            fontSize: dimen12,
+                                            fontSize: 14.0,
                                             weight: FontWeight.normal,
                                           ),
                                         ),
@@ -402,7 +402,7 @@ class AddressScreen extends GetView<AddressController> {
                                             ],
                                             controller: controller.phoneNumberController,
                                             style: AppStyles.textStyle(
-                                              fontSize: dimen12,
+                                              fontSize: 14.0,
                                               weight: FontWeight.normal,
                                             ),
                                             validator: (value) {
@@ -426,7 +426,7 @@ class AddressScreen extends GetView<AddressController> {
                                               hintStyle:
                                               AppStyles.textStyle(
                                                 color: AppColors.black,
-                                                fontSize: dimen12,
+                                                fontSize: 14.0,
                                                 weight: FontWeight.normal,
                                               ),
 
@@ -434,7 +434,7 @@ class AddressScreen extends GetView<AddressController> {
                                               labelStyle:
                                               AppStyles.textStyle(
                                                 color: AppColors.black,
-                                                fontSize: dimen12,
+                                                fontSize: 14.0,
                                                 weight: FontWeight.normal,
                                               ),
 
@@ -512,7 +512,7 @@ class AddressScreen extends GetView<AddressController> {
                                                   controller: controller
                                                       .floorController,
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -536,7 +536,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -544,7 +544,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -622,7 +622,7 @@ class AddressScreen extends GetView<AddressController> {
                                                         4),
                                                   ],
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -651,7 +651,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -659,7 +659,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -877,7 +877,7 @@ class AddressScreen extends GetView<AddressController> {
                                   child: Text("edit_address".tr,
                                       style: AppStyles.textStyle(
                                         color: AppColors.black,
-                                        fontSize: dimen12,
+                                        fontSize: 14.0,
                                         weight: FontWeight.w500,
                                       )),
                                 )
@@ -898,7 +898,7 @@ class AddressScreen extends GetView<AddressController> {
                                         child: Text(
                                           "Select address type",
                                           style: AppStyles.textStyle(
-                                            fontSize: dimen12,
+                                            fontSize: 14.0,
                                             weight: FontWeight.normal,
                                           ),
                                         ),
@@ -960,7 +960,7 @@ class AddressScreen extends GetView<AddressController> {
                                             ],
                                             controller: controller.phoneNumberController,
                                             style: AppStyles.textStyle(
-                                              fontSize: dimen12,
+                                              fontSize: 14.0,
                                               weight: FontWeight.normal,
                                             ),
                                             validator: (value) {
@@ -984,7 +984,7 @@ class AddressScreen extends GetView<AddressController> {
                                               hintStyle:
                                               AppStyles.textStyle(
                                                 color: AppColors.black,
-                                                fontSize: dimen12,
+                                                fontSize: 14.0,
                                                 weight: FontWeight.normal,
                                               ),
 
@@ -992,7 +992,7 @@ class AddressScreen extends GetView<AddressController> {
                                               labelStyle:
                                               AppStyles.textStyle(
                                                 color: AppColors.black,
-                                                fontSize: dimen12,
+                                                fontSize: 14.0,
                                                 weight: FontWeight.normal,
                                               ),
 
@@ -1071,7 +1071,7 @@ class AddressScreen extends GetView<AddressController> {
                                                   controller: controller
                                                       .floorController,
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -1095,7 +1095,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                     AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -1103,7 +1103,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                     AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -1181,7 +1181,7 @@ class AddressScreen extends GetView<AddressController> {
                                                         4),
                                                   ],
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -1210,7 +1210,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                     AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -1218,7 +1218,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                     AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 

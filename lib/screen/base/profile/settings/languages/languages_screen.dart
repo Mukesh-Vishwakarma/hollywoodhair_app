@@ -85,7 +85,7 @@ class LanguageScreen extends GetView<LanguagesController> {
                             controller.languageList[index].name
                         ? AppColors.color7C
                         : AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
                 )),

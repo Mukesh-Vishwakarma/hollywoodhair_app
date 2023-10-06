@@ -70,14 +70,14 @@ notificationList(index){
                   Text(controller.notificationList[index].title.toString(),
 
                       style: AppStyles.textStyle(
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.w500)
 
                   ),
                   Text(controller.notificationList[index].dis.toString(),
 
                       style: AppStyles.textStyle(
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           color: AppColors.gray99,
                           weight: FontWeight.normal)
                   )

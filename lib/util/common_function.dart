@@ -15,7 +15,7 @@ textField(controller, validationMsg, text, hintText, type,label) {
   return TextFormField(
     controller: controller,
     style: AppStyles.textStyle(
-      fontSize: dimen12,
+      fontSize: 14.0,
       weight: FontWeight.normal,
     ),
     validator: (value) {
@@ -45,7 +45,7 @@ textField(controller, validationMsg, text, hintText, type,label) {
       hintText: hintText,
       hintStyle: AppStyles.textStyle(
         color: AppColors.black,
-        fontSize: dimen12,
+        fontSize: 14.0,
         weight: FontWeight.normal,
       ),
       suffixIcon: type == "password"
@@ -61,7 +61,7 @@ textField(controller, validationMsg, text, hintText, type,label) {
       labelText: (label)?hintText:"null",
       labelStyle: (label)?AppStyles.textStyle(
         color: AppColors.black,
-        fontSize: dimen12,
+        fontSize: 14.0,
         weight: FontWeight.normal,
       ):null,
 
@@ -126,7 +126,7 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
               }
             },
             style: AppStyles.textStyle(
-              fontSize: dimen12,
+              fontSize: 14.0,
               weight: FontWeight.normal,
             ),
             onChanged: (value) {
@@ -298,7 +298,7 @@ buttom(text) {
           text,
           style: AppStyles.textStyle(
             color: AppColors.lightBackgroundColor,
-            fontSize: dimen12,
+            fontSize: 14.0,
             weight: FontWeight.normal,
           ),
         ),

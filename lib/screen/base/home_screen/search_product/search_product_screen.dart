@@ -44,7 +44,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -52,7 +52,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                             onTap: () {
                               Get.back();
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back,
                               size: 22,
                             )),
@@ -79,7 +79,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                               }
                             },
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(15.0),
+                              contentPadding: const EdgeInsets.all(15.0),
                               suffixIcon: Obx(
                                 () => controller.searchText.isTrue
                                     ? GestureDetector(
@@ -92,28 +92,28 @@ class SearchProductScreen extends GetView<SearchProductController> {
                                         child: SvgPicture.asset(
                                           Assets.cross,
                                         )).marginOnly(right: 10)
-                                    : SizedBox(),
+                                    : const SizedBox(),
                               ),
                               suffixIconConstraints:
-                                  BoxConstraints(minHeight: 30, minWidth: 30),
+                                  const BoxConstraints(minHeight: 30, minWidth: 30),
                               hintText: "search here",
                               hintStyle: AppStyles.textStyle(
                                   weight: FontWeight.w400,
                                   fontSize: 12.0,
                                   color: AppColors.searchHintColor),
-                              border: OutlineInputBorder(
+                              border: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColors.searchBorderColor)),
-                              errorBorder: OutlineInputBorder(
+                              errorBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: AppColors.red2C)),
-                              focusedErrorBorder: OutlineInputBorder(
+                              focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColors.searchBorderColor)),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColors.searchBorderColor)),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColors.primaryColor)),
                             ),
@@ -123,7 +123,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   )
                 ],
@@ -132,13 +132,13 @@ class SearchProductScreen extends GetView<SearchProductController> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Obx(() => !controller.isLoadPage.value
                           ? controller.searchedProduct.isEmpty
-                              ? Container(
+                              ? SizedBox(
                                   height: 80.h,
                                   child: Center(
                                       child: NoDataScreen(
@@ -190,50 +190,49 @@ class SearchProductScreen extends GetView<SearchProductController> {
   listTile({required Product item}) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPages.allProductDetailsScreen,
-            arguments: {"product_id": item.id});
+        Get.toNamed(AppPages.allProductDetailsScreen, arguments: {"product_id": item.id});
       },
-      child: Column(
+      child: Row(
         children: [
-          Row(
-            children: [
-              Image.network(
-                item.image,
-                height: 100,
-                width: 100,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: Adaptive.w(58),
-                        child: IntrinsicWidth(
-                          child: Text(
-                            "${item.title}",
-                            style: AppStyles.textStyle(
-                                fontSize: 13.0, weight: FontWeight.w500),
-                          ),
+          Image.network(
+            item.image,
+            height: 100,
+            width: 100,
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    child: IntrinsicWidth(
+                      child: Text(
+                        item.title,
+                        style: AppStyles.textStyle(
+                          fontSize: 13.0,
+                          weight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        "${item.formattedPrice}",
-                        style: AppStyles.textStyle(
-                            fontSize: 12.0, weight: FontWeight.w500),
-                      )
-                    ]),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    item.formattedPrice,
+                    style: AppStyles.textStyle(
+                      fontSize: 12.0,
+                      weight: FontWeight.w500,
+                    ),
+                  )
+                ],
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 15,
-          )
         ],
-      ),
+      ).marginOnly(top: 10),
     );
+
   }
 
   Widget buildLoader() {

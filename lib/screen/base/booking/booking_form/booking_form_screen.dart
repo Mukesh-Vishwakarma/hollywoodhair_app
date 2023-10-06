@@ -6,8 +6,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
-import 'package:sizer/sizer.dart';
-
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'booking_form_controller.dart';
 
 class BookingFormScreen extends GetView<BookingFormController> {
@@ -52,7 +51,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("name".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -73,7 +72,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("phone_number".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -94,7 +93,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("age".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -115,7 +114,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               hintText: "age".tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Padding(
@@ -128,7 +127,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               labelText: "age".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -178,7 +177,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("gender".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -199,7 +198,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               hintText: "gender".tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Padding(
@@ -212,7 +211,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               labelText: "gender".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -262,7 +261,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("service".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -283,7 +282,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               hintText: "service".tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Padding(
@@ -296,7 +295,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               labelText: "service".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -346,7 +345,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("show_room_location".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -367,7 +366,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               hintText: "show_room_location".tr,
                               hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon: Padding(
@@ -380,7 +379,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               labelText: "show_room_location".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 

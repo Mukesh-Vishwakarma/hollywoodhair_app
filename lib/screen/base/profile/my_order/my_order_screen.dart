@@ -73,7 +73,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                       child: Text("UPCOMING",
                           style: AppStyles.textStyle(
                               color: AppColors.gray99,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.normal)),
                     ),
                     Container(
@@ -108,7 +108,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                                       Text("Hair Thickening",
                                           style: AppStyles.textStyle(
                                               color: AppColors.black,
-                                              fontSize: dimen12,
+                                              fontSize: 14.0,
                                               weight: FontWeight.w500)),
                                       SizedBox(height: 7),
                                       Row(
@@ -141,7 +141,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                                                                   color: AppColors
                                                                       .gray99,
                                                                   fontSize:
-                                                                      dimen12,
+                                                                      14.0,
                                                                   weight: FontWeight
                                                                       .normal)),
                                                           Text("HH0144PL384S",
@@ -150,7 +150,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                                                                       AppColors
                                                                           .black,
                                                                   fontSize:
-                                                                      dimen12,
+                                                                      14.0,
                                                                   weight:
                                                                       FontWeight
                                                                           .w500)),
@@ -172,7 +172,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                                                 child: Text("Sun 1 Aug, 2023",
                                                     style: AppStyles.textStyle(
                                                         color: AppColors.gray99,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight:
                                                             FontWeight.normal)),
                                               )
@@ -200,7 +200,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                               child: Text("Sushant Dhasmana",
                                   style: AppStyles.textStyle(
                                       color: AppColors.black,
-                                      fontSize: dimen12,
+                                      fontSize: 14.0,
                                       weight: FontWeight.w500)),
                             ),
                             Padding(
@@ -209,7 +209,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                               child: Text("+91 431243 87234",
                                   style: AppStyles.textStyle(
                                       color: AppColors.gray99,
-                                      fontSize: dimen12,
+                                      fontSize: 14.0,
                                       weight: FontWeight.normal)),
                             ),
 
@@ -219,7 +219,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
                               child: Text("user.hollywoodhair@gmail.com",
                                   style: AppStyles.textStyle(
                                       color: AppColors.gray99,
-                                      fontSize: dimen12,
+                                      fontSize: 14.0,
                                       weight: FontWeight.normal)),
                             ),
 

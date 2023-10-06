@@ -45,38 +45,28 @@ class SignUpController extends GetxController {
         'device_id': '2',
         'password': passwordController.text.toString(),
       });
-      ShopifyUser value;
-      ShopifyAuth shopifyAuth = ShopifyAuth.instance;
-      value = await shopifyAuth.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-          firstName: nameController.text,
-          lastName: "");
-      print(value);
-      print(value.email);
-      print('create Data');
-      // print(params.toString());
+      // ShopifyUser value;
+      // ShopifyAuth shopifyAuth = ShopifyAuth.instance;
+      // value = await shopifyAuth.createUserWithEmailAndPassword(
+      //     email: emailController.text,
+      //     password: passwordController.text,
+      //     firstName: nameController.text,
+      //     lastName: "");
+      print(params.toString());
       BaseModel baseModel = await ApiProvider.base().funRegister(params);
       isPageLoad.value = false;
-      // progressDialog.dismiss();
       print('create Data');
       print(baseModel.result);
       if (baseModel.result == "1") {
         successToast(baseModel.message!);
         otpApi();
-        // Get.back();
       } else {
         successToast(baseModel.message!);
-        // isPageLoad.value = false;
-        // failedToast(userBean.msg!);
       }
     } on HttpException catch (exception) {
-      // progressDialog.dismiss();
       print("sdjbhjc===>1  ${exception.message}");
       isPageLoad.value = false;
-      // failedToast(exception.message);
     } catch (exception) {
-      // progressDialog.dismiss();
       print("sdjbhjc===>2 {exception.toString()}");
       isPageLoad.value = false;
       failedToast("User already register!");
@@ -116,19 +106,13 @@ class SignUpController extends GetxController {
         // Get.back();
       } else {
         successToast(baseModel.message!);
-        // isPageLoad.value = false;
-        // failedToast(userBean.msg!);
       }
     } on HttpException catch (exception) {
-      // progressDialog.dismiss();
       print(exception.message);
       isPageLoad.value = false;
-      // failedToast(exception.message);
     } catch (exception) {
-      // progressDialog.dismiss();
       print(exception.toString());
       isPageLoad.value = false;
-      // failedToast(exception.toString());
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_style.dart';
 import '../../../../util/res_dimens.dart';
@@ -70,7 +70,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     children: [
                       Text("our_saloons".tr,
                           style: AppStyles.textStyle(
-                            fontSize: dimen12, weight: FontWeight.w400,)
+                            fontSize: 14.0, weight: FontWeight.w400,)
                       ),
                       const Padding(
                         padding: EdgeInsets.only(top: 15.0),
@@ -92,7 +92,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     children: [
                       Text("languages".tr,
                           style: AppStyles.textStyle(
-                            fontSize: dimen12,
+                            fontSize: 14.0,
                             weight: FontWeight.w400,
                           )),
                       const Padding(
@@ -115,7 +115,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     children: [
                       Text("contact_us".tr,
                           style: AppStyles.textStyle(
-                            fontSize: dimen12,
+                            fontSize: 14.0,
                             weight: FontWeight.w400,
                           )),
                       const Padding(

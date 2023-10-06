@@ -5,6 +5,7 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'booking_controller.dart';
 
@@ -15,12 +16,12 @@ class BookingScreen extends GetView<BookingController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
           title: Text("booking_new".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.w500)),
+                  fontSize: 20.0, weight: FontWeight.w500)),
           actions: const <Widget>[
             // GestureDetector(
             //   child: Padding(
@@ -84,7 +85,7 @@ class BookingScreen extends GetView<BookingController> {
             //             "my_appointments".tr,
             //             style: AppStyles.textStyle(
             //               color: AppColors.primaryColor,
-            //               fontSize: dimen12,
+            //               fontSize: 14.0,
             //               weight: FontWeight.normal,
             //             ),
             //           ),

@@ -64,7 +64,7 @@ SizedBox(height: 20),
                   hintText: 'old_password'.tr,
                   hintStyle: AppStyles.textStyle(
                     color: AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
                   suffixIcon: Obx(() => Padding(
@@ -83,7 +83,7 @@ SizedBox(height: 20),
                   labelText: 'old_password'.tr,
                   labelStyle: AppStyles.textStyle(
                     color: AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
 
@@ -150,7 +150,7 @@ SizedBox(height: 20),
                         hintText: 'new_password'.tr,
                         hintStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
                         suffixIcon: Obx(() => Padding(
@@ -169,7 +169,7 @@ SizedBox(height: 20),
                         labelText: 'new_password'.tr,
                         labelStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
 
@@ -242,7 +242,7 @@ SizedBox(height: 20),
                         hintText: 'confirm_password'.tr,
                         hintStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
                         suffixIcon: Obx(() => Padding(
@@ -261,7 +261,7 @@ SizedBox(height: 20),
                         labelText: 'confirm_password'.tr,
                         labelStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
 

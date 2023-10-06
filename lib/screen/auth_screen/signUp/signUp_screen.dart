@@ -12,6 +12,8 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 import 'signUp_controller.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
+  const SignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 child: Text(
                   "get_started".tr,
                   style: AppStyles.textStyle(
-                      fontSize: dimen20, weight: FontWeight.w500),
+                      fontSize: 24.0, weight: FontWeight.w400),
                 ),
               ),
             ),
@@ -50,7 +52,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   "get_started_dis".tr,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyle(
-                      fontSize: dimen12,
+                      fontSize: 13.0,
                       color: Colors.grey,
                       weight: FontWeight.w400),
                 ),
@@ -60,7 +62,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 key: controller.formLoginKey,
                 child: Column(children: [
                   Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 50),
+                    margin: const EdgeInsets.only(left: 20, right: 20, top: 50),
                     child: textField(
                         controller.nameController,
                         "plz_enter_name".tr,
@@ -71,7 +73,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                    margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
                     child: textField(
                         controller.emailController,
                         "plz_enter_email".tr,
@@ -104,7 +106,7 @@ class SignUpScreen extends GetView<SignUpController> {
                                 // height: 46,
                                 child: TextFormField(
                                   style: AppStyles.textStyle(
-                                    fontSize: dimen12,
+                                    fontSize: 14.0,
                                     weight: FontWeight.normal,
                                   ),
                                   controller: controller.contactController,
@@ -157,7 +159,7 @@ class SignUpScreen extends GetView<SignUpController> {
                                               ),
                                               // Optional. Styles the search field.
                                               textStyle: AppStyles.textStyle(
-                                                fontSize: dimen12,
+                                                fontSize: 14.0,
                                                 weight: FontWeight.normal,
                                               ),
                                               inputDecoration: InputDecoration(
@@ -192,7 +194,7 @@ class SignUpScreen extends GetView<SignUpController> {
                                                 controller.countryCode
                                                     .toString(),
                                                 style: AppStyles.textStyle(
-                                                  fontSize: dimen12,
+                                                  fontSize: 14.0,
                                                   weight: FontWeight.normal,
                                                 ),
                                               ),
@@ -224,7 +226,7 @@ class SignUpScreen extends GetView<SignUpController> {
                                     labelText: 'phone_number'.tr,
                                     labelStyle: AppStyles.textStyle(
                                       color: AppColors.black,
-                                      fontSize: dimen12,
+                                      fontSize: 14.0,
                                       weight: FontWeight.normal,
                                     ),
                                     border: OutlineInputBorder(
@@ -318,7 +320,7 @@ class SignUpScreen extends GetView<SignUpController> {
                           child: Text("signUp_with".tr,
                               style: AppStyles.textStyle(
                                 color: AppColors.gray99,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               )),
                         ),
@@ -362,7 +364,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             child: Text("Google",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.normal,
                                 )),
                           ),
@@ -380,7 +382,7 @@ class SignUpScreen extends GetView<SignUpController> {
                       child: RichText(
                         text: TextSpan(
                           text: "already_have_an_account".tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
                             fontFamily: 'JosefinSans',
@@ -390,7 +392,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             TextSpan(text: " "),
                             TextSpan(
                                 text: "sign_in".tr,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15,
                                   color: Colors.black,

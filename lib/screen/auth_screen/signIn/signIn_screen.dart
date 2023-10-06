@@ -23,7 +23,7 @@ class SignInScreen extends GetView<SignInController> {
               child: Text(
                 "welcome_back".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen20, weight: FontWeight.w500),
+                    fontSize: 24.0, weight: FontWeight.w500),
               ),
             ),
           ),
@@ -33,7 +33,7 @@ class SignInScreen extends GetView<SignInController> {
               child: Text(
                 "welcome_dis".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen12,
+                    fontSize: 13.0,
                     color: Colors.grey,
                     weight: FontWeight.w400),
               ),
@@ -60,7 +60,7 @@ class SignInScreen extends GetView<SignInController> {
                     controller: controller.passwordController,
                     obscureText: controller.passwordVisible.value,
                     style: AppStyles.textStyle(
-                      fontSize: dimen12,
+                      fontSize: 14.0,
                       weight: FontWeight.normal,
                     ),
                     onTap: (){
@@ -82,7 +82,7 @@ class SignInScreen extends GetView<SignInController> {
                       hintText:'password'.tr,
                       hintStyle:AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
                       suffixIcon:
@@ -96,7 +96,7 @@ class SignInScreen extends GetView<SignInController> {
                       labelText: 'password'.tr,
                       labelStyle: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
 
@@ -157,7 +157,7 @@ class SignInScreen extends GetView<SignInController> {
                         padding: const EdgeInsets.only(right: 20, top: 20),
                         child: Text("forgot_password".tr,style: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 13.0,
                           weight: FontWeight.normal,
                         ),),
                       ),
@@ -238,7 +238,7 @@ class SignInScreen extends GetView<SignInController> {
                           "sign_with".tr,
                           style: AppStyles.textStyle(
                         color: AppColors.gray99,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                         )
                         ),
@@ -287,7 +287,7 @@ class SignInScreen extends GetView<SignInController> {
                             "Google",
                               style: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               )
                           ),

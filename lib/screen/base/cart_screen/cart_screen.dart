@@ -6,13 +6,10 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
-import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../util/theme_service.dart';
-import '../../checkout_screen/checkout_controller.dart';
 import 'cart_controller.dart';
 
 class CartScreen extends GetView<CartController> {

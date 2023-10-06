@@ -50,7 +50,7 @@ class ContactScreen extends GetView<ContactController> {
                     'support@hollywoodhair.com',
                     style: TextStyle(
                       color: Color(0xFF333333),
-                      fontSize:dimen12,
+                      fontSize:14.0,
                       fontFamily: 'TT Firs Neue Trl',
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
@@ -78,7 +78,7 @@ class ContactScreen extends GetView<ContactController> {
                   child: Text(
                     '+48 12349 34823',
                       style: AppStyles.textStyle(
-                          fontSize: dimen12, weight: FontWeight.normal)
+                          fontSize: 14.0, weight: FontWeight.normal)
                   ),
                 )
               ],
