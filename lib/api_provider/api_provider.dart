@@ -318,44 +318,7 @@ class ApiProvider {
     }
   }
 
-  //***** update address
 
-  Future funUpdateAddress(FormData params) async {
-    try {
-      print("response of update address >>>$params");
-      Response response = await _dio.post(strUpdateAddress, data: params);
-      print("response of update address  >>>${response.data!}");
-      return BaseModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
-
-  //***** get  address by id
-
-  Future funGetAddressById(FormData params) async {
-    try {
-      print("response of get  address by id>>>$params");
-      Response response = await _dio.post(strGetAddressByID, data: params);
-      print("response of get  address by id>>>${response.data!}");
-      return GetAddressByIdModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
-
-  //***** delete address
-
-  Future funDeleteAddress(FormData params) async {
-    try {
-      print("response of delete address>>>$params");
-      Response response = await _dio.post(strDeleteAddress, data: params);
-      print("response of delete address>>>${response.data!}");
-      return BaseModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
 
   //***** faq
 

@@ -336,8 +336,9 @@ class SettingScreen extends GetView<SettingsController> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                           onTap: () {
-                             isLogoutResponse();
+                            onTap: () {
+                              controller.signoutFun();
+
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10, top: 10),
@@ -358,7 +359,7 @@ class SettingScreen extends GetView<SettingsController> {
                               Get.back();
                             },
                             child: Container(
-                                // width: Get.size.width,
+                              // width: Get.size.width,
                                 padding: EdgeInsets.only(
                                     top: 10, bottom: 10, left: 10, right: 10),
                                 decoration: BoxDecoration(
