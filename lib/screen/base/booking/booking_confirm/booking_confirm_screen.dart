@@ -41,7 +41,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
               padding: EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 15),
               width: Get.size.width,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(30.0),
                   topLeft: Radius.circular(30.0),
                   // topRight: Radius.circular(0.0),
@@ -82,11 +82,13 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
             GestureDetector(
               onTap: (){
                 // Get.back();
-                Get.toNamed(AppPages.calendlyScreen);
+                // Get.toNamed(AppPages.calendlyScreen);
+                Get.toNamed(AppPages.bookingFormScreen);
+
               },
               child: Container(
-                margin: EdgeInsets.only(left: 20, right: 20, top: 15,bottom: 20),
-                padding: EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
+                margin: const EdgeInsets.only(left: 20, right: 20, top: 15,bottom: 20),
+                padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(7),
                   color: AppColors.color7C,
@@ -98,7 +100,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 100),
                           child: Text(
-                            "Book consultation",
+                            "book_consultation".tr,
                             style: AppStyles.textStyle(
                               color: AppColors.lightBackgroundColor,
                               fontSize: dimen12,

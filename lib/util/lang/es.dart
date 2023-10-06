@@ -119,4 +119,5 @@ const es_SP = {
   'consult_with_experts': 'Konsultuj się z ekspertami',
   'Book_in_Store_appointment': 'Zarezerwuj termin w sklepie stacjonarnym',
   'Unlock_your_perfect_look': 'Odblokuj swój idealny wygląd',
+  'book_consultation': 'Reservar consulta',
 };

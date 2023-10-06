@@ -102,7 +102,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             "plz_enter_name".tr,
                             controller.name,
                             'name'.tr,
-                            "name"),
+                            "name",
+                        true),
                       ),
                       SizedBox(
                         height: 20,
@@ -123,7 +124,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             "plz_enter_email".tr,
                             controller.email,
                             'email'.tr,
-                            "email"),
+                            "email",
+                        true),
                       ),
                       SizedBox(
                         height: 20,

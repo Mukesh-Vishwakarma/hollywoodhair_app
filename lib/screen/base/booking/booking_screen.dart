@@ -1,4 +1,3 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
@@ -10,17 +9,19 @@ import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'booking_controller.dart';
 
 class BookingScreen extends GetView<BookingController> {
+  const BookingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
           title: Text("booking_new".tr,
               style: AppStyles.textStyle(
                   fontSize: dimen15, weight: FontWeight.w500)),
-          actions: <Widget>[
+          actions: const <Widget>[
             // GestureDetector(
             //   child: Padding(
             //     padding: const EdgeInsets.only(right: 20),
@@ -41,7 +42,7 @@ class BookingScreen extends GetView<BookingController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ListView.builder(
                 // scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -109,16 +110,14 @@ class BookingScreen extends GetView<BookingController> {
       onTap: (){
         if(index==1){
           Get.toNamed(AppPages.bookingFormScreen);
-
         }else{
         // name: AppPages.confirmBookingScreen
           Get.toNamed(AppPages.confirmBookingScreen);
-
         }
       },
       child: Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(bottom: 10),
           // height: 200,
           width: Get.size.width,
           decoration: (BoxDecoration(

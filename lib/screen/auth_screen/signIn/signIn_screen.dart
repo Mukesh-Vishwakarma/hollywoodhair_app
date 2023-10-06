@@ -49,7 +49,7 @@ class SignInScreen extends GetView<SignInController> {
                       "plz_enter_email".tr,
                       controller.email,
                       'email'.tr,
-                      "email"),
+                      "email",true),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20, top: 40),

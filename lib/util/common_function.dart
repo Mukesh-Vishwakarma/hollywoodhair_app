@@ -11,7 +11,7 @@ import 'app_style.dart';
 import 'assets.dart';
 import 'route/app_pages.dart';
 
-textField(controller, validationMsg, text, hintText, type) {
+textField(controller, validationMsg, text, hintText, type,label) {
   return TextFormField(
     controller: controller,
     style: AppStyles.textStyle(
@@ -28,7 +28,6 @@ textField(controller, validationMsg, text, hintText, type) {
           return 'Invalid Email';
         }
       }
-
       return null;
     },
     //   if (value.toString().isEmpty) {
@@ -59,12 +58,12 @@ textField(controller, validationMsg, text, hintText, type) {
             )
           : SizedBox(),
 
-      labelText: hintText,
-      labelStyle: AppStyles.textStyle(
+      labelText: (label)?hintText:"null",
+      labelStyle: (label)?AppStyles.textStyle(
         color: AppColors.black,
         fontSize: dimen12,
         weight: FontWeight.normal,
-      ),
+      ):null,
 
       // const TextStyle(
       //     color: AppColors.color3D,
@@ -212,8 +211,7 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
               // hintStyle: const TextStyle(
               //     fontSize: 13, fontWeight: FontWeight.w400),
               labelText: hintText,
-              labelStyle:
-                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              labelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide:

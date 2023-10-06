@@ -385,7 +385,7 @@ class AddressScreen extends GetView<AddressController> {
                                             "recipient_name".tr,
                                             controller.recipientName,
                                             'recipient_name'.tr,
-                                            "recipient_name"),
+                                            "recipient_name",true),
                                       ),
 
                                       Container(
@@ -738,7 +738,7 @@ class AddressScreen extends GetView<AddressController> {
                                             "full_address".tr,
                                             controller.fullAddress,
                                             'full_address'.tr,
-                                            "full address"),
+                                            "full address",true),
                                       ),
 
                         Obx(() => !controller.isPageLoad.value
@@ -944,7 +944,7 @@ class AddressScreen extends GetView<AddressController> {
                                             "recipient_name".tr,
                                             controller.recipientName,
                                             'recipient_name'.tr,
-                                            "recipient_name"),
+                                            "recipient_name",true),
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(
@@ -1297,7 +1297,7 @@ class AddressScreen extends GetView<AddressController> {
                                             "full_address".tr,
                                             controller.fullAddress,
                                             'full_address'.tr,
-                                            "full address"),
+                                            "full address",true),
                                       ),
 
                                       Obx(() => !controller.isPageLoad.value
@@ -1311,7 +1311,7 @@ class AddressScreen extends GetView<AddressController> {
                                             }
                                           },
                                           child: Padding(
-                                              padding: EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   left: 20,
                                                   right: 20,
                                                   top: 80,
@@ -1319,7 +1319,7 @@ class AddressScreen extends GetView<AddressController> {
                                               child: buttom(
                                                   "add_new_address".tr)))
                                           : Padding(
-                                        padding: EdgeInsets.only(
+                                        padding: const EdgeInsets.only(
                                             left: 20,
                                             right: 20,
                                             top: 80,

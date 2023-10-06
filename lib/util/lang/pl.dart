@@ -120,5 +120,6 @@ const pl_PL = {
   'consult_with_experts': 'Consulta con Expertos',
   'Book_in_Store_appointment': 'Reservar Cita en Tienda',
   'Unlock_your_perfect_look': 'Descubre tu Look Perfecto',
+  'book_consultation': 'Zarezerwuj konsultację',
 
 };

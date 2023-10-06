@@ -119,4 +119,5 @@ const en_US = {
   'consult_with_experts': 'Consult with experts',
   'Book_in_Store_appointment': 'Book In-Store Appointment',
   'Unlock_your_perfect_look': 'Unlock your perfect look',
+  'book_consultation': 'Book consultation',
 };

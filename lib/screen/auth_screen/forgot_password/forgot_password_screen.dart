@@ -66,7 +66,7 @@ class ForgotPasswordScreen extends GetView<ForgotScreenController> {
                             "plz_enter_email".tr,
                             controller.email,
                             'email'.tr,
-                            "email"),
+                            "email",true),
                       ),
                       SizedBox(height: 80,),
 
