@@ -6,9 +6,9 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
-import 'package:sizer/sizer.dart';
 
 import 'search_product_controller.dart';
 
@@ -16,145 +16,221 @@ class SearchProductScreen extends GetView<SearchProductController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 150,
-            width: Get.size.width,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 1),
-                  blurRadius: 5,
-                  color: Colors.black.withOpacity(0.3),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.only(top: 30),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 50),
-                  child: Image.asset(
-                    Assets.back,
-                    height: 20,
-                    width: 15,
+      body: InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: () {
+          controller.focusNode.unfocus();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 150,
+              width: Get.size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 1),
+                    blurRadius: 5,
+                    color: Colors.black.withOpacity(0.3),
                   ),
-                ),
-                Container(
-                  height: 52,
-                  width: 80.w,
-                  margin: EdgeInsets.only(top: 40, left: 15),
-                  decoration: BoxDecoration(
-                      color: AppColors.backGroundColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                          color: AppColors.searchBorderColor, width: 1.0)),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                  child: Container(
-                    height: 52,
-                    width: 100.w,
+                ],
+              ),
+              // padding: EdgeInsets.only(top: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
+                        InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              size: 22,
+                            )),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: 80.w,
+                          height: 50,
                           child: TextFormField(
+                            focusNode: controller.focusNode,
                             onTap: () {},
                             controller: controller.searchController,
                             onChanged: (value) {
-                              // text = value;
                               if (value.isNotEmpty) {
+                                controller.searchText.value = true;
                                 controller.searchProducts(value);
                               }
+                              if (value.isEmpty) {
+                                controller.searchText.value = false;
+                                controller.searchController.clear();
+                                controller.focusNode.unfocus();
+                                controller.searchedProduct.value = [];
+                              }
                             },
-                            readOnly: false,
                             decoration: InputDecoration(
-                              isDense: true,
-                              // contentPadding: const EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(15.0),
+                              suffixIcon: Obx(
+                                () => controller.searchText.isTrue
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          controller.searchController.clear();
+                                          controller.isLoadPage.value = true;
+                                          controller.searchedProduct.value = [];
+                                          controller.focusNode.unfocus();
+                                        },
+                                        child: SvgPicture.asset(
+                                          Assets.cross,
+                                        )).marginOnly(right: 10)
+                                    : SizedBox(),
+                              ),
+                              suffixIconConstraints:
+                                  BoxConstraints(minHeight: 30, minWidth: 30),
                               hintText: "search here",
                               hintStyle: AppStyles.textStyle(
                                   weight: FontWeight.w400,
                                   fontSize: 12.0,
                                   color: AppColors.searchHintColor),
-                              border: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              focusedErrorBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                            ),
-                            style: AppStyles.textStyle(
-                              weight: FontWeight.w400,
-                              fontSize: 16.0,
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.searchBorderColor)),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: AppColors.red2C)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.searchBorderColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.searchBorderColor)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppColors.primaryColor)),
                             ),
                             cursorColor: AppColors.primaryColor,
                           ),
                         ),
-                        Obx(() => controller.searchedProduct.value.isEmpty
-                            ? Container()
-                            : GestureDetector(
-                                onTap: () {
-                                  controller.searchController.clear();
-                                },
-                                child: SvgPicture.asset(Assets.cross))),
-                        const SizedBox(width: 10),
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 0),
-                  Obx(() => !controller.isLoadPage.value
-                      ? controller.searchedProduct.isEmpty
-                          ? Center(
-                              child: NoDataScreen(
-                              title: "No Product Found",
-                            ))
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              // controller: controller.listScrollController.value,
-                              itemCount: controller.searchedProduct.length,
-                              itemBuilder: (context, index) {
-                                return listTile(
-                                    item: controller
-                                        .searchedProduct.value[index]);
-                                // return historyText(index);
-                              })
-                      : shimmerDemo()),
-                  Obx(() => Visibility(
-                        visible: controller.isPageLoad.value ? true : false,
-                        child: Container(
-                          child: const Text("Loading..."),
-                        ).marginOnly(top: 30, bottom: 30),
-                      )),
+                  SizedBox(
+                    height: 25,
+                  )
                 ],
               ),
             ),
-          )
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(() => !controller.isLoadPage.value
+                          ? controller.searchedProduct.isEmpty
+                              ? Container(
+                                  height: 80.h,
+                                  child: Center(
+                                      child: NoDataScreen(
+                                    image: Assets.noResult,
+                                    height: 80,
+                                    width: 80,
+                                    title: "No Results Found",
+                                    description:
+                                        "\"We were unable to locate the product you are searching for.\"",
+                                  )),
+                                )
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: controller.searchedProduct.length,
+                                  itemBuilder: (context, index) {
+                                    return listTile(
+                                        item: controller
+                                            .searchedProduct.value[index]);
+                                  })
+                          : Container(
+                              height: 80.h,
+                              child: Center(
+                                  child: NoDataScreen(
+                                title: "Nothing Searched Yet",
+                                image: Assets.nothingSearch,
+                                height: 180,
+                                width: 180,
+                              )),
+                            )),
+                      Obx(() => Visibility(
+                            visible: controller.isPageLoad.value ? true : false,
+                            child: Container(
+                              child: const Text("Loading..."),
+                            ).marginOnly(top: 30, bottom: 30),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   listTile({required Product item}) {
-    return Container(
-      child: Row(
+    return InkWell(
+      onTap: () {
+        Get.toNamed(AppPages.allProductDetailsScreen,
+            arguments: {"product_id": item.id});
+      },
+      child: Column(
         children: [
-          Image.network(item.image),
-          Column(children: [
-            Text("${item.title}"),
-            Text("${item.formattedPrice}")
-          ]),
+          Row(
+            children: [
+              Image.network(
+                item.image,
+                height: 100,
+                width: 100,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: Adaptive.w(58),
+                        child: IntrinsicWidth(
+                          child: Text(
+                            "${item.title}",
+                            style: AppStyles.textStyle(
+                                fontSize: 13.0, weight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "${item.formattedPrice}",
+                        style: AppStyles.textStyle(
+                            fontSize: 12.0, weight: FontWeight.w500),
+                      )
+                    ]),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          )
         ],
       ),
     );
@@ -242,45 +318,8 @@ class SearchProductScreen extends GetView<SearchProductController> {
                   ),
                 ),
               )),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Image.asset(
-              //     Assets.cancel,
-              //     height: 15,
-              //     width: 15,
-              //   ),
-              // )
             ],
           )),
     );
-  }
-
-  searchText() {
-    return Container(
-        margin: EdgeInsets.only(left: 10, right: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Hair Spray",
-                style: AppStyles.textStyle(
-                  weight: FontWeight.w400,
-                  fontSize: 16.0,
-                ),
-              ),
-            )),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                Assets.cancel,
-                height: 15,
-                width: 15,
-              ),
-            )
-          ],
-        ));
   }
 }

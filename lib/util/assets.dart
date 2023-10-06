@@ -72,6 +72,8 @@ class Assets {
   static const String trashIcon = 'assets/images/ic_delete.svg';
   static const String minusIcon = 'assets/images/ic_minus.svg';
   static const String plusIcon = 'assets/images/ic_plus.svg';
+  static const String noResult = 'assets/images/no_result_found.png';
+  static const String nothingSearch = 'assets/images/nothing_search_yet.png';
   static const String bag = 'assets/images/bag.png';
   static const String likeCard = 'assets/images/like_card.png';
   static const String notification1 = 'assets/dummy_images/notification1.png';

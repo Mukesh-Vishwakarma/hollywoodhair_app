@@ -35,11 +35,6 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
   final TranslationService translationService = TranslationService();
 
   var testConvert = "".obs;
-
-  // Instead of this line:
-// var dataIsLoading = true.obs;
-
-// You should define the products list:
   var rootInfo = RootInfo('', []).obs;
 
   var isLoader = true.obs;
@@ -88,36 +83,8 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
     try {
       List<Product>? _products =
           await shopifyStore.getProductsByIds([productId.value]);
-      //
-      // final translatedText = await translationService.translate("$_products", TranslateLanguage.french);
-      // if (translatedText != null) {
-      // // Do something with the translated text
-      // } else {
-      // // Handle the case where translation failed
-      // }
-
       products.value = _products!;
-      // products.value = _products!;
-
-      print("jbhshdfc==>1 ${products.value[0].formattedPrice}");
-      print("jbhshdfc==>2 ${products.value[0].descriptionHtml}");
-      print("jbhshdfc==>3 ${products.value[0].description}");
-      print("jbhshdfc==>4 ${products.value}");
-
-      // productDetailsApi();
-
       dataIsLoading.value = false;
-      // for (final product in products) {
-      //   final rating = product.productVariants[0].customAttributes.firstWhere(
-      //         (attribute) => attribute.key == 'rating', // Replace with your actual rating attribute key
-      //     orElse: () => null,
-      //   );
-      //
-      //   if (rating != null) {
-      //     print('Product Title: ${product.title}');
-      //     print('Product Rating: ${rating.value}');
-      //   }
-      // }
     } catch (e) {
       dataIsLoading.value = false;
       print("message: $e");

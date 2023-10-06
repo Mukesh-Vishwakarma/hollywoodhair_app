@@ -8,7 +8,6 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../model/salon_model.dart';
 import '../../util/app_colors.dart';

@@ -136,42 +136,35 @@ class BookingScreen extends GetView<BookingController> {
                           height: 270,
                           width: double.infinity,
                           fit: BoxFit.fill,
-                          image: AssetImage(
-                              controller.bookingList[index].image.toString())),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10, left: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      controller.bookingList[index].text
-                                          .toString(),
-                                      style: AppStyles.textStyle(
-                                          fontSize: dimen12,
-                                          weight: FontWeight.w500)),
-                                  // Text(
-                                  //     controller.bookingList[index].description
-                                  //         .toString(),
-                                  //     style: AppStyles.textStyle(
-                                  //         fontSize: dimen12,
-                                  //         weight: FontWeight.normal)),
-                                ],
-                              ),
+                          image: AssetImage(controller.bookingList[index].image.toString())),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    controller.bookingList[index].text.toString(),
+                                    style: AppStyles.textStyle(
+                                        fontSize: 12.0,
+                                        weight: FontWeight.w500)),
+                              ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 0),
-                            child: Image.asset(
-                              Assets.arrowRight,
-                              height: 15,
-                              width: 15,
-                            ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 3.0),
+                              child: Icon(Icons.arrow_forward_ios,
+                                size: 12,),
+                            )
+                            // Image.asset(
+                            //   Assets.arrowRight,
+                            //   height: 15,
+                            //   width: 15,
+                            // )
+                          ],
+                        ),
                       )
                     ],
                   )),

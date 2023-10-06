@@ -47,6 +47,8 @@ import 'package:hollywood_hair/screen/notification/notification_binding.dart';
 import 'package:hollywood_hair/screen/notification/notification_screen.dart';
 import 'package:hollywood_hair/screen/our_salons/our_salons_binder.dart';
 import 'package:hollywood_hair/screen/our_salons/our_salons_screen.dart';
+import 'package:hollywood_hair/screen/our_transformations/our_transformations_binder.dart';
+import 'package:hollywood_hair/screen/our_transformations/our_transformations_screen.dart';
 import 'package:hollywood_hair/screen/product_details/product_details_binding.dart';
 import 'package:hollywood_hair/screen/product_details/product_details_screen.dart';
 import 'package:hollywood_hair/screen/splash/splash_binding.dart';
@@ -221,6 +223,12 @@ class AppRoutes {
       name: AppPages.ourSalons,
       page: () => OurSalonsScreen(),
       binding:OurSalonsBinding(),
+    ),
+
+    GetPage(
+      name: AppPages.ourTransformations,
+      page: () => OurTransformationsScreen(),
+      binding:OurTransformationsBinding(),
     ),
   ];
 }

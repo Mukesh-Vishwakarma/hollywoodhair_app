@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hollywood_hair/model/all_transformations_model.dart';
 import 'package:hollywood_hair/model/base_model.dart';
 import 'package:hollywood_hair/model/faq_model.dart';
 import 'package:hollywood_hair/model/get_address_by_id.dart';
@@ -403,6 +404,18 @@ class ApiProvider {
       Response response = await _dio.post(strGetProductList, data: params);
       print("response of get all product>>>${response.data!}");
       return GetAllProductModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  //***** get all transformations
+
+  Future funGetAllTransformations() async {
+    try {
+      Response response = await _dio.get(strGetAllTransformations);
+      print("response of get all product>>>${response.data!}");
+      return AllTransformationsModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

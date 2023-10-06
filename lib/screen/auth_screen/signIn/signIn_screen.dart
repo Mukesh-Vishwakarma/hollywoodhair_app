@@ -260,7 +260,7 @@ class SignInScreen extends GetView<SignInController> {
                     width: Get.size.width,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: AppColors.colorE9,
+                        color: AppColors.grayE9,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(10),

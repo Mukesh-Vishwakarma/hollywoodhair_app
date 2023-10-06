@@ -7,9 +7,9 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../../util/theme_service.dart';
 import 'home_controller.dart';
@@ -91,7 +91,7 @@ class HomeScreen extends GetView<HomeController> {
                       GestureDetector(
                         child: const Icon(
                           Icons.arrow_back,
-                          size: 20,
+                          size: 22,
                         ),
                         onTap: () {
                           Get.back();
@@ -100,7 +100,7 @@ class HomeScreen extends GetView<HomeController> {
                       Container(
                         margin: const EdgeInsets.only(left: 24),
                         child: Text("Menu",
-                            style: AppStyles.textStyle(fontSize: dimen15)),
+                            style: AppStyles.textStyle(fontSize: 17.0)),
                       ),
                     ],
                   ),
@@ -123,7 +123,7 @@ class HomeScreen extends GetView<HomeController> {
                       children: [
                         Text("our_saloons".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12, weight: FontWeight.w400,)
+                              fontSize: 14.0, weight: FontWeight.w400,)
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5.0),
@@ -133,9 +133,27 @@ class HomeScreen extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 12,
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(AppPages.ourTransformations);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("our_transformation".tr,
+                            style: AppStyles.textStyle(
+                              fontSize: 14.0, weight: FontWeight.w400,)
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Icon(Icons.arrow_forward_ios,
+                            size: 14,),
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 12),
                   GestureDetector(
                     onTap: () {
                       Get.toNamed(AppPages.languagesScreen);
@@ -145,7 +163,7 @@ class HomeScreen extends GetView<HomeController> {
                       children: [
                         Text("languages".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w400,
                             )),
                         Padding(
@@ -156,9 +174,7 @@ class HomeScreen extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   GestureDetector(
                     onTap: () {
                       Get.toNamed(AppPages.contactScreen);
@@ -168,7 +184,7 @@ class HomeScreen extends GetView<HomeController> {
                       children: [
                         Text("contact_us".tr,
                             style: AppStyles.textStyle(
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w400,
                             )),
                         Padding(

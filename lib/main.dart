@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hollywood_hair/screen/tryOn_screen/tryOn_controller.dart';
 import 'package:logging/logging.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/shopify_config.dart';
-import 'package:sizer/sizer.dart';
-
 import 'util/app_constants.dart';
 import 'util/app_style.dart';
 import 'util/lang/localization_service.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
-    return Sizer(builder: (context, orientation, deviceType) {
+    return ResponsiveSizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
