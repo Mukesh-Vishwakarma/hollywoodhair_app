@@ -63,7 +63,7 @@ class ProfileScreen extends GetView<ProfileController> {
                             child: Obx(() => Text(
                                 controller.userName.toString(),
                                 style: AppStyles.textStyle(
-                                    fontSize: dimen14,
+                                    fontSize: 20.0,
                                     color: Colors.white,
                                     weight: FontWeight.w500))),
                           ),

@@ -22,19 +22,19 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
             title: Text('change_password'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),
         body: SingleChildScrollView(child: Column(
             children: [
-SizedBox(height: 20),
+const SizedBox(height: 20),
           Form(
               key: controller.formLoginKey,
               child: Column(children: [

@@ -26,7 +26,7 @@ class ContactScreen extends GetView<ContactController> {
               )),
           title: Text("contact_us".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen14, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),

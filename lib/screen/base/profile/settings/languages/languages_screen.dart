@@ -28,7 +28,7 @@ class LanguageScreen extends GetView<LanguagesController> {
                 )),
             title: Text("languages".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/no_data.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'static_controller.dart';
@@ -22,7 +21,7 @@ class StaticScreen extends GetView<StaticController> {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
@@ -31,7 +30,7 @@ class StaticScreen extends GetView<StaticController> {
             //         fontSize: dimen18, weight: FontWeight.w500)),     F
             title: Text(controller.title.value,
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

@@ -27,7 +27,7 @@ class FaqScreen extends GetView<FaqController> {
                 )),
             title: Text('FAQs'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),

@@ -8,16 +8,16 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/models/src/order/line_items_order/line_items_order.dart';
 import 'package:shopify_flutter/models/src/order/order.dart';
-import 'package:sizer/sizer.dart';
 
 import 'my_order_controller.dart';
 
 class MyOrderScreen extends GetView<MyOrderController> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
@@ -26,18 +26,19 @@ class MyOrderScreen extends GetView<MyOrderController> {
           preferredSize: Size.fromHeight(7.h),
           child: AppBar(
             elevation: 0.4,
+            titleSpacing: 0,
             backgroundColor: AppColors.colorFF,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
             title: Text("my_orders".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.w500)),
+                    fontSize: 16.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
             actions: [
               GestureDetector(
@@ -182,7 +183,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
   }
 
   productTile(LineItemsOrder lineItemsOrder) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(

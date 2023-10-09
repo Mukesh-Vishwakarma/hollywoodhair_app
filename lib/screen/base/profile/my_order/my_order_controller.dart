@@ -27,11 +27,11 @@ class MyOrderController extends GetxController {
       myOrder = _order;
       dataLoading.value = false;
       nodatafound.value = false;
-      // if (_order!.isNotEmpty) {
-      //   orderlist.value = [];
-      //   orderlist.value = _order;
-      //   nodatafound.value = false;
-      // }
+      if (_order!.isNotEmpty) {
+        orderlist.value = [];
+        orderlist.value = _order;
+        nodatafound.value = false;
+      }
     } catch (error) {
       print("message:$error");
     }

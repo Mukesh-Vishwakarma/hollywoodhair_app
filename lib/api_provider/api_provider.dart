@@ -22,6 +22,9 @@ import 'package:hollywood_hair/util/app_constants.dart';
 import '../model/all_saloon_list_model.dart';
 import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
+import '../model/shopify_model/delete_address_model.dart';
+import '../model/shopify_model/get_address_model.dart';
+import '../model/shopify_model/update_address_model.dart';
 import 'DioLogger.dart';
 import 'api_constants.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +32,11 @@ import 'package:http/http.dart' as http;
 class ApiProvider {
   Dio _dio = Dio();
   DioError? _dioError;
+
+  var headers = {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': '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',
+  };
 
   ApiProvider.shopify() {
     BaseOptions dioOptions = BaseOptions()..baseUrl = shopifyUrl;
@@ -520,6 +528,57 @@ class ApiProvider {
       Response response = await _dio.get(strGetFeaturedProducts);
       print("response of otp login >>>${response.data!}");
       return FeaturedProductsModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+
+  Future getAddressShopify({customerId}) async {
+    try {
+      Response response =
+      await _dio.get('api/2021-07/customers/$customerId/addresses.json');
+      print("response of Collections >>>${response.data!}");
+      return GetAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+
+  Future deleteAddressShopify({customerId,addressId}) async {
+    try {
+      Response response =
+      await _dio.delete('api/2021-07/customers/$customerId/addresses/$addressId.json');
+      print("response of Collections >>>${response.data!}");
+      return DeleteAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getUpdateCustomerUpdates(customerId,addressId,FormData params) async {
+    try {
+
+      // var headers = {
+      //   'Content-Type': 'application/json',
+      //   'X-Shopify-Access-Token': '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',
+      // };
+      //
+      // var dio = Dio();
+      // var response = await dio.request(
+      //   'https://a02f54.myshopify.com/admin/api/2021-07/customers/7301030707535/addresses/9789196960079.json',
+      //   options: Options(
+      //     method: 'PUT',
+      //     headers: headers,
+      //   ),
+      //   data: data,
+      // );
+
+      print("response of get profile >>>$params");
+      Response response = await _dio.post('api/2021-07/customers/$customerId/addresses/$addressId.json', data: jsonEncode(params));
+      print("response of get profile >>>${response.data!}");
+      return UpdateAddressModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

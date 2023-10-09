@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 
@@ -31,7 +30,7 @@ class SettingScreen extends GetView<SettingsController> {
           //         fontSize: dimen18, weight: FontWeight.w500)),
           title: Text("setting".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen14, weight: FontWeight.normal)),
+                  fontSize: 18.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),

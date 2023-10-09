@@ -30,7 +30,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
               )),
           title: Text("edit_profile".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen14, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),

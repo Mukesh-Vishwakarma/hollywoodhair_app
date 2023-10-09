@@ -28,7 +28,7 @@ class CheckoutScreen extends GetView<CheckoutController> {
                 title: Text(
                   "checkout".tr,
                   style: AppStyles.textStyle(
-                      fontSize: dimen15, weight: FontWeight.w400),
+                      fontSize: 16.0, weight: FontWeight.w400),
                 ),
                 automaticallyImplyLeading: false,
                 // Disable the default back button

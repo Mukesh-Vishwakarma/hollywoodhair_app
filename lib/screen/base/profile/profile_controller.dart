@@ -18,6 +18,9 @@ class ProfileController extends GetxController {
   var userID ="".obs;
   @override
   void onInit() {
+
+    userName.value = GetStorage().read(AppConstants.userName);
+
     getProfileApi();
     // userID.value = GetStorage().read(AppConstants.userId)??"";
     //
@@ -37,16 +40,14 @@ class ProfileController extends GetxController {
   editScreenRoute() async {
     var result = await Get.toNamed(AppPages.editProfileScreen);
     print("result>>>$result");
-
     if (result != null) {
       if (result == true) {
         await getProfileApi();
-
       }
     }
   }
-//**** api for get profile
 
+//**** api for get profile
   getProfileApi() async {
     userID.value = GetStorage().read(AppConstants.userId)??"";
 
@@ -70,13 +71,6 @@ class ProfileController extends GetxController {
         print("phone number2 >>> ${userModel.data!.customerName}");
         print("phone number3 >>> ${userModel.data!.customerCountryCode}");
         print("phone number3 >>> ${userModel.data!.customerPhone?? ""}");
-
-        // successToast(userModel.message!);
-        // userName.value =  GetStorage()
-        //     .read(AppConstants.userName);
-
-
-
 
       } else {
         // successToast(userModel.message!);

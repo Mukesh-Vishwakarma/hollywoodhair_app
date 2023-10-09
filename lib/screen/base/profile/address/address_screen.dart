@@ -1,14 +1,15 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/model/shopify_model/get_address_model.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:shopify_flutter/models/src/shopify_user/address/address.dart';
 
 import 'address_controller.dart';
 
@@ -33,7 +34,7 @@ class AddressScreen extends GetView<AddressController> {
               )),
           title: Text("select_address".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 18.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -67,7 +68,7 @@ class AddressScreen extends GetView<AddressController> {
                                   "Add New Address",
                                   style: AppStyles.textStyle(
                                     color: AppColors.black,
-                                    fontSize: dimen12,
+                                    fontSize: 14.0,
                                     weight: FontWeight.normal,
                                   ),
                                 ),
@@ -76,19 +77,20 @@ class AddressScreen extends GetView<AddressController> {
                           ),
                         ),
                       )
-                    : ListView.builder(
-                        // scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        reverse: false,
-                        itemCount: controller.addresses!.addressList.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return getAddress(
-                              controller.addresses!.addressList[index]);
-                        })
+                    : (controller.addressesListNew.value.addresses!.isNotEmpty)
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            reverse: false,
+                            itemCount: controller.addressesListNew.value.addresses!.length,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return getAddress(
+                                  controller.addressesListNew.value.addresses![index]);
+                            })
+                        : Container()
                 : shimmerDemo()),
             Obx(() => controller.noData.isTrue
-                ? SizedBox()
+                ? const SizedBox()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -103,7 +105,7 @@ class AddressScreen extends GetView<AddressController> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // controller.clearTextFiled();
+                          controller.clearTextFiled();
                           addAddress(type: 'add');
                         },
                         child: Row(
@@ -123,7 +125,7 @@ class AddressScreen extends GetView<AddressController> {
                                 "Add New Address",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.normal,
                                 ),
                               ),
@@ -142,14 +144,14 @@ class AddressScreen extends GetView<AddressController> {
     );
   }
 
-  getAddress(Address address) {
+  getAddress(AddressesList address) {
     return GestureDetector(
       onTap: () {
         // controller.checkAddress.value = index;
       },
       child: Container(
-        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-        padding: EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
+        margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
         decoration: BoxDecoration(
           border: Border.all(
             color:
@@ -183,10 +185,8 @@ class AddressScreen extends GetView<AddressController> {
                             address.company ?? "",
                             style: AppStyles.textStyle(
                               color:
-                                  // controller.checkAddress.value == index
-                                  //     ? AppColors.color7C :
                                   AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w400,
                             ),
                           )
@@ -195,7 +195,7 @@ class AddressScreen extends GetView<AddressController> {
                       address.name.toString(),
                       style: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.w400,
                       ),
                     ),
@@ -204,26 +204,26 @@ class AddressScreen extends GetView<AddressController> {
                             address.phone ?? "",
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
                           )
                         : SizedBox(),
-                    controller.email != null
-                        ? Text(
-                            controller.email,
-                            style: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.normal,
-                            ),
-                          )
-                        : SizedBox(),
+                    // controller.email != null
+                    //     ? Text(
+                    //         controller.email,
+                    //         style: AppStyles.textStyle(
+                    //           color: AppColors.black,
+                    //           fontSize: 14.0,
+                    //           weight: FontWeight.normal,
+                    //         ),
+                    //       )
+                    //     : SizedBox(),
                     address.address1 != null
                         ? Text(address.address1 ?? "",
                             style: AppStyles.textStyle(
                               color: AppColors.black,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                             ))
                         : SizedBox(),
                     Row(
@@ -233,7 +233,7 @@ class AddressScreen extends GetView<AddressController> {
                                 "${address.city}",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                 ),
                               )
                             : SizedBox(),
@@ -242,7 +242,7 @@ class AddressScreen extends GetView<AddressController> {
                                 ", ${address.countryCode} ",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                 ),
                               )
                             : SizedBox(),
@@ -255,7 +255,7 @@ class AddressScreen extends GetView<AddressController> {
                                 address.country.toString(),
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                 ),
                               )
                             : SizedBox(),
@@ -264,7 +264,7 @@ class AddressScreen extends GetView<AddressController> {
                                 "  ${address.zip}",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                 ),
                               )
                             : SizedBox(),
@@ -290,7 +290,12 @@ class AddressScreen extends GetView<AddressController> {
             ),
             GestureDetector(
               onTap: () {
-                controller.deleteAddresses(address.id);
+                print("jhsgvdkjhbxhbs===> ${address.id}");
+
+                int.parse("567890");
+                controller.deleteAddresses(address.id.toString());
+
+                controller.deleteCustomerAddress(address.id.toString());
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -318,10 +323,11 @@ class AddressScreen extends GetView<AddressController> {
       controller.companyController.text = address.company.toString();
       controller.zipCodeController.text = address.zip.toString();
       controller.phoneNumberController.text = address.phone.toString();
+      controller.defaultAddress = address.defaultAddress;
     }
     return Get.bottomSheet(
         Container(
-            margin: EdgeInsets.only(bottom: 0),
+            margin: const EdgeInsets.only(bottom: 0),
             color: Colors.transparent,
             child: SingleChildScrollView(
               child: Column(
@@ -329,7 +335,7 @@ class AddressScreen extends GetView<AddressController> {
                   children: <Widget>[
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 8, bottom: 0),
+                      margin: const EdgeInsets.only(top: 8, bottom: 0),
                       child: Image.asset(
                         Assets.imagesIcLine,
                         height: 36,
@@ -339,11 +345,11 @@ class AddressScreen extends GetView<AddressController> {
                     ),
                     Container(
                         width: Get.size.width,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: AppColors.lightBackgroundColor,
                             borderRadius: BorderRadius.only(
-                                topLeft: const Radius.circular(40.0),
-                                topRight: const Radius.circular(40.0))),
+                                topLeft: Radius.circular(40.0),
+                                topRight: Radius.circular(40.0))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -351,13 +357,13 @@ class AddressScreen extends GetView<AddressController> {
                             Text(type == "add" ? "Add address" : 'Edit address',
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.w500,
                                 )),
                             Form(
                                 key: controller.formLoginKey,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 20.0,
                                     right: 20.0,
                                     top: 20,
@@ -421,13 +427,13 @@ class AddressScreen extends GetView<AddressController> {
                                           children: [
                                             Expanded(
                                               child: Container(
-                                                  margin: EdgeInsets.only(
+                                                  margin: const EdgeInsets.only(
                                                       right: 20, top: 20),
                                                   child: TextFormField(
                                                     controller: controller
                                                         .cityController,
                                                     style: AppStyles.textStyle(
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
                                                     validator: (value) {
@@ -447,7 +453,7 @@ class AddressScreen extends GetView<AddressController> {
                                                       hintStyle:
                                                           AppStyles.textStyle(
                                                         color: AppColors.black,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight:
                                                             FontWeight.normal,
                                                       ),
@@ -456,14 +462,14 @@ class AddressScreen extends GetView<AddressController> {
                                                       labelStyle:
                                                           AppStyles.textStyle(
                                                         color: AppColors.black,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight:
                                                             FontWeight.normal,
                                                       ),
 
                                                       // const TextStyle(
                                                       //     color: AppColors.color3D,
-                                                      //     fontSize: 14,
+                                                      //     fontSize: 14.0,
                                                       //     fontWeight: FontWeight.w400),
                                                       border:
                                                           OutlineInputBorder(
@@ -521,7 +527,7 @@ class AddressScreen extends GetView<AddressController> {
                                             ),
                                             Expanded(
                                               child: Container(
-                                                margin: EdgeInsets.only(
+                                                margin: const EdgeInsets.only(
                                                     left: 20, top: 20),
                                                 child: TextFormField(
                                                   controller: controller
@@ -529,7 +535,7 @@ class AddressScreen extends GetView<AddressController> {
                                                   keyboardType:
                                                       TextInputType.number,
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -549,7 +555,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -557,13 +563,13 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
                                                     // const TextStyle(
                                                     //     color: AppColors.color3D,
-                                                    //     fontSize: 14,
+                                                    //     fontSize: 14.0,
                                                     //     fontWeight: FontWeight.w400),
                                                     border: OutlineInputBorder(
                                                       borderRadius:
@@ -622,12 +628,95 @@ class AddressScreen extends GetView<AddressController> {
                                           ],
                                         ),
                                         const SizedBox(height: 20.0),
-                                        textField2(
-                                            controller: controller
-                                                .phoneNumberController,
-                                            validationMsg:
-                                                "Please enter phone Number",
-                                            hintText: "Phone Number"),
+                                        TextFormField(
+                                          controller:
+                                              controller.phoneNumberController,
+                                          keyboardType: TextInputType.number,
+                                          style: AppStyles.textStyle(
+                                            fontSize: 14.0,
+                                            weight: FontWeight.normal,
+                                          ),
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter phone Number'
+                                                  .tr;
+                                            }
+
+                                            return null;
+                                          },
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(15)
+                                          ],
+                                          decoration: InputDecoration(
+                                            isDense: false,
+                                            contentPadding:
+                                                const EdgeInsets.all(15),
+
+                                            hintText: 'Phone Number'.tr,
+                                            hintStyle: AppStyles.textStyle(
+                                              color: AppColors.black,
+                                              fontSize: 14.0,
+                                              weight: FontWeight.normal,
+                                            ),
+
+                                            labelText: 'Phone Number'.tr,
+                                            labelStyle: AppStyles.textStyle(
+                                              color: AppColors.black,
+                                              fontSize: 14.0,
+                                              weight: FontWeight.normal,
+                                            ),
+
+                                            // const TextStyle(
+                                            //     color: AppColors.color3D,
+                                            //     fontSize: 14.0,
+                                            //     fontWeight: FontWeight.w400),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                  color: AppColors.colorCD,
+                                                  width: 0.99),
+                                            ),
+                                            errorBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                const OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                  color: AppColors.colorCD,
+                                                  width: 0.99),
+                                            ),
+
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                color: Colors.grey,
+                                                width: 0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        // textField2(
+                                        //     controller: controller
+                                        //         .phoneNumberController,
+                                        //     validationMsg:
+                                        //         "Please enter phone Number",
+                                        //     hintText: "Phone Number"),
                                         Obx(() => controller.isPageLoad.isFalse
                                             ? GestureDetector(
                                                 onTap: () {
@@ -639,21 +728,46 @@ class AddressScreen extends GetView<AddressController> {
                                                           .createAddresses();
                                                     }
                                                   } else {
-                                                    controller.updateAddresses(
-                                                        id: address.id);
+                                                    // controller.updateAddresses(
+                                                    //     id: address.id.toString());
+                                                    controller.getUpdateApi(
+                                                        address.id.toString());
                                                   }
                                                 },
                                                 child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 20,
-                                                        right: 20,
-                                                        top: 20,
-                                                        bottom: 40),
-                                                    child: buttom(type == "add"
-                                                        ? "add_new_address".tr
-                                                        : "Edit address")))
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20,
+                                                          right: 20,
+                                                          top: 20,
+                                                          bottom: 40),
+                                                  child: !controller
+                                                          .addNewAddressLoaderStatus
+                                                          .value
+                                                      ? buttom(type == "add"
+                                                          ? "add_new_address".tr
+                                                          : "Edit address")
+                                                      : Container(
+                                                          width: 95.w,
+                                                          height: 50,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        7),
+                                                            color: AppColors
+                                                                .color7C,
+                                                          ),
+                                                          child:
+                                                              const SpinKitThreeBounce(
+                                                            color: Colors.white,
+                                                            size: 30,
+                                                          ),
+                                                        ),
+                                                ))
                                             : Padding(
-                                                padding: EdgeInsets.only(
+                                                padding: const EdgeInsets.only(
                                                     left: 20,
                                                     right: 20,
                                                     top: 80,
@@ -729,7 +843,7 @@ class AddressScreen extends GetView<AddressController> {
     return TextFormField(
       controller: controller,
       style: AppStyles.textStyle(
-        fontSize: dimen12,
+        fontSize: 14.0,
         weight: FontWeight.normal,
       ),
       validator: (value) {
@@ -741,24 +855,18 @@ class AddressScreen extends GetView<AddressController> {
       decoration: InputDecoration(
         isDense: false,
         contentPadding: const EdgeInsets.all(15),
-
         hintText: hintText,
         hintStyle: AppStyles.textStyle(
           color: AppColors.black,
-          fontSize: dimen12,
+          fontSize: 14.0,
           weight: FontWeight.normal,
         ),
         labelText: hintText,
         labelStyle: AppStyles.textStyle(
           color: AppColors.black,
-          fontSize: dimen12,
+          fontSize: 14.0,
           weight: FontWeight.normal,
         ),
-
-        // const TextStyle(
-        //     color: AppColors.color3D,
-        //     fontSize: 14,
-        //     fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
@@ -774,12 +882,10 @@ class AddressScreen extends GetView<AddressController> {
             color: Colors.red,
           ),
         ),
-
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
         ),
-
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
