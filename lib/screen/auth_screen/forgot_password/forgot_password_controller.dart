@@ -7,6 +7,8 @@ import 'package:hollywood_hair/api_provider/api_provider.dart';
 import 'package:hollywood_hair/model/base_model.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:shopify_flutter/models/models.dart';
+import 'package:shopify_flutter/shopify/shopify.dart';
 
 class ForgotScreenController extends GetxController {
 
@@ -15,9 +17,21 @@ class ForgotScreenController extends GetxController {
   var emailController = TextEditingController();
     var email ="".obs;
   var isPageLoad = false.obs;
+  forgetPasswordApi() async {
+    isPageLoad.value = true;
+    try {
+      ShopifyUser value;
+      ShopifyAuth shopifyAuth = ShopifyAuth.instance;
+       await shopifyAuth.sendPasswordResetEmail(
+           email: emailController.text).then((value) {
+             Get.back();
+       });
 
-
-
+    } on HttpException catch (exception) {
+    } catch (exception) {
+      isPageLoad.value = false;
+    }
+  }
 
 
 

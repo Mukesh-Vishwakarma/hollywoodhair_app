@@ -68,12 +68,14 @@ class ProfileScreen extends GetView<ProfileController> {
                                     weight: FontWeight.w500))),
                           ),
                           Obx(() => controller.phoneNumber.value != null
-                              ? Text(
-                                  controller.phoneNumber.value.toString(),
-                                  style: AppStyles.textStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      weight: FontWeight.w400))
+                              ? Flexible(
+                                child: Text(
+                                    controller.phoneNumber.value.toString(),
+                                    style: AppStyles.textStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        weight: FontWeight.w400)),
+                              )
                               : Container()),
                         ],
                       ),
@@ -114,8 +116,8 @@ class ProfileScreen extends GetView<ProfileController> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
+              const Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Divider(),
               ),
               InkWell(

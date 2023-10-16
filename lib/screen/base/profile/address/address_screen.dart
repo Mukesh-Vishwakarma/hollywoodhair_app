@@ -10,7 +10,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../../util/theme_service.dart';
 import 'address_controller.dart';
 
 class AddressScreen extends GetView<AddressController> {
@@ -801,44 +801,6 @@ class AddressScreen extends GetView<AddressController> {
         isScrollControlled: true);
   }
 
-  shimmerDemo() {
-    return Container(
-      width: Get.size.width,
-      height: Get.size.height,
-      margin: EdgeInsets.only(left: 0, right: 0),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: ListView.builder(
-          itemBuilder: (__, _) => Padding(
-            padding: const EdgeInsets.only(bottom: 20.0, left: 10, right: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.0),
-                      ),
-                      Container(
-                        width: Get.size.width,
-                        height: 150,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          itemCount: 3,
-        ),
-      ),
-    );
-  }
-
   textField2({controller, validationMsg, hintText}) {
     return TextFormField(
       controller: controller,
@@ -892,6 +854,76 @@ class AddressScreen extends GetView<AddressController> {
             color: Colors.grey,
             width: 0,
           ),
+        ),
+      ),
+    );
+  }
+
+  shimmerDemo() {
+    return SizedBox(
+      width: 100.w,
+      height: 100.h,
+      child: Shimmer.fromColors(
+        baseColor: ThemeService().loadThemeFromBox()
+            ? AppColors.color4A
+            : Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: ListView.builder(
+          itemBuilder: (_, __) => Padding(
+            padding:
+            const EdgeInsets.only(left: 15, right: 15, bottom: 0, top: 10),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                const IntrinsicHeight(
+                  child: Divider(color: Colors.white),
+                ).marginOnly(top: 10),
+              ],
+            ),
+          ),
+          itemCount: 10,
         ),
       ),
     );

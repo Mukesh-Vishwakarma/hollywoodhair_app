@@ -84,29 +84,43 @@ class AllProductScreen extends GetView<AllProductController> {
                     ),
                   )
                 : SingleChildScrollView(
-          child: SizedBox(
-            width: double.infinity,
-            child: GridView.count(
-              crossAxisCount: 2, // Set the number of columns as needed
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(controller.products.length, (index) {
-                return commonProductWidget(index);
-              }),
-            ),
-          ),
-        )
-
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: (controller.products.length / 2).ceil(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: commonProductWidget(index * 2),
+                              ),
+                              const SizedBox(
+                                  width: 10), // Add spacing between items
+                              if (index * 2 + 1 < controller.products.length)
+                                Expanded(
+                                  child: commonProductWidget(index * 2 + 1),
+                                ),
+                              // Check if this is the last row and there's only one item
+                              if (index ==
+                                      (controller.products.length / 2)
+                                          .floor() &&
+                                  controller.products.length % 2 == 1)
+                                Expanded(
+                                  child: Container(), // Empty item
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  )
             : shimmerDemo()),
       ),
     );
   }
-
-
-
 
   // productsWidget() {
   //   return Container(
@@ -139,10 +153,9 @@ class AllProductScreen extends GetView<AllProductController> {
           ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: controller.networkImageWithLoader(
-    userProfile:
-    controller.products[index].image.isNotEmpty
-        ? controller.products[index].image.toString()
-        : Assets.upload ?? "")),
+                  userProfile: controller.products[index].image.isNotEmpty
+                      ? controller.products[index].image.toString()
+                      : Assets.upload ?? "")),
           const SizedBox(height: 10),
           Text(
             controller.products[index].title.toString(),
@@ -152,39 +165,36 @@ class AllProductScreen extends GetView<AllProductController> {
               fontSize: 14.0,
             ),
           ),
-          Expanded(
-            child: Row(
-              children: [
-                Text(
-                  controller.products[index].formattedPrice,
-                  // controller.productList[index].variants![0].price.toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    color: AppColors.black84,
-                    fontSize: 12.0,
-                  ),
+          Row(
+            children: [
+              Text(
+                controller.products[index].formattedPrice,
+                // controller.productList[index].variants![0].price.toString(),
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w500,
+                  color: AppColors.black84,
+                  fontSize: 12.0,
                 ),
-                const SizedBox(width: 5),
-                Text(
-                  controller.products[index].compareAtPriceFormatted,
-                  // controller.productList[index]..toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w400,
-                    fontSize: 11.0,
-                    color: AppColors.grayC4,
-                    decoration: TextDecoration.lineThrough,
-                    // decorationColor: AppColors.gray95
-                  ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                controller.products[index].compareAtPriceFormatted,
+                // controller.productList[index]..toString(),
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w400,
+                  fontSize: 11.0,
+                  color: AppColors.grayC4,
+                  decoration: TextDecoration.lineThrough,
+                  // decorationColor: AppColors.gray95
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           // const SizedBox(height: 6),
         ],
       ),
-    );
+    ).marginOnly(top: 5);
   }
-
 
   shimmerDemo() {
     return Padding(
@@ -200,11 +210,9 @@ class AllProductScreen extends GetView<AllProductController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +238,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +271,6 @@ class AllProductScreen extends GetView<AllProductController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +296,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,7 +329,6 @@ class AllProductScreen extends GetView<AllProductController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,7 +354,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

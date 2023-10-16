@@ -94,7 +94,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       userProfile,
       fit: BoxFit.cover,
       width: 50.w,
-      height: 17.h,
+      height: 16.h,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {
@@ -251,6 +251,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     return Image.network(
       image,
       fit: BoxFit.cover,
+      width: 50.w,
+      height: 16.h,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {
@@ -261,7 +263,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
           highlightColor: Colors.white,
           child: Container(
             width: 50.w,
-            height: 17.h,
+            height: 16.h,
             color: Colors.grey,
           ),
         );

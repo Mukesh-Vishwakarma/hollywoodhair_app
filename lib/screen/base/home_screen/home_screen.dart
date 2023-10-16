@@ -172,104 +172,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  // Popular products
-  productsWidget() {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'popular_product'.tr,
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              fontSize: 17.0,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Obx(() => controller.topProduct.isNotEmpty
-              ? SizedBox(
-                  width: double.infinity,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    // Change the number of columns as needed
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        List.generate(controller.topProduct.length, (index) {
-                      return commonProductWidget(
-                          productList: controller.topProduct.value[index]);
-                    }),
-                  ),
-                )
-              : shimmerDemo()),
-        ]);
-  }
-
-  commonProductWidget({required Product productList}) {
-    return GestureDetector(
-      onTap: () {
-        print("jhdsvjxzhbjkj===> ${productList.id}");
-        Get.toNamed(
-          AppPages.allProductDetailsScreen,
-          arguments: {"product_id": productList.id},
-        );
-        controller.getFindController();
-      },
-      child: Container(
-        width: 20.w,
-        height: 20.h,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: controller.networkImageWithLoader(
-                      userProfile: productList.image ?? ""),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              productList.title,
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.textStyle(
-                weight: FontWeight.w500,
-                fontSize: 14.0,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  productList.formattedPrice,
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    fontSize: 12.0,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  productList.compareAtPriceFormatted,
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w300,
-                    fontSize: 11.0,
-                    decoration: TextDecoration.lineThrough,
-                  ),
-                ),
-              ],
-            ).marginOnly(top: 5),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Category
+  /// Category
   categoriesListWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,40 +257,277 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  ///  Saloons
-  saloonList() {
+  /// Popular products
+  productsWidget() {
     return Column(
-        mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'popular_product'.tr,
+          style: AppStyles.textStyle(
+            weight: FontWeight.w500,
+            fontSize: 17.0,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Obx(() {
+          if (controller.topProduct.isNotEmpty) {
+            return SizedBox(
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemCount: (controller.topProduct.value.length / 2).ceil(),
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: commonProductWidget(
+                          productList: controller.topProduct.value[index * 2],
+                        ),
+                      ),
+                      const SizedBox(width: 10), // Add spacing between items
+                      if (index * 2 + 1 < controller.topProduct.value.length)
+                        Expanded(
+                          child: commonProductWidget(
+                            productList:
+                                controller.topProduct.value[index * 2 + 1],
+                          ),
+                        ),
+
+                      if (index ==
+                              (controller.topProduct.value.length / 2)
+                                  .floor() &&
+                          controller.topProduct.value.length % 2 == 1)
+                        Expanded(
+                          child: Container(), // Empty item
+                        ),
+                    ],
+                  );
+                },
+              ),
+            );
+          } else {
+            return shimmerDemo();
+          }
+        }),
+      ],
+    );
+  }
+
+  commonProductWidget({required Product productList}) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          arguments: {"product_id": productList.id},
+        );
+        controller.getFindController();
+      },
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: controller.networkImageWithLoader(
+                userProfile: productList.image ?? ""),
+          ),
+          const SizedBox(height: 5),
           Text(
-            'our_salons'.tr,
+            productList.title,
+            overflow: TextOverflow.ellipsis,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
-              fontSize: 17.0,
+              fontSize: 14.0,
             ),
           ),
-          const SizedBox(
-            height: 10,
+          Row(
+            children: [
+              Text(
+                productList.formattedPrice,
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w500,
+                  fontSize: 12.0,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                productList.compareAtPriceFormatted,
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w300,
+                  fontSize: 11.0,
+                  decoration: TextDecoration.lineThrough,
+                ),
+              ),
+            ],
+          ).marginOnly(top: 5),
+        ],
+      ),
+    ).marginOnly(top: 5);
+  }
+
+  /// Featured products
+  featuredProductsList() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'featured_products'.tr,
+          style: AppStyles.textStyle(
+            weight: FontWeight.w500,
+            fontSize: 17.0,
           ),
-          Obx(() => !controller.pageLoaderSalon.value
-              ? SizedBox(
-                  width: double.infinity,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    // Change the number of columns as needed
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 0,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        List.generate(controller.allSaloonList.length, (index) {
-                      return salonWidget(index);
-                    }),
-                  ),
-                )
-              : shimmerDemo()),
-        ]);
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Obx(() => !controller.pageLoaderFeaturedStatus.value
+            ? SizedBox(
+                width: double.infinity,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount:
+                      (controller.allFeaturedProductsList.length / 2).ceil(),
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: featuredProductsWidget(
+                            featuredData:
+                                controller.allFeaturedProductsList[index * 2],
+                          ),
+                        ),
+                        const SizedBox(width: 10), // Add spacing between items
+                        if (index * 2 + 1 <
+                            controller.allFeaturedProductsList.length)
+                          Expanded(
+                            child: featuredProductsWidget(
+                              featuredData: controller
+                                  .allFeaturedProductsList[index * 2 + 1],
+                            ),
+                          ),
+                        if (index ==
+                                (controller.allFeaturedProductsList.length / 2)
+                                    .floor() &&
+                            controller.allFeaturedProductsList.length % 2 == 1)
+                          Expanded(
+                            child: Container(), // Empty item
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              )
+            : shimmerDemo()),
+      ],
+    );
+  }
+
+  featuredProductsWidget({required FeaturedData featuredData}) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          // arguments: {"product_id": featuredData.productId.toString()},
+          arguments: {
+            "product_id": "gid://shopify/Product/8678460752207"
+          }, // added static product id because upcoming produce id is not valid
+        );
+        controller.getFindController();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColors.grayEB,
+                  // Adjust the color to your preference
+                  width: 1.0, // Adjust the border width
+                ),
+                borderRadius: BorderRadius.circular(6)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: controller.networkImageWithLoader(
+                  userProfile: featuredData.productImage ?? ""),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            featuredData.productName.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+          ),
+          Text(
+            featuredData.productPrice.toString(),
+            style: AppStyles.textStyle(
+              weight: FontWeight.w500,
+              fontSize: 12.0,
+            ),
+          ).marginOnly(top: 5),
+        ],
+      ),
+    );
+  }
+
+  saloonList() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'our_salons'.tr,
+          style: AppStyles.textStyle(
+            weight: FontWeight.w500,
+            fontSize: 17.0,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Obx(() => !controller.pageLoaderSalon.value
+            ? SizedBox(
+                width: double.infinity,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: (controller.allSaloonList.length / 2).ceil(),
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: salonWidget(index * 2),
+                        ),
+                        const SizedBox(width: 10), // Add spacing between items
+                        if (index * 2 + 1 < controller.allSaloonList.length)
+                          Expanded(
+                            child: salonWidget(index * 2 + 1),
+                          ),
+                        // Check if this is the last row and there's only one item
+                        if (index ==
+                                (controller.allSaloonList.length / 2).floor() &&
+                            controller.allSaloonList.length % 2 == 1)
+                          Expanded(
+                            child: Container(), // Empty item
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              )
+            : shimmerDemo()),
+      ],
+    );
   }
 
   salonWidget(index) {
@@ -421,105 +561,6 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  ///  Featured products
-  featuredProductsList() {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'featured_products'.tr,
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              fontSize: 17.0,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Obx(() => !controller.pageLoaderFeaturedStatus.value
-              ? SizedBox(
-                  width: double.infinity,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    // Change the number of columns as needed
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(
-                        controller.allFeaturedProductsList.length, (index) {
-                      return featuredProductsWidget(
-                          featuredData:
-                              controller.allFeaturedProductsList[index]);
-                    }),
-                  ),
-                )
-              : shimmerDemo()),
-        ]);
-  }
-
-  featuredProductsWidget({required FeaturedData featuredData}) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(
-          AppPages.allProductDetailsScreen,
-          // arguments: {"product_id": featuredData.productId.toString()},
-          arguments: {"product_id": "gid://shopify/Product/8678460752207"},// added static product id because upcoming produce id is not valid
-        );
-        controller.getFindController();
-      },
-      child: SizedBox(
-        width: 20.w,
-        height: 20.h,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.grayEB,
-                        // Adjust the color to your preference
-                        width: 1.0, // Adjust the border width
-                      ),
-                      borderRadius: BorderRadius.circular(6)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: controller.networkImageWithLoader(
-                        userProfile: featuredData.productImage ?? ""),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              featuredData.productName.toString(),
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.textStyle(
-                weight: FontWeight.w500,
-                fontSize: 14.0,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  featuredData.productPrice.toString(),
-                  style: AppStyles.textStyle(
-                    weight: FontWeight.w500,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ],
-            ).marginOnly(top: 5),
-          ],
-        ),
-      ),
-    );
-  }
-
   shimmerDemo() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -534,11 +575,9 @@ class HomeScreen extends GetView<HomeController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -597,7 +636,6 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -656,7 +694,6 @@ class HomeScreen extends GetView<HomeController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -735,7 +772,6 @@ class HomeScreen extends GetView<HomeController> {
             // scrollDirection: Axis.horizontal,
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

@@ -12,6 +12,8 @@ import 'package:shopify_flutter/models/src/shopify_user/addresses/addresses.dart
 import 'package:shopify_flutter/shopify/shopify.dart';
 import '../../../../api_provider/api_provider.dart';
 import '../../../../model/shopify_model/get_address_model.dart';
+import '../../../../model/shopify_model/update_address_model.dart';
+import '../../../../util/app_colors.dart';
 
 class AddressController extends GetxController {
   // var getAddress = <ShopifyUser>[].obs;
@@ -110,7 +112,8 @@ class AddressController extends GetxController {
       addNewAddressLoaderStatus.value = true;
       ShopifyCustomer shopifyCustomer = ShopifyCustomer.instance;
 
-      shopifyCustomer.customerAddressCreate(
+      print("csavhbjxknZ====>  ");
+      final creteAddressResult = await shopifyCustomer.customerAddressCreate(
           zip: zipCodeController.text,
           phone: phoneNumberController.text,
           lastName: lastNameController.text,
@@ -121,6 +124,21 @@ class AddressController extends GetxController {
           address2: address2Controller.text,
           address1: address1Controller.text,
           customerAccessToken: await customerAccessToken);
+
+      print("hsjbxzkNML<==> $creteAddressResult");
+
+      GetStorage().write(AppConstants.sippingAddress, true);
+      GetStorage().write(AppConstants.companyName, companyController.text);
+      GetStorage()
+          .write(AppConstants.customerAddressName, firstNameController.text);
+      GetStorage().write(AppConstants.mobileNo, phoneNumberController.text);
+      GetStorage().write(AppConstants.city, cityController.text);
+      GetStorage().write(AppConstants.country, companyController.text);
+      GetStorage().write(AppConstants.postelCode, zipCodeController.text);
+      GetStorage().write(AppConstants.address1, address1Controller.text);
+      GetStorage().write(AppConstants.address2, address2Controller.text);
+      GetStorage().write(AppConstants.addressId, "default");
+
       clearTextFiled();
       getUserAddress();
       Get.back();
@@ -129,7 +147,9 @@ class AddressController extends GetxController {
     } catch (error) {
       isPageLoad.value = false;
       addNewAddressLoaderStatus.value = false;
-      Get.back();
+      defaultToast("Please check country or zip.", "Invalid address",
+          AppColors.primaryColorDark);
+      // Get.back();
       debugPrint("messgae:$error");
     }
   }
@@ -285,7 +305,7 @@ class AddressController extends GetxController {
     }
   }
 
-  StringIDGet(input) {
+  stringIDGet(input) {
     try {
       RegExp regExp = RegExp(r'(\d+)');
       Match match = regExp.firstMatch(input)!;

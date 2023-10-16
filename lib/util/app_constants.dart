@@ -26,7 +26,21 @@ class AppConstants {
   static const checkOutID = "checkOutID";
   static const languageCode = "languageCode";
 
+  static const myOrderedProductsCount = "myOrderedProductsCount";
+
+  static const sippingAddress = "sippingAddress";
+  static const companyName = "companyName";
+  static const customerAddressName = "customerAddressName";
+  static const mobileNo = "mobileNo";
+  static const city = "city";
+  static const country = "country";
+  static const postelCode = "postelCode";
+  static const address1 = "address1";
+  static const address2 = "address2";
+  static const addressId = "addressId";
+
+
 // Calendly
-  static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb?hide_event_type_details=1';
-  // static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb/demo-testing?back=1&month=2023-09';
+//   static const calendlyUlr = 'https://calendly.com/mukeshvishwakarma-designoweb?hide_event_type_details=1';
+  static const calendlyUlr = 'https://calendly.com/hollywoodhairofficial/personal-meeting';
 }

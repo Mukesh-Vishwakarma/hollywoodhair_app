@@ -9,13 +9,15 @@ import 'package:hollywood_hair/api_provider/api_provider.dart';
 import 'package:hollywood_hair/model/product_by_id_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:shopify_flutter/models/models.dart';
+import 'package:shopify_flutter/models/src/shopify_user/address/address.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 
 import 'dart:convert';
 import '../../model/metafilds_details_model.dart';
 import '../../translater_service/translatter_service.dart';
 
-class ProductDetailsController extends GetxController with WidgetsBindingObserver {
+class ProductDetailsController extends GetxController
+    with WidgetsBindingObserver {
   var current = 0.obs;
   final CarouselController controller = CarouselController();
   var imageProductList = <Images>[].obs;
@@ -42,10 +44,17 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
   var targetLanguage = TranslateLanguage.polish.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     productId.value = Get.arguments['product_id'] ?? "";
     print("jashdvhbh===> ${productId.value}");
-    checkIfExitsCart();
+    try {
+      var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
+      if (checkOutID.toString() != "" && checkOutID != null) {
+        checkIfExitsCart();
+      }
+    } catch (e) {
+      print("mdjbsnm $e");
+    }
     getLanguage();
     productDetailsApi();
     getProductDetails();
@@ -53,7 +62,6 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
   }
 
   Future<void> checkIfExitsCart() async {
-
     addButtonStatus.value = false;
     print("sajkjnmz===>");
     try {
@@ -61,15 +69,13 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
       if (checkoutId.isNotEmpty) {
         Checkout _checkout = await shopifyCheckout
             .getCheckoutInfoQuery(checkoutId, getShippingInfo: false);
-        _checkout.lineItems.forEach((element) {
+        for (var element in _checkout.lineItems) {
           if (element.variant!.product!.id == productId.value) {
             addButtonStatus.value = true;
-
             print("sajkjnmz===>  ${addButtonStatus.value}");
           }
-
           print("sajkjnmz===>  ${addButtonStatus.value}");
-        });
+        }
       } else {
         print("sajkjnmz===>  ${addButtonStatus.value}");
         addButtonStatus.value = false;
@@ -111,13 +117,20 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
     isLoader.value = false;
     try {
       var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
-      ShopifyUser? shopifyUser = await ShopifyAuth.instance.currentUser();
-      GetStorage().write(AppConstants.userNameShopify, shopifyUser!.displayName);
-      GetStorage().write(AppConstants.emailShopify, shopifyUser.email);
-      GetStorage().write(AppConstants.tokenShopify, await ShopifyAuth.instance.currentCustomerAccessToken);
       var customerAccessToken = GetStorage().read(AppConstants.tokenShopify);
       var email = GetStorage().read(AppConstants.emailShopify);
+      // print("kahbdsskljhbjb===> ${checkOutID.toString()}");
 
+      try {
+        ShopifyUser? shopifyUser = await ShopifyAuth.instance.currentUser();
+        GetStorage()
+            .write(AppConstants.userNameShopify, shopifyUser!.displayName);
+        GetStorage().write(AppConstants.emailShopify, shopifyUser.email);
+        GetStorage().write(AppConstants.tokenShopify,
+            await ShopifyAuth.instance.currentCustomerAccessToken);
+      } catch (e) {
+        print("kahbdsskl===> $e");
+      }
       print("kahbdsskl===> $checkOutID");
 
       if (checkOutID == "") {
@@ -125,13 +138,36 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
           lineItems: [
             LineItem(variantId: variantId, title: title, quantity: 1, id: id)
           ],
+          // mailingAddress: Address(
+          //   address1: '71 ST. NICHOLAS DRIVE12',
+          //   // Replace with the address
+          //   address2: 'Apt 4B',
+          //   // Replace with address line 2 (optional)
+          //   company: 'Company Inc',
+          //   // Replace with the company (optional)
+          //   city: 'FAIRBANKS',
+          //   // Replace with the city
+          //   country: 'Poland',
+          //   // Replace with the country
+          //   firstName: 'John kumar vishwakarma',
+          //   // Replace with the first name
+          //   lastName: 'Doe',
+          //   // Replace with the last name
+          //   phone: '123-456-7890',
+          //   // Replace with the phone number
+          //   province: 'State',
+          //   // Replace with the province or state
+          //   zip: '99504',
+          // ),
           email: email,
         );
         print("checkout $checkout");
-        shopifyCheckout.checkoutCustomerAssociate(
+        shopifyCheckout
+            .checkoutCustomerAssociate(
           checkout.id,
           customerAccessToken,
-        ).then((value) async {
+        )
+            .then((value) async {
           GetStorage().write(AppConstants.checkOutID, checkout.id);
           addButtonStatus.value = true;
           isLoader.value = true;
@@ -148,43 +184,58 @@ class ProductDetailsController extends GetxController with WidgetsBindingObserve
         isLoader.value = true;
         print(checkout.lineItems.length);
       }
-
-      // shopifyCheckout
-      //     .checkoutCustomerAssociate(
-      //         checkout.id, 'dfa46d08f56c6067d80fd748ed0abad9')
-      //     .then((value) {
-      //   shopifyCheckout
-      //       .getCheckoutInfoQuery(checkout.id,
-      //           getShippingInfo: false, withPaymentId: false)
-      //       .then((value) {
-      //     print(value);
-      //   });
-      // shopifyCheckout
-      //     .getAllOrders("dfa46d08f56c6067d80fd748ed0abad9")
-      //     .then((value) {
-      //   print("kamal");
-      //   print(value!.length);
-      // });
-      //   dio.FormData params =
-      //       dio.FormData.fromMap({'id': varientId.value, 'quantity': "1"});
-      //
-      //   AddCartModel addCartModel =
-      //       await ApiProvider.shopifyCustomer().funAddToCart(params);
-      //   print("add to cart product >>>> ${addCartModel.quantity.toString()}");
-      //
-      //   Get.offAllNamed(AppPages.baseScreen,
-      //       arguments: {"screenType": "product details"});
-      // } on HttpException catch (exception) {
-      //   // progressDialog.dismiss();
-      //   print(exception.message);
-      // isPageLoad.value = false;
-      // failedToast(exception.message);
     } catch (exception) {
+      isLoader.value = true;
       print("sahgbxzjkhn==> ${exception.toString()}");
+
+      final exceptionString = exception.toString();
+      final start = exceptionString.indexOf("message: ");
+      if (start >= 0) {
+        final end = exceptionString.indexOf(",", start);
+        final errorMessage =
+            exceptionString.substring(start + "message: ".length, end);
+        if (errorMessage == "Checkout is already completed.") {
+          GetStorage().write(AppConstants.checkOutID, "");
+        }
+        print("Exception Message: $errorMessage");
+      } else {
+        print("An unexpected error occurred.");
+      }
     }
   }
 
   //  ****** product Details api
+
+  // shopifyCheckout
+  //     .checkoutCustomerAssociate(
+  //         checkout.id, 'dfa46d08f56c6067d80fd748ed0abad9')
+  //     .then((value) {
+  //   shopifyCheckout
+  //       .getCheckoutInfoQuery(checkout.id,
+  //           getShippingInfo: false, withPaymentId: false)
+  //       .then((value) {
+  //     print(value);
+  //   });
+  // shopifyCheckout
+  //     .getAllOrders("dfa46d08f56c6067d80fd748ed0abad9")
+  //     .then((value) {
+  //   print("kamal");
+  //   print(value!.length);
+  // });
+  //   dio.FormData params =
+  //       dio.FormData.fromMap({'id': varientId.value, 'quantity': "1"});
+  //
+  //   AddCartModel addCartModel =
+  //       await ApiProvider.shopifyCustomer().funAddToCart(params);
+  //   print("add to cart product >>>> ${addCartModel.quantity.toString()}");
+  //
+  //   Get.offAllNamed(AppPages.baseScreen,
+  //       arguments: {"screenType": "product details"});
+  // } on HttpException catch (exception) {
+  //   // progressDialog.dismiss();
+  //   print(exception.message);
+  // isPageLoad.value = false;
+  // failedToast(exception.message);
 
   productDetailsApi() async {
     print("dkjsbjkkdshx====> ${productId.value}");

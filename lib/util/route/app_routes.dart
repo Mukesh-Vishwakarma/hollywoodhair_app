@@ -56,11 +56,11 @@ import 'package:hollywood_hair/screen/splash/splash_screen.dart';
 
 import '../../screen/base/booking/calendly_screen/calendly_binding.dart';
 import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
-import '../../screen/checkout_screen/checkout_binding.dart';
-import '../../screen/checkout_screen/checkout_screen.dart';
 import '../../screen/tryOn_screen/priview_screen.dart';
 import '../../screen/tryOn_screen/tryOn_binder.dart';
 import '../../screen/tryOn_screen/tryOn_screen.dart';
+import '../../screen/web_checkout_screen/web_checkout_binding.dart';
+import '../../screen/web_checkout_screen/web_checkout_screen.dart';
 import 'app_pages.dart';
 
 class AppRoutes {
@@ -206,31 +206,30 @@ class AppRoutes {
       binding:CalendlyBinding(),
     ),
 
-
     GetPage(
         name: AppPages.tryOn,
         page: () => TryOnScreen(),
         binding:TryOnBinding(),
         transition: Transition.downToUp,
-        transitionDuration: Duration(milliseconds: 500)
+        transitionDuration: const Duration(milliseconds: 500)
     ),
 
     GetPage(
       name: AppPages.imagePreview,
-      page: () => PreviewScreen(),
+      page: () =>  PreviewScreen(),
       binding:TryOnBinding(),
     ),
 
     GetPage(
       name: AppPages.ourSalons,
-      page: () => OurSalonsScreen(),
+      page: () =>  OurSalonsScreen(),
       binding:OurSalonsBinding(),
     ),
 
     GetPage(
       name: AppPages.checkout,
-      page: () => CheckoutScreen(),
-      binding:CheckoutBinding(),
+      page: () =>  WebCheckoutScreen(),
+      binding:WebCheckoutBinding(),
     ),
 
     GetPage(

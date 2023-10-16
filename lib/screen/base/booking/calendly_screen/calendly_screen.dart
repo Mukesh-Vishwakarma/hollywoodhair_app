@@ -2,61 +2,125 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:lottie/lottie.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../util/app_constants.dart';
 import '../../../../util/assets.dart';
 import 'calendly_controller.dart';
 
 class CalendlyScreen extends GetView<CalendlyController> {
-  const CalendlyScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Obx(() => Stack(
-      children: [
-        Scaffold(
-          body: SafeArea(
-            child: WillPopScope(
-              onWillPop: () async {
-                if (await controller.controller.future.then(
-                    (webViewController) => webViewController.canGoBack())) {
-                  controller.controller.future.then(
-                    (webViewController) => webViewController.goBack(),
-                  );
-                  return false; // Prevent the app from closing
-                } else {
-                  return true; // Allow the app to close
-                }
-              },
-              child: Stack(
-                children: <Widget>[
-                  WebView(
-                    initialUrl: AppConstants.calendlyUlr,
-                    javascriptMode: JavascriptMode.unrestricted,
-                    onWebViewCreated: (WebViewController webViewController) {
-                      controller.controller.complete(webViewController);
-                    },
-                    onPageFinished: (String url) {
-                      try {
-                        controller.isLoading.value = false;
-                      } catch (e) {
-                        print("sjdhbjhb==> $e");
+          children: [
+            Scaffold(
+              backgroundColor: Colors.white,
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(7.h),
+                child: AppBar(
+                  titleSpacing: 0,
+                  elevation: 0.4,
+                  backgroundColor: AppColors.colorFF,
+                  leading: GestureDetector(
+                    onTap: () async {
+                      if (await controller.controller.future.then(
+                          (webViewController) =>
+                              webViewController.canGoBack())) {
+                        controller.controller.future.then(
+                          (webViewController) => webViewController.goBack(),
+                        );
+                      } else {
+                        Get.back();
                       }
                     },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.black,
+                    ),
                   ),
-                ],
+                  title: Text(
+                    "book_appointment".tr,
+                    style: AppStyles.textStyle(
+                      fontSize: 16.0,
+                      weight: FontWeight.w500,
+                    ),
+                  ),
+                  automaticallyImplyLeading: false,
+                ),
+              ),
+              body: SafeArea(
+                child: WillPopScope(
+                  onWillPop: () async {
+                    if (await controller.controller.future.then(
+                        (webViewController) => webViewController.canGoBack())) {
+                      controller.controller.future.then(
+                        (webViewController) => webViewController.goBack(),
+                      );
+                      return false; // Prevent the app from closing
+                    } else {
+                      return true; // Allow the app to close
+                    }
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      WebView(
+                        initialUrl: AppConstants.calendlyUlr,
+                        javascriptMode: JavascriptMode.unrestricted,
+                        onWebViewCreated:
+                            (WebViewController webViewController) {
+                          if (!controller.controller.isCompleted) {
+                            controller.controller.complete(webViewController);
+                          }
+                        },
+                        onPageStarted: (String url) {
+                          print("jshbzxkjz==> $url");
+                        },
+                        onPageFinished: (String url) {
+                          try {
+                            controller.isLoading.value = false;
+                          } catch (e) {
+                            print("sjdhbjhb==> $e");
+                          }
+                        },
+                      ),
+
+                      // WebView(
+                      //   initialUrl: AppConstants.calendlyUlr,
+                      //   javascriptMode: JavascriptMode.unrestricted,
+                      //   onWebViewCreated: (WebViewController webViewController) {
+                      //     controller.controller.complete(webViewController);
+                      //   },
+                      //   onPageStarted: (String url) {
+                      //     print("jshbzxkjz==> $url");
+                      //   },
+                      //   onPageFinished: (String url) {
+                      //     try {
+                      //       controller.isLoading.value = false;
+                      //     } catch (e) {
+                      //       print("sjdhbjhb==> $e");
+                      //     }
+                      //   },
+                      // ),
+                      InkWell(
+                        onTap: (){},
+                        child: Container(
+                          color: Colors.white,
+                          height: 80,
+                          width: 55,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        Visibility(
-          visible: controller.isLoading.value,
-          child: loader(),
-        )
-      ],
-    ));
+            Visibility(
+              visible: controller.isLoading.value,
+              child: loader(),
+            )
+          ],
+        ));
   }
 
   loader() {

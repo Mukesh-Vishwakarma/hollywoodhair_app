@@ -143,15 +143,17 @@ class BookingScreen extends GetView<BookingController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    controller.bookingList[index].text.toString(),
-                                    style: AppStyles.textStyle(
-                                        fontSize: 12.0,
-                                        weight: FontWeight.w500)),
-                              ],
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      controller.bookingList[index].text.toString(),
+                                      style: AppStyles.textStyle(
+                                          fontSize: 12.0,
+                                          weight: FontWeight.w500)),
+                                ],
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 3.0),

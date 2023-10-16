@@ -19,6 +19,8 @@ import '../../util/theme_service.dart';
 import 'product_details_controller.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
+  const ProductDetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -31,6 +33,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           preferredSize: Size.fromHeight(7.h),
           child: AppBar(
             elevation: 0.4,
+            titleSpacing: 0.0,
             backgroundColor: AppColors.colorFF,
             leading: GestureDetector(
                 onTap: () {
@@ -42,7 +45,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 )),
             title: Text("Product details",
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.w500)),
+                    fontSize: 18.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
             actions: [
               // GestureDetector(
@@ -54,9 +57,14 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               //     child: SvgPicture.asset(Assets.favouriteIcon),
               //   ),
               // ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: SvgPicture.asset(Assets.searchIcon),
+              InkWell(
+                onTap: (){
+                  // controller.addToCartUpdateAddress();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: SvgPicture.asset(Assets.searchIcon),
+                ),
               ),
               GestureDetector(
                 onTap: () {
@@ -487,7 +495,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   alignment: Alignment.bottomCenter,
                   child: (controller.isLoader.value)?InkWell(
                     onTap: () {
-
                       if (controller.addButtonStatus.isTrue) {
                         Get.find<BaseHomeController>().selectedIndex.value = 3;
                         Get.find<CartController>().onInit();

@@ -9,7 +9,7 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 
 import 'change_password_controller.dart';
 
-class ChangePasswordScreen extends GetView<ChangePasswordController> {
+class   ChangePasswordScreen extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

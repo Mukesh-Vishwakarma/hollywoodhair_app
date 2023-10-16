@@ -45,6 +45,9 @@ class SignInController extends GetxController {
       Get.offAllNamed(AppPages.baseScreen,
           arguments: {"screenType": "login screen"});
 
+      print("sdjkdjk===> $value");
+      print("sdjkdjk===> ${value.id.toString() }");
+
     } on HttpException catch (exception) {
       if (kDebugMode) {
         print(exception.message);

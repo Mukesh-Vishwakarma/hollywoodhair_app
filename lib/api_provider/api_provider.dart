@@ -25,6 +25,7 @@ import '../model/metafilds_details_model.dart';
 import '../model/shopify_model/delete_address_model.dart';
 import '../model/shopify_model/get_address_model.dart';
 import '../model/shopify_model/update_address_model.dart';
+import '../model/shopify_model/user_orders_model.dart';
 import 'DioLogger.dart';
 import 'api_constants.dart';
 import 'package:http/http.dart' as http;
@@ -540,6 +541,17 @@ class ApiProvider {
       await _dio.get('api/2021-07/customers/$customerId/addresses.json');
       print("response of Collections >>>${response.data!}");
       return GetAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getMyOrdersByCustomerId({customerId}) async {
+    try {
+      Response response =
+      await _dio.get('api/2022-01/orders.json?customer_id=$customerId');
+      print("response of Collections >>>${response.data!}");
+      return UserOrdersModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

@@ -35,7 +35,7 @@ const en_US = {
   'edit_profile': 'Edit profile',
   'save': 'Save',
   'name': 'Name',
-  'date': 'Name',
+  'date': 'Date',
   'phone_number': 'Phone number',
   'select_address': 'Select address',
   'add_new_address': 'Add new address',
@@ -69,8 +69,6 @@ const en_US = {
   'plz_enter_old_password': 'Please enter old password',
   'plz_enter_confirm_password': 'Please enter confirm password',
   'plz_enter_phone_number': 'Please enter phone number',
-
-
 
 //home Screen
   'explore_by_categories': 'Explore by Categories',
@@ -124,4 +122,7 @@ const en_US = {
   'Book_in_Store_appointment': 'Book In-Store Appointment',
   'Unlock_your_perfect_look': 'Unlock your perfect look',
   'book_consultation': 'Book consultation',
+
+  // Checkout
+  'done': 'Done',
 };

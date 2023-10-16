@@ -6,6 +6,7 @@ import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../util/common_function.dart';
 import 'faq_controller.dart';
 
 class FaqScreen extends GetView<FaqController> {
@@ -54,44 +55,6 @@ class FaqScreen extends GetView<FaqController> {
         ));
   }
 
-  shimmerDemo() {
-    return Container(
-      width: Get.size.width,
-      height: Get.size.height,
-      margin: const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 10),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: ListView.builder(
-          itemBuilder: (__, _) => Padding(
-            padding: const EdgeInsets.only(bottom: 10.0, left: 10, right: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.0),
-                      ),
-                      Container(
-                        
-                        width: Get.size.width,
-                        height: 30,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          itemCount: 3,
-        ),
-      ),
-    );
-  }
 
   faqWidget(index, context) {
     return Container(
