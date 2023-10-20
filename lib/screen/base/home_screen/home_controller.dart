@@ -42,7 +42,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     categoriesListApi();
     getTopProductApi();
     getAllSaloonList();
@@ -168,6 +167,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     try {
       Get.find<ProductDetailsController>().onInit();
     } catch (e){
+      print("kjashb $e");
       print("kjashb $e");
     }
   }
