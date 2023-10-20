@@ -131,6 +131,10 @@ class BaseHomeController extends GetxController {
                 getAddressModel.addresses![i].address2.toString());
             GetStorage().write(AppConstants.addressId,
                 getAddressModel.addresses![i].id.toString());
+            GetStorage().write(AppConstants.firstName,
+                getAddressModel.addresses![i].firstName.toString());
+            GetStorage().write(AppConstants.lastName,
+                getAddressModel.addresses![i].lastName.toString());
           }
         }
       }

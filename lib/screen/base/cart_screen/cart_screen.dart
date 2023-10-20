@@ -596,7 +596,7 @@ class CartScreen extends GetView<CartController> {
                     Border.all(color: AppColors.searchBorderColor, width: 1.0),
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: const Text("Change")
+              child: controller.shippingAddressStatus.value?const Text("Change").marginOnly(left: 10, right: 10, top: 5, bottom: 5):const Text("Add")
                   .marginOnly(left: 10, right: 10, top: 5, bottom: 5),
             ).marginOnly(left: 10),
           )

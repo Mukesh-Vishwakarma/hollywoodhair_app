@@ -129,49 +129,24 @@ class ProductDetailsController extends GetxController
         GetStorage().write(AppConstants.tokenShopify,
             await ShopifyAuth.instance.currentCustomerAccessToken);
       } catch (e) {
-        print("kahbdsskl===> $e");
+        print("kahbdsskl===> 1 $e");
       }
-      print("kahbdsskl===> $checkOutID");
+      print("kahbdsskl===> 2 $checkOutID");
 
-      if (checkOutID == "") {
+      if (checkOutID.toString() == "") {
         final checkout = await shopifyCheckout.createCheckout(
           lineItems: [
             LineItem(variantId: variantId, title: title, quantity: 1, id: id)
           ],
-          // mailingAddress: Address(
-          //   address1: '71 ST. NICHOLAS DRIVE12',
-          //   // Replace with the address
-          //   address2: 'Apt 4B',
-          //   // Replace with address line 2 (optional)
-          //   company: 'Company Inc',
-          //   // Replace with the company (optional)
-          //   city: 'FAIRBANKS',
-          //   // Replace with the city
-          //   country: 'Poland',
-          //   // Replace with the country
-          //   firstName: 'John kumar vishwakarma',
-          //   // Replace with the first name
-          //   lastName: 'Doe',
-          //   // Replace with the last name
-          //   phone: '123-456-7890',
-          //   // Replace with the phone number
-          //   province: 'State',
-          //   // Replace with the province or state
-          //   zip: '99504',
-          // ),
           email: email,
         );
         print("checkout $checkout");
-        shopifyCheckout
-            .checkoutCustomerAssociate(
-          checkout.id,
-          customerAccessToken,
-        )
-            .then((value) async {
-          GetStorage().write(AppConstants.checkOutID, checkout.id);
-          addButtonStatus.value = true;
-          isLoader.value = true;
-        });
+        print("checkoutId=> ${checkout.id}");
+        // shopifyCheckout.checkoutCustomerAssociate(checkout.id, customerAccessToken,).then((value) async {
+        GetStorage().write(AppConstants.checkOutID, checkout.id);
+        addButtonStatus.value = true;
+        isLoader.value = true;
+        // });
       } else {
         print("part 2");
         final checkout = await shopifyCheckout.addLineItemsToCheckout(

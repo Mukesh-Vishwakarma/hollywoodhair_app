@@ -48,9 +48,13 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   var address1 = "".obs;
   var address2 = "".obs;
   var addressId = "".obs;
+  var firstName = "".obs;
+  var lastName = "".obs;
 
   var addressLoaderStatus = false.obs;
   var openBottomSheetAddress = false.obs;
+
+  var shippingAddressStatus = false.obs;
 
   @override
   void onInit() async {
@@ -96,7 +100,15 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       dataLoading.value = false;
       noCartCreated.value = false;
       checkout = checkoutModel;
-      print("xzVjhj===>${checkout}");
+      print("xzVjhj 1 ===>$checkout");
+      print("xzVjhj 2 ===>${checkout.shippingAddress}");
+      if (checkout.shippingAddress == null) {
+        shippingAddressStatus.value = false;
+        print("sdbzn 1=> ");
+      } else {
+        shippingAddressStatus.value = true;
+        print("sdbzn 2=> ");
+      }
     } catch (error) {
       dataLoading.value = false;
       noCartCreated.value = true;
@@ -118,7 +130,6 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       getCart();
       print('Updated Cart: $cart');
     } catch (error) {
-      // Handle errors if the update fails
       print('Error updating cart: $error');
     }
   }
@@ -156,20 +167,24 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> goToCheckout() async {
-    var result = await Get.toNamed(AppPages.checkout,
-        arguments: [checkout.webUrl.toString()]);
+    try {
+      var result = await Get.toNamed(AppPages.checkout,
+          arguments: [checkout.webUrl.toString()]);
 
-    print("sdkjhbzxknlk=> $result");
-    print("sdkjhbzxsjdhknlk=> ${checkout.webUrl.toString()}");
-    if (result == "successful") {
-      try {
-        checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
-        GetStorage().write(AppConstants.myOrderedProductsCount,
-            userOrdersModel.value.orders!.length);
-        noCartCreated.value = true;
-      } catch (e) {
-        noCartCreated.value = true;
+      print("sdkjhbzxknlk=> $result");
+      print("sdkjhbzxsjdhknlk=> ${checkout.webUrl.toString()}");
+      if (result == "successful") {
+        try {
+          checkoutId = GetStorage().read(AppConstants.checkOutID) ?? "";
+          GetStorage().write(AppConstants.myOrderedProductsCount,
+              userOrdersModel.value.orders!.length);
+          noCartCreated.value = true;
+        } catch (e) {
+          noCartCreated.value = true;
+        }
       }
+    } catch (e){
+      print("dasbnjkm==> $e");
     }
   }
 
@@ -192,44 +207,33 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
         checkOutID,
         Address(
           address1: address1.toString(),
-          // Replace with the address
           address2: address2.toString(),
-          // Replace with address line 2 (optional)
           company: company.toString(),
-          // Replace with the company (optional)
           city: city.toString(),
-          // Replace with the city
           country: country.toString(),
-          // Replace with the country
           firstName: firstName.toString(),
-          // Replace with the first name
           lastName: lastName.toString(),
-          // Replace with the last name
           phone: phone.toString(),
-          // Replace with the phone number
           province: city.toString(),
-          // Replace with the province or state
           zip: zip.toString(),
         ),
       );
-
-      print("sdjbkjnk==> $checkout");
-
       changeAddress(
-        company: country,
-        name: name,
-        phone: phone,
-        city: city,
-        country: country,
-        zip: zip,
-        address1: address1,
-        address2: address2,
-        id: id,
-        // firstName: firstName,
-        // lastName: lastName
-      );
+          company: country,
+          name: name,
+          phone: phone,
+          city: city,
+          country: country,
+          zip: zip,
+          address1: address1,
+          address2: address2,
+          id: id,
+          firstName: firstName,
+          lastName: lastName);
       addressLoaderStatus.value = false;
-      defaultToast("Address successfully change.", "Successful!", AppColors.lightGreen);
+      shippingAddressStatus.value = true;
+      defaultToast(
+          "Address successfully change.", "Successful!", AppColors.lightGreen);
     } catch (exception) {
       defaultToast("Please check country or postcode.", "Invalid address",
           AppColors.primaryColorDark);
@@ -264,16 +268,19 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  changeAddress(
-      {required company,
-      required name,
-      required phone,
-      required city,
-      required country,
-      required zip,
-      required address1,
-      required address2,
-      required id}) {
+  changeAddress({
+    required company,
+    required name,
+    required phone,
+    required city,
+    required country,
+    required zip,
+    required address1,
+    required address2,
+    required id,
+    required firstName,
+    required lastName,
+  }) {
     try {
       GetStorage().write(AppConstants.sippingAddress, true);
       GetStorage().write(AppConstants.companyName, company.toString());
@@ -285,6 +292,8 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       GetStorage().write(AppConstants.address1, address1.toString());
       GetStorage().write(AppConstants.address2, address2.toString());
       GetStorage().write(AppConstants.addressId, id.toString());
+      GetStorage().write(AppConstants.firstName, firstName);
+      GetStorage().write(AppConstants.lastName, lastName);
       print("asdygzhj==> $id");
       getAddress();
     } catch (e) {
@@ -295,7 +304,8 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   getAddress() async {
     print("hagsdjanjakm");
     companyName.value = await GetStorage().read(AppConstants.companyName) ?? "";
-    customerAddressName.value = await GetStorage().read(AppConstants.customerAddressName) ?? "";
+    customerAddressName.value =
+        await GetStorage().read(AppConstants.customerAddressName) ?? "";
     mobileNo.value = await GetStorage().read(AppConstants.mobileNo) ?? "";
     city.value = await GetStorage().read(AppConstants.city) ?? "";
     country.value = await GetStorage().read(AppConstants.country) ?? "";
@@ -303,7 +313,21 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     address1.value = await GetStorage().read(AppConstants.address1) ?? "";
     address2.value = await GetStorage().read(AppConstants.address2) ?? "";
     addressId.value = await GetStorage().read(AppConstants.addressId) ?? "";
+    firstName.value = await GetStorage().read(AppConstants.firstName) ?? "";
+    lastName.value = await GetStorage().read(AppConstants.lastName) ?? "";
 
+    // updateAddress(
+    //     company: companyName.value,
+    //     name: customerAddressName.value,
+    //     phone: mobileNo.value,
+    //     city: city.value,
+    //     country: country.value,
+    //     zip: postelCode.value,
+    //     address1: address1.value,
+    //     address2: address2.value,
+    //     id: addressId.value,
+    //     firstName: firstName.value,
+    //     lastName: lastName.value);
 
     print("hagsdjanjakm ${companyName.value}");
   }
@@ -394,8 +418,10 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
               width: 200,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: (addressId.value.toString() == address.id.toString())
-                      ? AppColors.primaryColor
+                  color: (shippingAddressStatus.value)
+                      ? (addressId.value.toString() == address.id.toString())
+                          ? AppColors.primaryColor
+                          : AppColors.black
                       : AppColors.black,
                   width: 1.0,
                 ),
@@ -490,12 +516,16 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
             ).marginOnly(bottom: 10),
           ),
         ),
-        if(addressId.value.toString() == address.id.toString())
-        const Positioned(
-          right: 8,
-          top:3,
-          child: Icon(Icons.check_circle,color: AppColors.primaryColor,),
-        ),
+        if (shippingAddressStatus.value)
+          if (addressId.value.toString() == address.id.toString())
+            const Positioned(
+              right: 8,
+              top: 3,
+              child: Icon(
+                Icons.check_circle,
+                color: AppColors.primaryColor,
+              ),
+            ),
       ],
     );
   }

@@ -129,14 +129,15 @@ class AddressController extends GetxController {
 
       GetStorage().write(AppConstants.sippingAddress, true);
       GetStorage().write(AppConstants.companyName, companyController.text);
-      GetStorage()
-          .write(AppConstants.customerAddressName, firstNameController.text);
+      GetStorage().write(AppConstants.customerAddressName, firstNameController.text);
       GetStorage().write(AppConstants.mobileNo, phoneNumberController.text);
       GetStorage().write(AppConstants.city, cityController.text);
       GetStorage().write(AppConstants.country, companyController.text);
       GetStorage().write(AppConstants.postelCode, zipCodeController.text);
       GetStorage().write(AppConstants.address1, address1Controller.text);
       GetStorage().write(AppConstants.address2, address2Controller.text);
+      GetStorage().write(AppConstants.firstName, firstNameController.text);
+      GetStorage().write(AppConstants.lastName, lastNameController.text);
       GetStorage().write(AppConstants.addressId, "default");
 
       clearTextFiled();

@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
-
 import '../../../../util/route/app_pages.dart';
 import '../calendly_screen/calendly_controller.dart';
 import 'booking_confirm_controller.dart';
@@ -81,13 +79,16 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (Get.isRegistered<CalendlyController>()) {
-                            Get.toNamed(AppPages.calendlyScreen);
-                          } else {
-                            Get.put(CalendlyController());
-                            Get.toNamed(AppPages.calendlyScreen);
+                          try {
+                            if (Get.isRegistered<CalendlyController>()) {
+                              Get.toNamed(AppPages.calendlyScreen);
+                            } else {
+                              Get.put(CalendlyController());
+                              Get.toNamed(AppPages.calendlyScreen);
+                            }
+                          } catch (e){
+                            print("nxmjxcjnj");
                           }
-
                           // Get.put(CalendlyController());
                           // Get.toNamed(AppPages.calendlyScreen);
                           // Get.toNamed(AppPages.bookingFormScreen);

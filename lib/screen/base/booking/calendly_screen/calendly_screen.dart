@@ -10,6 +10,10 @@ import '../../../../util/assets.dart';
 import 'calendly_controller.dart';
 
 class CalendlyScreen extends GetView<CalendlyController> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => Stack(
@@ -24,13 +28,18 @@ class CalendlyScreen extends GetView<CalendlyController> {
                   backgroundColor: AppColors.colorFF,
                   leading: GestureDetector(
                     onTap: () async {
-                      if (await controller.controller.future.then(
-                          (webViewController) =>
-                              webViewController.canGoBack())) {
-                        controller.controller.future.then(
-                          (webViewController) => webViewController.goBack(),
-                        );
-                      } else {
+                      try {
+                        if (await controller.controller.future.then(
+                                (webViewController) =>
+                                webViewController.canGoBack())) {
+                          controller.controller.future.then(
+                                (webViewController) =>
+                                webViewController.goBack(),
+                          );
+                        } else {
+                          Get.back();
+                        }
+                      } catch (e){
                         Get.back();
                       }
                     },
@@ -85,23 +94,6 @@ class CalendlyScreen extends GetView<CalendlyController> {
                         },
                       ),
 
-                      // WebView(
-                      //   initialUrl: AppConstants.calendlyUlr,
-                      //   javascriptMode: JavascriptMode.unrestricted,
-                      //   onWebViewCreated: (WebViewController webViewController) {
-                      //     controller.controller.complete(webViewController);
-                      //   },
-                      //   onPageStarted: (String url) {
-                      //     print("jshbzxkjz==> $url");
-                      //   },
-                      //   onPageFinished: (String url) {
-                      //     try {
-                      //       controller.isLoading.value = false;
-                      //     } catch (e) {
-                      //       print("sjdhbjhb==> $e");
-                      //     }
-                      //   },
-                      // ),
                       InkWell(
                         onTap: (){},
                         child: Container(

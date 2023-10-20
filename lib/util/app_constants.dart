@@ -38,6 +38,8 @@ class AppConstants {
   static const address1 = "address1";
   static const address2 = "address2";
   static const addressId = "addressId";
+  static const firstName = "firstName";
+  static const lastName = "lastName";
 
 
 // Calendly
