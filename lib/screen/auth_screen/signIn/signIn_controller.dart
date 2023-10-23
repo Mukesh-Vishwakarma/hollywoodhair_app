@@ -52,10 +52,13 @@ class SignInController extends GetxController {
       if (kDebugMode) {
         print(exception.message);
       }
+      failedToast("There are some problems, please try after some time.");
+      isPageLoad.value = false;
     } catch (exception) {
       if (kDebugMode) {
         print(exception.toString());
       }
+      successToast("User not exits!");
       isPageLoad.value = false;
     }
   }

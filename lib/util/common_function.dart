@@ -277,8 +277,7 @@ defaultToast(String msg, String title, color) {
 
 void isLogoutResponse() {
   Get.back();
-  // ProgressDialog progressDialog = ProgressDialog();
-  // progressDialog.show();
+
   Future.delayed(const Duration(seconds: 2), () {
     GetStorage().remove(AppConstants.loginUser);
     GetStorage().remove(AppConstants.accessToken);

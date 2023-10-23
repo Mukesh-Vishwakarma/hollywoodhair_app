@@ -24,7 +24,6 @@ const es_SP = {
   'old_password': 'Contraseña antigua',
   'confirm_password': 'Confirmar contraseña',
   'change_password_des': 'Para restablecer su contraseña, necesitamos su correo electrónico o número de teléfono móvil que pueda ser autenticado',
-  'profile': 'Perfil',
   'setting': 'Configuración',
   'languages': 'Idiomas',
   'terms_&_condition': 'Términos y condiciones',
@@ -35,7 +34,7 @@ const es_SP = {
   'edit_profile': 'Editar perfil',
   'save': 'Guardar',
   'name': 'Nombre',
-  'date': 'Nombre',
+  'date': 'fecha',
   'phone_number': 'Número de teléfono',
   'select_address': 'Seleccionar dirección',
   'add_new_address': 'Agregar nueva dirección',
@@ -80,7 +79,6 @@ const es_SP = {
   'all_products': 'Todos los productos',
 
   // Cart
-  'cart': 'Carrito',
   'promo_code': 'Código promocional',
   'price_details': 'Detalles de precio',
   'subtotal': 'Subtotal',
@@ -100,11 +98,10 @@ const es_SP = {
   'product_details': 'Detalles del producto',
   'OPIS': 'OPIS',
   'go_to_cart': 'Ir al carrito',
-  'Home': 'Inicio',
-  'Booking': 'Reserva',
+  'home': 'Inicio',
   'try_on': 'Prueba',
-  'Cart': 'Carrito',
-  'Profile': 'Perfil',
+  'cart': 'Carrito',
+  'profile': 'Perfil',
 
   // Profile
   'address': 'Dirección',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
@@ -10,9 +11,7 @@ import '../../../../util/assets.dart';
 import 'calendly_controller.dart';
 
 class CalendlyScreen extends GetView<CalendlyController> {
-
-
-
+  const CalendlyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +27,28 @@ class CalendlyScreen extends GetView<CalendlyController> {
                   backgroundColor: AppColors.colorFF,
                   leading: GestureDetector(
                     onTap: () async {
-                      try {
-                        if (await controller.controller.future.then(
-                                (webViewController) =>
-                                webViewController.canGoBack())) {
-                          controller.controller.future.then(
-                                (webViewController) =>
-                                webViewController.goBack(),
-                          );
+                      if (controller.webViewController != null) {
+                        if (await controller.webViewController!.canGoBack()) {
+                          controller.webViewController!.goBack();
                         } else {
                           Get.back();
                         }
-                      } catch (e){
+                      } else {
                         Get.back();
                       }
+                      // try {
+                      //   if (await controller.webViewController.future.then(
+                      //       (webViewController) =>
+                      //           webViewController.canGoBack())) {
+                      //     controller.webViewController.future.then(
+                      //       (webViewController) => webViewController.goBack(),
+                      //     );
+                      //   } else {
+                      //     Get.back();
+                      //   }
+                      // } catch (e) {
+                      //   Get.back();
+                      // }
                     },
                     child: const Icon(
                       Icons.arrow_back,
@@ -61,45 +68,68 @@ class CalendlyScreen extends GetView<CalendlyController> {
               body: SafeArea(
                 child: WillPopScope(
                   onWillPop: () async {
-                    if (await controller.controller.future.then(
-                        (webViewController) => webViewController.canGoBack())) {
-                      controller.controller.future.then(
-                        (webViewController) => webViewController.goBack(),
-                      );
-                      return false; // Prevent the app from closing
-                    } else {
-                      return true; // Allow the app to close
+                    if (controller.webViewController != null) {
+                      if (await controller.webViewController!.canGoBack()) {
+                        controller.webViewController!.goBack();
+                        return false; // Prevent the app from closing
+                      } else {
+                        return true; // Allow the app to close
+                      }
                     }
+                    return true; // If there is no webViewController, just allow the app to close
+
+                    // if (await controller.webViewController.future.then(
+                    //     (webViewController) => webViewController.canGoBack())) {
+                    //   controller.webViewController.future.then(
+                    //     (webViewController) => webViewController.goBack(),
+                    //   );
+                    //   return false; // Prevent the app from closing
+                    // } else {
+                    //   return true; // Allow the app to close
+                    // }
                   },
                   child: Stack(
                     children: <Widget>[
-                      WebView(
-                        initialUrl: AppConstants.calendlyUlr,
-                        javascriptMode: JavascriptMode.unrestricted,
-                        onWebViewCreated:
-                            (WebViewController webViewController) {
-                          if (!controller.controller.isCompleted) {
-                            controller.controller.complete(webViewController);
-                          }
-                        },
-                        onPageStarted: (String url) {
-                          print("jshbzxkjz==> $url");
-                        },
-                        onPageFinished: (String url) {
-                          try {
-                            controller.isLoading.value = false;
-                          } catch (e) {
-                            print("sjdhbjhb==> $e");
-                          }
-                        },
-                      ),
-
+                      InAppWebView(
+                          initialUrlRequest: URLRequest(
+                              url: Uri.parse(AppConstants.calendlyUlr)),
+                          initialOptions: InAppWebViewGroupOptions(
+                            crossPlatform: InAppWebViewOptions(
+                              javaScriptEnabled: true,
+                            ),
+                          ),
+                          onWebViewCreated: (InAppWebViewController webViewController) {
+                            // if (!controller.webViewControllerNew.isCompleted) {
+                              controller.webViewController = webViewController;
+                            // }
+                          },
+                          onLoadStart:
+                              (InAppWebViewController controller, Uri? url) {
+                            if (url != null) {
+                              print("==> $url");
+                            }
+                          },
+                          onLoadStop: (InAppWebViewController webViewControllerNew, Uri? url) {
+                            if (url != null) {
+                              try {
+                                controller.isLoading.value = false;
+                              } catch (e) {
+                                print("Error: $e");
+                              }
+                            }
+                          }),
                       InkWell(
-                        onTap: (){},
+                        onTap: () {},
                         child: Container(
-                          color: Colors.white,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,  // Align the gradient from the left
+                              end: Alignment.centerRight,  // To the right
+                              colors: [Colors.white,AppColors.whiteTrans1, AppColors.whiteTrans],  // Your gradient colors
+                            ),
+                          ),
                           height: 80,
-                          width: 55,
+                          width: 150,
                         ),
                       )
                     ],

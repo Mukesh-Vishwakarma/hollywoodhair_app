@@ -80,6 +80,7 @@ class SignUpController extends GetxController {
       // }
     } on HttpException catch (exception) {
       print("sdjbhjc===>1  ${exception.message}");
+      failedToast("There are some problems, please try after some time.");
       isPageLoad.value = false;
     } catch (exception) {
       print("sdjbhjc===>2 {exception.toString()}");

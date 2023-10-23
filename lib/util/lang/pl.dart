@@ -24,7 +24,6 @@ const pl_PL = {
   'old_password': 'Stare hasło',
   'confirm_password': 'Potwierdź hasło',
   'change_password_des': 'Aby zresetować hasło, potrzebujemy Twojego adresu e-mail lub numeru telefonu komórkowego, który można zweryfikować',
-  'profile': 'Profil',
   'setting': 'Ustawienia',
   'languages': 'Języki',
   'terms_&_condition': 'Regulamin',
@@ -47,7 +46,7 @@ const pl_PL = {
   'full_address': 'Pełny adres',
   'address_type': 'Rodzaj adresu',
   'notification': 'Powiadomienie',
-  'booking': 'Rezerwacja',
+  'booking': 'Książka',
   'book_appointment': 'Zarezerwuj spotkanie',
   'age': 'Wiek',
   'gender': 'Płeć',
@@ -80,7 +79,6 @@ const pl_PL = {
   'all_products': 'Wszystkie produkty',
 
   // Cart
-  'cart': 'Koszyk',
   'promo_code': 'Kod promocyjny',
   'price_details': 'Szczegóły ceny',
   'subtotal': 'Suma częściowa',
@@ -100,12 +98,11 @@ const pl_PL = {
   'product_details': 'Szczegóły produktu',
   'OPIS': 'OPIS',
   'go_to_cart': 'Przejdź do koszyka',
-  'Home': 'Strona główna',
-  'Booking': 'Rezerwacja',
+  'home': 'Dom',
   'Booking_new': 'Zarezerwuj konsultację.',
-  'try_on': 'Przymierz',
-  'Cart': 'Koszyk',
-  'Profile': 'Profil',
+  'try_on': 'Spróbuj',
+  'cart': 'Koszyk',
+  'profile': 'Profil',
 
   // Profile
   'address': 'Adres',

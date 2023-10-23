@@ -5,8 +5,14 @@ import 'package:shopify_flutter/shopify/shopify.dart';
 class SettingsController extends GetxController {
   ShopifyAuth shopifyAuth = ShopifyAuth.instance;
 
-  signoutFun() async {
-    await shopifyAuth.signOutCurrentUser();
-    isLogoutResponse();
+  signOutFun() async {
+    try {
+      await shopifyAuth.signOutCurrentUser();
+      isLogoutResponse();
+      print("dhgxzbhjnz==> ");
+    } catch (e){
+      print("dhgxzbhjnz==> $e");
+      isLogoutResponse();
+    }
   }
 }

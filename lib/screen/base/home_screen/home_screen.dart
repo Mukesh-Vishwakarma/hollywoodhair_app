@@ -234,7 +234,7 @@ class HomeScreen extends GetView<HomeController> {
                   ).marginAll(3),
                 ),
                 Flexible(
-                  child: Container(
+                  child: SizedBox(
                     width: 80,
                     child: Text(
                       categoryItem.title,
@@ -283,6 +283,8 @@ class HomeScreen extends GetView<HomeController> {
                 itemCount: (controller.topProduct.value.length / 2).ceil(),
                 itemBuilder: (context, index) {
                   return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
                         child: commonProductWidget(
@@ -329,6 +331,7 @@ class HomeScreen extends GetView<HomeController> {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
@@ -339,6 +342,7 @@ class HomeScreen extends GetView<HomeController> {
           Text(
             productList.title,
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 14.0,
@@ -396,6 +400,8 @@ class HomeScreen extends GetView<HomeController> {
                       (controller.allFeaturedProductsList.length / 2).ceil(),
                   itemBuilder: (context, index) {
                     return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           child: featuredProductsWidget(
@@ -436,7 +442,7 @@ class HomeScreen extends GetView<HomeController> {
           AppPages.allProductDetailsScreen,
           // arguments: {"product_id": featuredData.productId.toString()},
           arguments: {
-            "product_id": "gid://shopify/Product/8678460752207"
+            "product_id": featuredData.adminGraphqlApiId.toString()
           }, // added static product id because upcoming produce id is not valid
         );
         controller.getFindController();
@@ -460,15 +466,16 @@ class HomeScreen extends GetView<HomeController> {
           ),
           const SizedBox(height: 5),
           Text(
-            featuredData.productName.toString(),
+            featuredData.title.toString(),
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 14.0,
             ),
           ),
           Text(
-            featuredData.productPrice.toString(),
+            featuredData.price.toString(),
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 12.0,
@@ -504,6 +511,8 @@ class HomeScreen extends GetView<HomeController> {
                   itemCount: (controller.allSaloonList.length / 2).ceil(),
                   itemBuilder: (context, index) {
                     return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           child: salonWidget(index * 2),
@@ -533,7 +542,6 @@ class HomeScreen extends GetView<HomeController> {
   salonWidget(index) {
     return GestureDetector(
       onTap: () {
-        print("sjkhzxnhcnjx");
         if (controller.allSaloonList[index].latitude != null) {
           controller.openMap(controller.allSaloonList[index].latitude,
               controller.allSaloonList[index].latitude);
@@ -551,6 +559,7 @@ class HomeScreen extends GetView<HomeController> {
           Text(
             controller.allSaloonList[index].salonAddress.toString(),
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 13.0,
@@ -558,15 +567,13 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ],
       ),
-    );
+    ).marginOnly(bottom: 5);
   }
 
   shimmerDemo() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
-        // width: 100.w,
-        // height: 100.h,
         child: Shimmer.fromColors(
           baseColor: ThemeService().loadThemeFromBox()
               ? AppColors.color4A

@@ -49,7 +49,7 @@ class SettingScreen extends GetView<SettingsController> {
                     Get.toNamed(AppPages.changePasswordScreen);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -82,7 +82,7 @@ class SettingScreen extends GetView<SettingsController> {
                     Get.toNamed(AppPages.languagesScreen);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -116,7 +116,7 @@ class SettingScreen extends GetView<SettingsController> {
                         arguments: "terms_&_condition".tr);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -150,7 +150,7 @@ class SettingScreen extends GetView<SettingsController> {
                         arguments: "privacy_policy".tr);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -183,7 +183,7 @@ class SettingScreen extends GetView<SettingsController> {
                     Get.toNamed(AppPages.contactScreen);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -216,7 +216,7 @@ class SettingScreen extends GetView<SettingsController> {
                     Get.toNamed(AppPages.faqScreen);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Expanded(
@@ -252,7 +252,7 @@ class SettingScreen extends GetView<SettingsController> {
               logout(context);
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: 5,bottom: 5),
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
               child: Row(
                 children: [
                   Expanded(
@@ -298,7 +298,7 @@ class SettingScreen extends GetView<SettingsController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Get.back();
                       },
                       child: Align(
@@ -336,19 +336,22 @@ class SettingScreen extends GetView<SettingsController> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              controller.signoutFun();
-
+                              controller.signOutFun();
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10, top: 10),
-                              child: Text("log_out".tr,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.red2C,
-                                    fontFamily: 'JosefinSans',
-                                    decoration: TextDecoration.underline,
-                                  )),
+                            child: Container(
+                              // color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, top: 10, bottom: 10),
+                                child: Text("log_out".tr,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14.0,
+                                      color: AppColors.red2C,
+                                      fontFamily: 'JosefinSans',
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
                             ),
                           ),
                         ),
@@ -358,7 +361,7 @@ class SettingScreen extends GetView<SettingsController> {
                               Get.back();
                             },
                             child: Container(
-                              // width: Get.size.width,
+                                // width: Get.size.width,
                                 padding: EdgeInsets.only(
                                     top: 10, bottom: 10, left: 10, right: 10),
                                 decoration: BoxDecoration(

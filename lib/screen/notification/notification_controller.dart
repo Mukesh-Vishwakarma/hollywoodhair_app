@@ -13,27 +13,20 @@ class NotificationController extends GetxController {
           title: "Your Password Has been changed.",
           dis: "password update successful",
           image: Assets.notification1),
-
-
       NotificationModel(
           title: "Your cart is getting heavy!",
           dis: "Time to checkout and enjoy your selections",
           image: Assets.notification2),
-
-
-
       NotificationModel(
           title: "Booking Confirmed!",
-          dis: "Dear Alicja Nowak, your appointment at Hollywood Hair is confirmed for 1 Aug, 2023 at 10:15 AM",
+          dis:
+              "Dear Alicja Nowak, your appointment at Hollywood Hair is confirmed for 1 Aug, 2023 at 10:15 AM",
           image: Assets.notification1),
-
       NotificationModel(
           title: "Embrace Self-Care Sundays! 🌼",
-          dis: "Refer a friend to Hollywood hair, and you both get 10% OFF on your next visit.",
+          dis:
+              "Refer a friend to Hollywood hair, and you both get 10% OFF on your next visit.",
           image: Assets.notification3),
-
-
-
     ];
     super.onInit();
   }

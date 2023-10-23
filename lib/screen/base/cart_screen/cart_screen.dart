@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/base/home_screen/home_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
@@ -10,6 +10,7 @@ import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import '../../../util/common_function.dart';
+import '../base_home_controller.dart';
 import 'cart_controller.dart';
 
 class CartScreen extends GetView<CartController> {
@@ -43,81 +44,83 @@ class CartScreen extends GetView<CartController> {
 
   bodyWidget() {
     return Obx(() => Stack(
-      children: [
-        SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  color: AppColors.backGroundColor,
-                  child: Obx(() => controller.dataLoading.isFalse
-                      ? controller.noCartCreated.isFalse
-                          ? (controller.checkout.lineItems.isNotEmpty)
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      if (controller.sippingAddress.value)
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      color: AppColors.backGroundColor,
+                      child: Obx(() => controller.dataLoading.isFalse
+                          ? controller.noCartCreated.isFalse
+                              ? (controller.checkout.lineItems.isNotEmpty)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          if (controller.sippingAddress.value)
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                addressWidget(),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                const Divider(),
+                                              ],
                                             ),
-                                            addressWidget(),
-                                            const SizedBox(
-                                              height: 10,
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10,
+                                                left: 15,
+                                                right: 15),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                cartWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                promoCodeWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                priceDetailWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                orderButton(),
+                                              ],
                                             ),
-                                            const Divider(),
-                                          ],
-                                        ),
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 10, left: 15, right: 15),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            cartWidget(),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            promoCodeWidget(),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            priceDetailWidget(),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            orderButton(),
-                                          ],
-                                        ),
-                                      )
-                                    ])
+                                          )
+                                        ])
+                                  : Container(
+                                      child: emptyCartWidget(),
+                                    )
                               : Container(
                                   child: emptyCartWidget(),
                                 )
-                          : Container(
-                              child: emptyCartWidget(),
-                            )
-                      : shimmerDemo()),
-                )
-              ],
+                          : shimmerDemo()),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-        Visibility(
-          visible: controller.addressLoaderStatus.value,
-          child: loader(AppColors.transparentBlack),
-        )
-      ],
-    )
-    );
+            Visibility(
+              visible: controller.addressLoaderStatus.value,
+              child: loader(AppColors.transparentBlack),
+            )
+          ],
+        ));
   }
 
   cartWidget() {
@@ -209,8 +212,8 @@ class CartScreen extends GetView<CartController> {
                       controller.updateCartItemQuantity(item, (quantity.value));
                     },
                     child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 10),
                       child: SvgPicture.asset(Assets.plusIcon, width: 12),
                     ),
                   ),
@@ -499,10 +502,13 @@ class CartScreen extends GetView<CartController> {
           ),
           InkWell(
             onTap: () {
-              Get.toNamed(AppPages.allProductScreen, arguments: {
-                "categoryName": "All ",
-                "categoryId": "ALL",
-              });
+              // Get.toNamed(AppPages.allProductScreen, arguments: {
+              //   "categoryName": "All ",
+              //   "categoryId": "ALL",
+              // });
+              Get.find<BaseHomeController>().selectedIndex.value = 0;
+              Get.find<HomeController>().onInit();
+              Get.toNamed(AppPages.baseScreen);
             },
             child: Container(
               width: 100.w,
@@ -596,15 +602,15 @@ class CartScreen extends GetView<CartController> {
                     Border.all(color: AppColors.searchBorderColor, width: 1.0),
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: controller.shippingAddressStatus.value?const Text("Change").marginOnly(left: 10, right: 10, top: 5, bottom: 5):const Text("Add")
-                  .marginOnly(left: 10, right: 10, top: 5, bottom: 5),
+              child: controller.shippingAddressStatus.value
+                  ? const Text("Change")
+                      .marginOnly(left: 10, right: 10, top: 5, bottom: 5)
+                  : const Text("Add")
+                      .marginOnly(left: 10, right: 10, top: 5, bottom: 5),
             ).marginOnly(left: 10),
           )
         ],
       ),
     );
   }
-
-
-
 }
