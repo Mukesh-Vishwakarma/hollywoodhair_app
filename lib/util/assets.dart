@@ -113,6 +113,55 @@ class Assets {
   static const String salon9 = 'assets/dummy_images/wroclaw_hollywoodhair_c5ca581a-24c7-481a-84c6-73a2c7d869be (1).webp';
 
 
+  /// Celebrities
+  static const String cel1 = 'assets/celebrity_image/1.webp';
+  static const String cel2 = 'assets/celebrity_image/2.webp';
+  static const String cel3 = 'assets/celebrity_image/3.webp';
+  static const String cel4 = 'assets/celebrity_image/4.webp';
+  static const String cel5 = 'assets/celebrity_image/5.webp';
+  static const String cel6 = 'assets/celebrity_image/6.webp';
+  static const String cel7 = 'assets/celebrity_image/7.webp';
+  static const String cel8 = 'assets/celebrity_image/8.webp';
+  static const String cel9 = 'assets/celebrity_image/9.webp';
+  static const String cel10 = 'assets/celebrity_image/10.webp';
+  static const String cel11 = 'assets/celebrity_image/11.webp';
+  static const String cel12 = 'assets/celebrity_image/12.webp';
+  static const String cel13 = 'assets/celebrity_image/13.webp';
+  static const String cel14 = 'assets/celebrity_image/14.webp';
+  static const String cel15 = 'assets/celebrity_image/15.webp';
+  static const String cel16 = 'assets/celebrity_image/16.webp';
 
+
+  /// press
+  static const String press1 = 'assets/press_image/press1.png';
+  static const String press2 = 'assets/press_image/press2.png';
+  static const String press3 = 'assets/press_image/press3.png';
+  static const String press4 = 'assets/press_image/press4.png';
+  static const String press5 = 'assets/press_image/press5.png';
+  static const String press6 = 'assets/press_image/press6.png';
+  static const String press7 = 'assets/press_image/press7.png';
+  static const String press8 = 'assets/press_image/press8.png';
+  static const String press9 = 'assets/press_image/press9.png';
+  static const String press10 = 'assets/press_image/press10.png';
+  static const String press11 = 'assets/press_image/press11.png';
+  static const String press12 = 'assets/press_image/press12.png';
+  static const String press13 = 'assets/press_image/press13.png';
+  static const String press14 = 'assets/press_image/press14.png';
+  static const String press15 = 'assets/press_image/press15.png';
+  static const String press16 = 'assets/press_image/press16.png';
+  static const String press17 = 'assets/press_image/press17.png';
+  static const String press18 = 'assets/press_image/press18.png';
+
+  /// transformations
+  static const String trans1 = 'assets/transformations_image/trans1.webp';
+  static const String trans2 = 'assets/transformations_image/trans2.webp';
+  static const String trans3 = 'assets/transformations_image/trans3.webp';
+  static const String trans4 = 'assets/transformations_image/trans4.webp';
+  static const String trans5 = 'assets/transformations_image/trans5.webp';
+  static const String trans6 = 'assets/transformations_image/trans6.webp';
+  static const String trans7 = 'assets/transformations_image/trans7.webp';
+  static const String trans8 = 'assets/transformations_image/trans8.webp';
+  static const String trans9 = 'assets/transformations_image/trans9.webp';
+  static const String trans10 = 'assets/transformations_image/trans10.webp';
 
 }

@@ -9,7 +9,6 @@ import 'package:hollywood_hair/api_provider/api_provider.dart';
 import 'package:hollywood_hair/model/product_by_id_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:shopify_flutter/models/models.dart';
-import 'package:shopify_flutter/models/src/shopify_user/address/address.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 
 import 'dart:convert';

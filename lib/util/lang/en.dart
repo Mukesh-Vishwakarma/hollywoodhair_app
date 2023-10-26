@@ -77,6 +77,9 @@ const en_US = {
   'popular_product': 'Popular product',
   'our_salons': 'Our Salons',
   'featured_products': 'Featured Products',
+  'celebrities': 'Celebrities',
+  'transformation': 'Transformation',
+  'press': 'Press',
 
   // Favourite screen
   'favourite': 'Favourite',
