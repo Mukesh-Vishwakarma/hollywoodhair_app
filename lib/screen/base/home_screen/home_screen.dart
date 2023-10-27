@@ -114,7 +114,6 @@ class HomeScreen extends GetView<HomeController> {
                   transformationList(),
                   const SizedBox(height: 20),
                   pressListFirst(),
-                  const SizedBox(height: 10),
                   pressListSecond(),
                 ],
               ),
@@ -880,7 +879,7 @@ class HomeScreen extends GetView<HomeController> {
                   itemCount: controller.pressModelFirst.length,
                   itemBuilder: (context, index) {
                     return pressWidget(
-                      featuredData: controller.pressModelFirst[index],
+                      featuredData: controller.pressModelFirst[index],position: index
                     );
                   },
                 ),
@@ -906,7 +905,7 @@ class HomeScreen extends GetView<HomeController> {
                   itemCount: controller.pressModelSecond.length,
                   itemBuilder: (context, index) {
                     return pressWidget(
-                      featuredData: controller.pressModelSecond[index],
+                      featuredData: controller.pressModelSecond[index],position: index
                     );
                   },
                 ),
@@ -916,7 +915,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  pressWidget({required PressModel featuredData}) {
+  pressWidget({required PressModel featuredData,required position}) {
     return GestureDetector(
       onTap: () {
         Get.toNamed(AppPages.celebritiesScreen,
@@ -943,7 +942,7 @@ class HomeScreen extends GetView<HomeController> {
                 fit: BoxFit.cover,
               ),
             ),
-          ).marginOnly(left: 3, right: 3),
+          ).marginOnly(right: 14),
         ],
       ),
     );
