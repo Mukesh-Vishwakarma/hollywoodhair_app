@@ -113,8 +113,9 @@ class HomeScreen extends GetView<HomeController> {
                   const SizedBox(height: 20),
                   transformationList(),
                   const SizedBox(height: 20),
-                  pressList(),
-                  const SizedBox(height: 20),
+                  pressListFirst(),
+                  const SizedBox(height: 10),
+                  pressListSecond(),
                 ],
               ),
             )
@@ -622,6 +623,8 @@ class HomeScreen extends GetView<HomeController> {
                   autoPlay: true,
                   enlargeStrategy: CenterPageEnlargeStrategy.scale,
                   enlargeFactor: 0.0,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 1000),
                   aspectRatio: 4.9 / 2,
                   viewportFraction: 0.6,
                   initialPage: 1,
@@ -643,9 +646,9 @@ class HomeScreen extends GetView<HomeController> {
                       width: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: AppColors.whiteTrans1,
+                        color: AppColors.transparentBlack,
                       ),
-                      child: const Icon(Icons.arrow_back_ios_new, size: 18),
+                      child: const Icon(Icons.arrow_back_ios_new, size: 18,color: Colors.white,),
                     ).marginOnly(left: 5),
                   ),
                   InkWell(
@@ -657,11 +660,12 @@ class HomeScreen extends GetView<HomeController> {
                       width: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: AppColors.whiteTrans1,
+                        color: AppColors.transparentBlack,
                       ),
                       child: const Icon(
                         Icons.arrow_forward_ios_outlined,
                         size: 18,
+                        color: Colors.white,
                       ),
                     ).marginOnly(right: 5),
                   ),
@@ -692,7 +696,7 @@ class HomeScreen extends GetView<HomeController> {
             height: 10,
           ),
           SizedBox(
-            height: 20.h,
+            height: 160,
             child: Stack(
               children: [
                 PageView.builder(
@@ -715,19 +719,7 @@ class HomeScreen extends GetView<HomeController> {
                                 children: [
                                   Expanded(
                                     child: InkWell(
-                                      onTap: () {
-                                        // Get.toNamed(AppPages.celebritiesScreen,
-                                        //     arguments: [
-                                        //       "Celebrities Details",
-                                        //       // controller
-                                        //       //     .transformationData[index].socialLink
-                                        //     ]);
-
-                                        print("sdhbjnkm==> ${controller
-                                            .transformationsModel[index]
-                                            .image}");
-
-                                      },
+                                      onTap: () {},
                                       child: SizedBox(
                                         height: 300,
                                         child: ClipRRect(
@@ -742,7 +734,7 @@ class HomeScreen extends GetView<HomeController> {
                                                 .size
                                                 .height,
                                             width: double.infinity,
-                                            fit: BoxFit.cover,
+                                            // fit: BoxFit.cover,
                                             errorBuilder: (BuildContext context,
                                                 Object exception,
                                                 StackTrace? stackTrace) {
@@ -774,40 +766,79 @@ class HomeScreen extends GetView<HomeController> {
                     );
                   },
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: IntrinsicWidth(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: IntrinsicWidth(
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(20.0),
+                //         color: AppColors.transparentBlack,
+                //       ),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: List<Widget>.generate(
+                //           controller.transformationsModel.length,
+                //           (index) => InkWell(
+                //             onTap: () {
+                //               controller.pageController.animateToPage(index,
+                //                   duration: const Duration(milliseconds: 300),
+                //                   curve: Curves.easeIn);
+                //             },
+                //             child: CircleAvatar(
+                //               radius: 4,
+                //               backgroundColor:
+                //                   controller.activePage.value == index
+                //                       ? Colors.white
+                //                       : Colors.grey,
+                //             ),
+                //           ).marginOnly(left: 3, right: 3),
+                //         ),
+                //       ).marginOnly(top: 5, bottom: 5, left: 10, right: 10),
+                //     ),
+                //   ),
+                // ).marginOnly(bottom: 5),
 
-                        color: AppColors.transparentBlack,
+                Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          controller.pageController.previousPage(duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: AppColors.transparentBlack,
+                          ),
+                          child: const Icon(Icons.arrow_back_ios_new, size: 18,color: Colors.white,),
+                        ).marginOnly(left: 5),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: List<Widget>.generate(
-                          controller.transformationsModel.length,
-                          // Divide by 2
-                          (index) => InkWell(
-                            onTap: () {
-                              controller.pageController.animateToPage(index,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeIn);
-                            },
-                            child: CircleAvatar(
-                              radius: 4,
-                              backgroundColor:
-                                  controller.activePage.value == index
-                                      ? Colors.white
-                                      : Colors.grey,
-                            ),
-                          ).marginOnly(left: 3, right: 3),
-                        ),
-                      ).marginOnly(top: 5, bottom: 5,left: 10,right: 10),
-                    ),
+                      InkWell(
+                        onTap: () {
+                          controller.pageController.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: AppColors.transparentBlack,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ).marginOnly(right: 5),
+                      ),
+                    ],
                   ),
-                ).marginOnly(bottom: 5),
+                ),
               ],
             ),
           )
@@ -816,11 +847,14 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  pressList() {
+  pressListFirst() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 10,
+        ),
         Text(
           'press'.tr,
           // style: TextStyle(
@@ -837,33 +871,42 @@ class HomeScreen extends GetView<HomeController> {
         ),
         Obx(() => !controller.pageLoaderFeaturedStatus.value
             ? SizedBox(
+                height: 55,
                 width: double.infinity,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: (controller.pressModel.length / 3).ceil(),
+                  scrollDirection: Axis.horizontal,
+                  controller: controller.scrollControllerFirst,
+                  itemCount: controller.pressModelFirst.length,
                   itemBuilder: (context, index) {
-                    int startIndex = index * 3;
-                    int endIndex = startIndex + 3;
-                    if (endIndex > controller.pressModel.length) {
-                      endIndex = controller.pressModel.length;
-                    }
+                    return pressWidget(
+                      featuredData: controller.pressModelFirst[index],
+                    );
+                  },
+                ),
+              )
+            : shimmerDemo()),
+      ],
+    );
+  }
 
-                    List<Widget> rowItems = [];
-
-                    for (int i = startIndex; i < endIndex; i++) {
-                      rowItems.add(Expanded(
-                        child: pressWidget(
-                          featuredData: controller.pressModel[i],
-                        ),
-                      ));
-                    }
-
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: rowItems,
+  pressListSecond() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Obx(() => !controller.pageLoaderFeaturedStatus.value
+            ? SizedBox(
+                height: 55,
+                width: double.infinity,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  controller: controller.scrollControllerSecond,
+                  itemCount: controller.pressModelSecond.length,
+                  itemBuilder: (context, index) {
+                    return pressWidget(
+                      featuredData: controller.pressModelSecond[index],
                     );
                   },
                 ),
@@ -874,6 +917,39 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   pressWidget({required PressModel featuredData}) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(AppPages.celebritiesScreen,
+            arguments: ["Press", featuredData.socialLink]);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              color: AppColors.searchBorderColor,
+              border: Border.all(
+                color: AppColors.primaryColor,
+                width: 1.0, // Adjust the border width
+              ),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Image.asset(
+                featuredData.image,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ).marginOnly(left: 3, right: 3),
+        ],
+      ),
+    );
+  }
+
+/*  pressWidget({required PressModel featuredData}) {
     return GestureDetector(
       onTap: () {
         Get.toNamed(AppPages.celebritiesScreen,
@@ -905,7 +981,7 @@ class HomeScreen extends GetView<HomeController> {
         ],
       ),
     );
-  }
+  }*/
 
   ///  Simmer view loader
 

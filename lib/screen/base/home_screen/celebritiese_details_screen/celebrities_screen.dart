@@ -30,10 +30,10 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
                         if (await controller.webViewController!.canGoBack()) {
                           controller.webViewController!.goBack();
                         } else {
-                          Get.back();
+                          Get.back(result: "backPress");
                         }
                       } else {
-                        Get.back();
+                        Get.back(result: "backPress"  );
                       }
                     },
                     child: const Icon(

@@ -14,7 +14,6 @@ import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api_provider/api_provider.dart';
-import '../../../model/all_transformations_model.dart';
 import '../../../model/celebrities_model.dart';
 import '../../../util/app_colors.dart';
 import '../../../util/assets.dart';
@@ -23,6 +22,12 @@ import '../../product_details/product_details_controller.dart';
 import '../../../model/featured_products_model.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
+
+
+  final PageController pageControllerNew = PageController(initialPage: 0);
+  final ValueNotifier<int> currentPageNew = ValueNotifier<int>(0);
+
+
   final PageController pageController = PageController(initialPage: 0);
   var activePage = 0.obs;
   int currentPage = 0;
@@ -54,8 +59,14 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   // RxList<TransformationsData> transformationData = <TransformationsData>[].obs;
   var isPageLoad = true.obs;
 
-  var pressModel = <PressModel>[].obs;
+  var pressModelFirst = <PressModel>[].obs;
+  var pressModelSecond = <PressModel>[].obs;
   var transformationsModel = <PressModel>[].obs;
+
+  ScrollController scrollControllerFirst = ScrollController();
+  ScrollController scrollControllerSecond = ScrollController();
+  List<String> items = List.generate(10, (index) => 'Item $index');
+  bool canJumpToFirstPosition = false;
 
   @override
   void onInit() {
@@ -66,6 +77,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     celebrities();
     press();
     transformation();
+    scrollPressFirst();
+    scrollPressSecond();
     // allTransformationApi();
     // celebritiesScroll();
     super.onInit();
@@ -414,108 +427,108 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   }
 
   press() {
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "1",
         title: "forbes",
         image: Assets.press1,
         socialLink:
             "https://www.forbes.pl/biznes/hollywood-hair-przedluzanie-wlosow-nowym-trendem-na-rynku-beauty/jvq54gg"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "2",
         title: "feszyn",
         image: Assets.press2,
         socialLink:
             "https://feszyn.com/przed-rozpoczeciem-mojej-dzialalnosci-rynek-przedluzania-wlosow-w-polsce-praktycznie-nie-istnial/"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "3",
         title: "galeriehandlowe",
         image: Assets.press3,
         socialLink:
             "https://www.galeriehandlowe.pl/publikacje/retail-news/artykul/hollywood-hair-poszerza-swoja-ekspansje-i-otwiera-dziesiaty-jubileuszowy-salon-w-szczecinie"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "4",
         title: "inwestycje",
         image: Assets.press4,
         socialLink:
             "https://inwestycje.pl/biznes/hollywood-hair-przyspiesza-swoja-ekspansje/"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "5",
         title: "mamstartup",
         image: Assets.press5,
         socialLink:
             "https://mamstartup.pl/stworzylam-siec-salonow-hollywood-hair-bez-zewnetrznego-finansowania-klaudia-duszynska/"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "6",
         title: "kierunekkosmetyki",
         image: Assets.press6,
         socialLink:
             "https://www.kierunekkosmetyki.pl/artykul,97834,hollywood-hair-poszerza-swoja-ekspansje-i-otwiera-dziesiaty-jubileuszowy-salon-w-szczecinie.html"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "7",
         title: "omnichannelnews",
         image: Assets.press7,
         socialLink:
             "https://omnichannelnews.pl/2023/09/11/kolejne-salony-sieci-hollywood-hair-na-mapie-polski/"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "8",
         title: "stronakobiet",
         image: Assets.press8,
         socialLink:
             "https://stronakobiet.pl/pielegnacja-wlosow-latem-zobacz-porady-ekspertek-ktore-uchronia-twoje-kosmyki-przed-zniszczeniem-ich-podczas-wakacji/ar/c6-17596503"));
-    pressModel.add(PressModel(
+    pressModelFirst.add(PressModel(
         id: "9",
         title: "wirtualnekosmetyki",
         image: Assets.press9,
         socialLink:
             "https://wirtualnekosmetyki.pl/-newsy-producenci/kolejne-dwa-salony-hollywood-hair"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "10",
         title: "lelum",
         image: Assets.press10,
         socialLink:
             "https://lelum.pl/olsniewajace-wlosy-dbaj-o-nie-w-trakcie-wakacji-rl-wd-130723"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "11",
         title: "youtube",
         image: Assets.press11,
         socialLink: "https://www.youtube.com/watch?v=XXjXAtOEdsA"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "12",
         title: "marketingibiznes",
         image: Assets.press12,
         socialLink:
             "https://marketingibiznes.pl/biznes/autentycznosc-komunikacji-marki-w-social-media-pozwolila-nam-wzrosnac-od-0-do-blisko-100-pracownikow-klaudia-duszynska-hollywood-hair/"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "13",
         title: "facebook",
         image: Assets.press13,
         socialLink:
             "https://www.facebook.com/hollywoodhairofficial/videos/429832644322304/?extid=CL-UNK-UNK-UNK-IOS_GK0T-GK1C&ref=sharing"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "14",
         title: "trustedcosmetics",
         image: Assets.press14,
         socialLink:
             "https://www.trustedcosmetics.pl/hollywood-hair-z-jubileuszowym-salonem-i-festiwalem-hairchella/"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "15",
         title: "facebook",
         image: Assets.press15,
         socialLink:
             "https://www.facebook.com/hollywoodhairofficial/videos/527495034770497/?extid=CL-UNK-UNK-UNK-IOS_GK0T-GK1C&ref=sharing"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "16",
         title: "wiadomoscikosmetyczne",
         image: Assets.press16,
         socialLink:
             "https://www.wiadomoscikosmetyczne.pl/biznes-kosmetyki/salon-kosmetyczny/hollywood-hair-otwiera-dwa-nowe-salony-tym-razem-w-lublinie-i-w-lodzi-2491038"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "17",
         title: "forbes",
         image: Assets.press17,
         socialLink:
             "https://www.forbes.pl/biznes/hollywood-hair-przedluzanie-wlosow-nowym-trendem-na-rynku-beauty/jvq54gg"));
-    pressModel.add(PressModel(
+    pressModelSecond.add(PressModel(
         id: "18",
         title: "zatrzymajmlodosc",
         image: Assets.press18,
@@ -560,4 +573,72 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 //     isPageLoad.value = false;
 //   }
 // }
+
+  scrollPressFirst(){
+    const scrollDuration = Duration(seconds: 5);
+
+    Timer.periodic(scrollDuration, (timer) {
+      if (scrollControllerFirst.hasClients) {
+        final maxExtent = scrollControllerFirst.position.maxScrollExtent;
+        final currentPosition = scrollControllerFirst.position.pixels;
+        if (currentPosition >= maxExtent) {
+          Timer(Duration(seconds: 1), () {
+            // _scrollController.animateTo(0.0, duration: scrollDuration, curve: Curves.linear);
+            // canJumpToFirstPosition = false;
+
+            scrollControllerFirst.jumpTo(0.0);
+          });
+
+        } else {
+          scrollControllerFirst.animateTo(
+            currentPosition + 200.0, // Adjust the scroll distance as needed
+            duration: scrollDuration,
+            curve: Curves.linear,
+          );
+        }
+      }
+    });
+  }
+
+  scrollPressSecond(){
+    const scrollDuration = Duration(seconds: 5);
+
+    Timer.periodic(scrollDuration, (timer) {
+      if (scrollControllerSecond.hasClients) {
+        final maxExtent = scrollControllerSecond.position.maxScrollExtent;
+        final currentPosition = scrollControllerSecond.position.pixels;
+        if (currentPosition >= maxExtent) {
+          Timer(Duration(seconds: 1), () {
+            // _scrollController.animateTo(0.0, duration: scrollDuration, curve: Curves.linear);
+            // canJumpToFirstPosition = false;
+
+            scrollControllerSecond.jumpTo(0.0);
+          });
+
+        } else {
+          scrollControllerSecond.animateTo(
+            currentPosition + 200.0, // Adjust the scroll distance as needed
+            duration: scrollDuration,
+            curve: Curves.linear,
+          );
+        }
+      }
+    });
+  }
+
+
+  void autoScroll() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (pageController.page! < currentPage - 1) {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      } else {
+        pageController.jumpToPage(0);
+      }
+      autoScroll();
+    });
+  }
+
 }
