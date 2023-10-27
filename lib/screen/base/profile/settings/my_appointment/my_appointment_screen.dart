@@ -16,6 +16,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -26,7 +27,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
               )),
           title: Text("my_appointment".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -38,7 +39,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
             child: Text("UPCOMING",
                 style: AppStyles.textStyle(
                     color: AppColors.gray99,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal)),
           ),
           Container(
@@ -67,7 +68,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                             Text("Hair Thickening",
                                 style: AppStyles.textStyle(
                                     color: AppColors.black,
-                                    fontSize: dimen12,
+                                    fontSize: 14.0,
                                     weight: FontWeight.w500)),
                             SizedBox(height: 7),
                             Row(
@@ -101,13 +102,13 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                                 Text("Date",
                                                     style: AppStyles.textStyle(
                                                         color: AppColors.gray99,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight:
                                                             FontWeight.normal)),
                                                 Text("Mon, 01 Aug, 2023",
                                                     style: AppStyles.textStyle(
                                                         color: AppColors.black,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight: FontWeight.w500)),
                                               ],
                                             ),
@@ -140,13 +141,13 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                                 Text("Hairstylist",
                                                     style: AppStyles.textStyle(
                                                         color: AppColors.gray99,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight:
                                                             FontWeight.normal)),
                                                 Text("Ishita Sajwan",
                                                     style: AppStyles.textStyle(
                                                         color: AppColors.black,
-                                                        fontSize: dimen12,
+                                                        fontSize: 14.0,
                                                         weight: FontWeight.w500)),
                                               ],
                                             ),
@@ -177,12 +178,12 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                           Text("Time",
                                               style: AppStyles.textStyle(
                                                   color: AppColors.gray99,
-                                                  fontSize: dimen12,
+                                                  fontSize: 14.0,
                                                   weight: FontWeight.normal)),
                                           Text("9:30 AM",
                                               style: AppStyles.textStyle(
                                                   color: AppColors.black,
-                                                  fontSize: dimen12,
+                                                  fontSize: 14.0,
                                                   weight: FontWeight.w500)),
                                         ],
                                       ),
@@ -234,7 +235,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                           child: Text("st. Belwederska 4400-594 Warsaw",
                               style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.normal)
 
 
@@ -271,7 +272,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                       child:Center(child: Text("Reschedule",
                           style: AppStyles.textStyle(
                               color: AppColors.primaryColor,
-                              fontSize: dimen12,
+                              fontSize: 14.0,
                               weight: FontWeight.w500)
 
 
@@ -300,7 +301,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
 
                             style: AppStyles.textStyle(
                                 color: AppColors.primaryColor,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.w500)
 
 

@@ -11,18 +11,20 @@ import 'package:intl/intl.dart';
 import 'book_appointment_controller.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController> {
+  const BookAppointmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.0),
+          preferredSize: const Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
@@ -37,15 +39,15 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Preferred Hairstylist(optional)",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
               Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
                   child:
 
                   TextFormField(
@@ -66,7 +68,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       hintText:"name".tr,
                       hintStyle:AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
                       suffixIcon:Padding(
@@ -77,7 +79,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       labelText: "name".tr,
                       labelStyle: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
 
@@ -125,15 +127,15 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     ),
                   )
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Date",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
               Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
                   child:
 
                   TextFormField(
@@ -191,15 +193,15 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       hintText:"date".tr,
                       hintStyle:AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
-                      suffixIcon:Icon(Icons.calendar_month_outlined),
+                      suffixIcon:const Icon(Icons.calendar_month_outlined),
 
                       labelText: "date".tr,
                       labelStyle: AppStyles.textStyle(
                         color: AppColors.black,
-                        fontSize: dimen12,
+                        fontSize: 14.0,
                         weight: FontWeight.normal,
                       ),
 
@@ -248,12 +250,12 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                   )
               ),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text("Available slots",
                     style: AppStyles.textStyle(
-                        fontSize: dimen12, weight: FontWeight.normal)),
+                        fontSize: 14.0, weight: FontWeight.normal)),
               ),
 
               Padding(
@@ -304,7 +306,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
               ),
 
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               GestureDetector(
                   onTap: () {
@@ -316,11 +318,11 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     // }
                   },
                   child: Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 80, bottom: 10),
                       child: buttom("Book appointment"))),
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
 
             ],

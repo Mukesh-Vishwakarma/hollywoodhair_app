@@ -9,7 +9,7 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 
 import 'change_password_controller.dart';
 
-class ChangePasswordScreen extends GetView<ChangePasswordController> {
+class   ChangePasswordScreen extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,23 +17,24 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
           preferredSize: Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
             title: Text('change_password'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen18, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),
         body: SingleChildScrollView(child: Column(
             children: [
-SizedBox(height: 20),
+const SizedBox(height: 20),
           Form(
               key: controller.formLoginKey,
               child: Column(children: [
@@ -63,7 +64,7 @@ SizedBox(height: 20),
                   hintText: 'old_password'.tr,
                   hintStyle: AppStyles.textStyle(
                     color: AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
                   suffixIcon: Obx(() => Padding(
@@ -82,7 +83,7 @@ SizedBox(height: 20),
                   labelText: 'old_password'.tr,
                   labelStyle: AppStyles.textStyle(
                     color: AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
 
@@ -149,7 +150,7 @@ SizedBox(height: 20),
                         hintText: 'new_password'.tr,
                         hintStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
                         suffixIcon: Obx(() => Padding(
@@ -168,7 +169,7 @@ SizedBox(height: 20),
                         labelText: 'new_password'.tr,
                         labelStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
 
@@ -241,7 +242,7 @@ SizedBox(height: 20),
                         hintText: 'confirm_password'.tr,
                         hintStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
                         suffixIcon: Obx(() => Padding(
@@ -260,7 +261,7 @@ SizedBox(height: 20),
                         labelText: 'confirm_password'.tr,
                         labelStyle: AppStyles.textStyle(
                           color: AppColors.black,
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.normal,
                         ),
 

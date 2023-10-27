@@ -8,6 +8,8 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 import 'notification_controller.dart';
 
 class NotificationScreen extends GetView<NotificationController> {
+  const NotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +21,7 @@ class NotificationScreen extends GetView<NotificationController> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
@@ -70,14 +72,14 @@ notificationList(index){
                   Text(controller.notificationList[index].title.toString(),
 
                       style: AppStyles.textStyle(
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           weight: FontWeight.w500)
 
                   ),
                   Text(controller.notificationList[index].dis.toString(),
 
                       style: AppStyles.textStyle(
-                          fontSize: dimen12,
+                          fontSize: 14.0,
                           color: AppColors.gray99,
                           weight: FontWeight.normal)
                   )

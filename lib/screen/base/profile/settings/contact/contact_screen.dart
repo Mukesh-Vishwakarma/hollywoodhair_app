@@ -15,17 +15,18 @@ class ContactScreen extends GetView<ContactController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
           title: Text("contact_us".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -40,16 +41,16 @@ class ContactScreen extends GetView<ContactController> {
               children: [
                 Image.asset(
                   Assets.msg,
-                  height: 30,
-                  width: 30,
+                  height: 25,
+                  width: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     'support@hollywoodhair.com',
                     style: TextStyle(
                       color: Color(0xFF333333),
-                      fontSize:dimen12,
+                      fontSize:14.0,
                       fontFamily: 'TT Firs Neue Trl',
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
@@ -69,15 +70,15 @@ class ContactScreen extends GetView<ContactController> {
               children: [
                 Image.asset(
                   Assets.phone,
-                  height: 30,
-                  width: 30,
+                  height: 25,
+                  width: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
                     '+48 12349 34823',
                       style: AppStyles.textStyle(
-                          fontSize: dimen12, weight: FontWeight.normal)
+                          fontSize: 14.0, weight: FontWeight.normal)
                   ),
                 )
               ],

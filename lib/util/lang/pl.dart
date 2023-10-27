@@ -24,7 +24,6 @@ const pl_PL = {
   'old_password': 'Stare hasło',
   'confirm_password': 'Potwierdź hasło',
   'change_password_des': 'Aby zresetować hasło, potrzebujemy Twojego adresu e-mail lub numeru telefonu komórkowego, który można zweryfikować',
-  'profile': 'Profil',
   'setting': 'Ustawienia',
   'languages': 'Języki',
   'terms_&_condition': 'Regulamin',
@@ -47,7 +46,7 @@ const pl_PL = {
   'full_address': 'Pełny adres',
   'address_type': 'Rodzaj adresu',
   'notification': 'Powiadomienie',
-  'booking': 'Rezerwacja',
+  'booking': 'Książka',
   'book_appointment': 'Zarezerwuj spotkanie',
   'age': 'Wiek',
   'gender': 'Płeć',
@@ -71,6 +70,8 @@ const pl_PL = {
   // Home Screen
   'explore_by_categories': 'Odkrywaj według kategorii',
   'popular_product': 'Popularne produkty',
+  'our_salons': 'Nasze Salony',
+  'featured_products': 'Wyróżnione produkty',
 
   // Favourite screen
   'favourite': 'Ulubione',
@@ -78,7 +79,6 @@ const pl_PL = {
   'all_products': 'Wszystkie produkty',
 
   // Cart
-  'cart': 'Koszyk',
   'promo_code': 'Kod promocyjny',
   'price_details': 'Szczegóły ceny',
   'subtotal': 'Suma częściowa',
@@ -88,4 +88,35 @@ const pl_PL = {
   'grand_total': 'Suma końcowa',
   'order_now': 'Zamów teraz',
   'apply': 'Zastosuj',
+  'empty_cart': 'Koszyk jest pusty',
+  'empty_cart_message': 'Wydaje się, że nie dodałeś jeszcze żadnych produktów do koszyka!',
+  'start_shopping': 'Zacznij zakupy teraz',
+  'checkout': 'Checkout',
+
+
+  // Home
+  'product_details': 'Szczegóły produktu',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Przejdź do koszyka',
+  'home': 'Dom',
+  'Booking_new': 'Zarezerwuj konsultację.',
+  'try_on': 'Spróbuj',
+  'cart': 'Koszyk',
+  'profile': 'Profil',
+
+  // Profile
+  'address': 'Adres',
+  'chatbot': 'Chatbot',
+  'Wishlist': 'Lista życzeń',
+  'rate_us': 'Oceń nas',
+
+
+  // Booking
+  'my_appointments': 'Mis Citas',
+  'style_selection_consultation': 'Konsultacja wyboru stylu Konsultacja z ekspertami.',
+  'consult_with_experts': 'Consulta con Expertos',
+  'Book_in_Store_appointment': 'Reservar Cita en Tienda',
+  'Unlock_your_perfect_look': 'Descubre tu Look Perfecto',
+  'book_consultation': 'Zarezerwuj konsultację',
+
 };

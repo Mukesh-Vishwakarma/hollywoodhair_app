@@ -9,13 +9,13 @@ class BookingController extends GetxController {
     // TODO: implement onInit
     bookingList = [
       BookingModel(
-          text: "Style Selection Consultation",
-          description: "Consult with experts",
-      image: Assets.demo1),
-      BookingModel(
-          text: "Book In-Store Appointment",
-          description: "Unlock your perfect look",
-          image: Assets.demo2),
+          text: "style_selection_consultation".tr,
+          // description: "consult_with_experts".tr,
+      image: Assets.bookingImgNew),
+      // BookingModel(
+      //     text: "Book_in_Store_appointment".tr,
+      //     description: "Unlock_your_perfect_look".tr,
+      //     image: Assets.demo2),
     ];
     super.onInit();
   }

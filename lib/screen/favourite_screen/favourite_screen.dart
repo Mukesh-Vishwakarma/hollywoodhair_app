@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'favourite_controller.dart';
 
@@ -14,7 +14,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
@@ -28,7 +28,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
@@ -73,18 +73,17 @@ class FavouriteScreen extends GetView<FavouriteController> {
   productsWidget() {
     return Container(
       color: AppColors.dividerColor,
-      child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: controller.productList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2 / 3.1,
-              crossAxisCount: 2,
-              crossAxisSpacing: 1,
-              mainAxisSpacing: 1),
-          itemBuilder: (context, index) {
-            return commonProductWidget(product: controller.productList[index]);
-          }),
+      child: GridView.count(
+        crossAxisCount: 2, // Set the number of columns as needed
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        children: List.generate(controller.productList.length, (index) {
+          return commonProductWidget(product: controller.productList[index]);
+        }),
+      )
+      ,
     );
   }
 
@@ -169,7 +168,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
           child: Text(
             "add_to_cart".tr,
             style: AppStyles.textStyle(
-                weight: FontWeight.w600,
+                weight: FontWeight.w500,
                 fontSize: 14.0,
                 color: AppColors.lightBackgroundColor),
           ),

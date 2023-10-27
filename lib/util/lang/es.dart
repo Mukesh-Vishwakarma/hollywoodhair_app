@@ -24,7 +24,6 @@ const es_SP = {
   'old_password': 'Contraseña antigua',
   'confirm_password': 'Confirmar contraseña',
   'change_password_des': 'Para restablecer su contraseña, necesitamos su correo electrónico o número de teléfono móvil que pueda ser autenticado',
-  'profile': 'Perfil',
   'setting': 'Configuración',
   'languages': 'Idiomas',
   'terms_&_condition': 'Términos y condiciones',
@@ -35,7 +34,7 @@ const es_SP = {
   'edit_profile': 'Editar perfil',
   'save': 'Guardar',
   'name': 'Nombre',
-  'date': 'Nombre',
+  'date': 'fecha',
   'phone_number': 'Número de teléfono',
   'select_address': 'Seleccionar dirección',
   'add_new_address': 'Agregar nueva dirección',
@@ -71,6 +70,8 @@ const es_SP = {
   // Home Screen
   'explore_by_categories': 'Explorar por categorías',
   'popular_product': 'Productos populares',
+  'our_salons': 'Nuestros Salones',
+  'featured_products': 'Productos Destacados',
 
   // Favourite screen
   'favourite': 'Favoritos',
@@ -78,7 +79,6 @@ const es_SP = {
   'all_products': 'Todos los productos',
 
   // Cart
-  'cart': 'Carrito',
   'promo_code': 'Código promocional',
   'price_details': 'Detalles de precio',
   'subtotal': 'Subtotal',
@@ -88,4 +88,33 @@ const es_SP = {
   'grand_total': 'Total general',
   'order_now': 'Ordenar ahora',
   'apply': 'Aplicar',
+  'empty_cart': 'Koszyk jest pusty',
+  'empty_cart_message': 'Wydaje się, że nie dodałeś jeszcze żadnych produktów do koszyka!',
+  'start_shopping': 'Zacznij zakupy teraz',
+  'checkout': 'Checkout',
+
+
+  // Home
+  'product_details': 'Detalles del producto',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Ir al carrito',
+  'home': 'Inicio',
+  'try_on': 'Prueba',
+  'cart': 'Carrito',
+  'profile': 'Perfil',
+
+  // Profile
+  'address': 'Dirección',
+  'chatbot': 'Chatbot',
+  'Wishlist': 'Lista de deseos',
+  'rate_us': 'Califícanos',
+  'booking_new': 'Agendar una consulta.',
+
+  // Booking
+  'my_appointments': 'Moje terminy',
+  'style_selection_consultation': 'Consulta de Selección de Estilo Consulta con expertos.',
+  'consult_with_experts': 'Konsultuj się z ekspertami',
+  'Book_in_Store_appointment': 'Zarezerwuj termin w sklepie stacjonarnym',
+  'Unlock_your_perfect_look': 'Odblokuj swój idealny wygląd',
+  'book_consultation': 'Reservar consulta',
 };

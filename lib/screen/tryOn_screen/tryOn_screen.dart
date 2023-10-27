@@ -11,7 +11,7 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TryOnScreen extends GetView<TryOnController> {
   const TryOnScreen({super.key});

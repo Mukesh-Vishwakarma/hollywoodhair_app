@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/base/home_screen/home_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/models/models.dart';
-import 'package:sizer/sizer.dart';
-
+import '../../../util/common_function.dart';
+import '../base_home_controller.dart';
 import 'cart_controller.dart';
 
 class CartScreen extends GetView<CartController> {
-  CartScreen({super.key});
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
@@ -26,29 +28,13 @@ class CartScreen extends GetView<CartController> {
           elevation: 0.4,
           backgroundColor: AppColors.colorFF,
           title: Text(
-            "${'cart'.tr}",
+            'cart'.tr,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
               fontSize: 20.0,
             ),
           ),
           automaticallyImplyLeading: false,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPages.favouriteScreen);
-                  },
-                  child: SvgPicture.asset(Assets.searchIcon)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(Assets.notificationIcon)),
-            ),
-          ],
         ),
       ),
       backgroundColor: AppColors.lightBackgroundColor,
@@ -57,43 +43,84 @@ class CartScreen extends GetView<CartController> {
   }
 
   bodyWidget() {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+    return Obx(() => Stack(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-              color: AppColors.backGroundColor,
-              child: Obx(
-                () => controller.noCartCreated.isFalse
-                    ? controller.dataLoading.isFalse
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                cartWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                promoCodeWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                priceDetailWidget(),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                orderButton(),
-                              ])
-                        : const SizedBox()
-                    : const SizedBox(),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      color: AppColors.backGroundColor,
+                      child: Obx(() => controller.dataLoading.isFalse
+                          ? controller.noCartCreated.isFalse
+                              ? (controller.checkout.lineItems.isNotEmpty)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          if (controller.sippingAddress.value)
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                addressWidget(),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                const Divider(),
+                                              ],
+                                            ),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10,
+                                                left: 15,
+                                                right: 15),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                cartWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                promoCodeWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                priceDetailWidget(),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                orderButton(),
+                                              ],
+                                            ),
+                                          )
+                                        ])
+                                  : Container(
+                                      child: emptyCartWidget(),
+                                    )
+                              : Container(
+                                  child: emptyCartWidget(),
+                                )
+                          : shimmerDemo()),
+                    )
+                  ],
+                ),
               ),
+            ),
+            Visibility(
+              visible: controller.addressLoaderStatus.value,
+              child: loader(AppColors.transparentBlack),
             )
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   cartWidget() {
@@ -102,12 +129,12 @@ class CartScreen extends GetView<CartController> {
         physics: const BouncingScrollPhysics(),
         itemCount: controller.checkout.lineItems.length,
         itemBuilder: (context, index) {
-          return cartitemWidget(controller.checkout.lineItems[index]);
+          return cartItemWidget(controller.checkout.lineItems[index]);
         });
   }
 
-  cartitemWidget(LineItem item) {
-    print(item);
+  cartItemWidget(LineItem item) {
+    RxInt quantity = (item.quantity).obs;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -118,8 +145,8 @@ class CartScreen extends GetView<CartController> {
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 item.variant!.image!.originalSrc,
-                width: 22.w,
-                height: 10.h,
+                width: 70,
+                height: 70,
                 fit: BoxFit.cover,
               )),
           Expanded(
@@ -136,34 +163,81 @@ class CartScreen extends GetView<CartController> {
                       fontSize: 14.0,
                     ),
                   ),
+                  Text(
+                    item.variant!.product!.compareAtPriceFormatted.toString(),
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 30),
-            padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
+            margin: const EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: AppColors.grayDA)),
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 9, vertical: 8),
-                  child: SvgPicture.asset(Assets.minusIcon),
-                ),
-                Text(item.quantity.toString(),
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 12.0,
-                    )),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 9, vertical: 8),
-                  child: SvgPicture.asset(Assets.plusIcon),
-                ),
-              ],
+            child: Obx(
+              () => Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (quantity == 1) {
+                        quantity.value = 0;
+                        controller.removeCartItems(item, quantity.value);
+                      } else if (quantity > 1) {
+                        quantity.value = quantity.value - 1;
+                        controller.updateCartItemQuantity(
+                            item, (quantity.value));
+                      }
+                    },
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      child: SvgPicture.asset(Assets.minusIcon, width: 10),
+                    ),
+                  ),
+                  Text(quantity.value.toString(),
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      )),
+                  InkWell(
+                    onTap: () {
+                      quantity.value = quantity.value + 1;
+                      controller.updateCartItemQuantity(item, (quantity.value));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 10),
+                      child: SvgPicture.asset(Assets.plusIcon, width: 12),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
+          InkWell(
+            onTap: () {
+              controller.removeCartItems(item, quantity.value);
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 30, left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.grayDA)),
+              child: SvgPicture.asset(
+                Assets.trashIcon,
+                width: 17,
+                height: 17.5,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -175,7 +249,7 @@ class CartScreen extends GetView<CartController> {
       children: [
         Text('promo_code'.tr,
             style: AppStyles.textStyle(
-              weight: FontWeight.w600,
+              weight: FontWeight.w500,
               fontSize: 16.0,
             )),
         const SizedBox(
@@ -196,6 +270,7 @@ class CartScreen extends GetView<CartController> {
               child: Center(
                 child: TextFormField(
                   controller: controller.promoCodeController,
+                  textCapitalization: TextCapitalization.characters,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(bottom: 10),
                     hintText: "HHGLAMOUR15",
@@ -219,18 +294,24 @@ class CartScreen extends GetView<CartController> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.black84, width: 1.0),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Center(
-                child: Text('apply'.tr,
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
-                      fontSize: 14.0,
-                    )),
+            InkWell(
+              onTap: () {
+                // controller.applyPromoCode();
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.black84, width: 1.0),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Center(
+                  child: Text('apply'.tr,
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      )),
+                ),
               ),
             )
           ],
@@ -245,19 +326,33 @@ class CartScreen extends GetView<CartController> {
       children: [
         Text('price_details'.tr,
             style: AppStyles.textStyle(
-              weight: FontWeight.w600,
+              weight: FontWeight.w500,
               fontSize: 16.0,
             )),
         const SizedBox(height: 20),
-        priceitemWidget(title: "subtotal".tr, value: "zł 457"),
+        priceItemWidget(
+            title: "subtotal".tr,
+            value: controller.checkout.subtotalPriceV2.formattedPrice),
         const SizedBox(height: 10),
-        priceitemWidget(title: 'discount'.tr, value: "zł 00"),
+        priceItemWidget(
+            title: 'discount'.tr,
+            value: controller.checkout.totalTaxV2.formattedPrice),
         const SizedBox(height: 10),
-        priceitemWidget(title: "shipping_cost".tr, value: "zł 15"),
+        priceItemWidget(
+            title: "shipping_cost".tr,
+            value: controller.checkout.shippingLine?.priceV2.formattedPrice ??
+                "zt0.00"),
         const SizedBox(height: 10),
-        priceitemWidget(title: "tax".tr, value: "zł 3"),
+        priceItemWidget(
+            title: "tax".tr,
+            value: controller.checkout.totalTaxV2.formattedPrice ?? "zt0.00"),
         const SizedBox(height: 10),
-        priceitemWidget(title: "promo_code".tr, value: "zł 3"),
+        priceItemWidget(
+            title: "promo_code".tr,
+            value: controller.checkout.appliedGiftCards.isNotEmpty
+                ? controller
+                    .checkout.appliedGiftCards[0].amountUsedV2.formattedPrice
+                : "zt0.00"),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,9 +365,9 @@ class CartScreen extends GetView<CartController> {
               ),
             ),
             Text(
-              "zł 400",
+              controller.checkout.totalPriceV2.formattedPrice,
               style: AppStyles.textStyle(
-                weight: FontWeight.w600,
+                weight: FontWeight.w500,
                 fontSize: 12.0,
               ),
             ),
@@ -282,7 +377,7 @@ class CartScreen extends GetView<CartController> {
     );
   }
 
-  priceitemWidget({title, value}) {
+  priceItemWidget({title, value}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -306,10 +401,7 @@ class CartScreen extends GetView<CartController> {
 
   orderButton() {
     return InkWell(
-      onTap: () {
-        controller.addItemToCart(
-            "f9605f50addfe070acbc1a29120df7c5", 47139383050575, 2);
-      },
+      onTap: () {},
       child: Container(
         color: AppColors.lightBackgroundColor,
         child: Row(
@@ -318,39 +410,206 @@ class CartScreen extends GetView<CartController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('1199.6',
-                    style: AppStyles.textStyle(
-                      weight: FontWeight.w700,
-                      fontSize: 17.0,
+                Text(controller.checkout.totalPriceV2.amount.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.0,
                     )),
-                Text('PLN',
+                Text(controller.checkout.currencyCode.toString(),
                     style: AppStyles.textStyle(
-                      weight: FontWeight.w500,
+                      weight: FontWeight.w400,
                       fontSize: 12.0,
                     )),
               ],
             ),
-            Container(
-              width: 70.w,
-              height: 52,
+            InkWell(
+              onTap: () async {
+                try {
+                  // await Get.put(CheckoutController());
+                  // Get.toNamed(AppPages.checkout,
+                  //     arguments: [controller.checkout.webUrl.toString()]);
+                  controller.goToCheckout();
+                } catch (e, s) {
+                  print(s);
+                }
+              },
+              child: Container(
+                width: 70.w,
+                height: 52,
+                decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border:
+                        Border.all(color: AppColors.primaryColor, width: 1.0)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+                child: Center(
+                  child: Text(
+                    'order_now'.tr,
+                    style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 16.0,
+                        color: AppColors.lightBackgroundColor),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  emptyCartWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 11.h,
+          ),
+          SvgPicture.asset(Assets.emptyCart),
+          SizedBox(
+            height: 2.h,
+          ),
+          Text(
+            "empty_cart".tr,
+            style: AppStyles.textStyle(
+                family: "DINNeuzeitGrotes",
+                fontSize: 26.0,
+                weight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 0.5.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27.0),
+            child: Text(
+              "empty_cart_message".tr,
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyle(
+                family: "DINNeuzeitGrotes",
+                fontSize: 15.0,
+                weight: FontWeight.w400,
+                color: AppColors.colorE9,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          InkWell(
+            onTap: () {
+              // Get.toNamed(AppPages.allProductScreen, arguments: {
+              //   "categoryName": "All ",
+              //   "categoryId": "ALL",
+              // });
+              Get.find<BaseHomeController>().selectedIndex.value = 0;
+              Get.find<HomeController>().onInit();
+              Get.toNamed(AppPages.baseScreen);
+            },
+            child: Container(
+              width: 100.w,
+              height: 48,
               decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(8),
                   border:
                       Border.all(color: AppColors.primaryColor, width: 1.0)),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
               child: Center(
                 child: Text(
-                  'order_now'.tr,
+                  'start_shopping'.tr,
                   style: AppStyles.textStyle(
+                      family: "DINNeuzeitGrotes",
                       weight: FontWeight.w500,
                       fontSize: 16.0,
                       color: AppColors.lightBackgroundColor),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  addressWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Deliver to :",
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    Expanded(
+                      child: Text(
+                        controller.customerAddressName.value,
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Text(
+                      controller.postelCode.value,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        controller.address1.value,
+                        style: const TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Text(
+                      ("${controller.city.value},"),
+                      style: const TextStyle(fontSize: 13),
+                    ).marginOnly(left: 5, right: 5),
+                    Text(
+                      controller.country.value,
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ).marginOnly(top: 5)
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              controller.getUserAddress("");
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border:
+                    Border.all(color: AppColors.searchBorderColor, width: 1.0),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: controller.shippingAddressStatus.value
+                  ? const Text("Change")
+                      .marginOnly(left: 10, right: 10, top: 5, bottom: 5)
+                  : const Text("Add")
+                      .marginOnly(left: 10, right: 10, top: 5, bottom: 5),
+            ).marginOnly(left: 10),
+          )
+        ],
       ),
     );
   }

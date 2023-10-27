@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
-import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
@@ -19,6 +17,7 @@ class LanguageScreen extends GetView<LanguagesController> {
           preferredSize: const Size.fromHeight(70.0),
           child: AppBar(
             backgroundColor: AppColors.colorFF,
+            titleSpacing: 0,
             leading: GestureDetector(
                 onTap: () {
                   Get.back();
@@ -29,7 +28,7 @@ class LanguageScreen extends GetView<LanguagesController> {
                 )),
             title: Text("languages".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen15, weight: FontWeight.normal)),
+                    fontSize: 16.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),
@@ -66,7 +65,8 @@ class LanguageScreen extends GetView<LanguagesController> {
             width: Get.size.width,
             decoration: BoxDecoration(
               border: Border.all(
-                color: controller.selectLang.value.name == controller.languageList[index].name
+                color: controller.selectLang.value.name ==
+                        controller.languageList[index].name
                     ? AppColors.color7C
                     : AppColors.black,
                 // style: BorderStyle.solid,
@@ -81,10 +81,11 @@ class LanguageScreen extends GetView<LanguagesController> {
                     child: Text(
                   controller.languageList[index].name.toString(),
                   style: AppStyles.textStyle(
-                    color: controller.selectLang.value.name == controller.languageList[index].name
+                    color: controller.selectLang.value.name ==
+                            controller.languageList[index].name
                         ? AppColors.color7C
                         : AppColors.black,
-                    fontSize: dimen12,
+                    fontSize: 14.0,
                     weight: FontWeight.normal,
                   ),
                 )),

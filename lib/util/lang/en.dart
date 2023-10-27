@@ -4,28 +4,31 @@ const en_US = {
   'email': 'Email',
   'password': 'Password',
   'forgot_password': 'Forgot Password?',
-  'forgot_password_dis': 'To reset your password, we need your email or mobile number that can be authenticated',
+  'forgot_password_dis':
+      'To reset your password, we need your email or mobile number that can be authenticated',
   'sign_in': 'Sign in',
   'sign_up': 'Sign Up',
   'get_otp': 'Get OTP',
   'enter_otp': 'Enter OTP',
   'verify_me': 'Verify me',
-  'enter_otp_des': 'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
+  'enter_otp_des':
+      'We have sent you a 4 digit OTP verification code. Please Enter the code for verification',
   'sign_with': 'or sign in with',
   'signUp_with': 'or sign up with',
   'google': 'Google',
   'facebook': 'Facebook',
   'new_user': 'New User?',
   'get_started': 'Get started',
-  'get_started_dis': 'To get started with us, kindly enter your information below.',
+  'get_started_dis':
+      'To get started with us, kindly enter your information below.',
   'already_have_an_account': 'Already have an account?',
   'change_password': 'Change password',
   'new_password': 'new password',
   'old_password': 'old password',
   'confirm_password': 'confirm password',
-  'change_password_des': 'To reset your password, we need your email or mobile number that can be authenticated',
-  'profile': 'Profile',
-  'setting': 'Setting',
+  'change_password_des':
+      'To reset your password, we need your email or mobile number that can be authenticated',
+  'setting': 'Settings',
   'languages': 'Languages',
   'terms_&_condition': 'Terms & condition',
   'privacy_policy': 'Privacy policy',
@@ -35,7 +38,7 @@ const en_US = {
   'edit_profile': 'Edit profile',
   'save': 'Save',
   'name': 'Name',
-  'date': 'Name',
+  'date': 'Date',
   'phone_number': 'Phone number',
   'select_address': 'Select address',
   'add_new_address': 'Add new address',
@@ -47,23 +50,20 @@ const en_US = {
   'full_address': 'Full address',
   'address_type': 'Address Type',
   'notification': 'Notification',
-  'booking': 'Booking',
+  'booking_new': 'Book a Consultation',
   'book_appointment': 'Book appointment',
   'age': 'Age',
   'gender': 'Gender',
   'service': 'Service',
   'show_room_location': 'Showroom Location',
+  'our_saloons': 'Our Salons',
+  'our_transformation': 'Our Transformations',
   'next': 'Next',
-  'my_appointment': 'My appointment',
+  'my_appointment': 'My appointments',
   'log_out': 'Log out',
   'cancel': 'Cancel',
   'log_out_dis': 'Are our sure you want to Log out?',
   'my_orders': 'My orders',
-
-
-
-
-
   'plz_enter_email': 'Please enter email',
   'plz_enter_name': 'Please enter name',
   'plz_enter_password': 'Please enter password',
@@ -72,18 +72,21 @@ const en_US = {
   'plz_enter_confirm_password': 'Please enter confirm password',
   'plz_enter_phone_number': 'Please enter phone number',
 
-
-
 //home Screen
   'explore_by_categories': 'Explore by Categories',
   'popular_product': 'Popular product',
+  'our_salons': 'Our Salons',
+  'featured_products': 'Featured Products',
+  'celebrities': 'Celebrities',
+  'transformation': 'Transformation',
+  'press': 'Press',
 
   // Favourite screen
   'favourite': 'Favourite',
   'add_to_cart': 'Add to cart',
   'all_products': 'All products',
+
   // cart
-  'cart': 'Cart',
   'promo_code': 'Promo code',
   'price_details': 'Price Details',
   'subtotal': 'Subtotal',
@@ -93,5 +96,41 @@ const en_US = {
   'grand_total': 'Grand total',
   'order_now': 'Order Now',
   'apply': 'Apply',
+  'empty_cart': 'Empty Cart',
+  'empty_cart_message':
+      'Looks like you haven’t added anything to your cart yet!',
+  'start_shopping': 'Start Shopping Now',
+  'checkout': 'Checkout',
 
+  // Home
+  'product_details': 'Product Details',
+  'OPIS': 'OPIS',
+  'go_to_cart': 'Go to Cart',
+  'home': 'Home',
+  'booking': 'Booking',
+  'try_on': 'Try on',
+  'my_cart': 'My Cart',
+  'cart': 'Cart',
+  'profile': 'Profile',
+
+  // Profile
+  'address': 'Address',
+  'chatbot': 'Chatbot',
+  'my_wishlist': 'My Wishlist',
+  'rate_us': 'Rate us',
+
+  // search
+  'data_not_available': 'No Data Available',
+
+  // Booking
+  'my_appointments': 'My Appointments',
+  'style_selection_consultation':
+      'Style Selection Consultation Consult with experts.',
+  'consult_with_experts': 'Consult with experts',
+  'Book_in_Store_appointment': 'Book In-Store Appointment',
+  'Unlock_your_perfect_look': 'Unlock your perfect look',
+  'book_consultation': 'Book consultation',
+
+  // Checkout
+  'done': 'Done',
 };

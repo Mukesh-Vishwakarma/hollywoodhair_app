@@ -5,12 +5,12 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
-
 import 'signIn_controller.dart';
 
 class SignInScreen extends GetView<SignInController> {
+  const SignInScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class SignInScreen extends GetView<SignInController> {
               child: Text(
                 "welcome_back".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen20, weight: FontWeight.w600),
+                    fontSize: 24.0, weight: FontWeight.w500),
               ),
             ),
           ),
@@ -33,7 +33,7 @@ class SignInScreen extends GetView<SignInController> {
               child: Text(
                 "welcome_dis".tr,
                 style: AppStyles.textStyle(
-                    fontSize: dimen12,
+                    fontSize: 13.0,
                     color: Colors.grey,
                     weight: FontWeight.w400),
               ),
@@ -43,108 +43,103 @@ class SignInScreen extends GetView<SignInController> {
               key: controller.formLoginKey,
               child: Column(children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 40),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
                   child: textField(
                       controller.emailController,
                       "plz_enter_email".tr,
                       controller.email,
                       'email'.tr,
-                      "email"),
+                      "email",
+                      true),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 40),
-                  child:
-                  Obx(()=>
+                    margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
+                    child: Obx(() => TextFormField(
+                          controller: controller.passwordController,
+                          obscureText: controller.passwordVisible.value,
+                          style: AppStyles.textStyle(
+                            fontSize: 14.0,
+                            weight: FontWeight.normal,
+                          ),
+                          onTap: () {
+                            controller.passwordVisible.value =
+                                !controller.passwordVisible.value;
+                          },
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
+                              return "plz_enter_password".tr;
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            controller.password.value = value;
+                          },
+                          decoration: InputDecoration(
+                            isDense: false,
+                            contentPadding: const EdgeInsets.all(15),
+                            hintText: 'password'.tr,
+                            hintStyle: AppStyles.textStyle(
+                              color: AppColors.black,
+                              fontSize: 14.0,
+                              weight: FontWeight.normal,
+                            ),
+                            suffixIcon: Obx(() => Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: !controller.passwordVisible.value
+                                      ? Image.asset(
+                                          Assets.seenPassword,
+                                          height: 5,
+                                        )
+                                      : Image.asset(
+                                          Assets.unseenPassword,
+                                          height: 5,
+                                        ),
+                                )),
 
-                  TextFormField(
-                    controller: controller.passwordController,
-                    obscureText: controller.passwordVisible.value,
-                    style: AppStyles.textStyle(
-                      fontSize: dimen12,
-                      weight: FontWeight.normal,
-                    ),
-                    onTap: (){
-                      controller.passwordVisible.value =!controller.passwordVisible.value;
-                    },
-                    validator: (value) {
-                      if (value.toString().isEmpty) {
-                        return  "plz_enter_password".tr;
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      controller.password.value = value;
-                    },
-                    decoration: InputDecoration(
-                      isDense: false,
-                      contentPadding:
-                      const EdgeInsets.all(15),
-                      hintText:'password'.tr,
-                      hintStyle:AppStyles.textStyle(
-                        color: AppColors.black,
-                        fontSize: dimen12,
-                        weight: FontWeight.normal,
-                      ),
-                      suffixIcon:
-                      Obx(()=>
+                            labelText: 'password'.tr,
+                            labelStyle: AppStyles.textStyle(
+                              color: AppColors.black,
+                              fontSize: 14.0,
+                              weight: FontWeight.normal,
+                            ),
 
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child:  !controller.passwordVisible.value?Image.asset(Assets.seenPassword,height:5,):Image.asset(Assets.unseenPassword,height:5,),
-                      )),
+                            // const TextStyle(
+                            //     color: AppColors.color3D,
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w400),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.colorCD, width: 0.99),
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
+                            focusedErrorBorder: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
 
-                      labelText: 'password'.tr,
-                      labelStyle: AppStyles.textStyle(
-                        color: AppColors.black,
-                        fontSize: dimen12,
-                        weight: FontWeight.normal,
-                      ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.colorCD, width: 0.99),
+                            ),
 
-                      // const TextStyle(
-                      //     color: AppColors.color3D,
-                      //     fontSize: 14,
-                      //     fontWeight: FontWeight.w400),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                            color: AppColors.colorCD,
-                            width: 0.99),
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                        ),
-                      ),
-                      focusedErrorBorder:
-                      const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(8)),
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                        ),
-                      ),
-
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                            color: AppColors.colorCD,
-                            width: 0.99),
-                      ),
-
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                          width: 0,
-                        ),
-                      ),
-                    ),
-                  )
-                  )
-                ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                                width: 0,
+                              ),
+                            ),
+                          ),
+                        ))),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -155,53 +150,55 @@ class SignInScreen extends GetView<SignInController> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20, top: 20),
-                        child: Text("forgot_password".tr,style: AppStyles.textStyle(
-                          color: AppColors.black,
-                          fontSize: dimen12,
-                          weight: FontWeight.normal,
-                        ),),
+                        child: Text(
+                          "forgot_password".tr,
+                          style: AppStyles.textStyle(
+                            color: AppColors.black,
+                            fontSize: 13.0,
+                            weight: FontWeight.normal,
+                          ),
+                        ),
                       ),
                     )
                   ],
                 ),
-
-
-                Obx(()=>!controller.isPageLoad.value?
-                GestureDetector(
-                    onTap: () {
-                      if (!controller.formLoginKey.currentState!.validate()) {
-                        print("not validate");
-                      } else {
-                        print("validateeee");
-                        controller.loginApi();
-                        // Get.back();
-                        // controller.loginApi();
-                      }
-                    },
-                    child: Padding(
-                        padding: EdgeInsets.only(
+                Obx(() => !controller.isPageLoad.value
+                    ? GestureDetector(
+                        onTap: () {
+                          if (!controller.formLoginKey.currentState!
+                              .validate()) {
+                            print("not validate");
+                          } else {
+                            print("validateeee");
+                            controller.loginApi();
+                            // Get.back();
+                            // controller.loginApi();
+                          }
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 80, bottom: 10),
+                            child: buttom("sign_in".tr)))
+                    : Padding(
+                        padding: const EdgeInsets.only(
                             left: 20, right: 20, top: 80, bottom: 10),
-                        child: buttom("sign_in".tr))):
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 80, bottom: 10),
-                  child: Container(
-                    width: Get.size.width,
-
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: AppColors.color7C,
-                    ),
-                    child:const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 15,bottom: 15),
-                        child: SpinKitThreeBounce(
-                          color: Colors.white,
-                          size: 20.0,
+                        child: Container(
+                          width: Get.size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: AppColors.color7C,
+                          ),
+                          child: const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              child: SpinKitThreeBounce(
+                                color: Colors.white,
+                                size: 20.0,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),),
-                )),
+                      )),
 
                 /*GestureDetector(
                     onTap: () {
@@ -216,34 +213,28 @@ class SignInScreen extends GetView<SignInController> {
                         padding: EdgeInsets.only(
                             left: 20, right: 20, top: 80, bottom: 10),
                         child: buttom("sign_in".tr,
-
-
                         ))),*/
-
-
 
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Divider(
                           thickness: 1,
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(right: 8, left: 8),
-                        child: Text(
-                          "sign_with".tr,
-                          style: AppStyles.textStyle(
-                        color: AppColors.gray99,
-                        fontSize: dimen12,
-                        weight: FontWeight.normal,
-                        )
-                        ),
+                        child: Text("sign_with".tr,
+                            style: AppStyles.textStyle(
+                              color: AppColors.gray99,
+                              fontSize: 14.0,
+                              weight: FontWeight.normal,
+                            )),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: Divider(
                           thickness: 1,
                         ),
@@ -251,22 +242,21 @@ class SignInScreen extends GetView<SignInController> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-
+                    margin: const EdgeInsets.only(left: 20, right: 20),
                     width: Get.size.width,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: AppColors.colorE9,
+                        color: AppColors.grayE9,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(10),
                       // color: AppColors.colorFF,
                     ),
-                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 0),
+                    padding: const EdgeInsets.only(top: 15, bottom: 15, left: 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -279,22 +269,18 @@ class SignInScreen extends GetView<SignInController> {
                             width: 20,
                           ),
                         ),
-                        
-                        
                         Padding(
                           padding: const EdgeInsets.only(left: 100),
-                          child: Text(
-                            "Google",
+                          child: Text("Google",
                               style: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
-                              )
-                          ),
+                              )),
                         ),
                       ],
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 GestureDetector(
@@ -306,20 +292,18 @@ class SignInScreen extends GetView<SignInController> {
                     child: RichText(
                       text: TextSpan(
                         text: "new_user".tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
                           fontFamily: 'JosefinSans',
-
                           color: AppColors.color61,
                         ),
                         children: <TextSpan>[
-                          TextSpan(text: " "),
+                          const TextSpan(text: " "),
                           TextSpan(
                               text: "sign_up".tr,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'JosefinSans',
-
                                 fontWeight: FontWeight.normal,
                                 fontSize: 15,
                                 color: Colors.black,
@@ -330,7 +314,7 @@ class SignInScreen extends GetView<SignInController> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ]))

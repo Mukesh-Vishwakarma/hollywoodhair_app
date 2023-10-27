@@ -6,7 +6,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
-
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'booking_form_controller.dart';
 
 class BookingFormScreen extends GetView<BookingFormController> {
@@ -14,14 +14,16 @@ class BookingFormScreen extends GetView<BookingFormController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(7.h),
         child: AppBar(
+          elevation: 0.8,
+          titleSpacing: 0,
           backgroundColor: AppColors.colorFF,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
@@ -39,7 +41,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
 
@@ -49,25 +51,28 @@ class BookingFormScreen extends GetView<BookingFormController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("name".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
                         child: textField(
                             controller.nameController,
                             "plz_enter_name".tr,
                             controller.name,
                             'name'.tr,
-                            "name"),
+                            "name",
+                        false),
                       ),
 
                       //****** phone number
-                      SizedBox(height: 30,),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("phone_number".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -76,113 +81,107 @@ class BookingFormScreen extends GetView<BookingFormController> {
                             "phone_number".tr,
                             controller.phoneNumber,
                             'phone_number'.tr,
-                            "phone number"),
+                            "phone number",
+                        false),
                       ),
 
-
-//****** age
-                      SizedBox(height: 30,),
+                      //****** age
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("age".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child:
+                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                          child: TextFormField(
+                            controller: controller.ageController,
+                            validator: (value) {
+                              if (value.toString().isEmpty) {
+                                return "age".tr;
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              controller.age.value = value;
+                            },
+                            decoration: InputDecoration(
+                              isDense: false,
+                              contentPadding: const EdgeInsets.all(15),
+                              hintText: "age".tr,
+                              hintStyle: AppStyles.textStyle(
+                                color: AppColors.black,
+                                fontSize: 14.0,
+                                weight: FontWeight.normal,
+                              ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Image.asset(
+                                  Assets.dropDown,
+                                ),
+                              ),
 
-                        TextFormField(
-                          controller: controller.ageController,
-                          validator: (value) {
-                            if (value.toString().isEmpty) {
-                              return "age".tr;
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            controller.age.value= value;
-                          },
-                          decoration: InputDecoration(
-                            isDense: false,
-                            contentPadding:
-                            const EdgeInsets.all(15),
-                            hintText:"age".tr,
-                            hintStyle:AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.normal,
-                            ),
-                            suffixIcon:Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Image.asset(Assets.dropDown,),
-                            ),
+                              labelText: "age".tr,
+                              labelStyle: AppStyles.textStyle(
+                                color: AppColors.black,
+                                fontSize: 14.0,
+                                weight: FontWeight.normal,
+                              ),
 
-                            labelText: "age".tr,
-                            labelStyle: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.normal,
-                            ),
+                              // const TextStyle(
+                              //     color: AppColors.color3D,
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.w400),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.colorCD, width: 0.99),
+                              ),
+                              errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              focusedErrorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
 
-                            // const TextStyle(
-                            //     color: AppColors.color3D,
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.w400),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.colorCD,
-                                  width: 0.99),
-                            ),
-                            errorBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.red,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.colorCD, width: 0.99),
+                              ),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 0,
+                                ),
                               ),
                             ),
-                            focusedErrorBorder:
-                            const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(8)),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              ),
-                            ),
-
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.colorCD,
-                                  width: 0.99),
-                            ),
-
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 0,
-                              ),
-                            ),
-                          ),
-                        )
-                      ),
+                          )),
 
                       //****** gender
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("gender".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                          child:
-
-                          TextFormField(
+                          child: TextFormField(
                             controller: controller.genderController,
                             validator: (value) {
                               if (value.toString().isEmpty) {
@@ -191,27 +190,28 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               return null;
                             },
                             onChanged: (value) {
-                              controller.gender.value= value;
+                              controller.gender.value = value;
                             },
                             decoration: InputDecoration(
                               isDense: false,
-                              contentPadding:
-                              const EdgeInsets.all(15),
-                              hintText:"gender".tr,
-                              hintStyle:AppStyles.textStyle(
+                              contentPadding: const EdgeInsets.all(15),
+                              hintText: "gender".tr,
+                              hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon:Padding(
+                              suffixIcon: Padding(
                                 padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(Assets.dropDown,),
+                                child: Image.asset(
+                                  Assets.dropDown,
+                                ),
                               ),
 
                               labelText: "gender".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -220,60 +220,52 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               //     fontSize: 14,
                               //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
                               errorBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
-                              focusedErrorBorder:
-                              const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(8)),
+                              focusedErrorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
 
                               enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
 
                               focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                   color: Colors.grey,
                                   width: 0,
                                 ),
                               ),
                             ),
-                          )
-                      ),
-
+                          )),
 
                       //****** service
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("service".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                          child:
-
-                          TextFormField(
+                          child: TextFormField(
                             controller: controller.serviceController,
                             validator: (value) {
                               if (value.toString().isEmpty) {
@@ -282,27 +274,28 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               return null;
                             },
                             onChanged: (value) {
-                              controller.service.value= value;
+                              controller.service.value = value;
                             },
                             decoration: InputDecoration(
                               isDense: false,
-                              contentPadding:
-                              const EdgeInsets.all(15),
-                              hintText:"service".tr,
-                              hintStyle:AppStyles.textStyle(
+                              contentPadding: const EdgeInsets.all(15),
+                              hintText: "service".tr,
+                              hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon:Padding(
+                              suffixIcon: Padding(
                                 padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(Assets.dropDown,),
+                                child: Image.asset(
+                                  Assets.dropDown,
+                                ),
                               ),
 
                               labelText: "service".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -311,61 +304,52 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               //     fontSize: 14,
                               //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
                               errorBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
-                              focusedErrorBorder:
-                              const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(8)),
+                              focusedErrorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
 
                               enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
 
                               focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                   color: Colors.grey,
                                   width: 0,
                                 ),
                               ),
                             ),
-                          )
-                      ),
-
-
+                          )),
 
                       //****** service
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("show_room_location".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                          child:
-
-                          TextFormField(
+                          child: TextFormField(
                             controller: controller.locationController,
                             validator: (value) {
                               if (value.toString().isEmpty) {
@@ -374,27 +358,28 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               return null;
                             },
                             onChanged: (value) {
-                              controller.location.value= value;
+                              controller.location.value = value;
                             },
                             decoration: InputDecoration(
                               isDense: false,
-                              contentPadding:
-                              const EdgeInsets.all(15),
-                              hintText:"show_room_location".tr,
-                              hintStyle:AppStyles.textStyle(
+                              contentPadding: const EdgeInsets.all(15),
+                              hintText: "show_room_location".tr,
+                              hintStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon:Padding(
+                              suffixIcon: Padding(
                                 padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(Assets.dropDown,),
+                                child: Image.asset(
+                                  Assets.dropDown,
+                                ),
                               ),
 
                               labelText: "show_room_location".tr,
                               labelStyle: AppStyles.textStyle(
                                 color: AppColors.black,
-                                fontSize: dimen12,
+                                fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
 
@@ -403,50 +388,42 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               //     fontSize: 14,
                               //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
                               errorBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
-                              focusedErrorBorder:
-                              const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(8)),
+                              focusedErrorBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
 
                               enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                    color: AppColors.colorCD,
-                                    width: 0.99),
+                                    color: AppColors.colorCD, width: 0.99),
                               ),
 
                               focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                   color: Colors.grey,
                                   width: 0,
                                 ),
                               ),
                             ),
-                          )
-                      ),
-
-
+                          )),
                     ])),
-            SizedBox(height: 20,),
-
+            SizedBox(
+              height: 20,
+            ),
             GestureDetector(
                 onTap: () {
                   Get.toNamed(AppPages.bookingAppointmentScreen);
@@ -460,8 +437,9 @@ class BookingFormScreen extends GetView<BookingFormController> {
                     padding: EdgeInsets.only(
                         left: 20, right: 20, top: 80, bottom: 10),
                     child: buttom("next".tr))),
-
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

@@ -2,21 +2,25 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/base/base_home_controller.dart';
+import 'package:hollywood_hair/screen/base/cart_screen/cart_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../util/theme_service.dart';
 import 'product_details_controller.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
+  const ProductDetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -29,6 +33,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           preferredSize: Size.fromHeight(7.h),
           child: AppBar(
             elevation: 0.4,
+            titleSpacing: 0.0,
             backgroundColor: AppColors.colorFF,
             leading: GestureDetector(
                 onTap: () {
@@ -40,7 +45,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 )),
             title: Text("Product details",
                 style: AppStyles.textStyle(
-                    fontSize: dimen14, weight: FontWeight.w500)),
+                    fontSize: 18.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
             actions: [
               // GestureDetector(
@@ -52,9 +57,14 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               //     child: SvgPicture.asset(Assets.favouriteIcon),
               //   ),
               // ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: SvgPicture.asset(Assets.searchIcon),
+              InkWell(
+                onTap: () {
+                  // controller.addToCartUpdateAddress();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: SvgPicture.asset(Assets.searchIcon),
+                ),
               ),
               GestureDetector(
                 onTap: () {
@@ -93,7 +103,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                             onPageChanged: (index, reason) {
                                               controller.current.value = index;
                                             }),
-                                        items: controller.products.value[0].images
+                                        items: controller
+                                            .products.value[0].images
                                             .map((url) {
                                           return Builder(
                                             builder: (BuildContext context) {
@@ -157,12 +168,14 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
 
-                              Obx(() => controller.products.value[0].title != null
+                              Obx(() => controller.products.value[0].title !=
+                                      null
                                   ? Padding(
                                       padding: const EdgeInsets.only(
                                           left: 15, right: 15, top: 10),
                                       child: Text(
-                                        controller.products.value[0].title ?? "",
+                                        controller.products.value[0].title ??
+                                            "",
                                         style: AppStyles.textStyle(
                                           weight: FontWeight.w500,
                                           fontSize: 16.0,
@@ -177,7 +190,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     padding: const EdgeInsets.only(
                                         left: 15, top: 10),
                                     child: Text(
-                                      controller.products.value[0].formattedPrice ?? "",
+                                      controller.products.value[0]
+                                              .formattedPrice ??
+                                          "",
                                       // "Scalp Peeling - Cleansing peeling for the scalp",
                                       style: AppStyles.textStyle(
                                         weight: FontWeight.w500,
@@ -185,19 +200,19 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                       ),
                                     ),
                                   ),
-
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 5, top: 14),
-                                    child: Text(
-                                      controller.products.value[0].compareAtPriceFormatted,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 13.0,
-                                        decoration: TextDecoration.lineThrough,
-                                      ),
-                                    )
-                                  ),
+                                      padding: const EdgeInsets.only(
+                                          left: 5, top: 14),
+                                      child: Text(
+                                        controller.products.value[0]
+                                            .compareAtPriceFormatted,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 13.0,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                        ),
+                                      )),
                                 ],
                               ),
 
@@ -231,7 +246,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //         child: Text("}",
                               //             style: AppStyles.textStyle(
                               //               weight: FontWeight.w500,
-                              //               fontSize: dimen12,
+                              //               fontSize: 14.0,
                               //             )),
                               //       ),
                               //       Padding(
@@ -241,7 +256,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //             style: AppStyles.textStyle(
                               //               weight: FontWeight.normal,
                               //               color: AppColors.gray99,
-                              //               fontSize: dimen12,
+                              //               fontSize: 14.0,
                               //             )),
                               //       )
                               //     ],
@@ -254,7 +269,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Divider(thickness: 1.0,),
+                                  const Divider(
+                                    thickness: 1.0,
+                                  ),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -275,32 +292,91 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     // height: 500,
                                     child: ListView(
                                       shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       children: [
                                         ListView.builder(
-                                          physics: const NeverScrollableScrollPhysics(),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: controller.rootInfo.value.children.length,
+                                          itemCount: controller
+                                              .rootInfo.value.children.length,
                                           itemBuilder: (context, index) {
-                                            final paragraph = controller.rootInfo.value.children[index];
+                                            final paragraph = controller
+                                                .rootInfo.value.children[index];
+
                                             return Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 const SizedBox(height: 8),
-                                                RichText(
-                                                  text: TextSpan(
-                                                    style: DefaultTextStyle.of(context).style,
-                                                    children: paragraph.children.map((textInfo) {
-                                                      return TextSpan(
-                                                        text: textInfo.value,
-                                                        style: TextStyle(
-                                                          fontWeight: textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal,
-                                                          height: 1.5,
-                                                          wordSpacing: 0.6
+                                                FutureBuilder<List<String>>(
+                                                  future: Future.wait(paragraph
+                                                      .children
+                                                      .map((textInfo) {
+                                                    return controller.translate(
+                                                        textInfo.value);
+                                                  })),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot
+                                                            .connectionState ==
+                                                        ConnectionState.done) {
+                                                      final translatedTexts =
+                                                          snapshot.data ??
+                                                              []; // List of translated texts.
+                                                      final concatenatedText =
+                                                          translatedTexts.join(
+                                                              ''); // Join the translated texts with no spaces in between.
+
+                                                      final textSpans =
+                                                          <TextSpan>[];
+                                                      for (int i = 0;
+                                                          i <
+                                                              paragraph.children
+                                                                  .length;
+                                                          i++) {
+                                                        final textInfo =
+                                                            paragraph
+                                                                .children[i];
+                                                        final translatedText =
+                                                            translatedTexts[i];
+
+                                                        final fontWeight =
+                                                            textInfo.bold ??
+                                                                    false
+                                                                ? FontWeight
+                                                                    .bold
+                                                                : FontWeight
+                                                                    .normal;
+
+                                                        textSpans.add(
+                                                          TextSpan(
+                                                            text:
+                                                                translatedText,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  fontWeight,
+                                                              height: 1.6,
+                                                              wordSpacing: 0.6,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      return RichText(
+                                                        text: TextSpan(
+                                                          style: DefaultTextStyle
+                                                                  .of(context)
+                                                              .style,
+                                                          children: textSpans,
                                                         ),
                                                       );
-                                                    }).toList(),
-                                                  ),
+                                                    } else {
+                                                      return Container();
+                                                      // return shimmerDemoTranslate();
+                                                      // return CircularProgressIndicator();
+                                                    }
+                                                  },
                                                 ),
                                                 const SizedBox(height: 16),
                                               ],
@@ -313,14 +389,15 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ],
                               ),
 
-
-                              Divider(thickness: 1.0,),
+                              const Divider(
+                                thickness: 1.0,
+                              ),
 
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10),
                                 child: Text(
-                                  "OPIS",
+                                  "OPIS".tr,
                                   style: AppStyles.textStyle(
                                     weight: FontWeight.w500,
                                     fontSize: dimen15,
@@ -332,7 +409,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 padding: const EdgeInsets.only(
                                     left: 10, right: 10, top: 0),
                                 child: Html(
-                                  data:controller.products[0].descriptionHtml!,
+                                  data: controller.products[0].descriptionHtml!,
                                   // style: AppStyles.textStyle(
                                   //   weight: FontWeight.w500,
                                   //   fontSize: dimen15,
@@ -340,13 +417,12 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
 
-
                               Divider(),
 
                               const SizedBox(
                                 height: 20,
                               ),
-                             /* Padding(
+                              /* Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 0),
                                 child: Text(
@@ -417,7 +493,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               //       '${controller.productDetails.value.product.variants![p].rating.toString()}/5',
                               //       style: AppStyles.textStyle(
                               //         weight: FontWeight.w500,
-                              //         fontSize: dimen12,
+                              //         fontSize: 14.0,
                               //       ),
                               //     )
                               //   ],
@@ -448,92 +524,73 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                             ],
                           )),
                     )
-                  :  shimmerDemo(),
+                  : shimmerDemo(),
             ),
             Obx(
               () => controller.dataIsLoading.isFalse
                   ? Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: Get.size.width,
-                        color: AppColors.lightBackgroundColor,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  // color:  AppColors.primaryColor,
-
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: AppColors.primaryColor,
-                                      width: 1.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 5, bottom: 5),
-                                child: Image.asset(
-                                  Assets.likeCard,
-                                  height: 30,
-                                  width: 30,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
+                      child: (controller.isLoader.value)
+                          ? InkWell(
+                              onTap: () {
+                                if (controller.addButtonStatus.isTrue) {
+                                  Get.find<BaseHomeController>()
+                                      .selectedIndex
+                                      .value = 3;
+                                  Get.find<CartController>().onInit();
+                                  Get.toNamed(AppPages.baseScreen);
+                                  print("jnxkzmlk==>1");
+                                } else {
+                                  print("jnxkzmlk==>2");
                                   controller.addToCart(
                                       title: controller.products[0].title,
                                       id: controller.products[0].id,
                                       variantId: controller
                                           .products[0].productVariants[0].id);
-                                },
-                                child: Container(
-                                  // width:200,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: AppColors.color7C,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Image.asset(
-                                          Assets.bag,
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 15, bottom: 15, left: 10),
-                                        child: Text(
-                                          "Add to cart",
-                                          style: AppStyles.textStyle(
-                                            color:
-                                                AppColors.lightBackgroundColor,
-                                            fontSize: dimen12,
-                                            weight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                }
+                              },
+                              child: Container(
+                                width: 95.w,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: AppColors.color7C,
                                 ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      Assets.bag,
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      controller.addButtonStatus.isTrue
+                                          ? "go_to_cart".tr
+                                          : "add_to_cart".tr,
+                                      style: AppStyles.textStyle(
+                                        color: AppColors.lightBackgroundColor,
+                                        fontSize: 14.0,
+                                        weight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ).paddingOnly(bottom: 1),
+                            )
+                          : Container(
+                              width: 95.w,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColors.color7C,
                               ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                      ))
+                              child: const SpinKitThreeBounce(
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ).paddingOnly(bottom: 1))
                   : SizedBox(),
             )
           ],
@@ -563,7 +620,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //                 "${controller.productReviewsList[index].rating.toString()}/5",
 //                 style: AppStyles.textStyle(
 //                     weight: FontWeight.normal,
-//                     fontSize: dimen12,
+//                     fontSize: 14.0,
 //                     color: AppColors.gray99),
 //               ),
 //             ),
@@ -576,7 +633,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //           controller.productReviewsList[index].review.toString(),
 //           style: AppStyles.textStyle(
 //               weight: FontWeight.normal,
-//               fontSize: dimen12,
+//               fontSize: 14.0,
 //               color: AppColors.gray99),
 //         ),
 //       ),
@@ -612,7 +669,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 //             '${controller.productReviewsList[index].rating.toString()}/5',
 //             style: AppStyles.textStyle(
 //               weight: FontWeight.w500,
-//               fontSize: dimen12,
+//               fontSize: 14.0,
 //             ),
 //           )
 //         ],
@@ -646,7 +703,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -690,7 +746,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -734,7 +789,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -778,7 +832,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -822,7 +875,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -866,7 +918,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -915,4 +966,24 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
     );
   }
 
+  shimmerDemoTranslate() {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: SizedBox(
+        width: 100.h,
+        height: 10.0,
+        child: Shimmer.fromColors(
+          baseColor: ThemeService().loadThemeFromBox()
+              ? AppColors.color4A
+              : Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(
+            width: 100.h,
+            height: 10.0,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
 }

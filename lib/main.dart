@@ -3,10 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hollywood_hair/screen/tryOn_screen/tryOn_controller.dart';
 import 'package:logging/logging.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/shopify_config.dart';
-import 'package:sizer/sizer.dart';
-
 import 'util/app_constants.dart';
 import 'util/app_style.dart';
 import 'util/lang/localization_service.dart';
@@ -26,6 +26,8 @@ Future<void> main() async {
     storeUrl: 'a02f54.myshopify.com',
     // adminAccessToken: "shpat_*******************", // optional
   );
+  WidgetsFlutterBinding.ensureInitialized(); // Register the observ
+  // Get.put(TryOnController());
   runApp(MyApp());
 }
 
@@ -35,12 +37,14 @@ void _initLog() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
-    return Sizer(builder: (context, orientation, deviceType) {
+    return ResponsiveSizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,

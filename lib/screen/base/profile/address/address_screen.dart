@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/model/shopify_model/get_address_model.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../../util/theme_service.dart';
 import 'address_controller.dart';
 
 class AddressScreen extends GetView<AddressController> {
+  const AddressScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +23,7 @@ class AddressScreen extends GetView<AddressController> {
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -30,7 +34,7 @@ class AddressScreen extends GetView<AddressController> {
               )),
           title: Text("select_address".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 18.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -39,13 +43,13 @@ class AddressScreen extends GetView<AddressController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Obx(() => !controller.isPageLoad.value
-                ? controller.getAddress.isEmpty
+                ? controller.noData.isTrue
                     ? Padding(
                         padding: const EdgeInsets.only(top: 40),
                         child: GestureDetector(
                           onTap: () {
                             controller.clearTextFiled();
-                            addAddress();
+                            addAddress(type: 'add');
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +68,7 @@ class AddressScreen extends GetView<AddressController> {
                                   "Add New Address",
                                   style: AppStyles.textStyle(
                                     color: AppColors.black,
-                                    fontSize: dimen12,
+                                    fontSize: 14.0,
                                     weight: FontWeight.normal,
                                   ),
                                 ),
@@ -73,34 +77,36 @@ class AddressScreen extends GetView<AddressController> {
                           ),
                         ),
                       )
-                    : ListView.builder(
-                        // scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        reverse: false,
-                        itemCount: controller.getAddress.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return getAddress(index);
-                        })
+                    : (controller.addressesListNew.value.addresses!.isNotEmpty)
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            reverse: false,
+                            itemCount: controller.addressesListNew.value.addresses!.length,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return getAddress(
+                                  controller.addressesListNew.value.addresses![index]);
+                            })
+                        : Container()
                 : shimmerDemo()),
-            Obx(() => controller.getAddress.isEmpty
-                ? SizedBox()
+            Obx(() => controller.noData.isTrue
+                ? const SizedBox()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      DottedLine(
+                      const DottedLine(
                         dashColor: AppColors.gray99,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       GestureDetector(
                         onTap: () {
-                   controller.clearTextFiled();
-                          addAddress();
+                          controller.clearTextFiled();
+                          addAddress(type: 'add');
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +125,7 @@ class AddressScreen extends GetView<AddressController> {
                                 "Add New Address",
                                 style: AppStyles.textStyle(
                                   color: AppColors.black,
-                                  fontSize: dimen12,
+                                  fontSize: 14.0,
                                   weight: FontWeight.normal,
                                 ),
                               ),
@@ -127,8 +133,7 @@ class AddressScreen extends GetView<AddressController> {
                           ],
                         ),
                       ),
-
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     ],
@@ -139,147 +144,198 @@ class AddressScreen extends GetView<AddressController> {
     );
   }
 
-  getAddress(index) {
+  getAddress(AddressesList address) {
     return GestureDetector(
       onTap: () {
-        controller.checkAddress.value = index;
+        // controller.checkAddress.value = index;
       },
-      child: Obx(() => Container(
-            margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-            padding: EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: controller.checkAddress.value == index
-                    ? AppColors.color7C
-                    : AppColors.black,
-                // style: BorderStyle.solid,
-                width: 1.0,
+      child: Container(
+        margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color:
+                // controller.checkAddress.value == index ? AppColors.color7C :
+                AppColors.black,
+            // style: BorderStyle.solid,
+            width: 1.0,
+          ),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                Assets.house,
+                height: 30,
+                width: 30,
               ),
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10.0),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    Assets.house,
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    address.company != null
+                        ? Text(
+                            address.company ?? "",
+                            style: AppStyles.textStyle(
+                              color:
+                                  AppColors.black,
+                              fontSize: 14.0,
+                              weight: FontWeight.w400,
+                            ),
+                          )
+                        : SizedBox(),
+                    Text(
+                      address.name.toString(),
+                      style: AppStyles.textStyle(
+                        color: AppColors.black,
+                        fontSize: 14.0,
+                        weight: FontWeight.w400,
+                      ),
+                    ),
+                    address.phone != null
+                        ? Text(
+                            address.phone ?? "",
+                            style: AppStyles.textStyle(
+                              color: AppColors.black,
+                              fontSize: 14.0,
+                              weight: FontWeight.normal,
+                            ),
+                          )
+                        : SizedBox(),
+                    // controller.email != null
+                    //     ? Text(
+                    //         controller.email,
+                    //         style: AppStyles.textStyle(
+                    //           color: AppColors.black,
+                    //           fontSize: 14.0,
+                    //           weight: FontWeight.normal,
+                    //         ),
+                    //       )
+                    //     : SizedBox(),
+                    address.address1 != null
+                        ? Text(address.address1 ?? "",
+                            style: AppStyles.textStyle(
+                              color: AppColors.black,
+                              fontSize: 14.0,
+                            ))
+                        : SizedBox(),
+                    Row(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            controller.getAddress[index].addressType.toString(),
-                            style: AppStyles.textStyle(
-                              color: controller.checkAddress.value == index
-                                  ? AppColors.color7C
-                                  : AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            controller.getAddress[index].name.toString(),
-                            style: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            controller.getAddress[index].phone.toString(),
-                            style: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            controller.getAddress[index].email.toString(),
-                            style: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                              weight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            controller.getAddress[index].address.toString(),
-                            style: AppStyles.textStyle(
-                              color: AppColors.black,
-                              fontSize: dimen12,
-                            ),
-                          ),
-                        ),
+                        address.city != null
+                            ? Text(
+                                "${address.city}",
+                                style: AppStyles.textStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14.0,
+                                ),
+                              )
+                            : SizedBox(),
+                        address.countryCode != null
+                            ? Text(
+                                ", ${address.countryCode} ",
+                                style: AppStyles.textStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14.0,
+                                ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.getAddressByIdApi(controller.getAddress[index].addressType.toString(),controller.getAddress[index].id.toString());
-                    editAddress(controller.getAddress[index].id.toString());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      Assets.edit,
-                      height: 20,
-                      width: 20,
+                    Row(
+                      children: [
+                        address.country != null
+                            ? Text(
+                                address.country.toString(),
+                                style: AppStyles.textStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14.0,
+                                ),
+                              )
+                            : SizedBox(),
+                        address.zip != null
+                            ? Text(
+                                "  ${address.zip}",
+                                style: AppStyles.textStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14.0,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
                     ),
-                  ),
+                  ],
                 ),
-                GestureDetector(
-                  onTap: (){
-                    controller.deleteAddressApi(controller.getAddress[index].id.toString());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      Assets.delete,
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          )),
+            GestureDetector(
+              onTap: () {
+                controller.clearTextFiled();
+                addAddress(type: 'edit', address: address);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  Assets.edit,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                print("jhsgvdkjhbxhbs===> ${address.id}");
+
+                int.parse("567890");
+                controller.deleteAddresses(address.id.toString());
+
+                controller.deleteCustomerAddress(address.id.toString());
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  Assets.delete,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  addAddress() {
+  addAddress({type, address}) {
+    if (type == 'edit') {
+      controller.address1Controller.text = address!.address1.toString();
+      controller.address2Controller.text = address.address2.toString();
+      controller.firstNameController.text = address.firstName.toString();
+      controller.lastNameController.text = address.lastName.toString();
+      controller.cityController.text = address.city.toString();
+      controller.countryController.text = address.country.toString();
+      controller.companyController.text = address.company.toString();
+      controller.zipCodeController.text = address.zip.toString();
+      controller.phoneNumberController.text = address.phone.toString();
+      controller.defaultAddress = address.defaultAddress;
+    }
     return Get.bottomSheet(
-        Wrap(children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 0),
-              color: Colors.transparent,
+        Container(
+            margin: const EdgeInsets.only(bottom: 0),
+            color: Colors.transparent,
+            child: SingleChildScrollView(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 8, bottom: 0),
+                      margin: const EdgeInsets.only(top: 8, bottom: 0),
                       child: Image.asset(
                         Assets.imagesIcLine,
                         height: 36,
@@ -289,338 +345,197 @@ class AddressScreen extends GetView<AddressController> {
                     ),
                     Container(
                         width: Get.size.width,
-                        decoration: new BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: AppColors.lightBackgroundColor,
-                            borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(40.0),
-                                topRight: const Radius.circular(40.0))),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(40.0),
+                                topRight: Radius.circular(40.0))),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 40, top: 20),
-                                  child: Image.asset(
-                                    Assets.dropDown,
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 80, top: 20),
-                                  child: Text("Add address",
-                                      style: AppStyles.textStyle(
-                                        color: AppColors.black,
-                                        fontSize: dimen12,
-                                        weight: FontWeight.w500,
-                                      )),
-                                )
-                              ],
-                            ),
+                            const SizedBox(height: 20),
+                            Text(type == "add" ? "Add address" : 'Edit address',
+                                style: AppStyles.textStyle(
+                                  color: AppColors.black,
+                                  fontSize: 14.0,
+                                  weight: FontWeight.w500,
+                                )),
                             Form(
                                 key: controller.formLoginKey,
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 25,
-                                            right: 20,
-                                            top: 10,
-                                            bottom: 20),
-                                        child: Text(
-                                          "Select address type",
-                                          style: AppStyles.textStyle(
-                                            fontSize: dimen12,
-                                            weight: FontWeight.normal,
-                                          ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 20.0,
+                                    right: 20.0,
+                                    top: 20,
+                                  ),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        textField2(
+                                          hintText: "First Name",
+                                          validationMsg:
+                                              "Please enter first name",
+                                          controller:
+                                              controller.firstNameController,
                                         ),
-                                      ),
-                                      Obx(
-                                        () => Container(
-                                          height: 35,
-                                          margin: const EdgeInsets.only(
-                                            left: 20,
-                                            right: 20,
-                                          ),
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: controller
-                                                .addressTypeList.length,
-                                            itemBuilder: (context, index) {
-                                              return Obx(
-                                                  () => addressType(index));
-                                            },
-                                          ),
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "Last Name",
+                                          validationMsg:
+                                              "Please enter last name",
+                                          controller:
+                                              controller.lastNameController,
                                         ),
-                                      ),
-                                      // Container(
-                                      //   margin: EdgeInsets.only(
-                                      //       left: 20, right: 20, top: 20),
-                                      //   child: textField(
-                                      //       controller.addressController,
-                                      //       "address_name".tr,
-                                      //       controller.address,
-                                      //       'address_name'.tr,
-                                      //       "address name"),
-                                      // ),
-
-
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 20, right: 20, top: 20),
-                                        child: textField(
-                                            controller.recipientNameController,
-                                            "recipient_name".tr,
-                                            controller.recipientName,
-                                            'recipient_name'.tr,
-                                            "recipient_name"),
-                                      ),
-
-                                      Container(
-                                          margin: EdgeInsets.only(
-                                              left: 20,
-                                              right: 20,
-                                              top: 20),
-                                          child: TextFormField(
-                                            keyboardType:
-                                            TextInputType.number,
-                                            inputFormatters: [
-                                              LengthLimitingTextInputFormatter(
-                                                  10),
-                                            ],
-                                            controller: controller.phoneNumberController,
-                                            style: AppStyles.textStyle(
-                                              fontSize: dimen12,
-                                              weight: FontWeight.normal,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'phone_number'.tr;
-                                              }
-
-                                              return null;
-                                            },
-                                            onChanged: (value) {
-                                              controller.phoneNumber.value =
-                                                  value;
-                                            },
-                                            decoration: InputDecoration(
-                                              isDense: false,
-                                              contentPadding:
-                                              const EdgeInsets.all(
-                                                  15),
-
-                                              hintText: 'phone_number'.tr,
-                                              hintStyle:
-                                              AppStyles.textStyle(
-                                                color: AppColors.black,
-                                                fontSize: dimen12,
-                                                weight: FontWeight.normal,
-                                              ),
-
-                                              labelText: 'phone_number'.tr,
-                                              labelStyle:
-                                              AppStyles.textStyle(
-                                                color: AppColors.black,
-                                                fontSize: dimen12,
-                                                weight: FontWeight.normal,
-                                              ),
-
-                                              // const TextStyle(
-                                              //     color: AppColors.color3D,
-                                              //     fontSize: 14,
-                                              //     fontWeight: FontWeight.w400),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                    color: AppColors
-                                                        .colorCD,
-                                                    width: 0.99),
-                                              ),
-                                              errorBorder:
-                                              const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              focusedErrorBorder:
-                                              const OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.all(
-                                                    Radius.circular(
-                                                        8)),
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-
-                                              enabledBorder:
-                                              OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                    color: AppColors
-                                                        .colorCD,
-                                                    width: 0.99),
-                                              ),
-
-                                              focusedBorder:
-                                              OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0,
-                                                ),
-                                              ),
-                                            ),
-                                          )),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 20),
-                                                child: TextFormField(
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  inputFormatters: [
-                                                    LengthLimitingTextInputFormatter(
-                                                        2),
-                                                  ],
-                                                  controller: controller
-                                                      .floorController,
-                                                  style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
-                                                    weight: FontWeight.normal,
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'floor'.tr;
-                                                    }
-
-                                                    return null;
-                                                  },
-                                                  onChanged: (value) {
-                                                    controller.floor.value =
-                                                        value;
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    isDense: false,
-                                                    contentPadding:
-                                                        const EdgeInsets.all(
-                                                            15),
-
-                                                    hintText: 'floor'.tr,
-                                                    hintStyle:
-                                                        AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "Conpany",
+                                          validationMsg: "Please enter company",
+                                          controller:
+                                              controller.companyController,
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "Address 1",
+                                          validationMsg:
+                                              "Please enter Address 1",
+                                          controller:
+                                              controller.address1Controller,
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "Address 2",
+                                          validationMsg:
+                                              "Please enter Address 2",
+                                          controller:
+                                              controller.address2Controller,
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "City",
+                                          validationMsg: "Please enter City",
+                                          controller: controller.cityController,
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        textField2(
+                                          hintText: "Country",
+                                          validationMsg: "Please enter country",
+                                          controller:
+                                              controller.countryController,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      right: 20, top: 20),
+                                                  child: TextFormField(
+                                                    controller: controller
+                                                        .cityController,
+                                                    style: AppStyles.textStyle(
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
+                                                    validator: (value) {
+                                                      if (value!.isEmpty) {
+                                                        return 'City'.tr;
+                                                      }
 
-                                                    labelText: 'floor'.tr,
-                                                    labelStyle:
-                                                        AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
-                                                      weight: FontWeight.normal,
-                                                    ),
+                                                      return null;
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      isDense: false,
+                                                      contentPadding:
+                                                          const EdgeInsets.all(
+                                                              15),
 
-                                                    // const TextStyle(
-                                                    //     color: AppColors.color3D,
-                                                    //     fontSize: 14,
-                                                    //     fontWeight: FontWeight.w400),
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              color: AppColors
-                                                                  .colorCD,
-                                                              width: 0.99),
-                                                    ),
-                                                    errorBorder:
-                                                        const OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
+                                                      hintText: 'City'.tr,
+                                                      hintStyle:
+                                                          AppStyles.textStyle(
+                                                        color: AppColors.black,
+                                                        fontSize: 14.0,
+                                                        weight:
+                                                            FontWeight.normal,
+                                                      ),
+
+                                                      labelText: 'City'.tr,
+                                                      labelStyle:
+                                                          AppStyles.textStyle(
+                                                        color: AppColors.black,
+                                                        fontSize: 14.0,
+                                                        weight:
+                                                            FontWeight.normal,
+                                                      ),
+
+                                                      // const TextStyle(
+                                                      //     color: AppColors.color3D,
+                                                      //     fontSize: 14.0,
+                                                      //     fontWeight: FontWeight.w400),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color: AppColors
+                                                                    .colorCD,
+                                                                width: 0.99),
+                                                      ),
+                                                      errorBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          const OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    8)),
+                                                        borderSide: BorderSide(
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color: AppColors
+                                                                    .colorCD,
+                                                                width: 0.99),
+                                                      ),
+
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        borderSide:
+                                                            const BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 0,
+                                                        ),
                                                       ),
                                                     ),
-                                                    focusedErrorBorder:
-                                                        const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8)),
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              color: AppColors
-                                                                  .colorCD,
-                                                              width: 0.99),
-                                                    ),
-
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 20),
+                                                  )),
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 20, top: 20),
                                                 child: TextFormField(
                                                   controller: controller
                                                       .zipCodeController,
                                                   keyboardType:
                                                       TextInputType.number,
-
-                                                  inputFormatters: [
-                                                    LengthLimitingTextInputFormatter(
-                                                        4),
-                                                  ],
                                                   style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   validator: (value) {
@@ -629,15 +544,6 @@ class AddressScreen extends GetView<AddressController> {
                                                     }
 
                                                     return null;
-                                                  },
-                                                  //   if (value.toString().isEmpty) {
-                                                  //     return validationMsg;
-                                                  //   }
-                                                  //   return null;
-                                                  // },
-                                                  onChanged: (value) {
-                                                    controller.zipCode.value =
-                                                        value;
                                                   },
                                                   decoration: InputDecoration(
                                                     isDense: false,
@@ -649,7 +555,7 @@ class AddressScreen extends GetView<AddressController> {
                                                     hintStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
@@ -657,13 +563,13 @@ class AddressScreen extends GetView<AddressController> {
                                                     labelStyle:
                                                         AppStyles.textStyle(
                                                       color: AppColors.black,
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
 
                                                     // const TextStyle(
                                                     //     color: AppColors.color3D,
-                                                    //     fontSize: 14,
+                                                    //     fontSize: 14.0,
                                                     //     fontWeight: FontWeight.w400),
                                                     border: OutlineInputBorder(
                                                       borderRadius:
@@ -716,676 +622,308 @@ class AddressScreen extends GetView<AddressController> {
                                                       ),
                                                     ),
                                                   ),
-                                                )
-                                                // textField(
-                                                //     controller.zipCodeController,
-                                                //     "zip_code".tr,
-                                                //     controller.zipCode,
-                                                //     'zip_code'.tr,
-                                                //     "zip_code"),
-
                                                 ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 20.0),
+                                        TextFormField(
+                                          controller:
+                                              controller.phoneNumberController,
+                                          keyboardType: TextInputType.number,
+                                          style: AppStyles.textStyle(
+                                            fontSize: 14.0,
+                                            weight: FontWeight.normal,
                                           ),
-                                        ],
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 20, right: 20, top: 20),
-                                        child: textField(
-                                            controller.fullAddressController,
-                                            "full_address".tr,
-                                            controller.fullAddress,
-                                            'full_address'.tr,
-                                            "full address"),
-                                      ),
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter phone Number'
+                                                  .tr;
+                                            }
 
-                        Obx(() => !controller.isPageLoad.value
-                            ? GestureDetector(
-                            onTap: () {
-                              if (!controller.formLoginKey.currentState!.validate()) {
-                                print("not validate");
-                              } else {
-                                controller.addAddressApi();
-                                // controller.loginApi();
-                              }
-                            },
-                            child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                    top: 80,
-                                    bottom: 40),
-                                child: buttom(
-                                    "add_new_address".tr)))
-                            : Padding(
-                          padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                              top: 80,
-                              bottom: 40),
-                          child: Container(
-                            width: Get.size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColors.color7C,
-                            ),
-                            child: const Center(
-                              child: Padding(
-                                padding:
-                                EdgeInsets.only(top: 15, bottom: 15),
-                                child: SpinKitThreeBounce(
-                                  color: Colors.white,
-                                  size: 20.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ) ),
+                                            return null;
+                                          },
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(15)
+                                          ],
+                                          decoration: InputDecoration(
+                                            isDense: false,
+                                            contentPadding:
+                                                const EdgeInsets.all(15),
 
+                                            hintText: 'Phone Number'.tr,
+                                            hintStyle: AppStyles.textStyle(
+                                              color: AppColors.black,
+                                              fontSize: 14.0,
+                                              weight: FontWeight.normal,
+                                            ),
 
+                                            labelText: 'Phone Number'.tr,
+                                            labelStyle: AppStyles.textStyle(
+                                              color: AppColors.black,
+                                              fontSize: 14.0,
+                                              weight: FontWeight.normal,
+                                            ),
 
+                                            // const TextStyle(
+                                            //     color: AppColors.color3D,
+                                            //     fontSize: 14.0,
+                                            //     fontWeight: FontWeight.w400),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                  color: AppColors.colorCD,
+                                                  width: 0.99),
+                                            ),
+                                            errorBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                const OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                              ),
+                                            ),
 
-                                    ]))
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                  color: AppColors.colorCD,
+                                                  width: 0.99),
+                                            ),
+
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: const BorderSide(
+                                                color: Colors.grey,
+                                                width: 0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        // textField2(
+                                        //     controller: controller
+                                        //         .phoneNumberController,
+                                        //     validationMsg:
+                                        //         "Please enter phone Number",
+                                        //     hintText: "Phone Number"),
+                                        Obx(() => controller.isPageLoad.isFalse
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  if (type == "add") {
+                                                    if (controller.formLoginKey
+                                                        .currentState!
+                                                        .validate()) {
+                                                      controller
+                                                          .createAddresses();
+                                                    }
+                                                  } else {
+                                                    // controller.updateAddresses(
+                                                    //     id: address.id.toString());
+                                                    controller.getUpdateApi(
+                                                        address.id.toString());
+                                                  }
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20,
+                                                          right: 20,
+                                                          top: 20,
+                                                          bottom: 40),
+                                                  child: !controller
+                                                          .addNewAddressLoaderStatus
+                                                          .value
+                                                      ? buttom(type == "add"
+                                                          ? "add_new_address".tr
+                                                          : "Edit address")
+                                                      : Container(
+                                                          width: 95.w,
+                                                          height: 50,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        7),
+                                                            color: AppColors
+                                                                .color7C,
+                                                          ),
+                                                          child:
+                                                              const SpinKitThreeBounce(
+                                                            color: Colors.white,
+                                                            size: 30,
+                                                          ),
+                                                        ),
+                                                ))
+                                            : Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 20,
+                                                    right: 20,
+                                                    top: 80,
+                                                    bottom: 40),
+                                                child: Container(
+                                                  width: Get.size.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    color: AppColors.color7C,
+                                                  ),
+                                                  child: const Center(
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 15, bottom: 15),
+                                                      child: SpinKitThreeBounce(
+                                                        color: Colors.white,
+                                                        size: 20.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )),
+                                      ]),
+                                ))
                           ],
                         ))
-                  ]))
-        ]),
+                  ]),
+            )),
         isScrollControlled: true);
   }
 
-  addressType(index) {
-    return InkWell(
-      onTap: () {
-        // print(categoryItem.selected);
-        controller.selectAddressType.value = index;
-        controller.addressType.value =
-            controller.addressTypeList.value[index].toString();
+  textField2({controller, validationMsg, hintText}) {
+    return TextFormField(
+      controller: controller,
+      style: AppStyles.textStyle(
+        fontSize: 14.0,
+        weight: FontWeight.normal,
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return validationMsg;
+        }
+        return null;
       },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-            color: controller.selectAddressType.value == index
-                ? AppColors.primaryColor
-                : AppColors.lightBackgroundColor,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.primaryColor, width: 1.0)),
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-        child: Center(
-          child: Text(
-            controller.addressTypeList.value[index].toString(),
-            style: AppStyles.textStyle(
-                weight: FontWeight.w500,
-                fontSize: 14.0,
-                color: controller.selectAddressType.value == index
-                    ? AppColors.lightBackgroundColor
-                    : AppColors.primaryColor),
+      decoration: InputDecoration(
+        isDense: false,
+        contentPadding: const EdgeInsets.all(15),
+        hintText: hintText,
+        hintStyle: AppStyles.textStyle(
+          color: AppColors.black,
+          fontSize: 14.0,
+          weight: FontWeight.normal,
+        ),
+        labelText: hintText,
+        labelStyle: AppStyles.textStyle(
+          color: AppColors.black,
+          fontSize: 14.0,
+          weight: FontWeight.normal,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: Colors.grey,
+            width: 0,
           ),
         ),
       ),
     );
   }
 
-  editAddress(id) {
-    return Get.bottomSheet(
-        Wrap(children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 0),
-              color: Colors.transparent,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 8, bottom: 0),
-                      child: Image.asset(
-                        Assets.imagesIcLine,
-                        height: 36,
-                        width: 36,
-                        // color: Colors.grey,
-                      ),
-                    ),
-                    Container(
-                        width: Get.size.width,
-                        decoration: new BoxDecoration(
-                            color: AppColors.lightBackgroundColor,
-                            borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(40.0),
-                                topRight: const Radius.circular(40.0))),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 40, top: 20),
-                                  child: Image.asset(
-                                    Assets.dropDown,
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 80, top: 20),
-                                  child: Text("edit_address".tr,
-                                      style: AppStyles.textStyle(
-                                        color: AppColors.black,
-                                        fontSize: dimen12,
-                                        weight: FontWeight.w500,
-                                      )),
-                                )
-                              ],
-                            ),
-                            Form(
-                                key: controller.formLoginKey,
-                                child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 25,
-                                            right: 20,
-                                            top: 10,
-                                            bottom: 20),
-                                        child: Text(
-                                          "Select address type",
-                                          style: AppStyles.textStyle(
-                                            fontSize: dimen12,
-                                            weight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                      Obx(
-                                            () => Container(
-                                          height: 35,
-                                          margin: const EdgeInsets.only(
-                                            left: 20,
-                                            right: 20,
-                                          ),
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            physics:
-                                            const BouncingScrollPhysics(),
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: controller
-                                                .addressTypeList.length,
-                                            itemBuilder: (context, index) {
-                                              return Obx(
-                                                      () => addressType(index));
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      // Container(
-                                      //   margin: EdgeInsets.only(
-                                      //       left: 20, right: 20, top: 20),
-                                      //   child: textField(
-                                      //       controller.addressController,
-                                      //       "address_name".tr,
-                                      //       controller.address,
-                                      //       'address_name'.tr,
-                                      //       "address name"),
-                                      // ),
-
-
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 20, right: 20, top: 20),
-                                        child: textField(
-                                            controller.recipientNameController,
-                                            "recipient_name".tr,
-                                            controller.recipientName,
-                                            'recipient_name'.tr,
-                                            "recipient_name"),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.only(
-                                              left: 20,
-                                              right: 20,
-                                              top: 20),
-                                          child: TextFormField(
-                                            keyboardType:
-                                            TextInputType.number,
-                                            inputFormatters: [
-                                              LengthLimitingTextInputFormatter(
-                                                  10),
-                                            ],
-                                            controller: controller.phoneNumberController,
-                                            style: AppStyles.textStyle(
-                                              fontSize: dimen12,
-                                              weight: FontWeight.normal,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'phone_number'.tr;
-                                              }
-
-                                              return null;
-                                            },
-                                            onChanged: (value) {
-                                              controller.phoneNumber.value =
-                                                  value;
-                                            },
-                                            decoration: InputDecoration(
-                                              isDense: false,
-                                              contentPadding:
-                                              const EdgeInsets.all(
-                                                  15),
-
-                                              hintText: 'phone_number'.tr,
-                                              hintStyle:
-                                              AppStyles.textStyle(
-                                                color: AppColors.black,
-                                                fontSize: dimen12,
-                                                weight: FontWeight.normal,
-                                              ),
-
-                                              labelText: 'phone_number'.tr,
-                                              labelStyle:
-                                              AppStyles.textStyle(
-                                                color: AppColors.black,
-                                                fontSize: dimen12,
-                                                weight: FontWeight.normal,
-                                              ),
-
-                                              // const TextStyle(
-                                              //     color: AppColors.color3D,
-                                              //     fontSize: 14,
-                                              //     fontWeight: FontWeight.w400),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                    color: AppColors
-                                                        .colorCD,
-                                                    width: 0.99),
-                                              ),
-                                              errorBorder:
-                                              const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              focusedErrorBorder:
-                                              const OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.all(
-                                                    Radius.circular(
-                                                        8)),
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-
-                                              enabledBorder:
-                                              OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                    color: AppColors
-                                                        .colorCD,
-                                                    width: 0.99),
-                                              ),
-
-                                              focusedBorder:
-                                              OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8),
-                                                borderSide:
-                                                const BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0,
-                                                ),
-                                              ),
-                                            ),
-                                          )),
-
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 20),
-                                                child: TextFormField(
-                                                  keyboardType:
-                                                  TextInputType.number,
-                                                  inputFormatters: [
-                                                    LengthLimitingTextInputFormatter(
-                                                        2),
-                                                  ],
-                                                  controller: controller
-                                                      .floorController,
-                                                  style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
-                                                    weight: FontWeight.normal,
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'floor'.tr;
-                                                    }
-
-                                                    return null;
-                                                  },
-                                                  onChanged: (value) {
-                                                    controller.floor.value =
-                                                        value;
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    isDense: false,
-                                                    contentPadding:
-                                                    const EdgeInsets.all(
-                                                        15),
-
-                                                    hintText: 'floor'.tr,
-                                                    hintStyle:
-                                                    AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
-                                                      weight: FontWeight.normal,
-                                                    ),
-
-                                                    labelText: 'floor'.tr,
-                                                    labelStyle:
-                                                    AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
-                                                      weight: FontWeight.normal,
-                                                    ),
-
-                                                    // const TextStyle(
-                                                    //     color: AppColors.color3D,
-                                                    //     fontSize: 14,
-                                                    //     fontWeight: FontWeight.w400),
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                          color: AppColors
-                                                              .colorCD,
-                                                          width: 0.99),
-                                                    ),
-                                                    errorBorder:
-                                                    const OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                    const OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              8)),
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-
-                                                    enabledBorder:
-                                                    OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                          color: AppColors
-                                                              .colorCD,
-                                                          width: 0.99),
-                                                    ),
-
-                                                    focusedBorder:
-                                                    OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 20),
-                                                child: TextFormField(
-                                                  controller: controller
-                                                      .zipCodeController,
-                                                  keyboardType:
-                                                  TextInputType.number,
-
-                                                  inputFormatters: [
-                                                    LengthLimitingTextInputFormatter(
-                                                        4),
-                                                  ],
-                                                  style: AppStyles.textStyle(
-                                                    fontSize: dimen12,
-                                                    weight: FontWeight.normal,
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'zip_code'.tr;
-                                                    }
-
-                                                    return null;
-                                                  },
-                                                  //   if (value.toString().isEmpty) {
-                                                  //     return validationMsg;
-                                                  //   }
-                                                  //   return null;
-                                                  // },
-                                                  onChanged: (value) {
-                                                    controller.zipCode.value =
-                                                        value;
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    isDense: false,
-                                                    contentPadding:
-                                                    const EdgeInsets.all(
-                                                        15),
-
-                                                    hintText: 'zip_code'.tr,
-                                                    hintStyle:
-                                                    AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
-                                                      weight: FontWeight.normal,
-                                                    ),
-
-                                                    labelText: 'zip_code'.tr,
-                                                    labelStyle:
-                                                    AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: dimen12,
-                                                      weight: FontWeight.normal,
-                                                    ),
-
-                                                    // const TextStyle(
-                                                    //     color: AppColors.color3D,
-                                                    //     fontSize: 14,
-                                                    //     fontWeight: FontWeight.w400),
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                          color: AppColors
-                                                              .colorCD,
-                                                          width: 0.99),
-                                                    ),
-                                                    errorBorder:
-                                                    const OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                    const OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              8)),
-                                                      borderSide: BorderSide(
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-
-                                                    enabledBorder:
-                                                    OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                          color: AppColors
-                                                              .colorCD,
-                                                          width: 0.99),
-                                                    ),
-
-                                                    focusedBorder:
-                                                    OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      borderSide:
-                                                      const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              // textField(
-                                              //     controller.zipCodeController,
-                                              //     "zip_code".tr,
-                                              //     controller.zipCode,
-                                              //     'zip_code'.tr,
-                                              //     "zip_code"),
-
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 20, right: 20, top: 20),
-                                        child: textField(
-                                            controller.fullAddressController,
-                                            "full_address".tr,
-                                            controller.fullAddress,
-                                            'full_address'.tr,
-                                            "full address"),
-                                      ),
-
-                                      Obx(() => !controller.isPageLoad.value
-                                          ? GestureDetector(
-                                          onTap: () {
-                                            if (!controller.formLoginKey.currentState!.validate()) {
-                                              print("not validate");
-                                            } else {
-                                              controller.updateAddressApi(id);
-                                              // controller.loginApi();
-                                            }
-                                          },
-                                          child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 20,
-                                                  right: 20,
-                                                  top: 80,
-                                                  bottom: 40),
-                                              child: buttom(
-                                                  "add_new_address".tr)))
-                                          : Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20,
-                                            right: 20,
-                                            top: 80,
-                                            bottom: 40),
-                                        child: Container(
-                                          width: Get.size.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(7),
-                                            color: AppColors.color7C,
-                                          ),
-                                          child: const Center(
-                                            child: Padding(
-                                              padding:
-                                              EdgeInsets.only(top: 15, bottom: 15),
-                                              child: SpinKitThreeBounce(
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ) ),
-
-
-
-
-                                    ]))
-
-                          ],
-                        ))
-                  ]))
-        ]),
-        isScrollControlled: true);
-  }
-
   shimmerDemo() {
-    return Container(
-      width: Get.size.width,
-      height: Get.size.height,
-      margin: EdgeInsets.only(left: 0, right: 0),
+    return SizedBox(
+      width: 100.w,
+      height: 100.h,
       child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
+        baseColor: ThemeService().loadThemeFromBox()
+            ? AppColors.color4A
+            : Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
         child: ListView.builder(
-          itemBuilder: (__, _) => Padding(
-            padding: const EdgeInsets.only(bottom: 20.0, left: 10, right: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.0),
+          itemBuilder: (_, __) => Padding(
+            padding:
+            const EdgeInsets.only(left: 15, right: 15, bottom: 0, top: 10),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 10.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 40.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 70.0,
+                                height: 8,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Container(
-                        width: Get.size.width,
-                        height: 150,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                )
+                    )
+                  ],
+                ),
+                const IntrinsicHeight(
+                  child: Divider(color: Colors.white),
+                ).marginOnly(top: 10),
               ],
             ),
           ),
-          itemCount: 3,
+          itemCount: 10,
         ),
       ),
     );

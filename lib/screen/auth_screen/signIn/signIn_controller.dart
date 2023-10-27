@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,69 +29,42 @@ class SignInController extends GetxController {
   //****** api login
   loginApi() async {
     isPageLoad.value = true;
-
-    print("Email>>>>>${emailController.text}");
-    print("Password>>>>>${passwordController.text}");
     try {
-      dio.FormData params = dio.FormData.fromMap({
-        'customer_email': emailController.text.toString(),
-        'password': passwordController.text.toString(),
-      });
       ShopifyUser value;
       ShopifyAuth shopifyAuth = ShopifyAuth.instance;
       value = await shopifyAuth.signInWithEmailAndPassword(
           password: passwordController.text, email: emailController.text);
-      print('create Data ${value}} ');
-      // print(params.toString());
-      UserModel userModel = await ApiProvider.base().funLogin(params);
-      isPageLoad.value = false;
-      // progressDialog.dismiss();
-      print('create Data');
-      print(userModel.result);
-      if (userModel.result == "1") {
-        successToast(userModel.message!);
-        await GetStorage().write(AppConstants.isLogged, 'true');
-        print("UserIddd");
-        print(userModel.data?.customerId);
-        await GetStorage().write(
-            AppConstants.userId, userModel.data?.customerId.toString() ?? "");
-        await GetStorage().write(AppConstants.loginUser, userModel.data);
-        await GetStorage()
-            .write(AppConstants.accessToken, userModel.data?.token);
-        await GetStorage()
-            .write(AppConstants.userName, userModel.data?.customerName);
-        await GetStorage()
-            .write(AppConstants.profileImage, userModel.data?.profileImage);
-        await GetStorage()
-            .write(AppConstants.email, userModel.data?.customerEmail);
-        await GetStorage().write(
-            AppConstants.phoneNumber, userModel.data?.customerPhone.toString());
-        await GetStorage().write(AppConstants.phoneCode,
-            userModel.data?.customerCountryCode.toString());
-        // loginApiShopify();
-        Get.offAllNamed(AppPages.baseScreen,
-            arguments: {"screenType": "login screen"});
-        // Get.back();
-      } else {
-        // isPageLoad.value = false;
-        // failedToast(userBean.msg!);
-      }
+
+      await GetStorage().write(AppConstants.isLogged, 'true');
+      await GetStorage().write(AppConstants.userId, value.id.toString() ?? "");
+      await GetStorage().write(AppConstants.loginUser, value);
+      await GetStorage().write(AppConstants.userName, value.displayName.toString());
+      await GetStorage().write(AppConstants.email, value.email.toString());
+      await GetStorage().write(AppConstants.phoneNumber, value.phone.toString());
+
+      Get.offAllNamed(AppPages.baseScreen,
+          arguments: {"screenType": "login screen"});
+
+      print("sdjkdjk===> $value");
+      print("sdjkdjk===> ${value.id.toString() }");
+
     } on HttpException catch (exception) {
-      // progressDialog.dismiss();
-      print(exception.message);
-      // isPageLoad.value = false;
-      // failedToast(exception.message);
-    } catch (exception) {
-      // progressDialog.dismiss();
-      print(exception.toString());
+      if (kDebugMode) {
+        print(exception.message);
+      }
+      failedToast("There are some problems, please try after some time.");
       isPageLoad.value = false;
-      // failedToast(exception.toString());
+    } catch (exception) {
+      if (kDebugMode) {
+        print(exception.toString());
+      }
+      successToast("User not exits!");
+      isPageLoad.value = false;
     }
   }
 
 //   ****** api login with shopify
-
-  loginApiShopify() async {
+/* loginApiShopify() async {
     try {
       final Map<String, dynamic> requestBody = {
         'query':
@@ -131,5 +105,5 @@ class SignInController extends GetxController {
       isPageLoad.value = false;
       // failedToast(exception.toString());
     }
-  }
+  }*/
 }

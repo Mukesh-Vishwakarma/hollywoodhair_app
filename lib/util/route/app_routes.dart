@@ -19,6 +19,8 @@ import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confi
 import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confirm_screen.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_binding.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_screen.dart';
+import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_binding.dart';
+import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_binding.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_screen.dart';
 import 'package:hollywood_hair/screen/base/profile/address/address_binding.dart';
@@ -45,6 +47,10 @@ import 'package:hollywood_hair/screen/favourite_screen/favourite_binder.dart';
 import 'package:hollywood_hair/screen/favourite_screen/favourite_screen.dart';
 import 'package:hollywood_hair/screen/notification/notification_binding.dart';
 import 'package:hollywood_hair/screen/notification/notification_screen.dart';
+import 'package:hollywood_hair/screen/our_salons/our_salons_binder.dart';
+import 'package:hollywood_hair/screen/our_salons/our_salons_screen.dart';
+import 'package:hollywood_hair/screen/our_transformations/our_transformations_binder.dart';
+import 'package:hollywood_hair/screen/our_transformations/our_transformations_screen.dart';
 import 'package:hollywood_hair/screen/product_details/product_details_binding.dart';
 import 'package:hollywood_hair/screen/product_details/product_details_screen.dart';
 import 'package:hollywood_hair/screen/splash/splash_binding.dart';
@@ -55,6 +61,8 @@ import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
 import '../../screen/tryOn_screen/priview_screen.dart';
 import '../../screen/tryOn_screen/tryOn_binder.dart';
 import '../../screen/tryOn_screen/tryOn_screen.dart';
+import '../../screen/web_checkout_screen/web_checkout_binding.dart';
+import '../../screen/web_checkout_screen/web_checkout_screen.dart';
 import 'app_pages.dart';
 
 class AppRoutes {
@@ -200,19 +208,44 @@ class AppRoutes {
       binding:CalendlyBinding(),
     ),
 
-
     GetPage(
         name: AppPages.tryOn,
         page: () => TryOnScreen(),
         binding:TryOnBinding(),
         transition: Transition.downToUp,
-        transitionDuration: Duration(milliseconds: 500)
+        transitionDuration: const Duration(milliseconds: 500)
     ),
 
     GetPage(
       name: AppPages.imagePreview,
-      page: () => PreviewScreen(),
+      page: () =>  PreviewScreen(),
       binding:TryOnBinding(),
     ),
+
+    GetPage(
+      name: AppPages.ourSalons,
+      page: () =>  OurSalonsScreen(),
+      binding:OurSalonsBinding(),
+    ),
+
+    GetPage(
+      name: AppPages.checkout,
+      page: () =>  WebCheckoutScreen(),
+      binding:WebCheckoutBinding(),
+    ),
+
+    GetPage(
+      name: AppPages.ourTransformations,
+      page: () => OurTransformationsScreen(),
+      binding:OurTransformationsBinding(),
+    ),
+
+    GetPage(
+      name: AppPages.celebritiesScreen,
+      page: () => CelebritiesScreen(),
+      binding:CelebritiesBinding(),
+    ),
+
+
   ];
 }

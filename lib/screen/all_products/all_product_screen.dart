@@ -7,8 +7,8 @@ import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../util/theme_service.dart';
 import 'all_product_controller.dart';
@@ -86,28 +86,41 @@ class AllProductScreen extends GetView<AllProductController> {
                 : SingleChildScrollView(
                     child: SizedBox(
                       width: double.infinity,
-                      child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.products.length,
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 270,
-                              childAspectRatio: 3 / 3,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
-                          itemBuilder: (context, index) {
-                            return commonProductWidget(index);
-                          }),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: (controller.products.length / 2).ceil(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: commonProductWidget(index * 2),
+                              ),
+                              const SizedBox(
+                                  width: 10), // Add spacing between items
+                              if (index * 2 + 1 < controller.products.length)
+                                Expanded(
+                                  child: commonProductWidget(index * 2 + 1),
+                                ),
+                              // Check if this is the last row and there's only one item
+                              if (index ==
+                                      (controller.products.length / 2)
+                                          .floor() &&
+                                  controller.products.length % 2 == 1)
+                                Expanded(
+                                  child: Container(), // Empty item
+                                ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   )
             : shimmerDemo()),
       ),
     );
   }
-
-
-
 
   // productsWidget() {
   //   return Container(
@@ -140,10 +153,9 @@ class AllProductScreen extends GetView<AllProductController> {
           ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: controller.networkImageWithLoader(
-    userProfile:
-    controller.products[index].image.isNotEmpty
-        ? controller.products[index].image.toString()
-        : Assets.upload ?? "")),
+                  userProfile: controller.products[index].image.isNotEmpty
+                      ? controller.products[index].image.toString()
+                      : Assets.upload ?? "")),
           const SizedBox(height: 10),
           Text(
             controller.products[index].title.toString(),
@@ -181,9 +193,8 @@ class AllProductScreen extends GetView<AllProductController> {
           // const SizedBox(height: 6),
         ],
       ),
-    );
+    ).marginOnly(top: 5);
   }
-
 
   shimmerDemo() {
     return Padding(
@@ -199,11 +210,9 @@ class AllProductScreen extends GetView<AllProductController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +238,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,7 +271,6 @@ class AllProductScreen extends GetView<AllProductController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,7 +296,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +329,6 @@ class AllProductScreen extends GetView<AllProductController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,7 +354,9 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

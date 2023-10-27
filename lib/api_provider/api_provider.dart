@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hollywood_hair/model/all_transformations_model.dart';
 import 'package:hollywood_hair/model/base_model.dart';
 import 'package:hollywood_hair/model/faq_model.dart';
 import 'package:hollywood_hair/model/get_address_by_id.dart';
@@ -18,7 +19,13 @@ import 'package:hollywood_hair/model/shopify_model/signUp_model.dart';
 import 'package:hollywood_hair/model/static_model.dart';
 import 'package:hollywood_hair/model/user_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
+import '../model/all_saloon_list_model.dart';
+import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
+import '../model/shopify_model/delete_address_model.dart';
+import '../model/shopify_model/get_address_model.dart';
+import '../model/shopify_model/update_address_model.dart';
+import '../model/shopify_model/user_orders_model.dart';
 import 'DioLogger.dart';
 import 'api_constants.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +33,11 @@ import 'package:http/http.dart' as http;
 class ApiProvider {
   Dio _dio = Dio();
   DioError? _dioError;
+
+  var headers = {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': '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',
+  };
 
   ApiProvider.shopify() {
     BaseOptions dioOptions = BaseOptions()..baseUrl = shopifyUrl;
@@ -318,44 +330,7 @@ class ApiProvider {
     }
   }
 
-  //***** update address
 
-  Future funUpdateAddress(FormData params) async {
-    try {
-      print("response of update address >>>$params");
-      Response response = await _dio.post(strUpdateAddress, data: params);
-      print("response of update address  >>>${response.data!}");
-      return BaseModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
-
-  //***** get  address by id
-
-  Future funGetAddressById(FormData params) async {
-    try {
-      print("response of get  address by id>>>$params");
-      Response response = await _dio.post(strGetAddressByID, data: params);
-      print("response of get  address by id>>>${response.data!}");
-      return GetAddressByIdModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
-
-  //***** delete address
-
-  Future funDeleteAddress(FormData params) async {
-    try {
-      print("response of delete address>>>$params");
-      Response response = await _dio.post(strDeleteAddress, data: params);
-      print("response of delete address>>>${response.data!}");
-      return BaseModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
 
   //***** faq
 
@@ -403,6 +378,18 @@ class ApiProvider {
       Response response = await _dio.post(strGetProductList, data: params);
       print("response of get all product>>>${response.data!}");
       return GetAllProductModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  //***** get all transformations
+
+  Future funGetAllTransformations() async {
+    try {
+      Response response = await _dio.get(strGetAllTransformations);
+      print("response of get all product>>>${response.data!}");
+      return AllTransformationsModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
@@ -526,6 +513,89 @@ class ApiProvider {
       handleException(error, stacktrace, _dioError!);
     }
   }
+
+  Future getAllSaloonList() async {
+    try {
+      Response response = await _dio.get(strGetAllSalons);
+      print("response of otp login >>>${response.data!}");
+      return AllSaloonListModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getFeaturedProducts() async {
+    try {
+      Response response = await _dio.get(strGetFeaturedProducts);
+      print("response of otp login >>>${response.data!}");
+      return FeaturedProductsModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+
+  Future getAddressShopify({customerId}) async {
+    try {
+      Response response =
+      await _dio.get('api/2021-07/customers/$customerId/addresses.json');
+      print("response of Collections >>>${response.data!}");
+      return GetAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getMyOrdersByCustomerId({customerId}) async {
+    try {
+      Response response =
+      await _dio.get('api/2022-01/orders.json?customer_id=$customerId');
+      print("response of Collections >>>${response.data!}");
+      return UserOrdersModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+
+  Future deleteAddressShopify({customerId,addressId}) async {
+    try {
+      Response response =
+      await _dio.delete('api/2021-07/customers/$customerId/addresses/$addressId.json');
+      print("response of Collections >>>${response.data!}");
+      return DeleteAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getUpdateCustomerUpdates(customerId,addressId,FormData params) async {
+    try {
+
+      // var headers = {
+      //   'Content-Type': 'application/json',
+      //   'X-Shopify-Access-Token': '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',
+      // };
+      //
+      // var dio = Dio();
+      // var response = await dio.request(
+      //   'https://a02f54.myshopify.com/admin/api/2021-07/customers/7301030707535/addresses/9789196960079.json',
+      //   options: Options(
+      //     method: 'PUT',
+      //     headers: headers,
+      //   ),
+      //   data: data,
+      // );
+
+      print("response of get profile >>>$params");
+      Response response = await _dio.post('api/2021-07/customers/$customerId/addresses/$addressId.json', data: jsonEncode(params));
+      print("response of get profile >>>${response.data!}");
+      return UpdateAddressModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
 }
 
 bool _checkSocketException(DioError err) {
@@ -533,3 +603,4 @@ bool _checkSocketException(DioError err) {
       err.error != null &&
       err.error is SocketException;
 }
+

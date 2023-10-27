@@ -157,7 +157,33 @@ class OtpController extends GetxController {
           signUpApiShopify();
           await GetStorage().write(AppConstants.isLogged, 'true');
 
-          Get.offAllNamed(AppPages.baseScreen);
+          Get.offAllNamed(AppPages.baseScreen,
+              arguments: {"screenType": "login screen"});
+
+
+          // await GetStorage().write(AppConstants.isLogged, 'true');
+          // print("UserIddd");
+          // print(userModel.data?.customerId);
+          // await GetStorage().write(
+          //     AppConstants.userId, userModel.data?.customerId.toString() ?? "");
+          // await GetStorage().write(AppConstants.loginUser, userModel.data);
+          // await GetStorage()
+          //     .write(AppConstants.accessToken, userModel.data?.token);
+          // await GetStorage()
+          //     .write(AppConstants.userName, userModel.data?.customerName);
+          // await GetStorage()
+          //     .write(AppConstants.profileImage, userModel.data?.profileImage);
+          // await GetStorage()
+          //     .write(AppConstants.email, userModel.data?.customerEmail);
+          // await GetStorage().write(
+          //     AppConstants.phoneNumber, userModel.data?.customerPhone.toString());
+          // await GetStorage().write(AppConstants.phoneCode,
+          //     userModel.data?.customerCountryCode.toString());
+          // // loginApiShopify();
+          // Get.offAllNamed(AppPages.baseScreen,
+          //     arguments: {"screenType": "login screen"});
+
+
         } else {
           Get.offNamed(AppPages.newPasswordScreen);
         }

@@ -18,6 +18,9 @@ class ProfileController extends GetxController {
   var userID ="".obs;
   @override
   void onInit() {
+
+    userName.value = GetStorage().read(AppConstants.userName);
+
     getProfileApi();
     // userID.value = GetStorage().read(AppConstants.userId)??"";
     //
@@ -37,23 +40,20 @@ class ProfileController extends GetxController {
   editScreenRoute() async {
     var result = await Get.toNamed(AppPages.editProfileScreen);
     print("result>>>$result");
-
     if (result != null) {
       if (result == true) {
         await getProfileApi();
-
       }
     }
   }
-//**** api for get profile
 
+//**** api for get profile
   getProfileApi() async {
     userID.value = GetStorage().read(AppConstants.userId)??"";
 
     try {
       dio.FormData params = dio.FormData.fromMap({
         'customer_id':userID.value,
-
       });
       print('create Data');
       print(params.toString());
@@ -67,10 +67,10 @@ class ProfileController extends GetxController {
         phoneNumber.value = "${userModel.data!.customerCountryCode?? ""}"   "${userModel.data!.customerPhone?? ""
         }";
         urlImage.value = userModel.data!.profileImage??"";
-        print("phone number >>> ${phoneNumber.value}");
-
-        // successToast(userModel.message!);
-
+        print("phone number1 >>> ${phoneNumber.value}");
+        print("phone number2 >>> ${userModel.data!.customerName}");
+        print("phone number3 >>> ${userModel.data!.customerCountryCode}");
+        print("phone number3 >>> ${userModel.data!.customerPhone?? ""}");
 
       } else {
         // successToast(userModel.message!);

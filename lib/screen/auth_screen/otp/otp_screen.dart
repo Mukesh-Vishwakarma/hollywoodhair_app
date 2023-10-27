@@ -9,7 +9,7 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'otp_controller.dart';
 
@@ -47,7 +47,7 @@ class OtpScreen extends GetView<OtpController> {
                 child: Text(
                   "enter_otp".tr,
                   style: AppStyles.textStyle(
-                      fontSize: dimen20, weight: FontWeight.w600),
+                      fontSize: dimen20, weight: FontWeight.w500),
                 ),
               ),
               Container(
@@ -57,7 +57,7 @@ class OtpScreen extends GetView<OtpController> {
                   "enter_otp_des".tr,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyle(
-                      fontSize: dimen12,
+                      fontSize: 14.0,
                       color: Colors.grey,
                       weight: FontWeight.w400),
                   // textAlign: TextAlign.center,

@@ -19,6 +19,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
+          titleSpacing: 0,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -29,7 +30,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
               )),
           title: Text("edit_profile".tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -92,7 +93,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("name".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -101,7 +102,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             "plz_enter_name".tr,
                             controller.name,
                             'name'.tr,
-                            "name"),
+                            "name",
+                        true),
                       ),
                       SizedBox(
                         height: 20,
@@ -113,7 +115,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("email".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -122,7 +124,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             "plz_enter_email".tr,
                             controller.email,
                             'email'.tr,
-                            "email"),
+                            "email",
+                        true),
                       ),
                       SizedBox(
                         height: 20,
@@ -134,7 +137,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Text("phone_number".tr,
                             style: AppStyles.textStyle(
-                                fontSize: dimen12, weight: FontWeight.normal)),
+                                fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 0),
@@ -146,7 +149,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                     // height: 46,
                                     child: TextFormField(
                                       style: AppStyles.textStyle(
-                                        fontSize: dimen12,
+                                        fontSize: 14.0,
                                         weight: FontWeight.normal,
                                       ),
                                       controller: controller.contactController,
@@ -203,7 +206,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                                   // Optional. Styles the search field.
                                                   textStyle:
                                                       AppStyles.textStyle(
-                                                    fontSize: dimen12,
+                                                    fontSize: 14.0,
                                                     weight: FontWeight.normal,
                                                   ),
                                                   inputDecoration:
@@ -239,7 +242,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                                     controller.countryCode
                                                         .toString(),
                                                     style: AppStyles.textStyle(
-                                                      fontSize: dimen12,
+                                                      fontSize: 14.0,
                                                       weight: FontWeight.normal,
                                                     ),
                                                   ),

@@ -5,17 +5,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
+import 'package:hollywood_hair/util/theme_service.dart';
+import 'package:lottie/lottie.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shimmer/shimmer.dart';
 import 'app_colors.dart';
 import 'app_constants.dart';
 import 'app_style.dart';
 import 'assets.dart';
 import 'route/app_pages.dart';
 
-textField(controller, validationMsg, text, hintText, type) {
+textField(controller, validationMsg, text, hintText, type, label) {
   return TextFormField(
     controller: controller,
     style: AppStyles.textStyle(
-      fontSize: dimen12,
+      fontSize: 14.0,
       weight: FontWeight.normal,
     ),
     validator: (value) {
@@ -28,7 +32,6 @@ textField(controller, validationMsg, text, hintText, type) {
           return 'Invalid Email';
         }
       }
-
       return null;
     },
     //   if (value.toString().isEmpty) {
@@ -46,7 +49,7 @@ textField(controller, validationMsg, text, hintText, type) {
       hintText: hintText,
       hintStyle: AppStyles.textStyle(
         color: AppColors.black,
-        fontSize: dimen12,
+        fontSize: 14.0,
         weight: FontWeight.normal,
       ),
       suffixIcon: type == "password"
@@ -59,12 +62,14 @@ textField(controller, validationMsg, text, hintText, type) {
             )
           : SizedBox(),
 
-      labelText: hintText,
-      labelStyle: AppStyles.textStyle(
-        color: AppColors.black,
-        fontSize: dimen12,
-        weight: FontWeight.normal,
-      ),
+      labelText: (label) ? hintText : "null",
+      labelStyle: (label)
+          ? AppStyles.textStyle(
+              color: AppColors.black,
+              fontSize: 14.0,
+              weight: FontWeight.normal,
+            )
+          : null,
 
       // const TextStyle(
       //     color: AppColors.color3D,
@@ -127,7 +132,7 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
               }
             },
             style: AppStyles.textStyle(
-              fontSize: dimen12,
+              fontSize: 14.0,
               weight: FontWeight.normal,
             ),
             onChanged: (value) {
@@ -263,7 +268,7 @@ defaultToast(String msg, String title, color) {
       style: TextStyle(color: Colors.white),
     ),
     backgroundColor: color,
-    duration: Duration(seconds: 1),
+    duration: Duration(seconds: 2),
     margin: EdgeInsets.all(20),
     isDismissible: false,
     snackStyle: SnackStyle.FLOATING,
@@ -272,8 +277,7 @@ defaultToast(String msg, String title, color) {
 
 void isLogoutResponse() {
   Get.back();
-  // ProgressDialog progressDialog = ProgressDialog();
-  // progressDialog.show();
+
   Future.delayed(const Duration(seconds: 2), () {
     GetStorage().remove(AppConstants.loginUser);
     GetStorage().remove(AppConstants.accessToken);
@@ -300,7 +304,7 @@ buttom(text) {
           text,
           style: AppStyles.textStyle(
             color: AppColors.lightBackgroundColor,
-            fontSize: dimen12,
+            fontSize: 14.0,
             weight: FontWeight.normal,
           ),
         ),
@@ -319,3 +323,129 @@ successToast(msg) {
       textColor: Colors.white,
       fontSize: 14.0);
 }
+
+shimmerDemo() {
+  return SizedBox(
+    width: 100.w,
+    height: 100.h,
+    child: Shimmer.fromColors(
+      baseColor: ThemeService().loadThemeFromBox()
+          ? AppColors.color4A
+          : Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: ListView.builder(
+        itemBuilder: (_, __) => Padding(
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, bottom: 0, top: 10),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          height: 10.0,
+                          color: Colors.white,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 10.0,
+                          color: Colors.white,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 40.0,
+                              height: 8,
+                              color: Colors.white,
+                            ),
+                            const Spacer(),
+                            Container(
+                              width: 70.0,
+                              height: 8,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const IntrinsicHeight(
+                child: Divider(color: Colors.white),
+              ).marginOnly(top: 10),
+            ],
+          ),
+        ),
+        itemCount: 10,
+      ),
+    ),
+  );
+}
+
+loader(Color color) {
+  return Stack(
+    children: [
+      InkWell(
+        onTap: () {},
+        child: const SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+        ),
+      ),
+      Center(
+        child: Container(
+          height: 80,
+          width: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 8,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.center,
+        child: Lottie.asset(Assets.videoProgressbarBarLoader,
+            height: 150, width: 150),
+      )
+    ],
+  );
+}
+
+
+// defaultToast(String msg, String title, color) {
+//   Get.snackbar(
+//     title,
+//     msg,
+//     snackPosition: SnackPosition.BOTTOM,
+//     colorText: AppColors.lightBackgroundColor,
+//     messageText: Text(
+//       msg,
+//       style: const TextStyle(color: Colors.white),
+//     ),
+//     backgroundColor: color,
+//     duration: const Duration(seconds: 2),
+//     margin: const EdgeInsets.all(20),
+//     isDismissible: false,
+//     snackStyle: SnackStyle.FLOATING,
+//   );
+// }

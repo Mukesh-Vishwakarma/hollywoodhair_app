@@ -1,4 +1,4 @@
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 var dimen7 = 7.sp;
 var dimen8 = 8.sp;

@@ -37,6 +37,7 @@ class Assets {
 
   static const String cartIconUl = 'assets/images/bag_icon_ul.svg';
   static const String cartIconSl = 'assets/images/bag_icon_sl.svg';
+  static const String emptyCart = 'assets/images/ic_empty_cart.svg';
 
   static const String profileIconUl = 'assets/images/profile_icon_ul.svg';
   static const String profileIconSl = 'assets/images/profile_icon_sl.svg';
@@ -52,7 +53,9 @@ class Assets {
   static const String user = 'assets/images/user.png';
   static const String clock = 'assets/images/clock.png';
   static const String whiteArrow = 'assets/images/white_arrow.png';
-
+  static const String menuBar = 'assets/images/Menu_Bar.png';
+  static const String profileBackground = 'assets/images/profile_background.svg';
+  static const String bookingImgNew = 'assets/images/booking_img_new.png';
   // home_scrrens
   static const String dummyBanner = 'assets/dummy_images/home_banner.png';
   static const String p1 = 'assets/dummy_images/p1.png';
@@ -69,6 +72,8 @@ class Assets {
   static const String trashIcon = 'assets/images/ic_delete.svg';
   static const String minusIcon = 'assets/images/ic_minus.svg';
   static const String plusIcon = 'assets/images/ic_plus.svg';
+  static const String noResult = 'assets/images/no_result_found.png';
+  static const String nothingSearch = 'assets/images/nothing_search_yet.png';
   static const String bag = 'assets/images/bag.png';
   static const String likeCard = 'assets/images/like_card.png';
   static const String notification1 = 'assets/dummy_images/notification1.png';
@@ -94,5 +99,69 @@ class Assets {
   static const String ellipse5 = 'assets/dummy_images/Ellipse 180.png';
   static const String ellipse6 = 'assets/dummy_images/Ellipse 181.png';
   static const String download = 'assets/dummy_images/download.svg';
+
+
+  //Salon dummy images
+  static const String salon1 = 'assets/dummy_images/Hollywood_Hair_Katowice.webp';
+  static const String salon2 = 'assets/dummy_images/Hollywood_hair_Szczecin.webp';
+  static const String salon3 = 'assets/dummy_images/Lokalizacja-salonow-Belwederska.webp';
+  static const String salon4 = 'assets/dummy_images/Lokalizacja-salonow-Poznan.webp';
+  static const String salon5 = 'assets/dummy_images/Lokalizacja-salonow-Sobieskiego.webp';
+  static const String salon6 = 'assets/dummy_images/Lokalizacja-salonow-Sopot.webp';
+  static const String salon7 = 'assets/dummy_images/Lokalizacja-salonow-Wilcza.webp';
+  static const String salon8 = 'assets/dummy_images/wroclaw_hollywoodhair_c5ca581a-24c7-481a-84c6-73a2c7d869be.webp';
+  static const String salon9 = 'assets/dummy_images/wroclaw_hollywoodhair_c5ca581a-24c7-481a-84c6-73a2c7d869be (1).webp';
+
+
+  /// Celebrities
+  static const String cel1 = 'assets/celebrity_image/1.webp';
+  static const String cel2 = 'assets/celebrity_image/2.webp';
+  static const String cel3 = 'assets/celebrity_image/3.webp';
+  static const String cel4 = 'assets/celebrity_image/4.webp';
+  static const String cel5 = 'assets/celebrity_image/5.webp';
+  static const String cel6 = 'assets/celebrity_image/6.webp';
+  static const String cel7 = 'assets/celebrity_image/7.webp';
+  static const String cel8 = 'assets/celebrity_image/8.webp';
+  static const String cel9 = 'assets/celebrity_image/9.webp';
+  static const String cel10 = 'assets/celebrity_image/10.webp';
+  static const String cel11 = 'assets/celebrity_image/11.webp';
+  static const String cel12 = 'assets/celebrity_image/12.webp';
+  static const String cel13 = 'assets/celebrity_image/13.webp';
+  static const String cel14 = 'assets/celebrity_image/14.webp';
+  static const String cel15 = 'assets/celebrity_image/15.webp';
+  static const String cel16 = 'assets/celebrity_image/16.webp';
+
+
+  /// press
+  static const String press1 = 'assets/press_image/press1.png';
+  static const String press2 = 'assets/press_image/press2.png';
+  static const String press3 = 'assets/press_image/press3.png';
+  static const String press4 = 'assets/press_image/press4.png';
+  static const String press5 = 'assets/press_image/press5.png';
+  static const String press6 = 'assets/press_image/press6.png';
+  static const String press7 = 'assets/press_image/press7.png';
+  static const String press8 = 'assets/press_image/press8.png';
+  static const String press9 = 'assets/press_image/press9.png';
+  static const String press10 = 'assets/press_image/press10.png';
+  static const String press11 = 'assets/press_image/press11.png';
+  static const String press12 = 'assets/press_image/press12.png';
+  static const String press13 = 'assets/press_image/press13.png';
+  static const String press14 = 'assets/press_image/press14.png';
+  static const String press15 = 'assets/press_image/press15.png';
+  static const String press16 = 'assets/press_image/press16.png';
+  static const String press17 = 'assets/press_image/press17.png';
+  static const String press18 = 'assets/press_image/press18.png';
+
+  /// transformations
+  static const String trans1 = 'assets/transformations_image/trans1.webp';
+  static const String trans2 = 'assets/transformations_image/trans2.webp';
+  static const String trans3 = 'assets/transformations_image/trans3.webp';
+  static const String trans4 = 'assets/transformations_image/trans4.webp';
+  static const String trans5 = 'assets/transformations_image/trans5.webp';
+  static const String trans6 = 'assets/transformations_image/trans6.webp';
+  static const String trans7 = 'assets/transformations_image/trans7.webp';
+  static const String trans8 = 'assets/transformations_image/trans8.webp';
+  static const String trans9 = 'assets/transformations_image/trans9.webp';
+  static const String trans10 = 'assets/transformations_image/trans10.webp';
 
 }
