@@ -259,7 +259,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       print(exception.message);
     } catch (exception) {
       pageLoaderFeaturedStatus.value = false;
-      print("ajsdhbkxznkansz===> ${exception.toString()}");
+      // print("ajsdhbkxznkansz===> ${exception.toString()}");
     }
   }
 
