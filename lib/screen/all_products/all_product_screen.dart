@@ -84,6 +84,7 @@ class AllProductScreen extends GetView<AllProductController> {
                     ),
                   )
                 : SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
                     child: SizedBox(
                       width: double.infinity,
                       child: ListView.builder(
@@ -208,6 +209,7 @@ class AllProductScreen extends GetView<AllProductController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 Row(

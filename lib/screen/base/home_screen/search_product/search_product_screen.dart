@@ -9,10 +9,11 @@ import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
-
 import 'search_product_controller.dart';
 
 class SearchProductScreen extends GetView<SearchProductController> {
+  const SearchProductScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +57,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                               Icons.arrow_back,
                               size: 22,
                             )),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Container(
@@ -94,8 +95,8 @@ class SearchProductScreen extends GetView<SearchProductController> {
                                         )).marginOnly(right: 10)
                                     : const SizedBox(),
                               ),
-                              suffixIconConstraints:
-                                  const BoxConstraints(minHeight: 30, minWidth: 30),
+                              suffixIconConstraints: const BoxConstraints(
+                                  minHeight: 30, minWidth: 30),
                               hintText: "search here",
                               hintStyle: AppStyles.textStyle(
                                   weight: FontWeight.w400,
@@ -131,6 +132,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
             ),
             Expanded(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -190,7 +192,8 @@ class SearchProductScreen extends GetView<SearchProductController> {
   listTile({required Product item}) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPages.allProductDetailsScreen, arguments: {"product_id": item.id});
+        Get.toNamed(AppPages.allProductDetailsScreen,
+            arguments: {"product_id": item.id});
       },
       child: Row(
         children: [
@@ -232,7 +235,6 @@ class SearchProductScreen extends GetView<SearchProductController> {
         ],
       ).marginOnly(top: 10),
     );
-
   }
 
   Widget buildLoader() {
@@ -299,6 +301,15 @@ class SearchProductScreen extends GetView<SearchProductController> {
         Get.toNamed(AppPages.allProductDetailsScreen, arguments: {
           "product_id": controller.searchedProduct[index].id.toString()
         });
+        controller.isLoadPage();
+
+        // Get.toNamed(
+        //   AppPages.allProductDetailsScreen,
+        //   // arguments: {"product_id": featuredData.productId.toString()},
+        //   arguments: {
+        //     "product_id": featuredData.adminGraphqlApiId.toString()
+        //   }, // added static product id because upcoming produce id is not valid
+        // );
       },
       child: Container(
           margin: EdgeInsets.only(left: 10, right: 20),

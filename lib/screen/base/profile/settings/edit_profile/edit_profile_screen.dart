@@ -35,6 +35,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Center(

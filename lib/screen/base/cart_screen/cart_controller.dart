@@ -56,6 +56,8 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
 
   var shippingAddressStatus = false.obs;
 
+  var promoCodeApplyStatus = false.obs;
+
   @override
   void onInit() async {
     try {
@@ -109,9 +111,16 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
         shippingAddressStatus.value = true;
         print("sdbzn 2=> ");
       }
+      if(checkout.lineItems[0].discountAllocations.isNotEmpty) {
+        promoCodeApplyStatus.value = true;
+      } else {
+        promoCodeApplyStatus.value = false;
+      }
+      addressLoaderStatus.value = false;
     } catch (error) {
       dataLoading.value = false;
       noCartCreated.value = true;
+      addressLoaderStatus.value = false;
       GetStorage().write(AppConstants.checkOutID, "");
       print("message===> $error");
     }
@@ -137,8 +146,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   void removeCartItems(lineItemID, int newQuantity) async {
     try {
       dataLoading.value = true;
-      final cart = await shopifyCheckout
-          .removeLineItemsFromCheckout(checkoutId: checkoutId, lineItems: [
+      final cart = await shopifyCheckout.removeLineItemsFromCheckout(checkoutId: checkoutId, lineItems: [
         LineItem(
             id: lineItemID.id,
             variantId: lineItemID.variantId,
@@ -154,17 +162,23 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   }
 
   applyPromoCode() async {
+    // print("szbhxnjb==> ${checkout.lineItems[0].quantity}, ${checkout.lineItems[0]}");
     try {
-      dataLoading.value = true;
+      addressLoaderStatus.value = true;
       await shopifyCheckout.checkoutDiscountCodeApply(
           checkoutId, promoCodeController.text.trim());
-      getCart();
-      update();
+      updateCartItemQuantity(
+          checkout.lineItems[0], checkout.lineItems[0].quantity);
+      addressLoaderStatus.value = false;
     } catch (error) {
       // Handle errors if the update fails
+      addressLoaderStatus.value = false;
       print('Error updating cart: $error');
+      failedToast("Invalid promo code.");
     }
   }
+
+
 
   Future<void> goToCheckout() async {
     try {
@@ -183,7 +197,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
           noCartCreated.value = true;
         }
       }
-    } catch (e){
+    } catch (e) {
       print("dasbnjkm==> $e");
     }
   }

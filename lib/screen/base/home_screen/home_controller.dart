@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,21 +11,16 @@ import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/src/product/products/products.dart';
 import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../api_provider/api_provider.dart';
 import '../../../model/celebrities_model.dart';
 import '../../../util/app_colors.dart';
 import '../../../util/assets.dart';
 import '../../product_details/product_details_controller.dart';
-
 import '../../../model/featured_products_model.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
-
-
   final PageController pageControllerNew = PageController(initialPage: 0);
   final ValueNotifier<int> currentPageNew = ValueNotifier<int>(0);
-
 
   final PageController pageController = PageController(initialPage: 0);
   var activePage = 0.obs;
@@ -197,7 +191,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       Get.find<ProductDetailsController>().onInit();
     } catch (e) {
       print("kjashb $e");
-      print("kjashb $e");
     }
   }
 
@@ -244,8 +237,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       pageLoaderSalon.value = false;
       if (allSaloonListModel.result == 1) {
         allSaloonList.value = allSaloonListModel.saloonData!;
-      } else {
-        // successToast(allSaloonListModel.msg!);
       }
     } on HttpException catch (exception) {
       print(exception.message);
@@ -260,9 +251,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     try {
       FeaturedProductsModel featuredProductsModel =
           await ApiProvider.base().getFeaturedProducts();
-      print('FeaturedProductsModel');
-      print(featuredProductsModel.result);
-      print(featuredProductsModel.featuredData);
       pageLoaderFeaturedStatus.value = false;
       if (featuredProductsModel.result == 1) {
         allFeaturedProductsList.value = featuredProductsModel.featuredData!;
@@ -574,7 +562,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 //   }
 // }
 
-  scrollPressFirst(){
+  scrollPressFirst() {
     const scrollDuration = Duration(seconds: 5);
 
     Timer.periodic(scrollDuration, (timer) {
@@ -588,7 +576,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
             scrollControllerFirst.jumpTo(0.0);
           });
-
         } else {
           scrollControllerFirst.animateTo(
             currentPosition + 200.0, // Adjust the scroll distance as needed
@@ -600,7 +587,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  scrollPressSecond(){
+  scrollPressSecond() {
     const scrollDuration = Duration(seconds: 5);
 
     Timer.periodic(scrollDuration, (timer) {
@@ -614,7 +601,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
             scrollControllerSecond.jumpTo(0.0);
           });
-
         } else {
           scrollControllerSecond.animateTo(
             currentPosition + 200.0, // Adjust the scroll distance as needed
@@ -625,7 +611,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       }
     });
   }
-
 
   void autoScroll() {
     Future.delayed(const Duration(seconds: 3), () {
@@ -640,5 +625,4 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       autoScroll();
     });
   }
-
 }

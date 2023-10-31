@@ -51,6 +51,7 @@ class FavouriteScreen extends GetView<FavouriteController> {
   bodyWidget() {
     return SafeArea(
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

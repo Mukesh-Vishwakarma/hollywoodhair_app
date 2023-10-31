@@ -7,6 +7,7 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import '../../../util/common_function.dart';
@@ -47,6 +48,7 @@ class CartScreen extends GetView<CartController> {
           children: [
             SafeArea(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -118,7 +120,11 @@ class CartScreen extends GetView<CartController> {
             Visibility(
               visible: controller.addressLoaderStatus.value,
               child: loader(AppColors.transparentBlack),
-            )
+            ),
+            Visibility(
+              visible: controller.addressLoaderStatus.value,
+              child: loader(AppColors.transparentBlack),
+            ),
           ],
         ));
   }
@@ -196,8 +202,7 @@ class CartScreen extends GetView<CartController> {
                       }
                     },
                     child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
                       child: SvgPicture.asset(Assets.minusIcon, width: 10),
                     ),
                   ),
@@ -258,62 +263,71 @@ class CartScreen extends GetView<CartController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 70.w,
-              height: 49,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.promoborder, width: 1.0),
-                color: AppColors.promofilled,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Center(
-                child: TextFormField(
-                  controller: controller.promoCodeController,
-                  textCapitalization: TextCapitalization.characters,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 10),
-                    hintText: "HHGLAMOUR15",
-                    hintStyle: AppStyles.textStyle(
-                        // fontStyle: FontStyle.italic,
-                        color: AppColors.promoHint.withOpacity(0.34),
-                        fontSize: 14.0,
-                        weight: FontWeight.w400),
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                  cursorColor: AppColors.primaryColor,
-                  style: AppStyles.textStyle(
-                      // fontStyle: FontStyle.italic,
-                      color: AppColors.promoHint,
-                      fontSize: 14.0,
-                      weight: FontWeight.w400),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                // controller.applyPromoCode();
-              },
+            Expanded(
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                // width: 70.w,
+                height: 45,
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.black84, width: 1.0),
+                  border: Border.all(color: AppColors.promoborder, width: 1.0),
+                  color: AppColors.promofilled,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Center(
-                  child: Text('apply'.tr,
-                      style: AppStyles.textStyle(
-                        weight: FontWeight.w500,
+                  child: TextFormField(
+                    controller: controller.promoCodeController,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 10),
+                      hintText: "HHGLAMOUR15",
+                      hintStyle: AppStyles.textStyle(
+                          // fontStyle: FontStyle.italic,
+                          color: AppColors.promoHint.withOpacity(0.34),
+                          fontSize: 14.0,
+                          weight: FontWeight.w400),
+                      border: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                    ),
+                    cursorColor: AppColors.primaryColor,
+                    style: AppStyles.textStyle(
+                        // fontStyle: FontStyle.italic,
+                        color: AppColors.promoHint,
                         fontSize: 14.0,
-                      )),
+                        weight: FontWeight.w400),
+                  ),
                 ),
               ),
-            )
+            ),
+
+             InkWell(
+                onTap: () {
+                  if(controller.promoCodeApplyStatus.value){
+                    successToast("Promo code already applied.");
+                  } else {
+                    controller.applyPromoCode();
+                  }
+                },
+                child: Container(
+                  height: 44,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.black84, width: 1.0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Center(
+                    child: Text(controller.promoCodeApplyStatus.value?'applied'.tr:'apply'.tr,
+                        style: AppStyles.textStyle(
+                          weight: FontWeight.w500,
+                          fontSize: 14.0,
+                        )),
+                  ),
+                ),
+              ).marginOnly(left: 15),
+
           ],
         )
       ],
@@ -349,9 +363,8 @@ class CartScreen extends GetView<CartController> {
         const SizedBox(height: 10),
         priceItemWidget(
             title: "promo_code".tr,
-            value: controller.checkout.appliedGiftCards.isNotEmpty
-                ? controller
-                    .checkout.appliedGiftCards[0].amountUsedV2.formattedPrice
+            value: controller.checkout.lineItems[0].discountAllocations.isNotEmpty
+                ? "zt${controller.checkout.lineItems[0].discountAllocations[0].allocatedAmount!.amount.toString()}"
                 : "zt0.00"),
         const SizedBox(height: 20),
         Row(
@@ -611,6 +624,35 @@ class CartScreen extends GetView<CartController> {
           )
         ],
       ),
+    );
+  }
+
+
+
+  loaderApplyCode() {
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: Colors.white,
+        ),
+        Center(
+          child: Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Lottie.asset(Assets.videoProgressbarBarLoader,
+              height: 150, width: 150),
+        )
+      ],
     );
   }
 }

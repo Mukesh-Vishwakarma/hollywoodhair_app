@@ -7,26 +7,23 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
-
-var image = Assets.textImage;
-var isFirstTime = ''.obs;
+  var image = Assets.textImage;
+  var isFirstTime = ''.obs;
 
   @override
   void onInit() {
-
     super.onInit();
     switchScreen();
   }
 
-switchScreen() async {
-  isFirstTime.value = GetStorage().read(AppConstants.isLogged)??'';
-  print("check is first time ${isFirstTime.value}");
-  Future.delayed(const Duration(seconds: 2), () {
-    return isFirstTime.value=='true'
-        ? Get.offNamed(AppPages.baseScreen,arguments: {"screenType":"splash screen"}
-    )
-        : Get.offNamed(AppPages.signInScreen);
-  });
-
-}
+  switchScreen() async {
+    isFirstTime.value = GetStorage().read(AppConstants.isLogged) ?? '';
+    print("check is first time ${isFirstTime.value}");
+    Future.delayed(const Duration(seconds: 2), () {
+      return isFirstTime.value == 'true'
+          ? Get.offNamed(AppPages.baseScreen,
+              arguments: {"screenType": "splash screen"})
+          : Get.offNamed(AppPages.signInScreen);
+    });
+  }
 }

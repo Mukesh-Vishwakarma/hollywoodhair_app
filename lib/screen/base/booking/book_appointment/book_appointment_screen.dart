@@ -35,6 +35,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
           ),
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

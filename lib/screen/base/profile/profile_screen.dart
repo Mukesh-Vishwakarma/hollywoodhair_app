@@ -29,6 +29,7 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

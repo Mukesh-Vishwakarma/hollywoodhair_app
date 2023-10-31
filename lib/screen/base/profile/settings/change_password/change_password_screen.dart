@@ -32,7 +32,9 @@ class   ChangePasswordScreen extends GetView<ChangePasswordController> {
             automaticallyImplyLeading: false,
           ),
         ),
-        body: SingleChildScrollView(child: Column(
+        body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
             children: [
 const SizedBox(height: 20),
           Form(

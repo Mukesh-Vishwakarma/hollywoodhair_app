@@ -44,6 +44,7 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
             ),
         ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
             children:[
               SizedBox(height: 10,),
@@ -59,6 +60,7 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
                     child: SizedBox(
                       width: double.infinity,
                       child: Obx(
@@ -111,6 +113,7 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
 

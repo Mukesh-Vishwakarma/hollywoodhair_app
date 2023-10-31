@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
+import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 
@@ -13,17 +14,19 @@ class NoDataScreen extends StatelessWidget {
   double? height;
   double? width;
 
-  NoDataScreen({this.title, this.image, this.description, this.height,this.width});
+  NoDataScreen(
+      {this.title, this.image, this.description, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
             child: Image.asset(
-              image.toString(),
+              (image != null) ? image.toString() : Assets.nothingSearch,
               height: height ?? 80,
               width: width ?? 80,
               // fit: BoxFit.contain,
@@ -33,8 +36,8 @@ class NoDataScreen extends StatelessWidget {
             child: Text(title ?? 'data_not_available'.tr,
                 textAlign: TextAlign.center,
                 style: AppStyles.textStyle(
-                  fontSize: title == "Nothing Searched Yet" ? dimen20 : dimen26,
-                  weight: FontWeight.w600,
+                  fontSize: title == "Nothing Searched Yet" ? dimen15 : dimen20,
+                  weight: FontWeight.w500,
                 )),
           ),
           Center(

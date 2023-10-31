@@ -26,12 +26,9 @@ class StaticScreen extends GetView<StaticController> {
                 Icons.arrow_back,
                 color: AppColors.black,
               )),
-          // title: Text("setting".tr,
-          //     style: AppStyles.textStyle(
-          //         fontSize: dimen18, weight: FontWeight.w500)),     F
           title: Text(controller.title.value,
               style: AppStyles.textStyle(
-                  fontSize: 16.0, weight: FontWeight.normal)),
+                  fontSize: 18.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -42,9 +39,12 @@ class StaticScreen extends GetView<StaticController> {
                     title: "No Data Found",
                   ),
                 )
-              : Html(
-                  data: controller.appContentTextHtml.value.toString(),
-                ).marginOnly(top: 10, left: 15, right: 15)
+              : SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+                child: Html(
+                    data: controller.appContentTextHtml.value.toString(),
+                  ).marginOnly(top: 10, left: 15, right: 15),
+              )
           : shimmerDemo()),
     );
   }

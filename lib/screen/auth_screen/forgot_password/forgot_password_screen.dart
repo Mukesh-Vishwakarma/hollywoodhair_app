@@ -16,6 +16,7 @@ class ForgotPasswordScreen extends GetView<ForgotScreenController> {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

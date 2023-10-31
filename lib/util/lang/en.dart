@@ -96,6 +96,7 @@ const en_US = {
   'grand_total': 'Grand total',
   'order_now': 'Order Now',
   'apply': 'Apply',
+  'applied': 'Applied',
   'empty_cart': 'Empty Cart',
   'empty_cart_message':
       'Looks like you haven’t added anything to your cart yet!',

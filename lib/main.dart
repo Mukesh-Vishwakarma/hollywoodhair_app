@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hollywood_hair/screen/tryOn_screen/tryOn_controller.dart';
 import 'package:logging/logging.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/shopify_config.dart';
@@ -21,14 +19,12 @@ Future<void> main() async {
   await GetStorage.init();
   await Get.putAsync(() => AuthServices().init());
   ShopifyConfig.setConfig(
-    // storefrontAccessToken: '0be3088788389431389a3ce7a17eb4ba',
     storefrontAccessToken: '549578c139b9579e72a9674e7873a1b5',
     storeUrl: 'a02f54.myshopify.com',
-    // adminAccessToken: "shpat_*******************", // optional
   );
   WidgetsFlutterBinding.ensureInitialized(); // Register the observ
   // Get.put(TryOnController());
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 void _initLog() {

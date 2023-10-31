@@ -34,6 +34,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Form(

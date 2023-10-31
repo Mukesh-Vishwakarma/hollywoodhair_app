@@ -41,6 +41,7 @@ class BookingScreen extends GetView<BookingController> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             const SizedBox(height: 30),

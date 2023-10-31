@@ -33,7 +33,7 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
                           Get.back(result: "backPress");
                         }
                       } else {
-                        Get.back(result: "backPress"  );
+                        Get.back(result: "backPress");
                       }
                     },
                     child: const Icon(

@@ -28,17 +28,27 @@ class FaqScreen extends GetView<FaqController> {
                 )),
             title: Text('FAQs'.tr,
                 style: AppStyles.textStyle(
-                    fontSize: 16.0, weight: FontWeight.normal)),
+                    fontSize: 18.0, weight: FontWeight.normal)),
             automaticallyImplyLeading: false,
           ),
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               Obx(() => !controller.isPageLoad.value
                   ? controller.faqList.isEmpty
-                      ? NoDataScreen(
-                          title: "No '${'FAQs'.tr}' Data ",
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Center(
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: NoDataScreen(
+                                title: "No '${'FAQs'.tr}' Data",
+                              ),
+                            ),
+                          ).marginOnly(bottom: 70),
                         )
                       : ListView.builder(
                           // scrollDirection: Axis.vertical,
@@ -54,7 +64,6 @@ class FaqScreen extends GetView<FaqController> {
           ),
         ));
   }
-
 
   faqWidget(index, context) {
     return Container(
@@ -72,8 +81,7 @@ class FaqScreen extends GetView<FaqController> {
                     // controller.changeColor.value = -1;
                   }
                 }),
-                title: Text(
-                    "Que.  ${controller.faqList[index].ques}",
+                title: Text("Que.  ${controller.faqList[index].ques}",
                     style: AppStyles.textStyle(
                       color: AppColors.black,
                       fontSize: dimen10,
@@ -84,14 +92,13 @@ class FaqScreen extends GetView<FaqController> {
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                     child: Text(
-                      "Ans.  ${controller.faqList[index].ans.toString()}",
+                        "Ans.  ${controller.faqList[index].ans.toString()}",
                         style: AppStyles.textStyle(
                           color: AppColors.gray99,
                           fontSize: dimen10,
                           weight: FontWeight.w400,
-
                         ) // style:AppStyles.textStyle(
-                    ),
+                        ),
                   ),
                 ])));
   }

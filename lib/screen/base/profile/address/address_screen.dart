@@ -39,6 +39,7 @@ class AddressScreen extends GetView<AddressController> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -330,6 +331,7 @@ class AddressScreen extends GetView<AddressController> {
             margin: const EdgeInsets.only(bottom: 0),
             color: Colors.transparent,
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[

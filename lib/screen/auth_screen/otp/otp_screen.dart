@@ -25,6 +25,7 @@ class OtpScreen extends GetView<OtpController> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

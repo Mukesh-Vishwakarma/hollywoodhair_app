@@ -77,6 +77,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
       ),
       body: Obx(
         () => SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: (!controller.orderStatus.value)
               ? ListView.builder(
                   shrinkWrap: true,

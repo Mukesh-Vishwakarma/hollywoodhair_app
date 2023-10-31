@@ -17,14 +17,13 @@ class StaticController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    title.value = Get.arguments??"";
+    title.value = Get.arguments ?? "";
     print("ScreenTypee>>>$title");
 
-    if(title.value =='Terms & condition'){
-      apiType.value ='Terms';
-    }else{
-      apiType.value ='Privacy';
-
+    if (title.value == 'Terms & condition') {
+      apiType.value = 'Terms';
+    } else {
+      apiType.value = 'Privacy';
     }
     staticApi();
     super.onInit();
@@ -32,7 +31,6 @@ class StaticController extends GetxController {
 
   //here goes the function
   String? parseHtmlString(String htmlString) {
-
     final document = parse(htmlString);
     final String? parsedString =
         parse(document.body?.text).documentElement?.text;
@@ -40,13 +38,11 @@ class StaticController extends GetxController {
     return appContentText.value = parsedString.toString();
   }
 
-
   staticApi() async {
     appContentTextHtml.value = '';
     try {
       dio.FormData params = dio.FormData.fromMap({
-        'type':apiType.value.toString(),
-
+        'type': apiType.value.toString(),
       });
       print('create Data');
       print(params.toString());
@@ -58,8 +54,6 @@ class StaticController extends GetxController {
       if (staticModel.result == 1) {
         parseHtmlString(staticModel.data!.description.toString());
         appContentTextHtml.value = staticModel.data!.description.toString();
-
-
       } else {
         successToast(staticModel.msg!);
       }
@@ -75,6 +69,4 @@ class StaticController extends GetxController {
       // failedToast(exception.toString());
     }
   }
-
-
 }

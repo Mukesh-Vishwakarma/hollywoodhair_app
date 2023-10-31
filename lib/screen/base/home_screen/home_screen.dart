@@ -591,8 +591,7 @@ class HomeScreen extends GetView<HomeController> {
         const SizedBox(
           height: 10,
         ),
-        Container(
-          // color: Colors.red,
+        SizedBox(
           height: 20.h,
           child: Stack(
             alignment: Alignment.center,
@@ -647,7 +646,11 @@ class HomeScreen extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(30),
                         color: AppColors.transparentBlack,
                       ),
-                      child: const Icon(Icons.arrow_back_ios_new, size: 18,color: Colors.white,),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 18,
+                        color: Colors.white,
+                      ),
                     ).marginOnly(left: 5),
                   ),
                   InkWell(
@@ -797,7 +800,6 @@ class HomeScreen extends GetView<HomeController> {
                 //     ),
                 //   ),
                 // ).marginOnly(bottom: 5),
-
                 Align(
                   alignment: Alignment.center,
                   child: Row(
@@ -805,7 +807,9 @@ class HomeScreen extends GetView<HomeController> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          controller.pageController.previousPage(duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+                          controller.pageController.previousPage(
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.easeIn);
                         },
                         child: Container(
                           height: 30,
@@ -814,12 +818,18 @@ class HomeScreen extends GetView<HomeController> {
                             borderRadius: BorderRadius.circular(30),
                             color: AppColors.transparentBlack,
                           ),
-                          child: const Icon(Icons.arrow_back_ios_new, size: 18,color: Colors.white,),
+                          child: const Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 18,
+                            color: Colors.white,
+                          ),
                         ).marginOnly(left: 5),
                       ),
                       InkWell(
                         onTap: () {
-                          controller.pageController.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+                          controller.pageController.nextPage(
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.easeIn);
                         },
                         child: Container(
                           height: 30,
@@ -846,6 +856,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
+  /// Press Sections
   pressListFirst() {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -856,10 +867,6 @@ class HomeScreen extends GetView<HomeController> {
         ),
         Text(
           'press'.tr,
-          // style: TextStyle(
-          //   fontSize: 18.0,
-          //   fontWeight: FontWeight.w600
-          // ),
           style: AppStyles.textStyle(
             weight: FontWeight.w500,
             fontSize: 18.0,
@@ -868,23 +875,22 @@ class HomeScreen extends GetView<HomeController> {
         const SizedBox(
           height: 10,
         ),
-        Obx(() => !controller.pageLoaderFeaturedStatus.value
-            ? SizedBox(
-                height: 55,
-                width: double.infinity,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  controller: controller.scrollControllerFirst,
-                  itemCount: controller.pressModelFirst.length,
-                  itemBuilder: (context, index) {
-                    return pressWidget(
-                      featuredData: controller.pressModelFirst[index],position: index
-                    );
-                  },
-                ),
-              )
-            : shimmerDemo()),
+        Obx(() => SizedBox(
+              height: 55,
+              width: double.infinity,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                controller: controller.scrollControllerFirst,
+                itemCount: controller.pressModelFirst.length,
+                itemBuilder: (context, index) {
+                  return pressWidget(
+                      featuredData: controller.pressModelFirst[index],
+                      position: index);
+                },
+              ),
+            )),
       ],
     );
   }
@@ -894,28 +900,27 @@ class HomeScreen extends GetView<HomeController> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(() => !controller.pageLoaderFeaturedStatus.value
-            ? SizedBox(
-                height: 55,
-                width: double.infinity,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  controller: controller.scrollControllerSecond,
-                  itemCount: controller.pressModelSecond.length,
-                  itemBuilder: (context, index) {
-                    return pressWidget(
-                      featuredData: controller.pressModelSecond[index],position: index
-                    );
-                  },
-                ),
-              )
-            : shimmerDemo()),
+        Obx(() => SizedBox(
+              height: 55,
+              width: double.infinity,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                controller: controller.scrollControllerSecond,
+                itemCount: controller.pressModelSecond.length,
+                itemBuilder: (context, index) {
+                  return pressWidget(
+                      featuredData: controller.pressModelSecond[index],
+                      position: index);
+                },
+              ),
+            )),
       ],
     );
   }
 
-  pressWidget({required PressModel featuredData,required position}) {
+  pressWidget({required PressModel featuredData, required position}) {
     return GestureDetector(
       onTap: () {
         Get.toNamed(AppPages.celebritiesScreen,
@@ -948,40 +953,6 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-/*  pressWidget({required PressModel featuredData}) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppPages.celebritiesScreen,
-            arguments: ["Press", featuredData.socialLink]);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 50,
-            width: 200,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: AppColors.grayEB,
-                // Adjust the color to your preference
-                width: 1.0, // Adjust the border width
-              ),
-              // borderRadius: BorderRadius.circular(6),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.asset(
-                featuredData.image,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ).marginOnly(bottom: 15, left: 3, right: 3),
-        ],
-      ),
-    );
-  }*/
-
   ///  Simmer view loader
 
   shimmerDemo() {
@@ -994,6 +965,7 @@ class HomeScreen extends GetView<HomeController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 Row(
@@ -1190,6 +1162,7 @@ class HomeScreen extends GetView<HomeController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             // scrollDirection: Axis.horizontal,
             child: Column(
               children: [

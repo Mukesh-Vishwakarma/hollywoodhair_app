@@ -66,6 +66,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
       child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: (!controller.pageLoader.value)
                 ? SizedBox(
                     width: double.infinity,
@@ -133,6 +134,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 Row(

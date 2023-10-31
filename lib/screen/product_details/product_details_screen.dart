@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/screen/base/base_home_controller.dart';
 import 'package:hollywood_hair/screen/base/cart_screen/cart_controller.dart';
@@ -14,7 +13,6 @@ import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../util/theme_service.dart';
 import 'product_details_controller.dart';
 
@@ -47,7 +45,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 style: AppStyles.textStyle(
                     fontSize: 18.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
-            actions: [
+            /*actions: const [
               // GestureDetector(
               //   onTap: () {
               //     Get.toNamed(AppPages.favouriteScreen);
@@ -57,7 +55,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               //     child: SvgPicture.asset(Assets.favouriteIcon),
               //   ),
               // ),
-              InkWell(
+              *//* InkWell(
                 onTap: () {
                   // controller.addToCartUpdateAddress();
                 },
@@ -74,8 +72,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: SvgPicture.asset(Assets.notificationIcon),
                 ),
-              ),
-            ],
+              ),*//*
+            ],*/
           ),
         ),
         body: Stack(
@@ -83,6 +81,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             Obx(
               () => controller.dataIsLoading.isFalse
                   ? SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Obx(() => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -690,6 +689,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 ClipRRect(

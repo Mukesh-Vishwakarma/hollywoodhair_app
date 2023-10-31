@@ -32,6 +32,7 @@ class NotificationScreen extends GetView<NotificationController> {
         ),
       ),
     body: SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(children: [
         SizedBox(height: 10,),
         ListView.builder(
