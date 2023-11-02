@@ -1,105 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
-import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/route/app_pages.dart';
+import 'package:hollywood_hair/util/common_function.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../util/assets.dart';
 import '../../util/theme_service.dart';
 import 'our_transformations_controller.dart';
 
 class OurTransformationsScreen extends GetView<OurTransformationsController> {
-  OurTransformationsScreen({super.key});
+  const OurTransformationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(()=>OurTransformationsController());
+    Get.lazyPut(() => OurTransformationsController());
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
     return Scaffold(
-      backgroundColor: AppColors.lightBackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          elevation: 4,
-          backgroundColor: AppColors.colorFF,
-          leading: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: AppColors.black,
-              )),
-          title:
-          Text("Transformations",
+        backgroundColor: AppColors.lightBackgroundColor,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(7.h),
+          child: AppBar(
+            titleSpacing: 0,
+            elevation: 4,
+            backgroundColor: AppColors.colorFF,
+            leading: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: AppColors.black,
+                )),
+            title: Text("Transformations",
                 style: AppStyles.textStyle(
-                    fontSize: 14.0, weight: FontWeight.w500)),
-
+                    fontSize: 18.0, weight: FontWeight.w500)),
+          ),
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(children: [
+            const SizedBox(
+              height: 10,
             ),
-        ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-            children:[
-              SizedBox(height: 10,),
-              bodyWidget(),
-            ]
-        ),
-      )
-    );
+            bodyWidget(context),
+          ]),
+        ));
   }
 
-  bodyWidget() {
+  bodyWidget(context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Obx(
-                        ()=> ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.transformationData.length,
-                            itemBuilder: (context, index) {
-                              return transformationsWidget(index);
-                            }),
-                      ),
-                    ),
-                  )
-            // : shimmerDemo()),
+      child: Obx(
+        () => Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: !controller.isPageLoad.value
+                ? controller.transformationData.isNotEmpty
+                    ? SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller.transformationData.length,
+                              itemBuilder: (context, index) {
+                                return transformationsWidget(index);
+                              }),
+                        ),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: noDataFound(),
+                      )
+                : shimmerDemo()),
       ),
     );
   }
-
 
   transformationsWidget(index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.network(controller.transformationData[index].imageUrl.toString())),
-        const SizedBox(height: 20),
-        // Text(controller.transformationData[index].status.toString(),
-        //   overflow: TextOverflow.ellipsis,
-        //   style: AppStyles.textStyle(
-        //     weight: FontWeight.w500,
-        //     fontSize: 14.0,
-        //   ),
-        // ),
+            borderRadius: BorderRadius.circular(0),
+            child: Image.network(
+                controller.transformationData[index].imageUrl.toString())),
+        const SizedBox(height: 8),
       ],
     );
   }
-
 
   shimmerDemo() {
     return Padding(
@@ -113,14 +107,12 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +138,9 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +171,6 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +196,9 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +229,6 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,7 +254,9 @@ class OurTransformationsScreen extends GetView<OurTransformationsController> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

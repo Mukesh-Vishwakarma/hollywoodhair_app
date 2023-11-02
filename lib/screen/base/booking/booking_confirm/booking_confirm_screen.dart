@@ -4,10 +4,11 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import '../../../../util/route/app_pages.dart';
-import '../calendly_screen/calendly_controller.dart';
 import 'booking_confirm_controller.dart';
 
 class BookingConfirmScreen extends GetView<BookingConfirmController> {
+  const BookingConfirmScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
@@ -35,7 +36,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                       decoration: BoxDecoration(
                           color: AppColors.black.withOpacity(.35),
                           shape: BoxShape.circle),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back,
                         color: AppColors.lightBackgroundColor,
                       ))),
@@ -43,9 +44,9 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  margin: EdgeInsets.only(left: 0, right: 0, top: 10),
+                  margin: const EdgeInsets.only(left: 0, right: 0, top: 10),
                   padding:
-                      EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 15),
+                      const EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 15),
                   width: Get.size.width,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
@@ -79,7 +80,7 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          try {
+                         /* try {
                             if (Get.isRegistered<CalendlyController>()) {
                               Get.toNamed(AppPages.calendlyScreen);
                             } else {
@@ -88,10 +89,8 @@ class BookingConfirmScreen extends GetView<BookingConfirmController> {
                             }
                           } catch (e){
                             print("nxmjxcjnj");
-                          }
-                          // Get.put(CalendlyController());
-                          // Get.toNamed(AppPages.calendlyScreen);
-                          // Get.toNamed(AppPages.bookingFormScreen);
+                          }*/
+                          Get.toNamed(AppPages.bookingFormScreen);
                         },
                         child: Container(
                           margin: const EdgeInsets.only(

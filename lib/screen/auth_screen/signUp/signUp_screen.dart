@@ -63,34 +63,34 @@ class SignUpScreen extends GetView<SignUpController> {
                   Container(
                     margin: const EdgeInsets.only(left: 20, right: 20, top: 50),
                     child: textField(
-                        controller.nameController,
-                        "plz_enter_name".tr,
-                        controller.name,
-                        'name'.tr,
-                        "name",
-                        true),
+                        controller:controller.nameController,
+                        validationMsg:"plz_enter_name".tr,
+                        text:controller.name,
+                        hintText:'name'.tr,
+                        type:"name",
+                        label:true),
                   ),
 
                   Container(
                     margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
                     child: textField(
-                        controller.emailController,
-                        "plz_enter_email".tr,
-                        controller.email,
-                        'email'.tr,
-                        "email",
-                        true),
+                        controller:controller.emailController,
+                        validationMsg:"plz_enter_email".tr,
+                        text:controller.email,
+                        hintText:'email'.tr,
+                        type:"email",
+                        label:true),
                   ),
 
                   Container(
                     margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                     child: textField(
-                        controller.passwordController,
-                        "plz_enter_password".tr,
-                        controller.password,
-                        'password'.tr,
-                        "password",
-                        true),
+                        controller:controller.passwordController,
+                        validationMsg:"plz_enter_password".tr,
+                        text:controller.password,
+                        hintText:'password'.tr,
+                        type:"password",
+                        label:true),
                   ),
 
                   //****** phone number

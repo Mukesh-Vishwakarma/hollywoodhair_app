@@ -85,14 +85,17 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       List<Collection>? collection = await shopifyStore.getAllCollections();
       print("collection ${collection}");
       collectionList.value = [];
-      collectionList.add(Collection(
+      collectionList.add(
+        Collection(
           title: "All",
           id: "ALL",
-          products: Products(productList: [], hasNextPage: false)));
-      collection.forEach((element) {
+          products: Products(productList: [], hasNextPage: false),
+        ),
+      );
+      for (var element in collection) {
         collectionList.add(element);
         print("objectdhsjhx==> $element");
-      });
+      }
     } on HttpException catch (exception) {
       print(exception.message);
     } catch (exception) {
@@ -231,9 +234,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     try {
       AllSaloonListModel allSaloonListModel =
           await ApiProvider.base().getAllSaloonList();
-
-      print('create Data');
-      print(allSaloonListModel.result);
       pageLoaderSalon.value = false;
       if (allSaloonListModel.result == 1) {
         allSaloonList.value = allSaloonListModel.saloonData!;
@@ -259,7 +259,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       print(exception.message);
     } catch (exception) {
       pageLoaderFeaturedStatus.value = false;
-      // print("ajsdhbkxznkansz===> ${exception.toString()}");
+      print("ajsdhbkxznkansz===> ${exception.toString()}");
     }
   }
 

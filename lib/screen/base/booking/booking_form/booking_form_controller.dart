@@ -10,16 +10,10 @@ class BookingFormController extends GetxController {
   var serviceController = TextEditingController();
   var locationController = TextEditingController();
 
-
-
-  var name ="".obs;
-  var phoneNumber ="".obs;
-  var age ="".obs;
-  var gender ="".obs;
-  var service ="".obs;
-  var location ="".obs;
-
-
-
-
+  var name = "".obs;
+  var phoneNumber = "".obs;
+  var age = "".obs;
+  var gender = "".obs;
+  var service = "".obs;
+  var location = "".obs;
 }

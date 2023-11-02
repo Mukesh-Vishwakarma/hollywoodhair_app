@@ -19,8 +19,8 @@ import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confi
 import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confirm_screen.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_binding.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_screen.dart';
-import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_binding.dart';
-import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_screen.dart';
+import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_binding.dart';
+import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_binding.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_screen.dart';
 import 'package:hollywood_hair/screen/base/profile/address/address_binding.dart';
@@ -56,8 +56,12 @@ import 'package:hollywood_hair/screen/product_details/product_details_screen.dar
 import 'package:hollywood_hair/screen/splash/splash_binding.dart';
 import 'package:hollywood_hair/screen/splash/splash_screen.dart';
 
+import '../../celebrities/our_celebrities_binder.dart';
+import '../../celebrities/our_celebrities_screen.dart';
 import '../../screen/base/booking/calendly_screen/calendly_binding.dart';
 import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
+import '../../screen/filter_products_screen/filter_binder.dart';
+import '../../screen/filter_products_screen/filter_screen.dart';
 import '../../screen/tryOn_screen/priview_screen.dart';
 import '../../screen/tryOn_screen/tryOn_binder.dart';
 import '../../screen/tryOn_screen/tryOn_screen.dart';
@@ -155,7 +159,8 @@ class AppRoutes {
       name: AppPages.bookingAppointmentScreen,
       page: () => BookAppointmentScreen(),
       binding: BookAppointmentBinding(),
-    ),   GetPage(
+    ),
+    GetPage(
       name: AppPages.confirmBookingScreen,
       page: () => BookingConfirmScreen(),
       binding: BookingConfirmBinding(),
@@ -170,82 +175,76 @@ class AppRoutes {
       page: () => FavouriteScreen(),
       binding: FavouriteBinding(),
     ),
-
     GetPage(
       name: AppPages.allProductScreen,
       page: () => AllProductScreen(),
       binding: AllProductBinding(),
     ),
-
     GetPage(
       name: AppPages.allProductDetailsScreen,
       page: () => ProductDetailsScreen(),
-      binding:ProductDetailsBinding(),
+      binding: ProductDetailsBinding(),
     ),
-
-
     GetPage(
       name: AppPages.myOrderScreen,
       page: () => MyOrderScreen(),
-      binding:MyOrderBinding(),
+      binding: MyOrderBinding(),
     ),
-
     GetPage(
       name: AppPages.changePasswordScreen,
       page: () => ChangePasswordScreen(),
-      binding:ChangePasswordBinding(),
+      binding: ChangePasswordBinding(),
     ),
-
     GetPage(
       name: AppPages.searchProductScreen,
       page: () => SearchProductScreen(),
-      binding:SearchProductBinding(),
+      binding: SearchProductBinding(),
     ),
-
     GetPage(
       name: AppPages.calendlyScreen,
       page: () => CalendlyScreen(),
-      binding:CalendlyBinding(),
+      binding: CalendlyBinding(),
     ),
-
     GetPage(
         name: AppPages.tryOn,
         page: () => TryOnScreen(),
-        binding:TryOnBinding(),
+        binding: TryOnBinding(),
         transition: Transition.downToUp,
-        transitionDuration: const Duration(milliseconds: 500)
-    ),
-
+        transitionDuration: const Duration(milliseconds: 500)),
     GetPage(
       name: AppPages.imagePreview,
-      page: () =>  PreviewScreen(),
-      binding:TryOnBinding(),
+      page: () => PreviewScreen(),
+      binding: TryOnBinding(),
     ),
-
     GetPage(
       name: AppPages.ourSalons,
-      page: () =>  OurSalonsScreen(),
-      binding:OurSalonsBinding(),
+      page: () => OurSalonsScreen(),
+      binding: OurSalonsBinding(),
     ),
-
     GetPage(
       name: AppPages.checkout,
-      page: () =>  WebCheckoutScreen(),
-      binding:WebCheckoutBinding(),
+      page: () => WebCheckoutScreen(),
+      binding: WebCheckoutBinding(),
     ),
-
     GetPage(
       name: AppPages.ourTransformations,
       page: () => OurTransformationsScreen(),
-      binding:OurTransformationsBinding(),
+      binding: OurTransformationsBinding(),
     ),
-
+    GetPage(
+      name: AppPages.celebritiesDetailsScreen,
+      page: () => CelebritiesDetailsScreen(),
+      binding: CelebritiesDetailsBinding(),
+    ),
     GetPage(
       name: AppPages.celebritiesScreen,
       page: () => CelebritiesScreen(),
-      binding:CelebritiesBinding(),
+      binding: CelebritiesBinding(),
     ),
-
-
+    GetPage(
+      name: AppPages.filterScreen,
+      page: () => FilterProductScreen(),
+      binding: FilterProductBinding(),
+    ),
   ];
 }

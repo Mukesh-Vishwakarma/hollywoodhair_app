@@ -65,12 +65,12 @@ class ForgotPasswordScreen extends GetView<ForgotScreenController> {
                   Container(
                     margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                     child: textField(
-                        controller.emailController,
-                        "plz_enter_email".tr,
-                        controller.email,
-                        'email'.tr,
-                        "email",
-                        true),
+                        controller:controller.emailController,
+                        validationMsg:"plz_enter_email".tr,
+                        text:controller.email,
+                        hintText:'email'.tr,
+                        type:"email",
+                        label:true),
                   ),
                   const SizedBox(
                     height: 80,

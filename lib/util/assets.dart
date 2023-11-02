@@ -83,6 +83,8 @@ class Assets {
   static const String cross = 'assets/images/cross.svg';
   static const String progressBarLoader = 'assets/video/progress_bar_loader.json';
   static const String videoProgressbarBarLoader = 'assets/json/progress_bar_loader.json';
+  static const String icAllProducts = 'assets/images/ic_all_products.png';
+  static const String noDataFound = 'assets/images/no_data_found.png';
 
 
   //Try On Screen

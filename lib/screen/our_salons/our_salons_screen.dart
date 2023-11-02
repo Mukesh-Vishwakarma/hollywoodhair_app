@@ -8,6 +8,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../util/common_function.dart';
 import '../../util/theme_service.dart';
 import 'our_salons_controller.dart';
 
@@ -57,48 +58,76 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
           ],
         ),
       ),
-      body: Obx(() => bodyWidget()),
+      body: saloonList(context),
     );
   }
 
-  bodyWidget() {
-    return SafeArea(
-      child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: (!controller.pageLoader.value)
-                ? SizedBox(
-                    width: double.infinity,
-                    child: GridView.count(
-                      crossAxisCount: 2, // Set the number of columns as needed
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 0, // Adjust as needed
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: List.generate(controller.allSaloonList.length, (index) {
-                        return salonWidget(index);
-                      }),
-                    )
-              ,
-                  )
-                : shimmerDemo(),
-          )
-          // : shimmerDemo()),
-          ),
+  /// Our saloons
+  saloonList(context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(() => !controller.pageLoaderSalon.value
+                ? controller.allSaloonList.isNotEmpty
+                    ? SizedBox(
+                        width: double.infinity,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount:
+                              (controller.allSaloonList.length / 2).ceil(),
+                          itemBuilder: (context, index) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: salonWidget(index * 2),
+                                ),
+                                const SizedBox(width: 10),
+                                // Add spacing between items
+                                if (index * 2 + 1 <
+                                    controller.allSaloonList.length)
+                                  Expanded(
+                                    child: salonWidget(index * 2 + 1),
+                                  ),
+                                // Check if this is the last row and there's only one item
+                                if (index ==
+                                        (controller.allSaloonList.length / 2)
+                                            .floor() &&
+                                    controller.allSaloonList.length % 2 == 1)
+                                  Expanded(
+                                    child: Container(), // Empty item
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: noDataFound(),
+                      )
+                : shimmerDemo()),
+          ],
+        ),
+      ),
     );
   }
 
   salonWidget(index) {
     return GestureDetector(
       onTap: () {
-        print("sjkhzxnhcnjx");
-        if(controller.allSaloonList[index].latitude!=null) {
+        if (controller.allSaloonList[index].latitude != null) {
           controller.openMap(controller.allSaloonList[index].latitude,
               controller.allSaloonList[index].latitude);
         }
-
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,20 +135,21 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
           const SizedBox(height: 10),
           ClipRRect(
               borderRadius: BorderRadius.circular(7),
-              child: controller.networkImageCategory(
+              child: networkImageSalons(
                   image:
                       controller.allSaloonList[index].salonPicture.toString())),
           Text(
             controller.allSaloonList[index].salonAddress.toString(),
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
             style: AppStyles.textStyle(
               weight: FontWeight.w500,
-              fontSize: 14.0,
+              fontSize: 13.0,
             ),
           ),
         ],
       ),
-    );
+    ).marginOnly(bottom: 5);
   }
 
   shimmerDemo() {
@@ -134,7 +164,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 Row(
@@ -165,7 +195,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -223,7 +253,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -281,7 +311,7 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(

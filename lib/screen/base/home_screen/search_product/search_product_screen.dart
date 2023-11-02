@@ -34,7 +34,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 1),
+                    offset: const Offset(0, 1),
                     blurRadius: 5,
                     color: Colors.black.withOpacity(0.3),
                   ),
@@ -60,7 +60,7 @@ class SearchProductScreen extends GetView<SearchProductController> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Container(
+                        SizedBox(
                           width: 80.w,
                           height: 50,
                           child: TextFormField(
@@ -192,16 +192,15 @@ class SearchProductScreen extends GetView<SearchProductController> {
   listTile({required Product item}) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPages.allProductDetailsScreen,
-            arguments: {"product_id": item.id});
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          arguments: {"product_id": item.id},
+        );
+        controller.getFindController();
       },
       child: Row(
         children: [
-          Image.network(
-            item.image,
-            height: 100,
-            width: 100,
-          ),
+          controller.networkImageWithLoader(userProfile: item.image ?? ""),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -238,13 +237,13 @@ class SearchProductScreen extends GetView<SearchProductController> {
   }
 
   Widget buildLoader() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
   Widget buildEndMessage() {
-    return Center(
+    return const Center(
       child: Text('No more items to load.'),
     );
   }

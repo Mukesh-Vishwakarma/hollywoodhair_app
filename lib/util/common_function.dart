@@ -15,9 +15,10 @@ import 'app_style.dart';
 import 'assets.dart';
 import 'route/app_pages.dart';
 
-textField(controller, validationMsg, text, hintText, type, label) {
+textField({controller, validationMsg, text, hintText, type, label, readOnly}) {
   return TextFormField(
     controller: controller,
+    readOnly: readOnly ?? false,
     style: AppStyles.textStyle(
       fontSize: 14.0,
       weight: FontWeight.normal,
@@ -34,18 +35,12 @@ textField(controller, validationMsg, text, hintText, type, label) {
       }
       return null;
     },
-    //   if (value.toString().isEmpty) {
-    //     return validationMsg;
-    //   }
-    //   return null;
-    // },
     onChanged: (value) {
       text = value;
     },
     decoration: InputDecoration(
       isDense: false,
       contentPadding: const EdgeInsets.all(15),
-
       hintText: hintText,
       hintStyle: AppStyles.textStyle(
         color: AppColors.black,
@@ -61,8 +56,7 @@ textField(controller, validationMsg, text, hintText, type, label) {
               ),
             )
           : SizedBox(),
-
-      labelText: (label) ? hintText : "null",
+      labelText: (label) ? hintText : "",
       labelStyle: (label)
           ? AppStyles.textStyle(
               color: AppColors.black,
@@ -70,11 +64,6 @@ textField(controller, validationMsg, text, hintText, type, label) {
               weight: FontWeight.normal,
             )
           : null,
-
-      // const TextStyle(
-      //     color: AppColors.color3D,
-      //     fontSize: 14,
-      //     fontWeight: FontWeight.w400),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
@@ -90,12 +79,82 @@ textField(controller, validationMsg, text, hintText, type, label) {
           color: Colors.red,
         ),
       ),
-
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
       ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Colors.grey,
+          width: 0,
+        ),
+      ),
+    ),
+  );
+}
 
+textFieldWithoutLabel(
+    {controller, validationMsg, text, hintText, type, label, readOnly}) {
+  return TextFormField(
+    controller: controller,
+    readOnly: readOnly ?? false,
+    style: AppStyles.textStyle(
+      fontSize: 14.0,
+      weight: FontWeight.normal,
+    ),
+    validator: (value) {
+      if (value!.isEmpty) {
+        return validationMsg;
+      }
+
+      if (type == "email") {
+        if (!GetUtils.isEmail(value)) {
+          return 'Invalid Email';
+        }
+      }
+      return null;
+    },
+    onChanged: (value) {
+      text = value;
+    },
+    decoration: InputDecoration(
+      isDense: false,
+      contentPadding: const EdgeInsets.all(15),
+      hintText: hintText,
+      hintStyle: AppStyles.textStyle(
+        color: AppColors.black,
+        fontSize: 14.0,
+        weight: FontWeight.normal,
+      ),
+      suffixIcon: type == "password"
+          ? Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset(
+                Assets.seenPassword,
+                height: 5,
+              ),
+            )
+          : const SizedBox(),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+        ),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(
+          color: Colors.red,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: AppColors.colorCD, width: 0.99),
+      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(
@@ -431,7 +490,6 @@ loader(Color color) {
   );
 }
 
-
 // defaultToast(String msg, String title, color) {
 //   Get.snackbar(
 //     title,
@@ -449,3 +507,54 @@ loader(Color color) {
 //     snackStyle: SnackStyle.FLOATING,
 //   );
 // }
+
+/// Images view
+networkImageSalons({required image}) {
+  return Image.network(
+    image,
+    fit: BoxFit.cover,
+    width: 50.w,
+    height: 16.h,
+    loadingBuilder: (BuildContext context, Widget child,
+        ImageChunkEvent? loadingProgress) {
+      if (loadingProgress == null) {
+        return child;
+      }
+      return Shimmer.fromColors(
+        baseColor: const Color.fromRGBO(191, 191, 191, 0.5254901960784314),
+        highlightColor: Colors.white,
+        child: Container(
+          width: 50.w,
+          height: 16.h,
+          color: Colors.grey,
+        ),
+      );
+    },
+    errorBuilder:
+        (BuildContext context, Object exception, StackTrace? stackTrace) {
+      return Container(
+        width: 50.w,
+        height: 17.h,
+        color: AppColors.lightGrey,
+        child: const Icon(
+          Icons.image_not_supported,
+          color: Colors.white,
+          size: 30,
+        ), // You can use any widget as a placeholder
+      );
+    },
+  );
+}
+
+
+noDataFound(){
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset(Assets.noDataFound,height: 100,width: 100,),
+      const Text("No data found",style: TextStyle(
+          fontSize: 20
+      ),).marginOnly(top: 10),
+    ],
+  ).marginOnly(bottom: 80);
+}

@@ -10,6 +10,7 @@ import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 
 import '../../util/app_colors.dart';
+import '../product_details/product_details_controller.dart';
 
 class AllProductController extends GetxController
     with GetTickerProviderStateMixin {
@@ -122,4 +123,11 @@ class AllProductController extends GetxController
     );
   }
 
+  getFindController() {
+    try {
+      Get.find<ProductDetailsController>().onInit();
+    } catch (e) {
+      print("kjashb $e");
+    }
+  }
 }

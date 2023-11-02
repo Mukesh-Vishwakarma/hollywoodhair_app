@@ -15,7 +15,7 @@ class SignInScreen extends GetView<SignInController> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       child: Column(
         children: [
           Padding(
@@ -46,12 +46,13 @@ class SignInScreen extends GetView<SignInController> {
                 Container(
                   margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
                   child: textField(
-                      controller.emailController,
-                      "plz_enter_email".tr,
-                      controller.email,
-                      'email'.tr,
-                      "email",
-                      true),
+                    controller: controller.emailController,
+                    validationMsg: "plz_enter_email".tr,
+                    text: controller.email,
+                    hintText: 'email'.tr,
+                    type: "email",
+                    label: true,
+                  ),
                 ),
                 Container(
                     margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
@@ -257,7 +258,8 @@ class SignInScreen extends GetView<SignInController> {
                       borderRadius: BorderRadius.circular(10),
                       // color: AppColors.colorFF,
                     ),
-                    padding: const EdgeInsets.only(top: 15, bottom: 15, left: 0),
+                    padding:
+                        const EdgeInsets.only(top: 15, bottom: 15, left: 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,

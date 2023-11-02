@@ -9,12 +9,11 @@ import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../util/theme_service.dart';
 import 'all_product_controller.dart';
 
 class AllProductScreen extends GetView<AllProductController> {
-  AllProductScreen({super.key});
+  const AllProductScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +42,16 @@ class AllProductScreen extends GetView<AllProductController> {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            // GestureDetector(
-            //   onTap: () {
-            //     Get.toNamed(AppPages.favouriteScreen);
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right: 20.0),
-            //     child: SvgPicture.asset(Assets.favouriteIcon),
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset(Assets.searchIcon),
-            ),
-            GestureDetector(
+            InkWell(
               onTap: () {
-                Get.toNamed(AppPages.allProductScreen);
+                Get.toNamed(AppPages.filterScreen,
+                    arguments: {"products": controller.products});
               },
+              highlightColor: AppColors.transparentBlack,
+              splashColor: AppColors.transparentBlack,
               child: Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                child: SvgPicture.asset(Assets.notificationIcon),
+                child: SvgPicture.asset(Assets.searchIcon),
               ),
             ),
           ],
@@ -84,7 +73,7 @@ class AllProductScreen extends GetView<AllProductController> {
                     ),
                   )
                 : SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     child: SizedBox(
                       width: double.infinity,
                       child: ListView.builder(
@@ -98,8 +87,8 @@ class AllProductScreen extends GetView<AllProductController> {
                               Expanded(
                                 child: commonProductWidget(index * 2),
                               ),
-                              const SizedBox(
-                                  width: 10), // Add spacing between items
+                              const SizedBox(width: 10),
+                              // Add spacing between items
                               if (index * 2 + 1 < controller.products.length)
                                 Expanded(
                                   child: commonProductWidget(index * 2 + 1),
@@ -123,30 +112,14 @@ class AllProductScreen extends GetView<AllProductController> {
     );
   }
 
-  // productsWidget() {
-  //   return Container(
-  //     // color: AppColors.dividerColor,
-  //     child: GridView.builder(
-  //         physics: const BouncingScrollPhysics(),
-  //         shrinkWrap: true,
-  //         itemCount: controller.products.length,
-  //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //             childAspectRatio: 4 / 4.4,
-  //             crossAxisCount: 2,
-  //             crossAxisSpacing: 0,
-  //             mainAxisSpacing: 0),
-  //         itemBuilder: (context, index) {
-  //           return commonProductWidget(index);
-  //         }),
-  //   );
-  // }
-
   commonProductWidget(index) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppPages.allProductDetailsScreen, arguments: {
-          "product_id": controller.products[index].id.toString()
-        });
+        Get.toNamed(
+          AppPages.allProductDetailsScreen,
+          arguments: {"product_id": controller.products[index].id.toString()},
+        );
+        controller.getFindController();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +182,7 @@ class AllProductScreen extends GetView<AllProductController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 Row(
@@ -240,7 +213,7 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -298,7 +271,7 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
@@ -356,7 +329,7 @@ class AllProductScreen extends GetView<AllProductController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(

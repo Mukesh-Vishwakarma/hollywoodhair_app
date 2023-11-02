@@ -99,14 +99,15 @@ class EditProfileScreen extends GetView<EditProfileController> {
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textField(
-                            controller.nameController,
-                            "plz_enter_name".tr,
-                            controller.name,
-                            'name'.tr,
-                            "name",
-                        true),
+                          controller: controller.nameController,
+                          validationMsg: "plz_enter_name".tr,
+                          text: controller.name,
+                          hintText: 'name'.tr,
+                          type: "name",
+                          label: true,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 
@@ -119,16 +120,17 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textField(
-                            controller.emailController,
-                            "plz_enter_email".tr,
-                            controller.email,
-                            'email'.tr,
-                            "email",
-                        true),
+                          controller: controller.emailController,
+                          validationMsg: "plz_enter_email".tr,
+                          text: controller.email,
+                          hintText: 'email'.tr,
+                          type: "email",
+                          label: true,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 
@@ -141,7 +143,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 0),
+                        margin: const EdgeInsets.only(left: 20, right: 20, top: 0),
                         child: Obx(() => Row(
                               children: [
                                 Expanded(

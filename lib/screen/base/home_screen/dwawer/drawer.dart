@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_style.dart';
-import '../../../../util/res_dimens.dart';
 import '../../../../util/route/app_pages.dart';
 
 class DrawerLayout extends StatefulWidget {
   const DrawerLayout({super.key});
-
 
   @override
   State<DrawerLayout> createState() => _DrawerLayoutState();
@@ -38,16 +35,16 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     GestureDetector(
                       child: const Icon(
                         Icons.arrow_back,
-                        size: 20,
+                        size: 25,
                       ),
                       onTap: () {
                         Get.back();
                       },
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 24),
+                      margin: const EdgeInsets.only(left: 10),
                       child: Text("Menu",
-                          style: AppStyles.textStyle(fontSize: dimen15)),
+                          style: AppStyles.textStyle(fontSize: 20.0)),
                     ),
                   ],
                 ),
@@ -62,7 +59,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Get.toNamed(AppPages.ourSalons);
                   },
                   child: Row(
@@ -70,41 +67,46 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     children: [
                       Text("our_saloons".tr,
                           style: AppStyles.textStyle(
-                            fontSize: 14.0, weight: FontWeight.w400,)
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: Icon(Icons.arrow_forward_ios,
-                          size: 15,),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPages.languagesScreen);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("languages".tr,
-                          style: AppStyles.textStyle(
-                            fontSize: 14.0,
+                            fontSize: 16.0,
                             weight: FontWeight.w400,
                           )),
                       const Padding(
                         padding: EdgeInsets.only(top: 15.0),
-                        child: Icon(Icons.arrow_forward_ios,
-                          size: 15,),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 17,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppPages.ourTransformations);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("transformation".tr,
+                          style: AppStyles.textStyle(
+                            fontSize: 16.0,
+                            weight: FontWeight.w400,
+                          )),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 17,
                 ),
                 InkWell(
                   onTap: () {
@@ -115,13 +117,65 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     children: [
                       Text("contact_us".tr,
                           style: AppStyles.textStyle(
-                            fontSize: 14.0,
+                            fontSize: 16.0,
                             weight: FontWeight.w400,
                           )),
                       const Padding(
                         padding: EdgeInsets.only(top: 15.0),
-                        child: Icon(Icons.arrow_forward_ios,
-                          size: 15,),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 17,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppPages.languagesScreen);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("languages".tr,
+                          style: AppStyles.textStyle(
+                            fontSize: 16.0,
+                            weight: FontWeight.w400,
+                          )),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 17,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppPages.celebritiesScreen);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("celebrities".tr,
+                          style: AppStyles.textStyle(
+                            fontSize: 16.0,
+                            weight: FontWeight.w400,
+                          )),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
                       ),
                     ],
                   ),
@@ -129,7 +183,6 @@ class _DrawerLayoutState extends State<DrawerLayout> {
               ],
             ),
           ),
-
         ],
       ),
     );

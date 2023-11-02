@@ -198,7 +198,7 @@ class CartScreen extends GetView<CartController> {
                       } else if (quantity > 1) {
                         quantity.value = quantity.value - 1;
                         controller.updateCartItemQuantity(
-                            item, (quantity.value));
+                            item, (quantity.value),'');
                       }
                     },
                     child: Padding(
@@ -214,7 +214,7 @@ class CartScreen extends GetView<CartController> {
                   InkWell(
                     onTap: () {
                       quantity.value = quantity.value + 1;
-                      controller.updateCartItemQuantity(item, (quantity.value));
+                      controller.updateCartItemQuantity(item, (quantity.value),'');
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -327,7 +327,6 @@ class CartScreen extends GetView<CartController> {
                   ),
                 ),
               ).marginOnly(left: 15),
-
           ],
         )
       ],
@@ -624,35 +623,6 @@ class CartScreen extends GetView<CartController> {
           )
         ],
       ),
-    );
-  }
-
-
-
-  loaderApplyCode() {
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          color: Colors.white,
-        ),
-        Center(
-          child: Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Lottie.asset(Assets.videoProgressbarBarLoader,
-              height: 150, width: 150),
-        )
-      ],
     );
   }
 }

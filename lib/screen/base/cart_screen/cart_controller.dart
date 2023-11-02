@@ -93,8 +93,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     super.onInit();
   }
 
-  Future<void> getCart() async {
-    print("mesjnbsage===> ");
+  Future<void> getCart({type}) async {
     try {
       noCartCreated.value = true;
       Checkout checkoutModel = await shopifyCheckout
@@ -115,6 +114,9 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
         promoCodeApplyStatus.value = true;
       } else {
         promoCodeApplyStatus.value = false;
+        if(type=='discount'){
+          successToast("Promo code is not applicable for this product!");
+        }
       }
       addressLoaderStatus.value = false;
     } catch (error) {
@@ -126,7 +128,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  void updateCartItemQuantity(lineItemID, int newQuantity) async {
+  void updateCartItemQuantity(lineItemID, int newQuantity,type) async {
     try {
       final cart = await shopifyCheckout
           .updateLineItemsInCheckout(checkoutId: checkoutId, lineItems: [
@@ -136,10 +138,12 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
             quantity: newQuantity,
             title: lineItemID.title),
       ]);
-      getCart();
+      getCart(type:type);
       print('Updated Cart: $cart');
+      addressLoaderStatus.value = false;
     } catch (error) {
       print('Error updating cart: $error');
+      addressLoaderStatus.value = false;
     }
   }
 
@@ -168,8 +172,8 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       await shopifyCheckout.checkoutDiscountCodeApply(
           checkoutId, promoCodeController.text.trim());
       updateCartItemQuantity(
-          checkout.lineItems[0], checkout.lineItems[0].quantity);
-      addressLoaderStatus.value = false;
+          checkout.lineItems[0], checkout.lineItems[0].quantity,"discount");
+
     } catch (error) {
       // Handle errors if the update fails
       addressLoaderStatus.value = false;

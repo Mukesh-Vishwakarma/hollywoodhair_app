@@ -7,7 +7,6 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:intl/intl.dart';
-
 import 'book_appointment_controller.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController> {

@@ -33,5 +33,7 @@ class AppPages {
   static const ourSalons = '/Our_salons_screen';
   static const ourTransformations = '/Our_transformations_screen';
   static const checkout = '/checkout_screen';
+  static const celebritiesDetailsScreen = '/celebrities_details_screen';
   static const celebritiesScreen = '/celebrities_screen';
+  static const filterScreen = '/filter_screen';
 }

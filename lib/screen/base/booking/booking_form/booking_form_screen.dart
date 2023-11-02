@@ -10,6 +10,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'booking_form_controller.dart';
 
 class BookingFormScreen extends GetView<BookingFormController> {
+  const BookingFormScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Form(
@@ -55,14 +57,16 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: textField(
-                            controller.nameController,
-                            "plz_enter_name".tr,
-                            controller.name,
-                            'name'.tr,
-                            "name",
-                        false),
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        child: textFieldWithoutLabel(
+                          controller: controller.nameController,
+                          validationMsg: "plz_enter_name".tr,
+                          text: controller.name,
+                          hintText: 'name'.tr,
+                          type: "name",
+                          label: true,
+                        ),
                       ),
 
                       //****** phone number
@@ -76,14 +80,16 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: textField(
-                            controller.phoneNumberController,
-                            "phone_number".tr,
-                            controller.phoneNumber,
-                            'phone_number'.tr,
-                            "phone number",
-                        false),
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        child: textFieldWithoutLabel(
+                          controller: controller.phoneNumberController,
+                          validationMsg: "phone_number".tr,
+                          text: controller.phoneNumber,
+                          hintText: 'phone_number'.tr,
+                          type: "phone number",
+                          label: true,
+                        ),
                       ),
 
                       //****** age
@@ -97,9 +103,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, top: 10),
                           child: TextFormField(
                             controller: controller.ageController,
+                            readOnly: true,
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "age".tr;
@@ -124,18 +132,6 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   Assets.dropDown,
                                 ),
                               ),
-
-                              labelText: "age".tr,
-                              labelStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -153,13 +149,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   color: Colors.red,
                                 ),
                               ),
-
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                     color: AppColors.colorCD, width: 0.99),
                               ),
-
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -171,7 +165,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           )),
 
                       //****** gender
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Padding(
@@ -181,9 +175,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, top: 10),
                           child: TextFormField(
                             controller: controller.genderController,
+                            readOnly: true,
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "gender".tr;
@@ -208,18 +204,6 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   Assets.dropDown,
                                 ),
                               ),
-
-                              labelText: "gender".tr,
-                              labelStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -237,13 +221,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   color: Colors.red,
                                 ),
                               ),
-
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                     color: AppColors.colorCD, width: 0.99),
                               ),
-
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -255,7 +237,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           )),
 
                       //****** service
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Padding(
@@ -265,9 +247,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, top: 10),
                           child: TextFormField(
                             controller: controller.serviceController,
+                            readOnly: true,
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "service".tr;
@@ -292,18 +276,6 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   Assets.dropDown,
                                 ),
                               ),
-
-                              labelText: "service".tr,
-                              labelStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -321,13 +293,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   color: Colors.red,
                                 ),
                               ),
-
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                     color: AppColors.colorCD, width: 0.99),
                               ),
-
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -339,7 +309,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           )),
 
                       //****** service
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Padding(
@@ -349,9 +319,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, top: 10),
                           child: TextFormField(
                             controller: controller.locationController,
+                            readOnly: true,
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "show_room_location".tr;
@@ -376,18 +348,6 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   Assets.dropDown,
                                 ),
                               ),
-
-                              labelText: "show_room_location".tr,
-                              labelStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -405,13 +365,11 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                   color: Colors.red,
                                 ),
                               ),
-
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                     color: AppColors.colorCD, width: 0.99),
                               ),
-
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -422,7 +380,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                             ),
                           )),
                     ])),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             GestureDetector(
@@ -435,10 +393,10 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   // }
                 },
                 child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20, right: 20, top: 80, bottom: 10),
                     child: buttom("next".tr))),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],

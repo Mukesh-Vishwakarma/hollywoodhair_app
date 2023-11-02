@@ -237,8 +237,18 @@ class HomeScreen extends GetView<HomeController> {
                         Border.all(color: AppColors.primaryColor, width: 1.0)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: controller.networkImageCategory(
-                      userProfile: categoryItem.imageUrl ?? ""),
+                  child: (categoryItem.title != "All")
+                      ? controller.networkImageCategory(
+                          userProfile: categoryItem.imageUrl ?? "")
+                      : Container(
+                          color: AppColors.primaryColor,
+                          height: 55,
+                          width: 55,
+                          child: Image.asset(
+                            Assets.dummyBanner,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ).marginAll(3),
               ),
               Flexible(
