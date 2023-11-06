@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -557,4 +558,20 @@ noDataFound(){
       ),).marginOnly(top: 10),
     ],
   ).marginOnly(bottom: 80);
+}
+
+loaderTransparent() {
+  return Container(
+    color: AppColors.transparentBlackNew,
+    child: const SpinKitFadingCircle(
+      color: Colors.white,
+      size: 70.0,
+    ).marginOnly(top: 70),
+  );
+}
+
+textThemeColor() {
+  return ThemeService().loadThemeFromBox()
+      ? AppColors.lightBackgroundColor
+      : AppColors.black;
 }

@@ -87,6 +87,10 @@ class Assets {
   static const String noDataFound = 'assets/images/no_data_found.png';
 
 
+  static const String imagesSelected = 'assets/images/selected.png';
+  static const String imagesUnselect = 'assets/images/unselect.svg';
+
+
   //Try On Screen
   static const String pic1 = 'assets/dummy_images/Pic 1.svg';
   static const String pic2 = 'assets/dummy_images/Pic 2.svg';

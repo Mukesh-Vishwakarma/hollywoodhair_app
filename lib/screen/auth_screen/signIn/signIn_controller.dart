@@ -38,16 +38,19 @@ class SignInController extends GetxController {
       await GetStorage().write(AppConstants.isLogged, 'true');
       await GetStorage().write(AppConstants.userId, value.id.toString() ?? "");
       await GetStorage().write(AppConstants.loginUser, value);
-      await GetStorage().write(AppConstants.userName, value.displayName.toString());
+      await GetStorage()
+          .write(AppConstants.userName, value.displayName.toString());
       await GetStorage().write(AppConstants.email, value.email.toString());
-      await GetStorage().write(AppConstants.phoneNumber, value.phone.toString());
+      await GetStorage()
+          .write(AppConstants.phoneNumber, value.phone.toString());
+      await GetStorage()
+          .write(AppConstants.passwordController, passwordController.text);
 
       Get.offAllNamed(AppPages.baseScreen,
           arguments: {"screenType": "login screen"});
 
       print("sdjkdjk===> $value");
-      print("sdjkdjk===> ${value.id.toString() }");
-
+      print("sdjkdjk===> ${value.id.toString()}");
     } on HttpException catch (exception) {
       if (kDebugMode) {
         print(exception.message);
@@ -58,7 +61,7 @@ class SignInController extends GetxController {
       if (kDebugMode) {
         print(exception.toString());
       }
-      successToast("User not exits!");
+      failedToast("Userid or password is not correct!");
       isPageLoad.value = false;
     }
   }

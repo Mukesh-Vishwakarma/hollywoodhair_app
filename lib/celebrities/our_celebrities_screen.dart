@@ -7,6 +7,7 @@ import 'package:hollywood_hair/util/common_function.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../util/theme_service.dart';
+import '../util/route/app_pages.dart';
 import 'our_celebrities_controller.dart';
 
 class CelebritiesScreen extends GetView<CelebritiesController> {
@@ -18,36 +19,51 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
-    return Scaffold(
-        backgroundColor: AppColors.lightBackgroundColor,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(7.h),
-          child: AppBar(
-            titleSpacing: 0,
-            elevation: 4,
-            backgroundColor: AppColors.colorFF,
-            leading: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: AppColors.black,
-                )),
-            title: Text("Transformations",
-                style: AppStyles.textStyle(
-                    fontSize: 18.0, weight: FontWeight.w500)),
-          ),
-        ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(children: [
-            const SizedBox(
-              height: 10,
-            ),
-            bodyWidget(context),
-          ]),
-        ));
+    return Obx(()=>Stack(
+      children: [
+        Scaffold(
+              backgroundColor: AppColors.lightBackgroundColor,
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(7.h),
+                child: AppBar(
+                  titleSpacing: 0,
+                  elevation: 4,
+                  backgroundColor: AppColors.colorFF,
+                  leading: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.black,
+                      )),
+                  title: Text("celebrities".tr,
+                      style: AppStyles.textStyle(
+                          fontSize: 18.0, weight: FontWeight.w500)),
+                ),
+              ),
+              body: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        bodyWidget(context),
+                      ]),
+                    ),
+
+                  ],
+
+              )),
+        Visibility(
+          visible: controller.isLoading.value,
+          child: loaderTransparent(),
+        )
+      ],
+    ),
+    );
   }
 
   bodyWidget(context) {
@@ -56,19 +72,53 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
         () => Padding(
             padding: const EdgeInsets.all(10.0),
             child: !controller.isPageLoad.value
-                ? controller.transformationData.isNotEmpty
+                ? controller.celebritiesModel.isNotEmpty
                     ? SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: SizedBox(
                           width: double.infinity,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ListView.builder(
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.transformationData.length,
+                              scrollDirection: Axis.vertical,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount:
+                                  (controller.celebritiesModel.length / 2)
+                                      .ceil(),
                               itemBuilder: (context, index) {
-                                return transformationsWidget(index);
-                              }),
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: transformationsWidget(index * 2),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    // Add spacing between items
+                                    if (index * 2 + 1 <
+                                        controller.celebritiesModel.length)
+                                      Expanded(
+                                        child: transformationsWidget(
+                                            index * 2 + 1),
+                                      ),
+                                    // Check if this is the last row and there's only one item
+                                    if (index ==
+                                            (controller.celebritiesModel
+                                                        .length /
+                                                    2)
+                                                .floor() &&
+                                        controller.celebritiesModel.length %
+                                                2 ==
+                                            1)
+                                      Expanded(
+                                        child: Container(), // Empty item
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       )
                     : SizedBox(
@@ -85,11 +135,31 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ClipRRect(
-            borderRadius: BorderRadius.circular(0),
-            child: Image.network(
-                controller.transformationData[index].imageUrl.toString())),
-        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: () async {
+            var result = await Get.toNamed(AppPages.celebritiesDetailsScreen,
+                arguments: [
+                  "Celebrities Details",
+                  controller.celebritiesModel[index].socialLink
+                ]);
+            if (result=="backPress") {
+              controller.isLoading.value = true;
+              controller.delayedFunction();
+            }
+          },
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                height: 150,
+                width: 50.w,
+                color: Colors.red,
+                child: Image.asset(
+                  controller.celebritiesModel[index].image.toString(),
+                  fit: BoxFit.cover,
+                ),
+              )),
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }

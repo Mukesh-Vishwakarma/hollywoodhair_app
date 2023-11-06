@@ -15,7 +15,7 @@ class SignInScreen extends GetView<SignInController> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
           Padding(

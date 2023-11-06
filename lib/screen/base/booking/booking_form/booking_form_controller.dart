@@ -1,19 +1,152 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../api_provider/api_provider.dart';
+import '../../../../model/all_saloon_list_model.dart';
+import '../../../../model/all_services_model.dart';
 
 class BookingFormController extends GetxController {
   final formLoginKey = GlobalKey<FormState>();
+
   var nameController = TextEditingController();
   var phoneNumberController = TextEditingController();
   var ageController = TextEditingController();
   var genderController = TextEditingController();
+  var saloonLocationController = TextEditingController();
   var serviceController = TextEditingController();
-  var locationController = TextEditingController();
 
-  var name = "".obs;
-  var phoneNumber = "".obs;
   var age = "".obs;
-  var gender = "".obs;
+  var name = "".obs;
   var service = "".obs;
-  var location = "".obs;
+  var saloonLocation = "".obs;
+  var phoneNumber = "".obs;
+
+  var searchSaloonController = TextEditingController();
+  var isSearch = false.obs;
+  var searchText = "".obs;
+  var firstTimeScreen = true.obs;
+
+  var searchSaloonList = <SaloonData>[].obs;
+  var allSaloonList = <SaloonData>[].obs;
+  var pageLoaderSalon = true.obs;
+
+  var searchServiceController = TextEditingController();
+  var isServiceSearch = false.obs;
+  var searchServiceText = "".obs;
+  var searchServiceList = <DataServices>[].obs;
+  var allServiceList = <DataServices>[].obs;
+  var pageLoaderService = true.obs;
+
+  var selectedItem = 'Select'.obs;
+  var genderList = ['Male', 'Female'].obs;
+  var gender = "".obs;
+  var checkGender = false.obs;
+  // var isGender = ''.obs;
+
+  @override
+  void onInit() {
+    getSaloonList();
+    getServicesList();
+    super.onInit();
+  }
+
+  /// getSaloon list
+  getSaloonList() {
+    Future.delayed(const Duration(seconds: 1), () {
+      getAllSaloonList();
+      firstTimeScreen.value = false;
+    });
+  }
+
+  getSearchSaloonList(value) {
+    if (value.toString().isEmpty) {
+      searchSaloonList.value = [];
+      isSearch.value = false;
+      searchSaloonController.clear();
+      searchText.value = value;
+      refresh();
+    } else {
+      searchSaloonList.value = allSaloonList
+          .where((user) {
+            return user.salonAddress
+                .toString()
+                .toLowerCase()
+                .contains(value.toString().toLowerCase());
+          })
+          .cast<SaloonData>()
+          .toList();
+      searchSaloonList.refresh();
+      print("sdjhsnkc==> ${searchSaloonList.value}");
+      isSearch.value = true;
+      update();
+    }
+  }
+
+  getAllSaloonList() async {
+    try {
+      AllSaloonListModel allSaloonListModel =
+          await ApiProvider.base().getAllSaloonList();
+      pageLoaderSalon.value = false;
+      if (allSaloonListModel.result == 1) {
+        allSaloonList.value = allSaloonListModel.saloonData!;
+      }
+      print("jhsdA==> ${allSaloonListModel.msg}");
+    } on HttpException catch (exception) {
+      print(exception.message);
+    } catch (exception) {
+      pageLoaderSalon.value = false;
+      print(exception.toString());
+    }
+  }
+
+  /// get services list
+  getServicesList() {
+    Future.delayed(const Duration(seconds: 1), () {
+      getAllServicesList();
+      firstTimeScreen.value = false;
+    });
+  }
+
+  getSearchServicesList(value) {
+    if (value.toString().isEmpty) {
+      searchServiceList.value = [];
+      isServiceSearch.value = false;
+      searchServiceController.clear();
+      searchServiceText.value = value;
+      refresh();
+    } else {
+      searchServiceList.value = allServiceList
+          .where((user) {
+            return user.serviceName
+                .toString()
+                .toLowerCase()
+                .contains(value.toString().toLowerCase());
+          })
+          .cast<DataServices>()
+          .toList();
+      searchServiceList.refresh();
+      print("sdjhsnkc==> ${searchServiceList.value[0].serviceName}");
+      isServiceSearch.value = true;
+      update();
+    }
+  }
+
+  getAllServicesList() async {
+    try {
+      var lan = "en";
+      AllServicesModel allServicesModel = await ApiProvider.booking().getAllServicesList(lan);
+      pageLoaderService.value = false;
+      if (allServicesModel.result == 1) {
+        allServiceList.value = allServicesModel.dataServices!;
+      }
+      print("jhsdfxgcdhdA==> ${allServicesModel.msg}");
+    } on HttpException catch (exception) {
+      print(exception.message);
+      pageLoaderService.value = false;
+    } catch (exception) {
+      pageLoaderService.value = false;
+      print(exception.toString());
+    }
+  }
 }

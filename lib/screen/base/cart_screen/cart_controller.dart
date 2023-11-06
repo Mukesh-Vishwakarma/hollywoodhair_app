@@ -96,6 +96,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   Future<void> getCart({type}) async {
     try {
       noCartCreated.value = true;
+      dataLoading.value = true;
       Checkout checkoutModel = await shopifyCheckout
           .getCheckoutInfoQuery(checkoutId, getShippingInfo: false);
       dataLoading.value = false;
@@ -110,11 +111,11 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
         shippingAddressStatus.value = true;
         print("sdbzn 2=> ");
       }
-      if(checkout.lineItems[0].discountAllocations.isNotEmpty) {
+      if (checkout.lineItems[0].discountAllocations.isNotEmpty) {
         promoCodeApplyStatus.value = true;
       } else {
         promoCodeApplyStatus.value = false;
-        if(type=='discount'){
+        if (type == 'discount') {
           successToast("Promo code is not applicable for this product!");
         }
       }
@@ -128,7 +129,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  void updateCartItemQuantity(lineItemID, int newQuantity,type) async {
+  void updateCartItemQuantity(lineItemID, int newQuantity, type) async {
     try {
       final cart = await shopifyCheckout
           .updateLineItemsInCheckout(checkoutId: checkoutId, lineItems: [
@@ -138,7 +139,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
             quantity: newQuantity,
             title: lineItemID.title),
       ]);
-      getCart(type:type);
+      getCart(type: type);
       print('Updated Cart: $cart');
       addressLoaderStatus.value = false;
     } catch (error) {
@@ -148,9 +149,11 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void removeCartItems(lineItemID, int newQuantity) async {
+    print("sfkdzxc==> $newQuantity");
     try {
-      dataLoading.value = true;
-      final cart = await shopifyCheckout.removeLineItemsFromCheckout(checkoutId: checkoutId, lineItems: [
+      addressLoaderStatus.value = true;
+      final cart = await shopifyCheckout
+          .removeLineItemsFromCheckout(checkoutId: checkoutId, lineItems: [
         LineItem(
             id: lineItemID.id,
             variantId: lineItemID.variantId,
@@ -172,8 +175,7 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       await shopifyCheckout.checkoutDiscountCodeApply(
           checkoutId, promoCodeController.text.trim());
       updateCartItemQuantity(
-          checkout.lineItems[0], checkout.lineItems[0].quantity,"discount");
-
+          checkout.lineItems[0], checkout.lineItems[0].quantity, "discount");
     } catch (error) {
       // Handle errors if the update fails
       addressLoaderStatus.value = false;
@@ -181,8 +183,6 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
       failedToast("Invalid promo code.");
     }
   }
-
-
 
   Future<void> goToCheckout() async {
     try {
@@ -200,10 +200,18 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
         } catch (e) {
           noCartCreated.value = true;
         }
+      } else {
+        addressLoaderStatus.value = true;
+        delayedFunction();
       }
     } catch (e) {
       print("dasbnjkm==> $e");
     }
+  }
+
+  Future<void> delayedFunction() async {
+    await Future.delayed(const Duration(seconds: 2));
+    addressLoaderStatus.value = false;
   }
 
   updateAddress(
@@ -321,32 +329,18 @@ class CartController extends GetxController with GetTickerProviderStateMixin {
 
   getAddress() async {
     print("hagsdjanjakm");
-    companyName.value = await GetStorage().read(AppConstants.companyName) ?? "";
+    companyName.value = GetStorage().read(AppConstants.companyName) ?? "";
     customerAddressName.value =
-        await GetStorage().read(AppConstants.customerAddressName) ?? "";
-    mobileNo.value = await GetStorage().read(AppConstants.mobileNo) ?? "";
-    city.value = await GetStorage().read(AppConstants.city) ?? "";
-    country.value = await GetStorage().read(AppConstants.country) ?? "";
-    postelCode.value = await GetStorage().read(AppConstants.postelCode) ?? "";
-    address1.value = await GetStorage().read(AppConstants.address1) ?? "";
-    address2.value = await GetStorage().read(AppConstants.address2) ?? "";
-    addressId.value = await GetStorage().read(AppConstants.addressId) ?? "";
-    firstName.value = await GetStorage().read(AppConstants.firstName) ?? "";
-    lastName.value = await GetStorage().read(AppConstants.lastName) ?? "";
-
-    // updateAddress(
-    //     company: companyName.value,
-    //     name: customerAddressName.value,
-    //     phone: mobileNo.value,
-    //     city: city.value,
-    //     country: country.value,
-    //     zip: postelCode.value,
-    //     address1: address1.value,
-    //     address2: address2.value,
-    //     id: addressId.value,
-    //     firstName: firstName.value,
-    //     lastName: lastName.value);
-
+        GetStorage().read(AppConstants.customerAddressName) ?? "";
+    mobileNo.value = GetStorage().read(AppConstants.mobileNo) ?? "";
+    city.value = GetStorage().read(AppConstants.city) ?? "";
+    country.value = GetStorage().read(AppConstants.country) ?? "";
+    postelCode.value = GetStorage().read(AppConstants.postelCode) ?? "";
+    address1.value = GetStorage().read(AppConstants.address1) ?? "";
+    address2.value = GetStorage().read(AppConstants.address2) ?? "";
+    addressId.value = GetStorage().read(AppConstants.addressId) ?? "";
+    firstName.value = GetStorage().read(AppConstants.firstName) ?? "";
+    lastName.value = GetStorage().read(AppConstants.lastName) ?? "";
     print("hagsdjanjakm ${companyName.value}");
   }
 

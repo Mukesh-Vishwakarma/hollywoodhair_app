@@ -7,6 +7,7 @@ String tag = 'api_provider';
 
 
 const baseUrl = 'https://designoweb.co/hollywoodhair/api/';
+const baseUrlBooking = 'https://designoweb.co/hollywoodhair/crm/api/';
 const shopifyUrl = 'https://a02f54.myshopify.com/admin/';
 const shopifyTokenUrl = 'https://a02f54.myshopify.com/';
 //https://a02f54.myshopify.com/api/2023-07/graphql.json
@@ -33,6 +34,9 @@ const String strGetProductByID = 'getProductById';
 const String strGetAllSalons = 'getAllSalons';
 const String strGetFeaturedProducts = 'getFeaturedProducts';
 const String strGetAllTransformations = 'getAllTransformationsImages';
+const String strGetAllServices = 'service';
+const String strGetWorkerBySalon = 'worker/getWorkerBySalon';
+const String strGetAvailability = 'salons/getAvailability';
 
 //shopify end points
 

@@ -12,6 +12,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import '../../../model/featured_products_model.dart';
+import '../../../util/common_function.dart';
 import '../../../util/theme_service.dart';
 import 'dwawer/drawer.dart';
 import 'home_controller.dart';
@@ -24,57 +25,67 @@ class HomeScreen extends GetView<HomeController> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
     ));
-    return Scaffold(
-      key: controller.key,
-      appBar: AppBar(
-        elevation: 0.4,
-        backgroundColor: AppColors.colorFF,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              width: 15,
-            ),
-            Image.asset(Assets.appLogo),
-            const SizedBox(
-              width: 10,
-            ),
-            Image.asset(Assets.appNameVertical),
-          ],
-        ),
-        leading: GestureDetector(
-          child: Container(
-            margin: const EdgeInsets.only(left: 23, right: 10),
-            child: const Image(
-              image: AssetImage(Assets.menuBar),
-            ),
-          ),
-          onTap: () {
-            print("hello");
-            controller.key.currentState!.openDrawer();
-          },
-        ),
-        automaticallyImplyLeading: false,
-        actions: [
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 20.0),
-          //   child: InkWell(
-          //       onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
-          // ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: InkWell(
+    return Obx(
+      () => Stack(
+        children: [
+          Scaffold(
+            key: controller.key,
+            appBar: AppBar(
+              elevation: 0.4,
+              backgroundColor: AppColors.colorFF,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Image.asset(Assets.appLogo),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(Assets.appNameVertical),
+                ],
+              ),
+              leading: GestureDetector(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 23, right: 10),
+                  child: const Image(
+                    image: AssetImage(Assets.menuBar),
+                  ),
+                ),
                 onTap: () {
-                  Get.toNamed(AppPages.notificationScreen);
+                  print("hello");
+                  controller.key.currentState!.openDrawer();
                 },
-                child: SvgPicture.asset(Assets.notificationIcon)),
+              ),
+              automaticallyImplyLeading: false,
+              actions: [
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 20.0),
+                //   child: InkWell(
+                //       onTap: () {}, child: SvgPicture.asset(Assets.favouriteIcon)),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: InkWell(
+                      onTap: () {
+                        Get.toNamed(AppPages.notificationScreen);
+                      },
+                      child: SvgPicture.asset(Assets.notificationIcon)),
+                ),
+              ],
+            ),
+            drawer: const DrawerLayout(),
+            backgroundColor: AppColors.lightBackgroundColor,
+            body: bodyWidget(),
           ),
+          Visibility(
+            visible: controller.isLoading.value,
+            child: loaderTransparent(),
+          )
         ],
       ),
-      drawer: const DrawerLayout(),
-      backgroundColor: AppColors.lightBackgroundColor,
-      body: bodyWidget(),
     );
   }
 
@@ -612,11 +623,18 @@ class HomeScreen extends GetView<HomeController> {
                 itemBuilder:
                     (BuildContext context, int indexCarousel, int realIndex) {
                   return InkWell(
-                    onTap: () {
-                      Get.toNamed(AppPages.celebritiesScreen, arguments: [
-                        "Celebrities Details",
-                        controller.celebritiesModel[indexCarousel].socialLink
-                      ]);
+                    onTap: () async {
+                      var result = await Get.toNamed(
+                          AppPages.celebritiesDetailsScreen,
+                          arguments: [
+                            "Celebrities Details",
+                            controller
+                                .celebritiesModel[indexCarousel].socialLink
+                          ]);
+                      if (result == "backPress") {
+                        controller.isLoading.value = true;
+                        controller.delayedFunction();
+                      }
                     },
                     child: Image.asset(
                       controller.celebritiesModel[indexCarousel].image
@@ -932,9 +950,14 @@ class HomeScreen extends GetView<HomeController> {
 
   pressWidget({required PressModel featuredData, required position}) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppPages.celebritiesScreen,
+      onTap: () async {
+        var result = await Get.toNamed(AppPages.celebritiesDetailsScreen,
             arguments: ["Press", featuredData.socialLink]);
+
+        if (result == "backPress") {
+          controller.isLoading.value = true;
+          controller.delayedFunction();
+        }
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

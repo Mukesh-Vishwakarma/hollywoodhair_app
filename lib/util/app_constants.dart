@@ -13,6 +13,7 @@ class AppConstants {
   static const address = 'address';
   static const profileImage = 'profile_image';
   static const phoneNumber = 'phone_number';
+  static const passwordController = 'password_controller';
   static const phoneCode = 'phone_code';
   static const email = 'email';
 

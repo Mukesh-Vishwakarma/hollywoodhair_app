@@ -110,6 +110,31 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                 ),
                 InkWell(
                   onTap: () {
+                    Get.toNamed(AppPages.celebritiesScreen);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("celebrities".tr,
+                          style: AppStyles.textStyle(
+                            fontSize: 16.0,
+                            weight: FontWeight.w400,
+                          )),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 17,
+                ),
+                InkWell(
+                  onTap: () {
                     Get.toNamed(AppPages.contactScreen);
                   },
                   child: Row(
@@ -141,31 +166,6 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("languages".tr,
-                          style: AppStyles.textStyle(
-                            fontSize: 16.0,
-                            weight: FontWeight.w400,
-                          )),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 17,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPages.celebritiesScreen);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("celebrities".tr,
                           style: AppStyles.textStyle(
                             fontSize: 16.0,
                             weight: FontWeight.w400,

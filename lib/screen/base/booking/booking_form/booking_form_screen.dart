@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
@@ -7,6 +9,8 @@ import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import '../../../../util/no_data.dart';
+import '../../../../util/theme_service.dart';
 import 'booking_form_controller.dart';
 
 class BookingFormScreen extends GetView<BookingFormController> {
@@ -105,63 +109,13 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       Container(
                           margin: const EdgeInsets.only(
                               left: 20, right: 20, top: 10),
-                          child: TextFormField(
+                          child: textFieldWithoutLabel(
                             controller: controller.ageController,
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return "age".tr;
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              controller.age.value = value;
-                            },
-                            decoration: InputDecoration(
-                              isDense: false,
-                              contentPadding: const EdgeInsets.all(15),
-                              hintText: "age".tr,
-                              hintStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(
-                                  Assets.dropDown,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 0,
-                                ),
-                              ),
-                            ),
+                            validationMsg: "age".tr,
+                            text: controller.phoneNumber,
+                            hintText: 'age'.tr,
+                            type: "name",
+                            label: true,
                           )),
 
                       //****** gender
@@ -175,67 +129,68 @@ class BookingFormScreen extends GetView<BookingFormController> {
                                 fontSize: 14.0, weight: FontWeight.normal)),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 20, top: 10),
-                          child: TextFormField(
-                            controller: controller.genderController,
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return "gender".tr;
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              controller.gender.value = value;
-                            },
-                            decoration: InputDecoration(
-                              isDense: false,
-                              contentPadding: const EdgeInsets.all(15),
-                              hintText: "gender".tr,
-                              hintStyle: AppStyles.textStyle(
-                                color: AppColors.black,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(
-                                  Assets.dropDown,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 0,
-                                ),
+                        width: 100.w,
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        child: TextFormField(
+                          controller: controller.genderController,
+                          readOnly: true,
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
+                              return "gender".tr;
+                            }
+                            return null;
+                          },
+                          onTap: () {
+                            genderBottomSheet();
+                          },
+                          decoration: InputDecoration(
+                            isDense: false,
+                            contentPadding: const EdgeInsets.all(15),
+                            hintText: "gender".tr,
+                            hintStyle: AppStyles.textStyle(
+                              color: AppColors.black,
+                              fontSize: 14.0,
+                              weight: FontWeight.normal,
+                            ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Image.asset(
+                                Assets.dropDown,
                               ),
                             ),
-                          )),
-
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.colorCD, width: 0.99),
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
+                            focusedErrorBorder: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.colorCD, width: 0.99),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                                width: 0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       //****** service
                       const SizedBox(
                         height: 30,
@@ -258,8 +213,8 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               }
                               return null;
                             },
-                            onChanged: (value) {
-                              controller.service.value = value;
+                            onTap: () {
+                              servicePickerBottomSheet();
                             },
                             decoration: InputDecoration(
                               isDense: false,
@@ -322,7 +277,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           margin: const EdgeInsets.only(
                               left: 20, right: 20, top: 10),
                           child: TextFormField(
-                            controller: controller.locationController,
+                            controller: controller.saloonLocationController,
                             readOnly: true,
                             validator: (value) {
                               if (value.toString().isEmpty) {
@@ -330,8 +285,8 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               }
                               return null;
                             },
-                            onChanged: (value) {
-                              controller.location.value = value;
+                            onTap: () {
+                              saloonPickerBottomSheet();
                             },
                             decoration: InputDecoration(
                               isDense: false,
@@ -385,12 +340,21 @@ class BookingFormScreen extends GetView<BookingFormController> {
             ),
             GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppPages.bookingAppointmentScreen);
-                  // if (!controller.formLoginKey.currentState!.validate()) {
-                  //   print("not validate");
-                  // } else {
-                  //   // controller.loginApi();
-                  // }
+                  if (!controller.formLoginKey.currentState!.validate()) {
+                    print("not validate");
+                  } else {
+                    Get.toNamed(
+                      AppPages.bookingAppointmentScreen,
+                      arguments: {
+                        'name': controller.nameController.text.trim(),
+                        'phone_number': controller.phoneNumberController.text.trim(),
+                        'age': controller.ageController.text.trim(),
+                        'gender': controller.genderController.text.trim(),
+                        'service': controller.serviceController.text.trim(),
+                        'saloon_address': controller.saloonLocationController.text.trim(),
+                      },
+                    );
+                  }
                 },
                 child: Padding(
                     padding: const EdgeInsets.only(
@@ -403,5 +367,563 @@ class BookingFormScreen extends GetView<BookingFormController> {
         ),
       ),
     );
+  }
+
+  /// Saloon list bottom sheet
+  saloonPickerBottomSheet() {
+    Get.bottomSheet(
+        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      return Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(0)),
+              padding:
+                  const EdgeInsets.only(bottom: 0, left: 0, right: 0, top: 20),
+              child: Wrap(children: [
+                Center(
+                  child: Container(
+                    width: 60,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 13),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+                ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Container(
+                      color: ThemeService().loadThemeFromBox()
+                          ? AppColors.color18
+                          : AppColors.lightBackgroundColor,
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 20, bottom: 10, top: 20),
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: ThemeService().loadThemeFromBox()
+                                      ? AppColors.color18
+                                      : AppColors.colorF6,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        child: Icon(Icons.search_rounded,
+                                            size: 25, color: textThemeColor()),
+                                      ),
+                                      Expanded(
+                                        child: TextField(
+                                            enableInteractiveSelection: false,
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(
+                                                  40),
+                                            ],
+                                            controller: controller
+                                                .searchSaloonController,
+                                            autocorrect: true,
+                                            decoration: InputDecoration(
+                                                hintText: 'Search here..'.tr,
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.zero,
+                                                isDense: true),
+                                            onChanged: (value) {
+                                              controller
+                                                  .getSearchSaloonList(value);
+                                            }),
+                                      ),
+                                      Obx(
+                                        () => Visibility(
+                                            visible:
+                                                controller.searchText.isEmpty
+                                                    ? false
+                                                    : true,
+                                            child: Image.asset(
+                                              Assets.cross,
+                                              height: 15,
+                                              width: 10,
+                                            )),
+                                      ),
+                                    ])),
+                            Container(
+                              height: 450,
+                              padding: const EdgeInsets.only(right: 20, top: 0),
+                              child: Obx(() => controller.isSearch.value
+                                  ? searchSaloonListWidget()
+                                  : saloonListWidget()),
+                            )
+                          ]),
+                    ))
+              ])));
+    }), isScrollControlled: true);
+  }
+
+  saloonListWidget() {
+    return Obx(() => controller.firstTimeScreen.value
+        ? Container(
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator())
+        : controller.allSaloonList.isNotEmpty
+            ? ListView.builder(
+                itemCount: controller.allSaloonList.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      print("kzkkkxc==>${controller.saloonLocation.value}");
+                      controller.saloonLocationController.text = controller
+                          .allSaloonList[index].salonAddress
+                          .toString();
+                      controller.saloonLocation.value =
+                          controller.allSaloonList[index].salonId.toString();
+                      print("kzkkkxc==>${controller.saloonLocation.value}");
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 5, left: 15, bottom: 0, right: 15),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                    controller.allSaloonList[index].salonPicture
+                                        .toString(),
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: SizedBox(
+                                    width: 55.w,
+                                    child: Text(
+                                      controller
+                                          .allSaloonList[index].salonAddress
+                                          .toString(),
+                                      maxLines: 3,
+                                      style: AppStyles.textStyle(
+                                        weight: FontWeight.w500,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ),
+                                ).marginOnly(left: 10)
+                              ],
+                            ),
+                            const Divider().marginOnly(top: 5, bottom: 0),
+                          ],
+                        )),
+                  );
+                })
+            : Center(
+                child: NoDataScreen(
+                title: "no_country_available".tr,
+              )));
+  }
+
+  searchSaloonListWidget() {
+    return controller.searchSaloonList.isNotEmpty
+        ? ListView.builder(
+            itemCount: controller.searchSaloonList.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  controller.saloonLocationController.text = controller
+                      .searchSaloonList[index].salonAddress
+                      .toString();
+                  controller.saloonLocation.value =
+                      controller.searchSaloonList[index].salonId.toString();
+                  print("kzkkkxc==>${controller.saloonLocation.value}");
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 15, bottom: 0, right: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.network(
+                                controller.searchSaloonList[index].salonPicture
+                                    .toString(),
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 0),
+                              child: SizedBox(
+                                width: 55.w,
+                                child: Text(
+                                  controller
+                                      .searchSaloonList[index].salonAddress
+                                      .toString(),
+                                  maxLines: 3,
+                                  style: AppStyles.textStyle(
+                                    weight: FontWeight.w500,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ).marginOnly(left: 10)
+                          ],
+                        ),
+                        const Divider().marginOnly(top: 5, bottom: 0),
+                      ],
+                    )),
+              );
+            })
+        : Center(
+            child: NoDataScreen(
+            title: "no_country_available".tr,
+          ));
+  }
+
+  ///  Services list bottom sheet
+  servicePickerBottomSheet() {
+    Get.bottomSheet(
+        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      return Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(0)),
+              padding:
+                  const EdgeInsets.only(bottom: 0, left: 0, right: 0, top: 20),
+              child: Wrap(children: [
+                Center(
+                  child: Container(
+                    width: 60,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 13),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+                ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Container(
+                      color: ThemeService().loadThemeFromBox()
+                          ? AppColors.color18
+                          : AppColors.lightBackgroundColor,
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 20, bottom: 10, top: 20),
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: ThemeService().loadThemeFromBox()
+                                      ? AppColors.color18
+                                      : AppColors.colorF6,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        child: Icon(Icons.search_rounded,
+                                            size: 25, color: textThemeColor()),
+                                      ),
+                                      Expanded(
+                                        child: TextField(
+                                            enableInteractiveSelection: false,
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(
+                                                  40),
+                                            ],
+                                            controller: controller
+                                                .searchServiceController,
+                                            autocorrect: true,
+                                            decoration: InputDecoration(
+                                                hintText: 'Search here..'.tr,
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.zero,
+                                                isDense: true),
+                                            onChanged: (value) {
+                                              controller
+                                                  .getSearchServicesList(value);
+                                            }),
+                                      ),
+                                      Obx(
+                                        () => Visibility(
+                                            visible: controller
+                                                    .searchServiceText.isEmpty
+                                                ? false
+                                                : true,
+                                            child: Image.asset(
+                                              Assets.cross,
+                                              height: 15,
+                                              width: 10,
+                                            )),
+                                      ),
+                                    ])),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: 450, // Set your maximum height value
+                              ),
+                              child: Container(
+                                // height: 450,
+                                padding: const EdgeInsets.only(right: 20, top: 0),
+                                child: Obx(() => controller.isServiceSearch.value
+                                    ? serviceSearchListWidget()
+                                    : serviceListWidget()),
+                              ),
+                            )
+                          ]),
+                    ))
+              ])));
+    }), isScrollControlled: true);
+  }
+
+  serviceListWidget() {
+    return Obx(() => controller.firstTimeScreen.value
+        ? Container(
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator())
+        : controller.allServiceList.isNotEmpty
+            ? ListView.builder(
+                itemCount: controller.allServiceList.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      controller.serviceController.text = controller
+                          .allServiceList[index].serviceName
+                          .toString();
+                      controller.service.value =
+                          controller.allServiceList[index].serviceId.toString();
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 5, left: 15, bottom: 0, right: 15),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  // child: Image.network(
+                                  //   controller.allServiceList[index].salonPicture
+                                  //       .toString(),
+                                  //   height: 50,
+                                  //   width: 50,
+                                  // ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: SizedBox(
+                                    width: 55.w,
+                                    child: Text(
+                                      controller
+                                          .allServiceList[index].serviceName
+                                          .toString(),
+                                      maxLines: 3,
+                                      style: AppStyles.textStyle(
+                                        weight: FontWeight.w500,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ),
+                                ).marginOnly(left: 10),
+                                const Spacer(),
+                                const Icon(Icons.navigate_next),
+                              ],
+                            ),
+                            const Divider().marginOnly(top: 5, bottom: 0),
+                          ],
+                        )),
+                  );
+                })
+            : Center(
+                child: NoDataScreen(
+                title: "no_country_available".tr,
+              )));
+  }
+
+  serviceSearchListWidget() {
+    return controller.searchServiceList.isNotEmpty
+        ? ListView.builder(
+            itemCount: controller.searchServiceList.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  controller.serviceController.text = controller
+                      .searchServiceList[index].serviceName
+                      .toString();
+                  controller.service.value =
+                      controller.searchServiceList[index].serviceId.toString();
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 15, bottom: 0, right: 15),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              // child: Image.network(
+                              //   controller.searchServiceList[index].salonPicture
+                              //       .toString(),
+                              //   height: 50,
+                              //   width: 50,
+                              // ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 0),
+                              child: SizedBox(
+                                width: 55.w,
+                                child: Text(
+                                  controller
+                                      .searchServiceList[index].serviceName
+                                      .toString(),
+                                  maxLines: 3,
+                                  style: AppStyles.textStyle(
+                                    weight: FontWeight.w500,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ).marginOnly(left: 10),
+                            const Spacer(),
+                            const Icon(Icons.navigate_next),
+                          ],
+                        ),
+                        const Divider().marginOnly(top: 5, bottom: 0),
+                      ],
+                    )),
+              );
+            })
+        : Center(
+            child: NoDataScreen(
+            title: "no_country_available".tr,
+          ));
+  }
+
+  ///  Gender
+  genderBottomSheet() {
+    return Get.bottomSheet(
+        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      return Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(0)),
+              padding:
+                  const EdgeInsets.only(bottom: 0, left: 0, right: 0, top: 20),
+              child: Wrap(children: [
+                Center(
+                  child: Container(
+                    width: 60,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 13),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+                ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Container(
+                        color: ThemeService().loadThemeFromBox()
+                            ? AppColors.color18
+                            : AppColors.lightBackgroundColor,
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 20, bottom: 40, right: 15),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.genderList.value.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return ListTile(
+                                onTap: () {
+                                  controller.checkGender.value = false;
+                                  controller.genderController.text = controller
+                                      .genderList.value[index]
+                                      .toString();
+                                  // controller.isGender.value = controller.genderList.value[index].toString();
+                                  controller.gender.value = controller
+                                      .genderList.value[index]
+                                      .toString();
+                                  print(
+                                      "Gender>>>>>${controller.gender.value}");
+                                  Navigator.pop(context);
+                                },
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 10, left: 10, top: 10),
+                                  child: Text(
+                                    controller.genderList.value[index]
+                                        .toString(),
+                                    style: AppStyles.textStyle(
+                                      fontSize: 15.0,
+                                      color: textThemeColor(),
+                                      weight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                trailing: controller.gender.value ==
+                                        controller.genderList.value[index]
+                                            .toString()
+                                    ? Image.asset(
+                                        Assets.imagesSelected,
+                                        height: 20,
+                                        width: 20,
+                                      )
+                                    : SvgPicture.asset(
+                                        Assets.imagesUnselect,
+                                        height: 20,
+                                        width: 20,
+                                      ),
+                              );
+                            }))),
+              ])));
+    }), isScrollControlled: true);
   }
 }

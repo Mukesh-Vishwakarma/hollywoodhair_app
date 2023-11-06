@@ -7,7 +7,6 @@ import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
-import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import '../../../util/common_function.dart';
@@ -121,10 +120,6 @@ class CartScreen extends GetView<CartController> {
               visible: controller.addressLoaderStatus.value,
               child: loader(AppColors.transparentBlack),
             ),
-            Visibility(
-              visible: controller.addressLoaderStatus.value,
-              child: loader(AppColors.transparentBlack),
-            ),
           ],
         ));
   }
@@ -158,7 +153,7 @@ class CartScreen extends GetView<CartController> {
           Expanded(
             child: Container(
               width: 55.w,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -168,6 +163,7 @@ class CartScreen extends GetView<CartController> {
                       weight: FontWeight.w500,
                       fontSize: 14.0,
                     ),
+                    maxLines: 4,
                   ),
                   Text(
                     item.variant!.product!.compareAtPriceFormatted.toString(),
@@ -181,7 +177,7 @@ class CartScreen extends GetView<CartController> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -192,17 +188,18 @@ class CartScreen extends GetView<CartController> {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (quantity == 1) {
+                      if (quantity.value == 1) {
                         quantity.value = 0;
                         controller.removeCartItems(item, quantity.value);
                       } else if (quantity > 1) {
                         quantity.value = quantity.value - 1;
                         controller.updateCartItemQuantity(
-                            item, (quantity.value),'');
+                            item, (quantity.value), '');
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 10),
                       child: SvgPicture.asset(Assets.minusIcon, width: 10),
                     ),
                   ),
@@ -214,7 +211,8 @@ class CartScreen extends GetView<CartController> {
                   InkWell(
                     onTap: () {
                       quantity.value = quantity.value + 1;
-                      controller.updateCartItemQuantity(item, (quantity.value),'');
+                      controller.updateCartItemQuantity(
+                          item, (quantity.value), '');
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -231,7 +229,7 @@ class CartScreen extends GetView<CartController> {
               controller.removeCartItems(item, quantity.value);
             },
             child: Container(
-              margin: const EdgeInsets.only(top: 30, left: 20),
+              margin: const EdgeInsets.only(top: 20, left: 20),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -267,7 +265,8 @@ class CartScreen extends GetView<CartController> {
               child: Container(
                 // width: 70.w,
                 height: 45,
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.promoborder, width: 1.0),
                   color: AppColors.promofilled,
@@ -301,32 +300,34 @@ class CartScreen extends GetView<CartController> {
                 ),
               ),
             ),
-
-             InkWell(
-                onTap: () {
-                  if(controller.promoCodeApplyStatus.value){
-                    successToast("Promo code already applied.");
-                  } else {
-                    controller.applyPromoCode();
-                  }
-                },
-                child: Container(
-                  height: 44,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.black84, width: 1.0),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Center(
-                    child: Text(controller.promoCodeApplyStatus.value?'applied'.tr:'apply'.tr,
-                        style: AppStyles.textStyle(
-                          weight: FontWeight.w500,
-                          fontSize: 14.0,
-                        )),
-                  ),
+            InkWell(
+              onTap: () {
+                if (controller.promoCodeApplyStatus.value) {
+                  successToast("Promo code already applied.");
+                } else {
+                  controller.applyPromoCode();
+                }
+              },
+              child: Container(
+                height: 44,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.black84, width: 1.0),
+                  borderRadius: BorderRadius.circular(4),
                 ),
-              ).marginOnly(left: 15),
+                child: Center(
+                  child: Text(
+                      controller.promoCodeApplyStatus.value
+                          ? 'applied'.tr
+                          : 'apply'.tr,
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ),
+            ).marginOnly(left: 15),
           ],
         )
       ],
@@ -362,7 +363,8 @@ class CartScreen extends GetView<CartController> {
         const SizedBox(height: 10),
         priceItemWidget(
             title: "promo_code".tr,
-            value: controller.checkout.lineItems[0].discountAllocations.isNotEmpty
+            value: controller
+                    .checkout.lineItems[0].discountAllocations.isNotEmpty
                 ? "zt${controller.checkout.lineItems[0].discountAllocations[0].allocatedAmount!.amount.toString()}"
                 : "zt0.00"),
         const SizedBox(height: 20),

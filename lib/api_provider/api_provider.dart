@@ -19,7 +19,11 @@ import 'package:hollywood_hair/model/shopify_model/signUp_model.dart';
 import 'package:hollywood_hair/model/static_model.dart';
 import 'package:hollywood_hair/model/user_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
+import '../model/all_artist_model.dart';
 import '../model/all_saloon_list_model.dart';
+import '../model/all_services_model.dart';
+import '../model/available_slots_list_model.dart';
+import '../model/change_password_model.dart';
 import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
 import '../model/shopify_model/delete_address_model.dart';
@@ -126,6 +130,7 @@ class ApiProvider {
     }));
   }
 
+/*
   ApiProvider.shopifyCustomer() {
     BaseOptions dioOptions = BaseOptions()..baseUrl = shopifyCustomerUrl;
     _dio = Dio(dioOptions);
@@ -150,6 +155,7 @@ class ApiProvider {
       return handler.next(error);
     }));
   }
+*/
 
   ApiProvider.base() {
     BaseOptions dioOptions = BaseOptions()..baseUrl = baseUrl;
@@ -193,7 +199,49 @@ class ApiProvider {
     }));
   }
 
-// for multipart
+  ApiProvider.booking() {
+    BaseOptions dioOptions = BaseOptions()..baseUrl = baseUrlBooking;
+    _dio = Dio(dioOptions);
+    _dio.interceptors.add(
+        InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
+      options.headers = {'Content-Type': 'application/json'};
+      DioLogger.onSend(tag, options);
+      return handler.next(options);
+    }, onResponse: (Response response, handler) {
+      DioLogger.onSuccess(tag, response);
+      return handler.next(response);
+    }, onError: (DioError error, handler) {
+      _dioError = error;
+      DioLogger.onError(tag, error);
+      if (_checkSocketException(error)) {
+        // failedToast('Internet connection failed');
+      }
+      return handler.next(error);
+    }));
+  }
+
+  // for token
+  ApiProvider.bookingWithToken() {
+    BaseOptions dioOptions = BaseOptions()..baseUrl = baseUrlBooking;
+    _dio = Dio(dioOptions);
+    _dio.interceptors.add(
+        InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
+      String accessToken = GetStorage().read(AppConstants.accessToken);
+      options.headers = {'Content-Type': 'application/json'};
+      options.headers = {'token': accessToken};
+      DioLogger.onSend(tag, options);
+      return handler.next(options);
+    }, onResponse: (Response response, handler) {
+      DioLogger.onSuccess(tag, response);
+      return handler.next(response);
+    }, onError: (DioError error, handler) {
+      _dioError = error;
+      DioLogger.onError(tag, error);
+      return handler.next(error);
+    }));
+  }
+
+/*// for multipart
   ApiProvider.baseWithMultipart() {
     BaseOptions dioOptions = BaseOptions()..baseUrl = baseUrl;
     _dio = Dio(dioOptions);
@@ -212,11 +260,11 @@ class ApiProvider {
       DioLogger.onError(tag, error);
       return handler.next(error);
     }));
-  }
+  }*/
 
   //**** resgistretion
 
-  Future funRegister(FormData params) async {
+/*  Future funRegister(FormData params) async {
     try {
       print("response of signup >>>${params}");
       Response response = await _dio.post(strGetRegister, data: params);
@@ -225,18 +273,18 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
-  Future funLogin(FormData params) async {
-    try {
-      print("response of login >>>${params}");
-      Response response = await _dio.post(strGetEmailLogin, data: params);
-      print("response of login >>>${response.data!}");
-      return UserModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
+  // Future funLogin(FormData params) async {
+  //   try {
+  //     print("response of login >>>${params}");
+  //     Response response = await _dio.post(strGetEmailLogin, data: params);
+  //     print("response of login >>>${response.data!}");
+  //     return UserModel.fromJson(response.data!);
+  //   } catch (error, stacktrace) {
+  //     handleException(error, stacktrace, _dioError!);
+  //   }
+  // }
 
   //***** otp login
 
@@ -373,7 +421,7 @@ class ApiProvider {
 
   //***** get all product
 
-  Future funGetAllProduct(FormData params) async {
+/*  Future funGetAllProduct(FormData params) async {
     try {
       Response response = await _dio.post(strGetProductList, data: params);
       print("response of get all product>>>${response.data!}");
@@ -381,7 +429,7 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
   //***** get all transformations
 
@@ -413,7 +461,7 @@ class ApiProvider {
 
   //**** Login api*****
 
-  Future funLoginShopify(params) async {
+/*  Future funLoginShopify(params) async {
     try {
       print("response of login shopify >>>${params}");
       Response response =
@@ -423,11 +471,11 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
   //********* getCustomerDetails
 
-  Future funCustomerDetailsShopify(params) async {
+/*  Future funCustomerDetailsShopify(params) async {
     try {
       print("response of get Customer Details  shopify >>>${params}");
       Response response =
@@ -437,19 +485,19 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
   //***** Categories
 
-  Future funCategoriesApi() async {
-    try {
-      Response response = await _dio.get(categoryShopify);
-      print("response of Categories list>>>${response.data!}");
-      return CategoryModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
+  // Future funCategoriesApi() async {
+  //   try {
+  //     Response response = await _dio.get(categoryShopify);
+  //     print("response of Categories list>>>${response.data!}");
+  //     return CategoryModel.fromJson(response.data!);
+  //   } catch (error, stacktrace) {
+  //     handleException(error, stacktrace, _dioError!);
+  //   }
+  // }
 
   //***** product list shop
 
@@ -466,16 +514,16 @@ class ApiProvider {
 
   //***** product deatils shop
 
-  Future funProductDetailsShopify(product) async {
-    try {
-      //products/8655016329551.json
-      Response response = await _dio.get('api/2023-07/products/$product.json');
-      print("response of Collections >>>${response.data!}");
-      return ProductDetailsModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
+  // Future funProductDetailsShopify(product) async {
+  //   try {
+  //     //products/8655016329551.json
+  //     Response response = await _dio.get('api/2023-07/products/$product.json');
+  //     print("response of Collections >>>${response.data!}");
+  //     return ProductDetailsModel.fromJson(response.data!);
+  //   } catch (error, stacktrace) {
+  //     handleException(error, stacktrace, _dioError!);
+  //   }
+  // }
 
   //***** product deatils shop
 
@@ -492,19 +540,19 @@ class ApiProvider {
 
   //  &&&&& Add to cart
 
-  Future funAddToCart(FormData params) async {
-    try {
-      Response response = await _dio.post(addCartShopify, data: params);
-      print("response of add to cart >>>${response.data!}");
-      return AddCartModel.fromJson(response.data!);
-    } catch (error, stacktrace) {
-      handleException(error, stacktrace, _dioError!);
-    }
-  }
+  // Future funAddToCart(FormData params) async {
+  //   try {
+  //     Response response = await _dio.post(addCartShopify, data: params);
+  //     print("response of add to cart >>>${response.data!}");
+  //     return AddCartModel.fromJson(response.data!);
+  //   } catch (error, stacktrace) {
+  //     handleException(error, stacktrace, _dioError!);
+  //   }
+  // }
 
   //  ******** Get  to cart  **********
 
-  Future funGetToCart() async {
+/*  Future funGetToCart() async {
     try {
       Response response = await _dio.get(getCartShopify);
       print("response of get cart list >>>${response.data!}");
@@ -512,13 +560,43 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
   Future getAllSaloonList() async {
     try {
       Response response = await _dio.get(strGetAllSalons);
       print("response of otp login >>>${response.data!}");
       return AllSaloonListModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getAllServicesList(var lan) async {
+    try {
+      Response response = await _dio.get('$strGetAllServices/$lan');
+      print("response of otp login >>>${response.data!}");
+      return AllServicesModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getAllArtistList(var saloonId) async {
+    try {
+      Response response = await _dio.get('$strGetWorkerBySalon/$saloonId');
+      print("response of otp login >>>${response.data!}");
+      return AllArtistModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getAvailableSlotsList(requestData) async {
+    try {
+      Response response =  await _dio.post(strGetAvailability, data: jsonEncode(requestData));
+      print("response of otp login >>>${response.data!}");
+      return AvailableSlotsListModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
@@ -569,7 +647,24 @@ class ApiProvider {
     }
   }
 
-  Future getUpdateCustomerUpdates(customerId,addressId,FormData params) async {
+
+  //                  // https://a02f54.myshopify.com/admin/customers/7301030707535.json
+  // const shopifyUrl = 'https://a02f54.myshopify.com/admin/';
+  // const shopifyTokenUrl = 'https://a02f54.myshopify.com/';
+
+
+  Future changePasswordShopify({customerId,data}) async {
+    try {
+      Response response =
+      await _dio.put('customers/$customerId.json',data: data);
+      print("response of Collections >>>${response.data!}");
+      return ChangePasswordModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+/*  Future getUpdateCustomerUpdates(customerId,addressId,FormData params) async {
     try {
 
       // var headers = {
@@ -594,7 +689,7 @@ class ApiProvider {
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }
-  }
+  }*/
 
 }
 

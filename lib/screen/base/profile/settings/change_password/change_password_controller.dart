@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,9 +10,10 @@ import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:dio/dio.dart' as dio;
 
+import '../../../../../model/change_password_model.dart';
+import '../../../../../util/progress_dialog.dart';
+
 class ChangePasswordController extends GetxController {
-
-
   final formLoginKey = GlobalKey<FormState>();
   var oldPasswordController = TextEditingController();
   var newPasswordController = TextEditingController();
@@ -28,26 +30,23 @@ class ChangePasswordController extends GetxController {
   var userId = "".obs;
   var isPageLoad = false.obs;
 
-
-
-
   //  ****** change password
 
+/*
   changePasswordApi() async {
     isPageLoad.value = true;
-    userId.value = GetStorage().read(AppConstants.userId)??"";
+    userId.value = GetStorage().read(AppConstants.userId) ?? "";
 
     print("customer_id>>>>>${userId.value}");
     print("New password>>>>>${newPassword.value}");
     print("old password>>>>>${oldPassword.value}");
     print("confirm password>>>>>${confirmPassword.value}");
     try {
-
       dio.FormData params = dio.FormData.fromMap({
-        'customer_id':userId.value.toString(),
-        'old_password':oldPassword.value,
-        'new_password':newPassword.value.toString(),
-        'confirm_password':confirmPassword.value.toString()
+        'customer_id': "7301030707535",
+        'old_password': oldPassword.value,
+        'new_password': newPassword.value.toString(),
+        'confirm_password': confirmPassword.value.toString()
       });
       print('create Data');
       print(params.toString());
@@ -58,7 +57,6 @@ class ChangePasswordController extends GetxController {
       print(baseModel.result);
       if (baseModel.result == 1) {
         successToast(baseModel.message!);
-
 
         Get.back();
       } else {
@@ -78,6 +76,62 @@ class ChangePasswordController extends GetxController {
       // failedToast(exception.toString());
     }
   }
+*/
 
+  deleteCustomerAddress() async {
+    ProgressDialog progressIndicator = ProgressDialog();
+    try {
+      final input = await GetStorage().read(
+        AppConstants.userId,
+      );
+      final passwordController = await GetStorage().read(
+        AppConstants.passwordController,
+      );
 
+      final customerId = input.split('/').last;
+
+      print("customer_id>>>>>${userId.value}");
+      print("New password>>>>>${newPassword.value}");
+      print("old password>>>>>${oldPassword.value}");
+      print("confirm password>>>>>${confirmPassword.value}");
+
+      if (oldPassword.trim().toString() ==
+          passwordController.trim().toString()) {
+        progressIndicator.show();
+        var data = json.encode({
+          "customer": {
+            "id": customerId,
+            "password": newPassword.value,
+            "password_confirmation": confirmPassword.value,
+            "send_email_welcome": false
+          }
+        });
+
+        print("shjbhhdxc==> $data");
+        ChangePasswordModel changePasswordModel = await ApiProvider.shopify()
+            .changePasswordShopify(customerId: customerId, data: data);
+
+        print("djskkz==>$changePasswordModel");
+
+        successToast("Password change successfully!");
+        isPageLoad.value = false;
+        progressIndicator.dismiss();
+
+        await GetStorage()
+            .write(AppConstants.passwordController, passwordController.text);
+        Get.back();
+      } else {
+        successToast("Old password dose not match!");
+      }
+    } on HttpException catch (exception) {
+      print("kjsdbxcbh1==> ${exception.message}");
+      isPageLoad.value = false;
+      progressIndicator.dismiss();
+    } catch (exception) {
+      print("kjsdbxcbh2==> ${exception.toString()}");
+      failedToast("Cannot delete the customer’s default address");
+      isPageLoad.value = false;
+      progressIndicator.dismiss();
+    }
+  }
 }

@@ -7,17 +7,16 @@ class CelebritiesDetailsController extends GetxController {
   Completer<WebViewController> controllerWeb = Completer<WebViewController>();
   InAppWebViewController? webViewController;
   var isLoading = true.obs;
-  var hideAppbar = true.obs;
-  String currentUrl = ''; // Member variable to store the current URL
   String title = '';
-  String socialUrl = '';
+  var socialUrl = ''.obs;
 
   @override
   void onInit() {
     try {
       title = Get.arguments[0];
-      socialUrl = Get.arguments[1];
+      socialUrl.value = Get.arguments[1];
       isLoading.value = true;
+      print("sdvabnjmk==> ${socialUrl.value}");
     } catch (e) {
       isLoading.value = false;
     }

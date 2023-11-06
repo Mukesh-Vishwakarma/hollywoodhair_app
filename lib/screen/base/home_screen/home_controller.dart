@@ -61,6 +61,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   ScrollController scrollControllerSecond = ScrollController();
   List<String> items = List.generate(10, (index) => 'Item $index');
   bool canJumpToFirstPosition = false;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -595,7 +596,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
         final maxExtent = scrollControllerSecond.position.maxScrollExtent;
         final currentPosition = scrollControllerSecond.position.pixels;
         if (currentPosition >= maxExtent) {
-          Timer(Duration(seconds: 1), () {
+          Timer(const Duration(seconds: 1), () {
             // _scrollController.animateTo(0.0, duration: scrollDuration, curve: Curves.linear);
             // canJumpToFirstPosition = false;
 
@@ -624,5 +625,9 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       }
       autoScroll();
     });
+  }
+  Future<void> delayedFunction() async {
+    await Future.delayed(const Duration(seconds: 2));
+    isLoading.value = false;
   }
 }

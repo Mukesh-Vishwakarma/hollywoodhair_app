@@ -4,9 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
-import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../../../util/assets.dart';
+import '../../../../util/common_function.dart';
 import 'celebrities_details_controller.dart';
 
 class CelebritiesDetailsScreen extends GetView<CelebritiesDetailsController> {
@@ -59,6 +58,8 @@ class CelebritiesDetailsScreen extends GetView<CelebritiesDetailsController> {
                         controller.webViewController!.goBack();
                         return false; // Prevent the app from closing
                       } else {
+                        // Send a result before allowing the app to close
+                        Get.back(result: "backPress");
                         return true; // Allow the app to close
                       }
                     }
@@ -66,57 +67,38 @@ class CelebritiesDetailsScreen extends GetView<CelebritiesDetailsController> {
                   },
                   child: Stack(
                     children: <Widget>[
-                      InAppWebView(
-                          initialUrlRequest:
-                              URLRequest(url: Uri.parse(controller.socialUrl)),
-                          initialOptions: InAppWebViewGroupOptions(
-                            crossPlatform: InAppWebViewOptions(
-                              javaScriptEnabled: true,
+                      Obx(()=>InAppWebView(
+                            initialUrlRequest: URLRequest(
+                                url: Uri.parse(controller.socialUrl.value)),
+                            initialOptions: InAppWebViewGroupOptions(
+                              crossPlatform: InAppWebViewOptions(
+                                javaScriptEnabled: true,
+                              ),
                             ),
-                          ),
-                          onWebViewCreated:
-                              (InAppWebViewController webViewController) {
-                            // if (!controller.webViewControllerNew.isCompleted) {
-                            controller.webViewController = webViewController;
-                            // }
-                          },
-                          onLoadStart:
-                              (InAppWebViewController controller, Uri? url) {
-                            if (url != null) {
-                              print("==> $url");
-                            }
-                          },
-                          onLoadStop:
-                              (InAppWebViewController webViewControllerNew,
-                                  Uri? url) {
-                            if (url != null) {
-                              try {
-                                controller.isLoading.value = false;
-                              } catch (e) {
-                                print("Error: $e");
+                            onWebViewCreated:
+                                (InAppWebViewController webViewController) {
+                              // if (!controller.webViewControllerNew.isCompleted) {
+                              controller.webViewController = webViewController;
+                              // }
+                            },
+                            onLoadStart:
+                                (InAppWebViewController controller, Uri? url) {
+                              if (url != null) {
+                                print("==> $url");
                               }
-                            }
-                          }),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              // Align the gradient from the left
-                              end: Alignment.centerRight,
-                              // To the right
-                              colors: [
-                                Colors.white,
-                                AppColors.whiteTrans1,
-                                AppColors.whiteTrans
-                              ], // Your gradient colors
-                            ),
-                          ),
-                          height: 80,
-                          width: 150,
-                        ),
-                      )
+                            },
+                            onLoadStop:
+                                (InAppWebViewController webViewControllerNew,
+                                    Uri? url) {
+                              if (url != null) {
+                                try {
+                                  controller.isLoading.value = false;
+                                } catch (e) {
+                                  print("Error: $e");
+                                }
+                              }
+                            }),
+                      ),
                     ],
                   ),
                 ),
@@ -134,32 +116,5 @@ class CelebritiesDetailsScreen extends GetView<CelebritiesDetailsController> {
             )
           ],
         ));
-  }
-
-  loader() {
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          color: AppColors.transparentBlack,
-        ),
-        Center(
-          child: Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Lottie.asset(Assets.videoProgressbarBarLoader,
-              height: 150, width: 150),
-        )
-      ],
-    );
   }
 }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
-import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'booking_controller.dart';
@@ -21,21 +19,6 @@ class BookingScreen extends GetView<BookingController> {
           title: Text("booking_new".tr,
               style:
                   AppStyles.textStyle(fontSize: 20.0, weight: FontWeight.w500)),
-          actions: const <Widget>[
-            // GestureDetector(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right: 20),
-            //     child: Image.asset(
-            //       Assets.search,
-            //       height: 30,
-            //       width: 30,
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     // do something
-            //   },
-            // )
-          ],
           automaticallyImplyLeading: false,
         ),
       ),
@@ -54,53 +37,6 @@ class BookingScreen extends GetView<BookingController> {
                 return bookingList(index);
               },
             ),
-            // const SizedBox(height: 40),
-            // const DottedLine(
-            //   dashColor: AppColors.gray99,
-            // ),
-            // const SizedBox(height: 30),
-            // GestureDetector(
-            //   onTap: (){
-            //     Get.toNamed(AppPages.myAppointmentScreen);
-            //
-            //   },
-            //   child: Container(
-            //     margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-            //     padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
-            //     decoration: BoxDecoration(
-            //       border: Border.all(
-            //         color: AppColors.colorD3,
-            //         // style: BorderStyle.solid,
-            //         width: 1.0,
-            //       ),
-            //       color: Colors.transparent,
-            //       borderRadius: BorderRadius.circular(10.0),
-            //     ),
-            //     child: Row(
-            //       children: [
-            //         // Expanded(child: Container(),),
-            //         Expanded(
-            //             child: Padding(
-            //           padding: const EdgeInsets.only(left: 100),
-            //           child: Text(
-            //             "my_appointments".tr,
-            //             style: AppStyles.textStyle(
-            //               color: AppColors.primaryColor,
-            //               fontSize: 14.0,
-            //               weight: FontWeight.normal,
-            //             ),
-            //           ),
-            //         )),
-            //         Image.asset(
-            //           Assets.arrowRight,
-            //           height:20,
-            //           width: 20,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(height: 130),
           ],
         ),
       ),
@@ -165,11 +101,6 @@ class BookingScreen extends GetView<BookingController> {
                               size: 12,
                             ),
                           )
-                          // Image.asset(
-                          //   Assets.arrowRight,
-                          //   height: 15,
-                          //   width: 15,
-                          // )
                         ],
                       ),
                     )
