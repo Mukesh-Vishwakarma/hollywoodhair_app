@@ -29,7 +29,10 @@ class OurSalonsScreen extends GetView<OurSalonsController> {
           titleSpacing: 0,
           elevation: 0.4,
           backgroundColor: AppColors.colorFF,
-          leading: GestureDetector(
+          leading: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+              ),
               onTap: () {
                 Get.back();
               },

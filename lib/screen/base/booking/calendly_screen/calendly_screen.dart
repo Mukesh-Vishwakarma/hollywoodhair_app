@@ -25,7 +25,10 @@ class CalendlyScreen extends GetView<CalendlyController> {
                   titleSpacing: 0,
                   elevation: 0.4,
                   backgroundColor: AppColors.colorFF,
-                  leading: GestureDetector(
+                  leading: InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                    ),
                     onTap: () async {
                       if (controller.webViewController != null) {
                         if (await controller.webViewController!.canGoBack()) {

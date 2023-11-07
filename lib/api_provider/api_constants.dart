@@ -37,6 +37,9 @@ const String strGetAllTransformations = 'getAllTransformationsImages';
 const String strGetAllServices = 'service';
 const String strGetWorkerBySalon = 'worker/getWorkerBySalon';
 const String strGetAvailability = 'salons/getAvailability';
+const String strGetBooking = 'salons/booking';
+const String strGetAllBooking = 'salons/allbooking';
+const String strGetUpdateBookingStatus = 'salons/updateBookingStatus';
 
 //shopify end points
 

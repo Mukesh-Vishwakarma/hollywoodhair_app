@@ -29,7 +29,10 @@ class CelebritiesScreen extends GetView<CelebritiesController> {
                   titleSpacing: 0,
                   elevation: 4,
                   backgroundColor: AppColors.colorFF,
-                  leading: GestureDetector(
+                  leading: InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                      ),
                       onTap: () {
                         Get.back();
                       },

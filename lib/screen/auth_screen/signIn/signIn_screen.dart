@@ -164,43 +164,45 @@ class SignInScreen extends GetView<SignInController> {
                     )
                   ],
                 ),
-                Obx(() => !controller.isPageLoad.value
-                    ? GestureDetector(
-                        onTap: () {
-                          if (!controller.formLoginKey.currentState!
-                              .validate()) {
-                            print("not validate");
-                          } else {
-                            print("validateeee");
-                            controller.loginApi();
-                            // Get.back();
-                            // controller.loginApi();
-                          }
-                        },
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 80, bottom: 10),
-                            child: buttom("sign_in".tr)))
-                    : Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 80, bottom: 10),
-                        child: Container(
-                          width: Get.size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: AppColors.color7C,
-                          ),
-                          child: const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 15, bottom: 15),
-                              child: SpinKitThreeBounce(
-                                color: Colors.white,
-                                size: 20.0,
+                Obx(
+                  () => !controller.isPageLoad.value
+                      ? GestureDetector(
+                          onTap: () {
+                            if (!controller.formLoginKey.currentState!
+                                .validate()) {
+                              print("not validate");
+                            } else {
+                              print("validateeee");
+                              controller.loginApi();
+                              // Get.back();
+                              // controller.loginApi();
+                            }
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 80, bottom: 10),
+                              child: buttom("sign_in".tr)))
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 80, bottom: 10),
+                          child: Container(
+                            width: Get.size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: AppColors.color7C,
+                            ),
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                child: SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 20.0,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      )),
+                ),
 
                 /*GestureDetector(
                     onTap: () {

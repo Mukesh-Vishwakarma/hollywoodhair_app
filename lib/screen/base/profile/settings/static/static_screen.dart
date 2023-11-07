@@ -18,7 +18,10 @@ class StaticScreen extends GetView<StaticController> {
         child: AppBar(
           backgroundColor: AppColors.colorFF,
           titleSpacing: 0,
-          leading: GestureDetector(
+          leading: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+              ),
               onTap: () {
                 Get.back();
               },

@@ -32,7 +32,10 @@ class MyOrderScreen extends GetView<MyOrderController> {
           elevation: 0.4,
           titleSpacing: 0,
           backgroundColor: AppColors.colorFF,
-          leading: GestureDetector(
+          leading: InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+            ),
             onTap: () {
               Get.back();
             },

@@ -25,7 +25,10 @@ class BookingFormScreen extends GetView<BookingFormController> {
           elevation: 0.8,
           titleSpacing: 0,
           backgroundColor: AppColors.colorFF,
-          leading: GestureDetector(
+          leading: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+              ),
               onTap: () {
                 Get.back();
               },
@@ -35,7 +38,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
               )),
           title: Text('book_appointment'.tr,
               style: AppStyles.textStyle(
-                  fontSize: dimen15, weight: FontWeight.normal)),
+                  fontSize: 16.0, weight: FontWeight.normal)),
           automaticallyImplyLeading: false,
         ),
       ),
@@ -86,14 +89,16 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       Container(
                         margin:
                             const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: textFieldWithoutLabel(
-                          controller: controller.phoneNumberController,
-                          validationMsg: "phone_number".tr,
-                          text: controller.phoneNumber,
-                          hintText: 'phone_number'.tr,
-                          type: "phone number",
-                          label: true,
-                        ),
+                        child: contactNumberWithoutCountry(
+                            controller: controller.phoneNumberController,
+                            validationMsg: "phone_number".tr,
+                            text: controller.phoneNumber,
+                            hintText: 'phone_number'.tr,
+                            code: "+91",
+                            context: context
+                            // type: "phone number",
+                            // label: true,
+                            ),
                       ),
 
                       //****** age
@@ -109,13 +114,14 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       Container(
                           margin: const EdgeInsets.only(
                               left: 20, right: 20, top: 10),
-                          child: textFieldWithoutLabel(
+                          child: numberTextFields(
                             controller: controller.ageController,
                             validationMsg: "age".tr,
-                            text: controller.phoneNumber,
+                            text: controller.ageController,
                             hintText: 'age'.tr,
-                            type: "name",
-                            label: true,
+                            lengthLimit: 2
+                            // type: "name",
+                            // label: true,
                           )),
 
                       //****** gender
@@ -130,10 +136,13 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       ),
                       Container(
                         width: 100.w,
-                        margin:
-                            const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        color:AppColors.dividerColorNew,
                         child: TextFormField(
                           controller: controller.genderController,
+                          style: const TextStyle(
+                            color: AppColors.black84
+                          ),
                           readOnly: true,
                           validator: (value) {
                             if (value.toString().isEmpty) {
@@ -141,15 +150,16 @@ class BookingFormScreen extends GetView<BookingFormController> {
                             }
                             return null;
                           },
-                          onTap: () {
-                            genderBottomSheet();
-                          },
+                          // onTap: () {
+                          //   genderBottomSheet();
+                          // },
                           decoration: InputDecoration(
+                            fillColor: Colors.red,
                             isDense: false,
                             contentPadding: const EdgeInsets.all(15),
                             hintText: "gender".tr,
                             hintStyle: AppStyles.textStyle(
-                              color: AppColors.black,
+                              color: AppColors.searchHintColor,
                               fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
@@ -221,7 +231,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               contentPadding: const EdgeInsets.all(15),
                               hintText: "service".tr,
                               hintStyle: AppStyles.textStyle(
-                                color: AppColors.black,
+                                color: AppColors.searchHintColor,
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
@@ -293,7 +303,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               contentPadding: const EdgeInsets.all(15),
                               hintText: "show_room_location".tr,
                               hintStyle: AppStyles.textStyle(
-                                color: AppColors.black,
+                                color: AppColors.searchHintColor,
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
@@ -343,17 +353,25 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   if (!controller.formLoginKey.currentState!.validate()) {
                     print("not validate");
                   } else {
-                    Get.toNamed(
-                      AppPages.bookingAppointmentScreen,
-                      arguments: {
-                        'name': controller.nameController.text.trim(),
-                        'phone_number': controller.phoneNumberController.text.trim(),
-                        'age': controller.ageController.text.trim(),
-                        'gender': controller.genderController.text.trim(),
-                        'service': controller.serviceController.text.trim(),
-                        'saloon_address': controller.saloonLocationController.text.trim(),
-                      },
-                    );
+                    if(int.parse(controller.ageController.text.toString().trim()) > 10) {
+                      Get.toNamed(
+                        AppPages.bookingAppointmentScreen,
+                        arguments: {
+                          'name': controller.nameController.text.trim(),
+                          'phone_number': controller.phoneNumberController.text
+                              .trim(),
+                          'age': controller.ageController.text.trim(),
+                          'gender': controller.genderController.text.trim(),
+                          'service': controller.serviceController.text.trim(),
+                          'serviceId': controller.serviceId.toString(),
+                          'saloon_address': controller.saloonLocationController
+                              .text.trim(),
+                          'saloonId': controller.saloonLocationId.trim(),
+                        },
+                      );
+                    } else {
+                      successToastDynamic("Please enter a valid date.",AppColors.black);
+                    }
                   }
                 },
                 child: Padding(
@@ -486,13 +504,12 @@ class BookingFormScreen extends GetView<BookingFormController> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
-                      print("kzkkkxc==>${controller.saloonLocation.value}");
                       controller.saloonLocationController.text = controller
                           .allSaloonList[index].salonAddress
                           .toString();
-                      controller.saloonLocation.value =
+                      controller.saloonLocationId.value =
                           controller.allSaloonList[index].salonId.toString();
-                      print("kzkkkxc==>${controller.saloonLocation.value}");
+                      print("kzkkkxc==>${controller.saloonLocationId.value}");
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -553,9 +570,9 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   controller.saloonLocationController.text = controller
                       .searchSaloonList[index].salonAddress
                       .toString();
-                  controller.saloonLocation.value =
-                      controller.searchSaloonList[index].salonId.toString();
-                  print("kzkkkxc==>${controller.saloonLocation.value}");
+                  controller.saloonLocationId.value = controller.searchSaloonList[index].salonId.toString();
+
+                  print("kzkkkxc==>${controller.saloonLocationId.value}");
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -699,10 +716,12 @@ class BookingFormScreen extends GetView<BookingFormController> {
                               ),
                               child: Container(
                                 // height: 450,
-                                padding: const EdgeInsets.only(right: 20, top: 0),
-                                child: Obx(() => controller.isServiceSearch.value
-                                    ? serviceSearchListWidget()
-                                    : serviceListWidget()),
+                                padding:
+                                    const EdgeInsets.only(right: 20, top: 0),
+                                child: Obx(() =>
+                                    controller.isServiceSearch.value
+                                        ? serviceSearchListWidget()
+                                        : serviceListWidget()),
                               ),
                             )
                           ]),
@@ -728,7 +747,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       controller.serviceController.text = controller
                           .allServiceList[index].serviceName
                           .toString();
-                      controller.service.value =
+                      controller.serviceId.value =
                           controller.allServiceList[index].serviceId.toString();
                       Navigator.pop(context);
                     },
@@ -792,7 +811,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   controller.serviceController.text = controller
                       .searchServiceList[index].serviceName
                       .toString();
-                  controller.service.value =
+                  controller.serviceId.value =
                       controller.searchServiceList[index].serviceId.toString();
                   Navigator.pop(context);
                 },

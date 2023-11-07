@@ -12,14 +12,14 @@ class BookingFormController extends GetxController {
   var nameController = TextEditingController();
   var phoneNumberController = TextEditingController();
   var ageController = TextEditingController();
-  var genderController = TextEditingController();
+  var genderController = TextEditingController(text: "Female");
   var saloonLocationController = TextEditingController();
   var serviceController = TextEditingController();
 
   var age = "".obs;
   var name = "".obs;
-  var service = "".obs;
-  var saloonLocation = "".obs;
+  var serviceId = "".obs;
+  var saloonLocationId = "".obs;
   var phoneNumber = "".obs;
 
   var searchSaloonController = TextEditingController();
@@ -46,6 +46,7 @@ class BookingFormController extends GetxController {
 
   @override
   void onInit() {
+    pageLoaderService.value = true;
     getSaloonList();
     getServicesList();
     super.onInit();

@@ -51,6 +51,7 @@ abstract class AppColors {
   static const Color searchHintColor = Color(0xff949494);
   static const Color backGroundColor = Color(0xffFEFEFE);
   static const Color dividerColor = Color(0xffF0F0F0);
+  static const Color dividerColorNew = Color(0xfff6f5f5);
   static const Color grayDA = Color(0xffDADADA);
 
   static const Color promoborder = Color(0xffEEF1F4);

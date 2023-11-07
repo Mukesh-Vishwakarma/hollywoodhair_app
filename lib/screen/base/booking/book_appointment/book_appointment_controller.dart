@@ -1,29 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/util/common_function.dart';
+import 'package:hollywood_hair/util/route/app_pages.dart';
 import '../../../../api_provider/api_provider.dart';
 import '../../../../model/all_artist_model.dart';
 import '../../../../model/available_slots_list_model.dart';
+import '../../../../model/book_appointment_model.dart';
 
 class BookAppointmentController extends GetxController {
   var nameController = TextEditingController();
   var dateTimeController = TextEditingController();
+  final formBookingKey = GlobalKey<FormState>();
 
   var dateFocusNode = FocusNode();
 
-  var timeList = [
-    '10:00 AM',
-    '10:30 AM',
-    '11:00 AM',
-    '11:30 AM',
-    '12:00 AM',
-    '12:30 AM',
-    '01:00 AM',
-    '01:30 AM',
-    '02:00 AM'
-  ].obs;
-
   var artistName = "".obs;
+  var artistId = "".obs;
   var dateTime = "".obs;
   var selectTime = "".obs;
 
@@ -31,9 +26,10 @@ class BookAppointmentController extends GetxController {
   var age = "".obs;
   var gender = "".obs;
   var service = "".obs;
+  var serviceId = "".obs;
   var saloonLocation = "".obs;
   var phoneNumber = "".obs;
-  var saloonId = "1".obs;
+  var saloonId = "".obs;
   var timeSlot = "".obs;
   var timeSlotId = "".obs;
 
@@ -45,7 +41,11 @@ class BookAppointmentController extends GetxController {
   var allArtistList = <AllArtistData>[].obs;
   var searchArtistList = <AllArtistData>[].obs;
   var firstTimeScreen = true.obs;
+
   var availableSlotsList = <DataSlots>[].obs;
+
+  var isLoading = false.obs;
+  var isPageLoad = false.obs;
 
   @override
   void onInit() {
@@ -56,8 +56,10 @@ class BookAppointmentController extends GetxController {
       age.value = args['age'];
       gender.value = args['gender'];
       service.value = args['service'];
+      serviceId.value = args['serviceId'];
       saloonLocation.value = args['saloon_address'];
-
+      saloonId.value = args['saloonId'];
+      pageLoaderService.value = true;
       getArtistList();
     } catch (e) {
       print("jhskz==> $e");
@@ -69,7 +71,7 @@ class BookAppointmentController extends GetxController {
   /// get services list
   getArtistList() {
     Future.delayed(const Duration(seconds: 1), () {
-      getAllServicesList();
+      getAllArtistList();
       firstTimeScreen.value = false;
     });
   }
@@ -98,29 +100,33 @@ class BookAppointmentController extends GetxController {
     }
   }
 
-  getAllServicesList() async {
+  getAllArtistList() async {
     try {
-      var saloonId = "1";
+      isPageLoad.value = true;
       AllArtistModel allArtistModel =
-          await ApiProvider.booking().getAllArtistList(saloonId);
+          await ApiProvider.booking().getAllArtistList(saloonId.value);
       pageLoaderService.value = false;
       if (allArtistModel.result == 1) {
         allArtistList.value = allArtistModel.allArtistData!;
       }
       print("jhsdfxgcdhdA==> ${allArtistModel.msg}");
+      isPageLoad.value = false;
     } on HttpException catch (exception) {
       print("jdfksx==> ${exception.message}");
       pageLoaderService.value = false;
+      isPageLoad.value = false;
     } catch (exception) {
       pageLoaderService.value = false;
+      isPageLoad.value = false;
       print("jfksdmlcxkcx==> ${exception.toString()}");
     }
   }
 
-  getAvailableSlotsList(saloonId, date) async {
+  getAvailableSlotsList(date) async {
     try {
+      isLoading.value = true;
       final Map<String, dynamic> requestBody = {
-        'salon_id': saloonId,
+        'salon_id': saloonId.value,
         'date': date
       };
       print("jsdkz==> $requestBody");
@@ -131,12 +137,61 @@ class BookAppointmentController extends GetxController {
         availableSlotsList.value = availableSlotsListModel.dataSlots!;
       }
       print("jhssdfwdgcdhdA==> ${availableSlotsListModel.msg}");
+      isLoading.value = false;
     } on HttpException catch (exception) {
       print("jddfdffksx==> ${exception.message}");
       pageLoaderService.value = false;
+      isLoading.value = false;
     } catch (exception) {
       pageLoaderService.value = false;
       print("jfksddfdmlcxkcx==> ${exception.toString()}");
+      isLoading.value = false;
+    }
+  }
+
+  bookingFinal() async {
+    var date = dateTimeController.text.trim().toString();
+
+    if (timeSlotId.value != '') {
+      try {
+        isPageLoad.value = true;
+        final Map<String, dynamic> requestBody = {
+          // 'salon_id': saloonId.value,
+          'salon_id': "1",
+          'worker_id': artistId.value,
+          'customer_name': name.value,
+          'age': age.value,
+          'email': "",
+          'gender': gender.value,
+          'phone': phoneNumber.value,
+          'booking_date': date,
+          'signature': "",
+          'booking_id': "",
+        };
+        final List<String> services = [serviceId.value.toString()];
+        requestBody['services'] = services;
+        final List<String> slots = [timeSlotId.value.toString()];
+        requestBody['slots'] = slots;
+
+        print("hsdbk==> $requestBody");
+        BookAppointmentModel bookAppointmentModel =
+            await ApiProvider.booking().getFinalBookingSlots(requestBody);
+        if (bookAppointmentModel.result == 1) {
+          successToast(bookAppointmentModel.msg);
+          Get.toNamed(AppPages.successfulScreen);
+        }
+        isPageLoad.value = false;
+      } on HttpException catch (exception) {
+        print("jddfdffdksx==> ${exception.message}");
+        isPageLoad.value = false;
+        // pageLoaderService.value = false;
+      } catch (exception) {
+        // pageLoaderService.value = false;
+        print("jfksdddfdmlcxkcx==> ${exception.toString()}");
+        isPageLoad.value = false;
+      }
+    } else {
+      successToast("Please select available slots.");
     }
   }
 }

@@ -19,6 +19,8 @@ import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confi
 import 'package:hollywood_hair/screen/base/booking/booking_confirm/booking_confirm_screen.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_binding.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_screen.dart';
+import 'package:hollywood_hair/screen/base/booking/booking_successful_screen/booking_successful_binding.dart';
+import 'package:hollywood_hair/screen/base/booking/booking_successful_screen/booking_successful_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_binding.dart';
 import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_binding.dart';
@@ -245,6 +247,11 @@ class AppRoutes {
       name: AppPages.filterScreen,
       page: () => FilterProductScreen(),
       binding: FilterProductBinding(),
+    ),
+    GetPage(
+      name: AppPages.successfulScreen,
+      page: () => BookingSuccessfulScreen(),
+      binding: BookingSuccessfulBinding(),
     ),
   ];
 }

@@ -23,9 +23,11 @@ import '../model/all_artist_model.dart';
 import '../model/all_saloon_list_model.dart';
 import '../model/all_services_model.dart';
 import '../model/available_slots_list_model.dart';
+import '../model/book_appointment_model.dart';
 import '../model/change_password_model.dart';
 import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
+import '../model/my_all_book_appointment_model.dart';
 import '../model/shopify_model/delete_address_model.dart';
 import '../model/shopify_model/get_address_model.dart';
 import '../model/shopify_model/update_address_model.dart';
@@ -582,6 +584,26 @@ class ApiProvider {
     }
   }
 
+  Future getMyAllSlotsList(var status) async {
+    try {
+      Response response = await _dio.get('$strGetAllBooking/$status');
+      print("response of otp login >>>${response.data!}");
+      return MyAllBookAppointmentModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getCancelBooking(requestData) async {
+    try {
+      Response response = await _dio.post(strGetUpdateBookingStatus,data: jsonEncode(requestData));
+      print("response of otp login >>>${response.data!}");
+      return BookAppointmentModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
   Future getAllArtistList(var saloonId) async {
     try {
       Response response = await _dio.get('$strGetWorkerBySalon/$saloonId');
@@ -597,6 +619,16 @@ class ApiProvider {
       Response response =  await _dio.post(strGetAvailability, data: jsonEncode(requestData));
       print("response of otp login >>>${response.data!}");
       return AvailableSlotsListModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getFinalBookingSlots(requestData) async {
+    try {
+      Response response =  await _dio.post(strGetBooking, data: jsonEncode(requestData));
+      print("response of booking appointment  >>>${response.data!}");
+      return BookAppointmentModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

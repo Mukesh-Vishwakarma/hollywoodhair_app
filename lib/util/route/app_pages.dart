@@ -36,4 +36,5 @@ class AppPages {
   static const celebritiesDetailsScreen = '/celebrities_details_screen';
   static const celebritiesScreen = '/celebrities_screen';
   static const filterScreen = '/filter_screen';
+  static const successfulScreen = '/successful_screen';
 }

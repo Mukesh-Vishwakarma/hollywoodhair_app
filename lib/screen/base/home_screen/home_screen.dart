@@ -47,7 +47,10 @@ class HomeScreen extends GetView<HomeController> {
                   Image.asset(Assets.appNameVertical),
                 ],
               ),
-              leading: GestureDetector(
+              leading: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                ),
                 child: Container(
                   margin: const EdgeInsets.only(left: 23, right: 10),
                   child: const Image(
@@ -1195,7 +1198,7 @@ class HomeScreen extends GetView<HomeController> {
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             // scrollDirection: Axis.horizontal,
             child: Column(
               children: [

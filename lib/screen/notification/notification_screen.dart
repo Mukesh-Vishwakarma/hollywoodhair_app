@@ -17,7 +17,10 @@ class NotificationScreen extends GetView<NotificationController> {
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: AppColors.colorFF,
-          leading: GestureDetector(
+          leading: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+              ),
               onTap: () {
                 Get.back();
               },

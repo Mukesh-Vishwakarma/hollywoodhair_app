@@ -44,7 +44,7 @@ textField({controller, validationMsg, text, hintText, type, label, readOnly}) {
       contentPadding: const EdgeInsets.all(15),
       hintText: hintText,
       hintStyle: AppStyles.textStyle(
-        color: AppColors.black,
+        color: AppColors.searchHintColor,
         fontSize: 14.0,
         weight: FontWeight.normal,
       ),
@@ -108,7 +108,6 @@ textFieldWithoutLabel(
       if (value!.isEmpty) {
         return validationMsg;
       }
-
       if (type == "email") {
         if (!GetUtils.isEmail(value)) {
           return 'Invalid Email';
@@ -124,7 +123,7 @@ textFieldWithoutLabel(
       contentPadding: const EdgeInsets.all(15),
       hintText: hintText,
       hintStyle: AppStyles.textStyle(
-        color: AppColors.black,
+        color: AppColors.searchHintColor,
         fontSize: 14.0,
         weight: FontWeight.normal,
       ),
@@ -167,10 +166,8 @@ textFieldWithoutLabel(
   );
 }
 
-contactNumber(controller, validationMsg, text, hintText, code, context) {
-  return ////////Contact Number//////////
-
-      Row(
+contactNumber({controller, validationMsg, text, hintText, code, context}) {
+  return Row(
     children: [
       Expanded(
         child: Container(
@@ -184,11 +181,11 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
             ],
             validator: (value) {
               if (value!.isEmpty) {
-                return "Please Enter a Phone Number";
+                return "Please enter a phone number";
               } else if (!RegExp(
                       r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
                   .hasMatch(value)) {
-                return "Please Enter a Valid Phone Number";
+                return "Please enter a valid phone number";
               }
             },
             style: AppStyles.textStyle(
@@ -221,7 +218,7 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
                       // Optional. Sets the theme for the country list picker.
                       countryListTheme: CountryListThemeData(
                         // Optional. Sets the border radius for the bottomsheet.
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(40.0),
                           topRight: Radius.circular(40.0),
                         ),
@@ -237,7 +234,7 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
                           ),
                         ),
                         // Optional. Styles the text in the search field
-                        searchTextStyle: TextStyle(
+                        searchTextStyle: const TextStyle(
                           color: Colors.blue,
                           fontSize: 18,
                         ),
@@ -289,8 +286,13 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
                 borderSide:
                     const BorderSide(color: AppColors.grayEB, width: 0.99),
               ),
+              // errorBorder: const OutlineInputBorder(
+              //   borderSide: BorderSide(color: Colors.red, width: 0.0),
+              // ),
               errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red, width: 0.0),
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
               ),
               focusedErrorBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -313,6 +315,149 @@ contactNumber(controller, validationMsg, text, hintText, code, context) {
   );
 }
 
+contactNumberWithoutCountry(
+    {controller, validationMsg, text, hintText, code, context}) {
+  return Row(
+    children: [
+      Expanded(
+        child: TextFormField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(12),
+          ],
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please enter a phone number";
+            } else if (!RegExp(
+                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                .hasMatch(value)) {
+              return "Please enter a valid phone number";
+            }
+          },
+          style: AppStyles.textStyle(
+            fontSize: 14.0,
+            weight: FontWeight.normal,
+          ),
+          onChanged: (value) {
+            text = value;
+          },
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(15),
+            hintText: "Phone number",
+            hintStyle: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: AppColors.searchHintColor,
+            ),
+            labelStyle:
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  const BorderSide(color: AppColors.colorCD, width: 0.99),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  const BorderSide(color: AppColors.colorCD, width: 0.99),
+            ),
+            // errorBorder: const OutlineInputBorder(
+            //   borderSide: BorderSide(color: Colors.red, width: 0.0),
+            // ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Colors.grey,
+                width: 0,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+numberTextFields(
+    {controller, validationMsg, text, hintText, code, context, lengthLimit}) {
+  return Row(
+    children: [
+      Expanded(
+        child: TextFormField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(lengthLimit ?? 12),
+          ],
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please enter $hintText";
+            }
+          },
+          style: AppStyles.textStyle(
+            fontSize: 14.0,
+            weight: FontWeight.normal,
+          ),
+          onChanged: (value) {
+            text = value;
+          },
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(15),
+            hintText: "$hintText",
+            hintStyle: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: AppColors.searchHintColor,
+            ),
+            labelStyle:
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  const BorderSide(color: AppColors.colorCD, width: 0.99),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  const BorderSide(color: AppColors.colorCD, width: 0.99),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Colors.grey,
+                width: 0,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 failedToast(msg) {
   defaultToast(msg, 'Error', AppColors.color1E);
 }
@@ -325,11 +470,11 @@ defaultToast(String msg, String title, color) {
     colorText: AppColors.lightBackgroundColor,
     messageText: Text(
       msg,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
     ),
     backgroundColor: color,
-    duration: Duration(seconds: 2),
-    margin: EdgeInsets.all(20),
+    duration: const Duration(seconds: 2),
+    margin: const EdgeInsets.all(20),
     isDismissible: false,
     snackStyle: SnackStyle.FLOATING,
   );
@@ -380,6 +525,17 @@ successToast(msg) {
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
       backgroundColor: AppColors.primaryColor,
+      textColor: Colors.white,
+      fontSize: 14.0);
+}
+
+successToastDynamic(msg,Color color) {
+  return Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: color??AppColors.primaryColor,
       textColor: Colors.white,
       fontSize: 14.0);
 }
@@ -516,8 +672,8 @@ networkImageSalons({required image}) {
     fit: BoxFit.cover,
     width: 50.w,
     height: 16.h,
-    loadingBuilder: (BuildContext context, Widget child,
-        ImageChunkEvent? loadingProgress) {
+    loadingBuilder:
+        (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
       if (loadingProgress == null) {
         return child;
       }
@@ -547,15 +703,19 @@ networkImageSalons({required image}) {
   );
 }
 
-
-noDataFound(){
+noDataFound() {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Image.asset(Assets.noDataFound,height: 100,width: 100,),
-      const Text("No data found",style: TextStyle(
-          fontSize: 20
-      ),).marginOnly(top: 10),
+      Image.asset(
+        Assets.noDataFound,
+        height: 100,
+        width: 100,
+      ),
+      const Text(
+        "No data found",
+        style: TextStyle(fontSize: 20),
+      ).marginOnly(top: 10),
     ],
   ).marginOnly(bottom: 80);
 }
