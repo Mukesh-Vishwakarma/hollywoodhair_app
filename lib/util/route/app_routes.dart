@@ -21,6 +21,7 @@ import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_bin
 import 'package:hollywood_hair/screen/base/booking/booking_form/booking_form_screen.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_successful_screen/booking_successful_binding.dart';
 import 'package:hollywood_hair/screen/base/booking/booking_successful_screen/booking_successful_screen.dart';
+import 'package:hollywood_hair/screen/base/booking/reschedule_booking_screen/reschedule_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_binding.dart';
 import 'package:hollywood_hair/screen/base/home_screen/celebritiese_details_screen/celebrities_details_screen.dart';
 import 'package:hollywood_hair/screen/base/home_screen/search_product/search_product_binding.dart';
@@ -62,6 +63,7 @@ import '../../celebrities/our_celebrities_binder.dart';
 import '../../celebrities/our_celebrities_screen.dart';
 import '../../screen/base/booking/calendly_screen/calendly_binding.dart';
 import '../../screen/base/booking/calendly_screen/calendly_screen.dart';
+import '../../screen/base/booking/reschedule_booking_screen/reschedule_binding.dart';
 import '../../screen/filter_products_screen/filter_binder.dart';
 import '../../screen/filter_products_screen/filter_screen.dart';
 import '../../screen/tryOn_screen/priview_screen.dart';
@@ -252,6 +254,11 @@ class AppRoutes {
       name: AppPages.successfulScreen,
       page: () => BookingSuccessfulScreen(),
       binding: BookingSuccessfulBinding(),
+    ),
+    GetPage(
+      name: AppPages.rescheduleScreen,
+      page: () => RescheduleScreen(),
+      binding: RescheduleBinding(),
     ),
   ];
 }

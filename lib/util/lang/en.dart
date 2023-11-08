@@ -134,4 +134,11 @@ const en_US = {
 
   // Checkout
   'done': 'Done',
+  'no_data_found': 'No data found',
+  'booking_cancel': 'Booking Cancel',
+  'booking_cancel_disc': 'Are you sure you want to cancel booking?',
+  'yes': 'Yes',
+  'no': 'No',
+  'upcoming': 'Upcoming',
+  'completed': 'Completed',
 };

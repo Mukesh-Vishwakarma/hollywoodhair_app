@@ -31,6 +31,7 @@ class DataMyAllBooking {
   int? bookingId;
   int? customerId;
   int? workerId;
+  dynamic workerName;
   int? salonId;
   String? bookingDate;
   String? isConfirmed;
@@ -54,6 +55,7 @@ class DataMyAllBooking {
       {this.bookingId,
         this.customerId,
         this.workerId,
+        this.workerName,
         this.salonId,
         this.bookingDate,
         this.isConfirmed,
@@ -77,6 +79,7 @@ class DataMyAllBooking {
     bookingId = json['booking_id'];
     customerId = json['customer_id'];
     workerId = json['worker_id'];
+    workerName = json['worker_name'];
     salonId = json['salon_id'];
     bookingDate = json['booking_date'];
     isConfirmed = json['is_confirmed'];
@@ -118,6 +121,7 @@ class DataMyAllBooking {
     data['booking_id'] = this.bookingId;
     data['customer_id'] = this.customerId;
     data['worker_id'] = this.workerId;
+    data['worker_name'] = this.workerName;
     data['salon_id'] = this.salonId;
     data['booking_date'] = this.bookingDate;
     data['is_confirmed'] = this.isConfirmed;

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-
+import 'package:hollywood_hair/util/route/app_pages.dart';
 import '../../../../../model/my_all_book_appointment_model.dart';
 import '../../../../../util/common_function.dart';
 import 'my_appointment_controller.dart';
@@ -23,6 +23,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
             child: AppBar(
               backgroundColor: AppColors.colorFF,
               titleSpacing: 0,
+              elevation: 0.5,
               leading: InkWell(
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -41,35 +42,124 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
               automaticallyImplyLeading: false,
             ),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(() => !controller.pageLoaderService.value
-                    ? controller.dataMyAllBooking.isNotEmpty
-                        ? SizedBox(
-                            width: double.infinity,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              reverse: true,
-                              scrollDirection: Axis.vertical,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: controller.dataMyAllBooking.length,
-                              itemBuilder: (context, index) {
-                                return itemMyAppointments(
-                                    controller.dataMyAllBooking[index]);
-                              },
+          body: Column(
+            children: [
+              Obx(
+                () => Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        onTap: () {
+                          controller.isUpcomingCompleteStatus.value =
+                              "upcoming";
+                          controller.updateStatusLists();
+                        },
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text("upcoming".tr.toUpperCase(),
+                                  style: AppStyles.textStyle(
+                                      color: (controller
+                                                  .isUpcomingCompleteStatus
+                                                  .value ==
+                                              'upcoming')
+                                          ? AppColors.primaryColorDark
+                                          : AppColors.black,
+                                      fontSize: 15.0,
+                                      weight: FontWeight.w500)),
                             ),
-                          )
-                        : SizedBox(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: noDataFound(),
-                          )
-                    : shimmerDemo()),
-              ],
-            ),
+                            if ((controller.isUpcomingCompleteStatus.value ==
+                                'upcoming'))
+                              Container(
+                                height: 3,
+                                width: 90,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  color: AppColors.primaryColor,
+                                ),
+                              ).marginOnly(top: 4),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        onTap: () {
+                          controller.isUpcomingCompleteStatus.value =
+                              "completed";
+                          controller.updateStatusLists();
+                        },
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text("completed".tr.toUpperCase(),
+                                  style: AppStyles.textStyle(
+                                      color: (controller
+                                                  .isUpcomingCompleteStatus
+                                                  .value ==
+                                              'completed')
+                                          ? AppColors.primaryColorDark
+                                          : AppColors.black,
+                                      fontSize: 15.0,
+                                      weight: FontWeight.w500)),
+                            ),
+                            if ((controller.isUpcomingCompleteStatus.value ==
+                                'completed'))
+                              Container(
+                                height: 3,
+                                width: 90,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  color: AppColors.primaryColor,
+                                ),
+                              ).marginOnly(top: 4),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ).marginOnly(top: 10),
+              ),
+              const Divider(
+                height: 1,
+                thickness: 1.0,
+                color: AppColors.lightGrey,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Obx(() => !controller.pageLoaderService.value
+                      ? controller.dataMyAllFilter.isNotEmpty
+                          ? SizedBox(
+                              width: double.infinity,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                reverse: false,
+                                scrollDirection: Axis.vertical,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: controller.dataMyAllFilter.length,
+                                itemBuilder: (context, index) {
+                                  return itemMyAppointments(
+                                      controller.dataMyAllFilter[index],
+                                      context);
+                                },
+                              ),
+                            )
+                          : SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: noDataFound(),
+                            )
+                      : shimmerDemo()),
+                ),
+              ),
+            ],
           ),
         ),
         Obx(
@@ -88,19 +178,40 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
     );
   }
 
-  itemMyAppointments(DataMyAllBooking dataMyAllBooking) {
+  itemMyAppointments(DataMyAllBooking dataMyAllBooking, context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 30, left: 20),
-          child: Text(
-            dataMyAllBooking.bookingStatus.toString().toUpperCase(),
-            style: AppStyles.textStyle(
-              color: AppColors.gray99,
-              fontSize: 14.0,
-              weight: FontWeight.normal,
-            ),
+          child: Row(
+            children: [
+              Text(
+                dataMyAllBooking.bookingStatus.toString().toUpperCase(),
+                style: AppStyles.textStyle(
+                  color: controller.getStatusColor(
+                      status: dataMyAllBooking.bookingStatus
+                          .toString()
+                          .toUpperCase()),
+                  fontSize: 14.0,
+                  weight: FontWeight.normal,
+                ),
+              ),
+              Image.asset(
+                controller.getStatusIcon(
+                  status:
+                      dataMyAllBooking.bookingStatus.toString().toUpperCase(),
+                ),
+                height: 15,
+                width: 15,
+                color: controller.getStatusColor(
+                    status: dataMyAllBooking.bookingStatus
+                        .toString()
+                        .toUpperCase()),
+              ).marginOnly(
+                left: 5,
+              )
+            ],
           ),
         ),
         Container(
@@ -189,45 +300,46 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6, right: 8),
-                                          child: Image.asset(
-                                            Assets.user,
-                                            height: 20,
-                                            // width: 20,
+                                    if (dataMyAllBooking.workerName != null)
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 6, right: 8),
+                                            child: Image.asset(
+                                              Assets.user,
+                                              height: 20,
+                                              // width: 20,
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 6),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text("Hairstylist",
-                                                  style: AppStyles.textStyle(
-                                                      color: AppColors.gray99,
-                                                      fontSize: 14.0,
-                                                      weight:
-                                                          FontWeight.normal)),
-                                              Text(
-                                                  dataMyAllBooking
-                                                      .customer!.customerName
-                                                      .toString(),
-                                                  style: AppStyles.textStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: 14.0,
-                                                      weight: FontWeight.w500)),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Hairstylist",
+                                                    style: AppStyles.textStyle(
+                                                        color: AppColors.gray99,
+                                                        fontSize: 14.0,
+                                                        weight:
+                                                            FontWeight.normal)),
+                                                Text(
+                                                    dataMyAllBooking.workerName
+                                                        .toString(),
+                                                    style: AppStyles.textStyle(
+                                                        color: AppColors.black,
+                                                        fontSize: 14.0,
+                                                        weight:
+                                                            FontWeight.w500)),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),
@@ -331,75 +443,97 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                   ),
                 ),
 
-                const Divider(
-                  color: AppColors.colorD9,
-                  thickness: 1.0,
-                ).marginOnly(
-                  top: 10,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /*Expanded(
-                      child: Container(
-                          margin:
-                              const EdgeInsets.only(left: 0, right: 0, top: 10),
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, top: 15, bottom: 15),
-                          width: Get.size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(10.0),
-                              // topRight: Radius.circular(0.0),
-                            ),
-                            border: Border.all(
-                              color: AppColors.colorD3,
-                              // style: BorderStyle.solid,
-                              // width: 1.0,
-                            ),
-                            color: Colors.transparent,
-                            // borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Text("Reschedule",
-                                style: AppStyles.textStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14.0,
-                                    weight: FontWeight.w500)),
-                          )),
-                    ),*/
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          controller.getCancelBooking('1');
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.only(
-                                left: 0, right: 0, top: 0),
+                if (dataMyAllBooking.bookingStatus.toString().toUpperCase() !=
+                    "COMPLETED")
+                  const Divider(
+                    color: AppColors.colorD9,
+                    thickness: 1.0,
+                  ).marginOnly(
+                    top: 10,
+                  ),
+                if (dataMyAllBooking.bookingStatus.toString().toUpperCase() !=
+                    "COMPLETED")
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            if (dataMyAllBooking.salonDetails != null) {
+                              Get.toNamed(AppPages.rescheduleScreen,
+                                  arguments: {
+                                    "saloon_id": dataMyAllBooking
+                                        .salonDetails?.salonId
+                                        .toString(),
+                                    "booking_id": dataMyAllBooking.bookingId?.toString()
+                                  });
+                            } else {
+                              successToast("Some issues");
+                            }
+                          },
+                          child: Container(
                             padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 10, bottom: 15),
+                                left: 8, right: 8, top: 5, bottom: 15),
                             width: Get.size.width,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0),
                                 bottomLeft: Radius.circular(10.0),
+                                // topRight: Radius.circular(0.0),
                               ),
-                              // border: Border.all(
-                              //   color: AppColors.colorD3,
-                              // ),
                               color: Colors.transparent,
+                              // borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Center(
-                              child: Text("Cancel",
+                              child: Text("Reschedule",
                                   style: AppStyles.textStyle(
-                                      color: AppColors.primaryColor,
+                                      color: AppColors.primaryColorDark,
                                       fontSize: 14.0,
                                       weight: FontWeight.w500)),
-                            )),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                )
+                      if (dataMyAllBooking.bookingStatus
+                              .toString()
+                              .toUpperCase() !=
+                          "CANCELLED")
+                        Container(
+                          height: 32,
+                          width: 1.0,
+                          color: AppColors.colorD9,
+                        ),
+                      if (dataMyAllBooking.bookingStatus
+                              .toString()
+                              .toUpperCase() !=
+                          "CANCELLED")
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.cancelConfirmation(context,
+                                  dataMyAllBooking.bookingId.toString());
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 5, bottom: 15),
+                                width: Get.size.width,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                  ),
+                                  color: Colors.transparent,
+                                ),
+                                child: Center(
+                                  child: Text("Cancel",
+                                      style: AppStyles.textStyle(
+                                          color: AppColors.primaryColorDark,
+                                          fontSize: 14.0,
+                                          weight: FontWeight.w500)),
+                                )),
+                          ),
+                        ),
+                    ],
+                  )
               ],
             ))
       ],

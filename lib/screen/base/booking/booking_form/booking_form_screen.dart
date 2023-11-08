@@ -27,7 +27,8 @@ class BookingFormScreen extends GetView<BookingFormController> {
           backgroundColor: AppColors.colorFF,
           leading: InkWell(
               customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                borderRadius: BorderRadius.circular(
+                    50), // Set the same rounded border as Material
               ),
               onTap: () {
                 Get.back();
@@ -115,14 +116,14 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           margin: const EdgeInsets.only(
                               left: 20, right: 20, top: 10),
                           child: numberTextFields(
-                            controller: controller.ageController,
-                            validationMsg: "age".tr,
-                            text: controller.ageController,
-                            hintText: 'age'.tr,
-                            lengthLimit: 2
-                            // type: "name",
-                            // label: true,
-                          )),
+                              controller: controller.ageController,
+                              validationMsg: "age".tr,
+                              text: controller.ageController,
+                              hintText: 'age'.tr,
+                              lengthLimit: 2
+                              // type: "name",
+                              // label: true,
+                              )),
 
                       //****** gender
                       const SizedBox(
@@ -136,13 +137,12 @@ class BookingFormScreen extends GetView<BookingFormController> {
                       ),
                       Container(
                         width: 100.w,
-                        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        color:AppColors.dividerColorNew,
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
+                        color: AppColors.dividerColorNew,
                         child: TextFormField(
                           controller: controller.genderController,
-                          style: const TextStyle(
-                            color: AppColors.black84
-                          ),
+                          style: const TextStyle(color: AppColors.black84),
                           readOnly: true,
                           validator: (value) {
                             if (value.toString().isEmpty) {
@@ -353,24 +353,25 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   if (!controller.formLoginKey.currentState!.validate()) {
                     print("not validate");
                   } else {
-                    if(int.parse(controller.ageController.text.toString().trim()) > 10) {
+                    if (int.parse(
+                            controller.ageController.text.toString().trim()) >
+                        10) {
                       Get.toNamed(
                         AppPages.bookingAppointmentScreen,
                         arguments: {
                           'name': controller.nameController.text.trim(),
-                          'phone_number': controller.phoneNumberController.text
-                              .trim(),
+                          'phone_number': controller.phoneNumberController.text.trim(),
                           'age': controller.ageController.text.trim(),
                           'gender': controller.genderController.text.trim(),
                           'service': controller.serviceController.text.trim(),
                           'serviceId': controller.serviceId.toString(),
-                          'saloon_address': controller.saloonLocationController
-                              .text.trim(),
+                          'saloon_address': controller.saloonLocationController.text.trim(),
                           'saloonId': controller.saloonLocationId.trim(),
                         },
                       );
                     } else {
-                      successToastDynamic("Please enter a valid date.",AppColors.black);
+                      successToastDynamic(
+                          "Please enter a valid date.", AppColors.black);
                     }
                   }
                 },
@@ -553,7 +554,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                 })
             : Center(
                 child: NoDataScreen(
-                title: "no_country_available".tr,
+                title: "no_data_found".tr,
               )));
   }
 
@@ -570,7 +571,8 @@ class BookingFormScreen extends GetView<BookingFormController> {
                   controller.saloonLocationController.text = controller
                       .searchSaloonList[index].salonAddress
                       .toString();
-                  controller.saloonLocationId.value = controller.searchSaloonList[index].salonId.toString();
+                  controller.saloonLocationId.value =
+                      controller.searchSaloonList[index].salonId.toString();
 
                   print("kzkkkxc==>${controller.saloonLocationId.value}");
                   Navigator.pop(context);
@@ -616,7 +618,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
             })
         : Center(
             child: NoDataScreen(
-            title: "no_country_available".tr,
+            title: "no_data_found".tr,
           ));
   }
 
@@ -794,7 +796,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                 })
             : Center(
                 child: NoDataScreen(
-                title: "no_country_available".tr,
+                title: "no_data_found".tr,
               )));
   }
 
@@ -858,7 +860,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
             })
         : Center(
             child: NoDataScreen(
-            title: "no_country_available".tr,
+            title: "no_data_found".tr,
           ));
   }
 

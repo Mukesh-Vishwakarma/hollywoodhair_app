@@ -119,4 +119,5 @@ const pl_PL = {
   'Unlock_your_perfect_look': 'Descubre tu Look Perfecto',
   'book_consultation': 'Zarezerwuj konsultację',
 
+  'no_data_found': 'Brak danych',
 };

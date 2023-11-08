@@ -26,6 +26,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
               preferredSize: const Size.fromHeight(70.0),
               child: AppBar(
                 backgroundColor: AppColors.colorFF,
+                titleSpacing: 0.0,
                 leading: InkWell(
                     customBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -40,7 +41,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     )),
                 title: Text('book_appointment'.tr,
                     style: AppStyles.textStyle(
-                        fontSize: dimen15, weight: FontWeight.normal)),
+                        fontSize: 16.0, weight: FontWeight.normal)),
                 automaticallyImplyLeading: false,
               ),
             ),
@@ -148,9 +149,10 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                   await showRoundedDatePicker(
                                 context: context,
                                 description: "date_journey".tr,
-                                theme: ThemeData(primarySwatch: Colors.blue),
+                                theme: ThemeData(primarySwatch: controller.orange),
                                 height: 300,
-                                initialDate: (controller.dateTime.value.isNotEmpty)
+                                initialDate: (controller
+                                        .dateTime.value.isNotEmpty)
                                     ? DateTime.parse(controller.dateTime.value)
                                     : DateTime.now(),
                                 firstDate: DateTime(DateTime.now().year - 100),
@@ -243,62 +245,50 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                           style: AppStyles.textStyle(
                               fontSize: 14.0, weight: FontWeight.normal)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Wrap(
-                          spacing: 3.0,
-                          runSpacing: 0.0,
-                          children: List.generate(
-                            controller.availableSlotsList.length,
-                            (index) => Obx(
-                              () => GestureDetector(
-                                onTap: () {
-                                  if (controller
-                                      .availableSlotsList[index].isAvail!) {
-                                    controller.timeSlot.value = controller
-                                        .availableSlotsList[index].slotName
-                                        .toString();
-                                    controller.timeSlotId.value = controller
-                                        .availableSlotsList[index].slotId
-                                        .toString();
-                                  } else {
-                                    successToast(
-                                        "This slots is already booked.");
-                                  }
-                                },
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.only(left: 5, top: 10),
-                                  child: (Chip(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      side: BorderSide(
-                                          color: controller
+                    (controller.availableSlotsList.isNotEmpty)
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Wrap(
+                                spacing: 3.0,
+                                runSpacing: 0.0,
+                                children: List.generate(
+                                  controller.availableSlotsList.length,
+                                  (index) => Obx(
+                                    () => GestureDetector(
+                                      onTap: () {
+                                        if (controller.availableSlotsList[index]
+                                            .isAvail!) {
+                                          controller.timeSlot.value = controller
+                                              .availableSlotsList[index]
+                                              .slotName
+                                              .toString();
+                                          controller.timeSlotId.value =
+                                              controller
                                                   .availableSlotsList[index]
-                                                  .isAvail!
-                                              ? AppColors.grayDA
-                                              : AppColors.promoborder),
-                                    ),
-                                    backgroundColor: (controller
-                                                .timeSlotId.value
-                                                .toString() !=
-                                            controller.availableSlotsList[index]
-                                                .slotId
-                                                .toString())
-                                        ? controller.availableSlotsList[index]
-                                                .isAvail!
-                                            ? AppColors.backGroundColor
-                                            : AppColors.promoborder
-                                        : AppColors.primaryColor,
-                                    label: Text(
-                                      controller
-                                          .availableSlotsList[index].slotName
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          color: (controller.timeSlotId.value
+                                                  .slotId
+                                                  .toString();
+                                        } else {
+                                          successToast(
+                                              "This slots is already booked.");
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 5, top: 10),
+                                        child: (Chip(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            side: BorderSide(
+                                                color: controller
+                                                        .availableSlotsList[
+                                                            index]
+                                                        .isAvail!
+                                                    ? AppColors.grayDA
+                                                    : AppColors.promoborder),
+                                          ),
+                                          backgroundColor: (controller
+                                                      .timeSlotId.value
                                                       .toString() !=
                                                   controller
                                                       .availableSlotsList[index]
@@ -307,55 +297,89 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                               ? controller
                                                       .availableSlotsList[index]
                                                       .isAvail!
-                                                  ? Colors.black
-                                                  : AppColors.black84
-                                              : AppColors.backGroundColor),
+                                                  ? AppColors.backGroundColor
+                                                  : AppColors.promoborder
+                                              : AppColors.primaryColor,
+                                          label: Text(
+                                            controller.availableSlotsList[index]
+                                                .slotName
+                                                .toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                color: (controller
+                                                            .timeSlotId.value
+                                                            .toString() !=
+                                                        controller
+                                                            .availableSlotsList[
+                                                                index]
+                                                            .slotId
+                                                            .toString())
+                                                    ? controller
+                                                            .availableSlotsList[
+                                                                index]
+                                                            .isAvail!
+                                                        ? Colors.black
+                                                        : AppColors.black84
+                                                    : AppColors
+                                                        .backGroundColor),
+                                          ),
+                                        )),
+                                      ),
                                     ),
-                                  )),
-                                ),
-                              ),
+                                  ),
+                                ).toList()),
+                          )
+                        : SizedBox(
+                            width: 100.w,
+                            child: Align(
+                              alignment: Alignment.center,
+                              // child: const Text('No slots found').marginOnly(top: 50),
                             ),
-                          ).toList()),
-                    ),
+                          ),
                     const SizedBox(
                       height: 20,
                     ),
-                Obx(
+                    Obx(
                       () => !controller.isPageLoad.value
-                      ? GestureDetector(
-                      onTap: () {
-                        if (!controller.formBookingKey.currentState!
-                            .validate()) {
-                          print("not validate");
-                        } else {
-                          controller.bookingFinal();
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 80, bottom: 10),
-                        child: buttom("Book appointment"),
-                      ),
-                    ): Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 80, bottom: 10),
-                      child: Container(
-                        width: Get.size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: AppColors.color7C,
-                        ),
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 15, bottom: 15),
-                            child: SpinKitThreeBounce(
-                              color: Colors.white,
-                              size: 20.0,
+                          ? GestureDetector(
+                              onTap: () {
+                                if (!controller.formBookingKey.currentState!
+                                    .validate()) {
+                                  print("not validate");
+                                } else {
+                                  controller.bookingFinal();
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 80, bottom: 10),
+                                child: buttom("Book appointment"),
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 80, bottom: 10),
+                              child: Container(
+                                width: Get.size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: AppColors.color7C,
+                                ),
+                                child: const Center(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 15, bottom: 15),
+                                    child: SpinKitThreeBounce(
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -556,7 +580,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                   })
               : Center(
                   child: NoDataScreen(
-                    title: "no_country_available".tr,
+                    title: "no_data_found".tr,
                   ),
                 ),
     );
@@ -622,7 +646,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
             })
         : Center(
             child: NoDataScreen(
-            title: "no_country_available".tr,
+            title: "no_data_found".tr,
           ));
   }
 }

@@ -11,9 +11,30 @@ import '../../../../model/available_slots_list_model.dart';
 import '../../../../model/book_appointment_model.dart';
 
 class BookAppointmentController extends GetxController {
+
+  static const int _orangePrimaryValue = 0xffEBADB7;
+  MaterialColor orange = const MaterialColor(
+    _orangePrimaryValue,
+    <int, Color>{
+      50: Color(0xffEBADB7),
+      100: Color(0xffEBADB7),
+      200: Color(0xffEBADB7),
+      300: Color(0xffEBADB7),
+      400: Color(0xffEBADB7),
+      500: Color(_orangePrimaryValue),
+      600: Color(0xffEBADB7),
+      700: Color(0xffEBADB7),
+      800: Color(0xffEBADB7),
+      900: Color(0xffEBADB7),
+    },
+  );
+
+
+
   var nameController = TextEditingController();
   var dateTimeController = TextEditingController();
   final formBookingKey = GlobalKey<FormState>();
+
 
   var dateFocusNode = FocusNode();
 
@@ -141,10 +162,13 @@ class BookAppointmentController extends GetxController {
     } on HttpException catch (exception) {
       print("jddfdffksx==> ${exception.message}");
       pageLoaderService.value = false;
+      successToast("Network issue");
       isLoading.value = false;
     } catch (exception) {
       pageLoaderService.value = false;
+      availableSlotsList.clear();
       print("jfksddfdmlcxkcx==> ${exception.toString()}");
+      successToast("Network issue");
       isLoading.value = false;
     }
   }

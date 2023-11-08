@@ -37,4 +37,5 @@ class AppPages {
   static const celebritiesScreen = '/celebrities_screen';
   static const filterScreen = '/filter_screen';
   static const successfulScreen = '/successful_screen';
+  static const rescheduleScreen = '/reschedule_screen';
 }

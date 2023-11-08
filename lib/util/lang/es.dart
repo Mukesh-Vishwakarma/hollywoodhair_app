@@ -117,4 +117,6 @@ const es_SP = {
   'Book_in_Store_appointment': 'Zarezerwuj termin w sklepie stacjonarnym',
   'Unlock_your_perfect_look': 'Odblokuj swój idealny wygląd',
   'book_consultation': 'Reservar consulta',
+
+  'no_data_found': 'No se encontraron datos',
 };

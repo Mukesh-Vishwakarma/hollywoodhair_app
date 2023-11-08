@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hollywood_hair/screen/base/profile/settings/my_appointment/my_appointment_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
@@ -124,6 +125,7 @@ class ProfileScreen extends GetView<ProfileController> {
               InkWell(
                 splashColor: Colors.transparent,
                 onTap: () {
+                  // Get.put(MyAppointmentController());
                   Get.toNamed(AppPages.myAppointmentScreen);
                 },
                 child: Padding(

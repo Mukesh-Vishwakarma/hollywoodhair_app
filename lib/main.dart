@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark));
     return ResponsiveSizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
+        
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
         themeMode: ThemeService().theme,
