@@ -65,7 +65,7 @@ class BookAppointmentController extends GetxController {
 
   var availableSlotsList = <DataSlots>[].obs;
 
-  var isLoading = false.obs;
+  var isLoading = true.obs;
   var isPageLoad = false.obs;
 
   @override
@@ -123,7 +123,7 @@ class BookAppointmentController extends GetxController {
 
   getAllArtistList() async {
     try {
-      isPageLoad.value = true;
+      isLoading.value = true;
       AllArtistModel allArtistModel =
           await ApiProvider.booking().getAllArtistList(saloonId.value);
       pageLoaderService.value = false;
@@ -131,14 +131,14 @@ class BookAppointmentController extends GetxController {
         allArtistList.value = allArtistModel.allArtistData!;
       }
       print("jhsdfxgcdhdA==> ${allArtistModel.msg}");
-      isPageLoad.value = false;
+      isLoading.value = false;
     } on HttpException catch (exception) {
       print("jdfksx==> ${exception.message}");
       pageLoaderService.value = false;
-      isPageLoad.value = false;
+      isLoading.value = false;
     } catch (exception) {
       pageLoaderService.value = false;
-      isPageLoad.value = false;
+      isLoading.value = false;
       print("jfksdmlcxkcx==> ${exception.toString()}");
     }
   }

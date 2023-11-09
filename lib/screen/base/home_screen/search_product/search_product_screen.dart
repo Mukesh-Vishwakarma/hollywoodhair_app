@@ -9,6 +9,7 @@ import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
+import '../../../../util/common_function.dart';
 import 'search_product_controller.dart';
 
 class SearchProductScreen extends GetView<SearchProductController> {
@@ -208,17 +209,45 @@ class SearchProductScreen extends GetView<SearchProductController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // SizedBox(
+                  //   child: IntrinsicWidth(
+                  //     child: Text(
+                  //       item.title,
+                  //       style: AppStyles.textStyle(
+                  //         fontSize: 13.0,
+                  //         weight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     child: IntrinsicWidth(
-                      child: Text(
-                        item.title,
-                        style: AppStyles.textStyle(
-                          fontSize: 13.0,
-                          weight: FontWeight.w500,
-                        ),
+                      child:
+                      FutureBuilder<String>(
+                        future: translate(item.title,controller.translationService),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasData) {
+                              return Text(
+                                snapshot.data!,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppStyles.textStyle(
+                                  weight: FontWeight.w500,
+                                  fontSize: 14.0,
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              // Handle error
+                              return Text('Error: ${snapshot.error}');
+                            }
+                          }
+                          return Container();
+                        },
                       ),
                     ),
                   ),
+
+
                   const SizedBox(height: 10),
                   Text(
                     item.formattedPrice,

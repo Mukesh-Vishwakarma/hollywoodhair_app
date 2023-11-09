@@ -42,7 +42,12 @@ class BookingFormController extends GetxController {
   var genderList = ['Male', 'Female'].obs;
   var gender = "".obs;
   var checkGender = false.obs;
+
   // var isGender = ''.obs;
+
+  var isLoading = true.obs;
+  var isSaloonDataStatus = true.obs;
+  var isServiceDataStatus = true.obs;
 
   @override
   void onInit() {
@@ -88,15 +93,21 @@ class BookingFormController extends GetxController {
     try {
       AllSaloonListModel allSaloonListModel =
           await ApiProvider.base().getAllSaloonList();
-      pageLoaderSalon.value = false;
       if (allSaloonListModel.result == 1) {
         allSaloonList.value = allSaloonListModel.saloonData!;
       }
       print("jhsdA==> ${allSaloonListModel.msg}");
+      pageLoaderSalon.value = false;
+      isSaloonDataStatus.value = false;
+      isDataLoaded();
     } on HttpException catch (exception) {
       print(exception.message);
+      isSaloonDataStatus.value = false;
+      isDataLoaded();
     } catch (exception) {
       pageLoaderSalon.value = false;
+      isSaloonDataStatus.value = false;
+      isDataLoaded();
       print(exception.toString());
     }
   }
@@ -136,18 +147,31 @@ class BookingFormController extends GetxController {
   getAllServicesList() async {
     try {
       var lan = "en";
-      AllServicesModel allServicesModel = await ApiProvider.booking().getAllServicesList(lan);
+      AllServicesModel allServicesModel =
+          await ApiProvider.booking().getAllServicesList(lan);
       pageLoaderService.value = false;
       if (allServicesModel.result == 1) {
         allServiceList.value = allServicesModel.dataServices!;
       }
       print("jhsdfxgcdhdA==> ${allServicesModel.msg}");
+      isServiceDataStatus.value = false;
+      isDataLoaded();
     } on HttpException catch (exception) {
       print(exception.message);
       pageLoaderService.value = false;
+      isServiceDataStatus.value = false;
+      isDataLoaded();
     } catch (exception) {
       pageLoaderService.value = false;
+      isServiceDataStatus.value = false;
+      isDataLoaded();
       print(exception.toString());
+    }
+  }
+
+  isDataLoaded() {
+    if (!isSaloonDataStatus.value && !isServiceDataStatus.value) {
+      isLoading.value = false;
     }
   }
 }

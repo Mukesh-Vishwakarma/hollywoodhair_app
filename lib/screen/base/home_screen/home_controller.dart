@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:hollywood_hair/model/all_saloon_list_model.dart';
 import 'package:hollywood_hair/model/press_model.dart';
 import 'package:hollywood_hair/model/shopify_model/category_model.dart';
@@ -13,7 +15,9 @@ import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../api_provider/api_provider.dart';
 import '../../../model/celebrities_model.dart';
+import '../../../translater_service/translatter_service.dart';
 import '../../../util/app_colors.dart';
+import '../../../util/app_constants.dart';
 import '../../../util/assets.dart';
 import '../../product_details/product_details_controller.dart';
 import '../../../model/featured_products_model.dart';
@@ -62,6 +66,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   List<String> items = List.generate(10, (index) => 'Item $index');
   bool canJumpToFirstPosition = false;
   var isLoading = false.obs;
+
+  final TranslationService translationService = TranslationService();
 
   @override
   void onInit() {
@@ -626,8 +632,40 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       autoScroll();
     });
   }
+
   Future<void> delayedFunction() async {
     await Future.delayed(const Duration(seconds: 2));
     isLoading.value = false;
+  }
+
+  Future<TranslateLanguage> getLanguage() async {
+    final languageCode = GetStorage().read(AppConstants.languageCode);
+    if (languageCode != null) {
+      if (languageCode == "English") {
+        return TranslateLanguage.english;
+      } else if (languageCode == "Polski") {
+        return TranslateLanguage.polish;
+      } else {
+        return TranslateLanguage.spanish;
+      }
+    } else {
+      return TranslateLanguage.polish;
+    }
+  }
+
+  Future<String> translate(test) async {
+    final targetLanguage =
+    await getLanguage(); // Wait for getLanguage() to complete.
+
+    final translatedText =
+    await translationService.translate(test, targetLanguage);
+
+    if (translatedText != null) {
+      print("Translated Text: $translatedText");
+      return translatedText;
+    } else {
+      print("Translation failed ");
+      return "inputWord";
+    }
   }
 }

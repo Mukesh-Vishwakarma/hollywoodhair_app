@@ -42,6 +42,9 @@ class ProductDetailsController extends GetxController
 
   var targetLanguage = TranslateLanguage.polish.obs;
 
+  var htmlDescription = "".obs;
+  var productTitle = "".obs;
+
   @override
   Future<void> onInit() async {
     productId.value = Get.arguments['product_id'] ?? "";
@@ -89,6 +92,11 @@ class ProductDetailsController extends GetxController
       List<Product>? _products =
           await shopifyStore.getProductsByIds([productId.value]);
       products.value = _products!;
+
+      productTitle.value = await translate(products.value[0].title.toString());
+      String originalString = await translate(products[0].descriptionHtml!.toString());
+      htmlDescription.value = originalString.replaceAll('/ ', '/'); // Replace '/' with a space
+
       dataIsLoading.value = false;
     } catch (e) {
       dataIsLoading.value = false;
@@ -239,8 +247,7 @@ class ProductDetailsController extends GetxController
   }
 
   Future<String> translate(test) async {
-    final targetLanguage =
-        await getLanguage(); // Wait for getLanguage() to complete.
+    final targetLanguage = await getLanguage(); // Wait for getLanguage() to complete.
 
     final translatedText =
         await translationService.translate(test, targetLanguage);

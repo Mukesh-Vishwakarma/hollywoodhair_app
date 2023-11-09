@@ -9,6 +9,7 @@ import 'package:hollywood_hair/util/no_data.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../util/common_function.dart';
 import '../../util/theme_service.dart';
 import 'all_product_controller.dart';
 
@@ -134,13 +135,35 @@ class AllProductScreen extends GetView<AllProductController> {
                       ? controller.products[index].image.toString()
                       : Assets.upload ?? "")),
           const SizedBox(height: 10),
-          Text(
-            controller.products[index].title.toString(),
-            overflow: TextOverflow.ellipsis,
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
+          // Text(
+          //   controller.products[index].title.toString(),
+          //   overflow: TextOverflow.ellipsis,
+          //   style: AppStyles.textStyle(
+          //     weight: FontWeight.w500,
+          //     fontSize: 14.0,
+          //   ),
+          // ),
+
+          FutureBuilder<String>(
+            future: translate(controller.products[index].title.toString(),controller.translationService),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return Text(
+                    snapshot.data!,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  // Handle error
+                  return Text('Error: ${snapshot.error}');
+                }
+              }
+              return Container();
+            },
           ),
           Row(
             children: [

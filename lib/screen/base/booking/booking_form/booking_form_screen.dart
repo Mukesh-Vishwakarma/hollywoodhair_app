@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/common_function.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../util/no_data.dart';
@@ -18,373 +18,389 @@ class BookingFormScreen extends GetView<BookingFormController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(7.h),
-        child: AppBar(
-          elevation: 0.8,
-          titleSpacing: 0,
-          backgroundColor: AppColors.colorFF,
-          leading: InkWell(
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                    50), // Set the same rounded border as Material
-              ),
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: AppColors.black,
-              )),
-          title: Text('book_appointment'.tr,
-              style: AppStyles.textStyle(
-                  fontSize: 16.0, weight: FontWeight.normal)),
-          automaticallyImplyLeading: false,
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Form(
-                key: controller.formLoginKey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(7.h),
+            child: AppBar(
+              elevation: 0.8,
+              titleSpacing: 0,
+              backgroundColor: AppColors.colorFF,
+              leading: InkWell(
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        50), // Set the same rounded border as Material
+                  ),
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.black,
+                  )),
+              title: Text('book_appointment'.tr,
+                  style: AppStyles.textStyle(
+                      fontSize: 16.0, weight: FontWeight.normal)),
+              automaticallyImplyLeading: false,
+            ),
+          ),
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Form(
+                    key: controller.formLoginKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
 
-                      //****** name
+                          //****** name
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("name".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                        margin:
-                            const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: textFieldWithoutLabel(
-                          controller: controller.nameController,
-                          validationMsg: "plz_enter_name".tr,
-                          text: controller.name,
-                          hintText: 'name'.tr,
-                          type: "name",
-                          label: true,
-                        ),
-                      ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("name".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.only(left: 20, right: 20, top: 10),
+                            child: textFieldWithoutLabel(
+                              controller: controller.nameController,
+                              validationMsg: "plz_enter_name".tr,
+                              text: controller.name,
+                              hintText: 'name'.tr,
+                              type: "name",
+                              label: true,
+                            ),
+                          ),
 
-                      //****** phone number
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("phone_number".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                        margin:
-                            const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: contactNumberWithoutCountry(
-                            controller: controller.phoneNumberController,
-                            validationMsg: "phone_number".tr,
-                            text: controller.phoneNumber,
-                            hintText: 'phone_number'.tr,
-                            code: "+91",
-                            context: context
-                            // type: "phone number",
-                            // label: true,
-                            ),
-                      ),
+                          //****** phone number
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("phone_number".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                            margin:
+                                const EdgeInsets.only(left: 20, right: 20, top: 10),
+                            child: contactNumberWithoutCountry(
+                                controller: controller.phoneNumberController,
+                                validationMsg: "phone_number".tr,
+                                text: controller.phoneNumber,
+                                hintText: 'phone_number'.tr,
+                                code: "+91",
+                                context: context
+                                // type: "phone number",
+                                // label: true,
+                                ),
+                          ),
 
-                      //****** age
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("age".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 20, top: 10),
-                          child: numberTextFields(
-                              controller: controller.ageController,
-                              validationMsg: "age".tr,
-                              text: controller.ageController,
-                              hintText: 'age'.tr,
-                              lengthLimit: 2
-                              // type: "name",
-                              // label: true,
-                              )),
+                          //****** age
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("age".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10),
+                              child: numberTextFields(
+                                  controller: controller.ageController,
+                                  validationMsg: "age".tr,
+                                  text: controller.ageController,
+                                  hintText: 'age'.tr,
+                                  lengthLimit: 2
+                                  // type: "name",
+                                  // label: true,
+                                  )),
 
-                      //****** gender
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("gender".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                        width: 100.w,
-                        margin:
-                            const EdgeInsets.only(left: 20, right: 20, top: 10),
-                        color: AppColors.dividerColorNew,
-                        child: TextFormField(
-                          controller: controller.genderController,
-                          style: const TextStyle(color: AppColors.black84),
-                          readOnly: true,
-                          validator: (value) {
-                            if (value.toString().isEmpty) {
-                              return "gender".tr;
-                            }
-                            return null;
-                          },
-                          // onTap: () {
-                          //   genderBottomSheet();
-                          // },
-                          decoration: InputDecoration(
-                            fillColor: Colors.red,
-                            isDense: false,
-                            contentPadding: const EdgeInsets.all(15),
-                            hintText: "gender".tr,
-                            hintStyle: AppStyles.textStyle(
-                              color: AppColors.searchHintColor,
-                              fontSize: 14.0,
-                              weight: FontWeight.normal,
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Image.asset(
-                                Assets.dropDown,
-                              ),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.colorCD, width: 0.99),
-                            ),
-                            errorBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              ),
-                            ),
-                            focusedErrorBorder: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.colorCD, width: 0.99),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 0,
+                          //****** gender
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("gender".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                            width: 100.w,
+                            margin:
+                                const EdgeInsets.only(left: 20, right: 20, top: 10),
+                            color: AppColors.dividerColorNew,
+                            child: TextFormField(
+                              controller: controller.genderController,
+                              style: const TextStyle(color: AppColors.black84),
+                              readOnly: true,
+                              validator: (value) {
+                                if (value.toString().isEmpty) {
+                                  return "gender".tr;
+                                }
+                                return null;
+                              },
+                              // onTap: () {
+                              //   genderBottomSheet();
+                              // },
+                              decoration: InputDecoration(
+                                fillColor: Colors.red,
+                                isDense: false,
+                                contentPadding: const EdgeInsets.all(15),
+                                hintText: "gender".tr,
+                                hintStyle: AppStyles.textStyle(
+                                  color: AppColors.searchHintColor,
+                                  fontSize: 14.0,
+                                  weight: FontWeight.normal,
+                                ),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.asset(
+                                    Assets.dropDown,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: AppColors.colorCD, width: 0.99),
+                                ),
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                focusedErrorBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: AppColors.colorCD, width: 0.99),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 0,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      //****** service
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("service".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 20, top: 10),
-                          child: TextFormField(
-                            controller: controller.serviceController,
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return "service".tr;
-                              }
-                              return null;
-                            },
-                            onTap: () {
-                              servicePickerBottomSheet();
-                            },
-                            decoration: InputDecoration(
-                              isDense: false,
-                              contentPadding: const EdgeInsets.all(15),
-                              hintText: "service".tr,
-                              hintStyle: AppStyles.textStyle(
-                                color: AppColors.searchHintColor,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(
-                                  Assets.dropDown,
+                          //****** service
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("service".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10),
+                              child: TextFormField(
+                                controller: controller.serviceController,
+                                readOnly: true,
+                                validator: (value) {
+                                  if (value.toString().isEmpty) {
+                                    return "service".tr;
+                                  }
+                                  return null;
+                                },
+                                onTap: () {
+                                  servicePickerBottomSheet();
+                                },
+                                decoration: InputDecoration(
+                                  isDense: false,
+                                  contentPadding: const EdgeInsets.all(15),
+                                  hintText: "service".tr,
+                                  hintStyle: AppStyles.textStyle(
+                                    color: AppColors.searchHintColor,
+                                    fontSize: 14.0,
+                                    weight: FontWeight.normal,
+                                  ),
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Image.asset(
+                                      Assets.dropDown,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.colorCD, width: 0.99),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.colorCD, width: 0.99),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Colors.grey,
+                                      width: 0,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 0,
-                                ),
-                              ),
-                            ),
-                          )),
+                              )),
 
-                      //****** service
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("show_room_location".tr,
-                            style: AppStyles.textStyle(
-                                fontSize: 14.0, weight: FontWeight.normal)),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 20, top: 10),
-                          child: TextFormField(
-                            controller: controller.saloonLocationController,
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return "show_room_location".tr;
-                              }
-                              return null;
+                          //****** service
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text("show_room_location".tr,
+                                style: AppStyles.textStyle(
+                                    fontSize: 14.0, weight: FontWeight.normal)),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10),
+                              child: TextFormField(
+                                controller: controller.saloonLocationController,
+                                readOnly: true,
+                                validator: (value) {
+                                  if (value.toString().isEmpty) {
+                                    return "show_room_location".tr;
+                                  }
+                                  return null;
+                                },
+                                onTap: () {
+                                  saloonPickerBottomSheet();
+                                },
+                                decoration: InputDecoration(
+                                  isDense: false,
+                                  contentPadding: const EdgeInsets.all(15),
+                                  hintText: "show_room_location".tr,
+                                  hintStyle: AppStyles.textStyle(
+                                    color: AppColors.searchHintColor,
+                                    fontSize: 14.0,
+                                    weight: FontWeight.normal,
+                                  ),
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Image.asset(
+                                      Assets.dropDown,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.colorCD, width: 0.99),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.colorCD, width: 0.99),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Colors.grey,
+                                      width: 0,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ])),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      if (!controller.formLoginKey.currentState!.validate()) {
+                        print("not validate");
+                      } else {
+                        if (int.parse(
+                                controller.ageController.text.toString().trim()) >
+                            10) {
+                          Get.toNamed(
+                            AppPages.bookingAppointmentScreen,
+                            arguments: {
+                              'name': controller.nameController.text.trim(),
+                              'phone_number': controller.phoneNumberController.text.trim(),
+                              'age': controller.ageController.text.trim(),
+                              'gender': controller.genderController.text.trim(),
+                              'service': controller.serviceController.text.trim(),
+                              'serviceId': controller.serviceId.toString(),
+                              'saloon_address': controller.saloonLocationController.text.trim(),
+                              'saloonId': controller.saloonLocationId.trim(),
                             },
-                            onTap: () {
-                              saloonPickerBottomSheet();
-                            },
-                            decoration: InputDecoration(
-                              isDense: false,
-                              contentPadding: const EdgeInsets.all(15),
-                              hintText: "show_room_location".tr,
-                              hintStyle: AppStyles.textStyle(
-                                color: AppColors.searchHintColor,
-                                fontSize: 14.0,
-                                weight: FontWeight.normal,
-                              ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(
-                                  Assets.dropDown,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.colorCD, width: 0.99),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 0,
-                                ),
-                              ),
-                            ),
-                          )),
-                    ])),
-            const SizedBox(
-              height: 20,
+                          );
+                        } else {
+                          successToastDynamic(
+                              "Please enter a valid date.", AppColors.black);
+                        }
+                      }
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 80, bottom: 10),
+                        child: buttom("next".tr))),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
-            GestureDetector(
-                onTap: () {
-                  if (!controller.formLoginKey.currentState!.validate()) {
-                    print("not validate");
-                  } else {
-                    if (int.parse(
-                            controller.ageController.text.toString().trim()) >
-                        10) {
-                      Get.toNamed(
-                        AppPages.bookingAppointmentScreen,
-                        arguments: {
-                          'name': controller.nameController.text.trim(),
-                          'phone_number': controller.phoneNumberController.text.trim(),
-                          'age': controller.ageController.text.trim(),
-                          'gender': controller.genderController.text.trim(),
-                          'service': controller.serviceController.text.trim(),
-                          'serviceId': controller.serviceId.toString(),
-                          'saloon_address': controller.saloonLocationController.text.trim(),
-                          'saloonId': controller.saloonLocationId.trim(),
-                        },
-                      );
-                    } else {
-                      successToastDynamic(
-                          "Please enter a valid date.", AppColors.black);
-                    }
-                  }
-                },
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 80, bottom: 10),
-                    child: buttom("next".tr))),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+          ),
         ),
-      ),
+        Obx(
+              () => Visibility(
+            visible: controller.isLoading.value,
+            child: Container(
+              color: AppColors.transparentBlack,
+              child: const SpinKitFadingCircle(
+                color: Colors.white,
+                size: 70.0,
+              ).marginOnly(top: 70),
+            ),
+          ),
+        )
+      ],
     );
   }
 

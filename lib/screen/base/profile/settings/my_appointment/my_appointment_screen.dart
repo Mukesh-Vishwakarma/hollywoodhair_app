@@ -51,6 +51,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                     Expanded(
                       child: InkWell(
                         splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () {
                           controller.isUpcomingCompleteStatus.value =
                               "upcoming";
@@ -68,7 +69,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                           ? AppColors.primaryColorDark
                                           : AppColors.black,
                                       fontSize: 15.0,
-                                      weight: FontWeight.w500)),
+                                      weight: FontWeight.w500)).marginOnly(bottom: 5),
                             ),
                             if ((controller.isUpcomingCompleteStatus.value ==
                                 'upcoming'))
@@ -81,14 +82,15 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                       topRight: Radius.circular(10)),
                                   color: AppColors.primaryColor,
                                 ),
-                              ).marginOnly(top: 4),
+                              ),
                           ],
-                        ),
+                        ).marginOnly(top: 10),
                       ),
                     ),
                     Expanded(
                       child: InkWell(
                         splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () {
                           controller.isUpcomingCompleteStatus.value =
                               "completed";
@@ -106,7 +108,7 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                           ? AppColors.primaryColorDark
                                           : AppColors.black,
                                       fontSize: 15.0,
-                                      weight: FontWeight.w500)),
+                                      weight: FontWeight.w500)).marginOnly(bottom: 5),
                             ),
                             if ((controller.isUpcomingCompleteStatus.value ==
                                 'completed'))
@@ -119,13 +121,13 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                                       topRight: Radius.circular(10)),
                                   color: AppColors.primaryColor,
                                 ),
-                              ).marginOnly(top: 4),
+                              ),
                           ],
-                        ),
+                        ).marginOnly(top: 10),
                       ),
                     ),
                   ],
-                ).marginOnly(top: 10),
+                ),
               ),
               const Divider(
                 height: 1,
@@ -458,15 +460,22 @@ class MyAppointmentScreen extends GetView<MyAppointmentController> {
                     children: [
                       Expanded(
                         child: InkWell(
-                          onTap: () {
+                          onTap: () async {
                             if (dataMyAllBooking.salonDetails != null) {
-                              Get.toNamed(AppPages.rescheduleScreen,
+                              var result = await Get.toNamed(AppPages.rescheduleScreen,
                                   arguments: {
-                                    "saloon_id": dataMyAllBooking
-                                        .salonDetails?.salonId
-                                        .toString(),
+                                    // "saloon_id": dataMyAllBooking
+                                    //     .salonDetails?.salonId
+                                    //     .toString(),
+
+                                    "saloon_id": '1',
                                     "booking_id": dataMyAllBooking.bookingId?.toString()
                                   });
+                              print("dsvb==>- $result");
+                              if(result=="Successful"){
+                                controller.isLoading.value = true;
+                                controller.getAllServicesList();
+                              }
                             } else {
                               successToast("Some issues");
                             }

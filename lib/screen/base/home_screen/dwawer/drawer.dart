@@ -108,7 +108,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                 const SizedBox(
                   height: 17,
                 ),
-                InkWell(
+                /*InkWell(
                   onTap: () {
                     Get.toNamed(AppPages.celebritiesScreen);
                   },
@@ -132,7 +132,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                 ),
                 const SizedBox(
                   height: 17,
-                ),
+                ),*/
                 InkWell(
                   onTap: () {
                     Get.toNamed(AppPages.contactScreen);

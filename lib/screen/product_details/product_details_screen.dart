@@ -9,7 +9,6 @@ import 'package:hollywood_hair/screen/base/cart_screen/cart_controller.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
 import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
@@ -35,7 +34,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             backgroundColor: AppColors.colorFF,
             leading: InkWell(
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                  borderRadius: BorderRadius.circular(
+                      50), // Set the same rounded border as Material
                 ),
                 onTap: () {
                   Get.back();
@@ -44,7 +44,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
-            title: Text("Product details",
+            title: Text("product_details".tr,
                 style: AppStyles.textStyle(
                     fontSize: 18.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
@@ -58,7 +58,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               //     child: SvgPicture.asset(Assets.favouriteIcon),
               //   ),
               // ),
-              *//* InkWell(
+              */ /* InkWell(
                 onTap: () {
                   // controller.addToCartUpdateAddress();
                 },
@@ -75,7 +75,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: SvgPicture.asset(Assets.notificationIcon),
                 ),
-              ),*//*
+              ),*/ /*
             ],*/
           ),
         ),
@@ -170,14 +170,13 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
 
-                              Obx(() => controller.products.value[0].title !=
-                                      null
+                              Obx(() => controller.products.value[0].title != null
                                   ? Padding(
                                       padding: const EdgeInsets.only(
                                           left: 15, right: 15, top: 10),
                                       child: Text(
-                                        controller.products.value[0].title ??
-                                            "",
+                                        controller.productTitle.value,
+                                        // controller.products.value[0].title,
                                         style: AppStyles.textStyle(
                                           weight: FontWeight.w500,
                                           fontSize: 16.0,
@@ -281,10 +280,10 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                     padding: const EdgeInsets.only(
                                         left: 15, right: 15, top: 0),
                                     child: Text(
-                                      "Product Details",
-                                      style: AppStyles.textStyle(
-                                        weight: FontWeight.w500,
-                                        fontSize: dimen15,
+                                      "product_details".tr,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
                                       ),
                                     ),
                                   ),
@@ -313,43 +312,21 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                               children: [
                                                 const SizedBox(height: 8),
                                                 FutureBuilder<List<String>>(
-                                                  future: Future.wait(paragraph
-                                                      .children
-                                                      .map((textInfo) {
-                                                    return controller.translate(
-                                                        textInfo.value);
+                                                  future: Future.wait(paragraph.children.map((textInfo) {
+                                                    return controller.translate(textInfo.value);
                                                   })),
                                                   builder: (context, snapshot) {
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState.done) {
-                                                      final translatedTexts =
-                                                          snapshot.data ??
-                                                              []; // List of translated texts.
-                                                      final concatenatedText =
-                                                          translatedTexts.join(
-                                                              ''); // Join the translated texts with no spaces in between.
+                                                    if (snapshot.connectionState == ConnectionState.done) {
+                                                      final translatedTexts = snapshot.data ?? []; // List of translated texts.
+                                                      final concatenatedText = translatedTexts.join(''); // Join the translated texts with no spaces in between.
 
                                                       final textSpans =
                                                           <TextSpan>[];
-                                                      for (int i = 0;
-                                                          i <
-                                                              paragraph.children
-                                                                  .length;
-                                                          i++) {
-                                                        final textInfo =
-                                                            paragraph
-                                                                .children[i];
-                                                        final translatedText =
-                                                            translatedTexts[i];
+                                                      for (int i = 0; i < paragraph.children.length; i++) {
+                                                        final textInfo = paragraph.children[i];
+                                                        final translatedText = translatedTexts[i];
 
-                                                        final fontWeight =
-                                                            textInfo.bold ??
-                                                                    false
-                                                                ? FontWeight
-                                                                    .bold
-                                                                : FontWeight
-                                                                    .normal;
+                                                        final fontWeight = textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal;
 
                                                         textSpans.add(
                                                           TextSpan(
@@ -364,7 +341,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                                           ),
                                                         );
                                                       }
-
                                                       return RichText(
                                                         text: TextSpan(
                                                           style: DefaultTextStyle
@@ -399,10 +375,10 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10),
                                 child: Text(
-                                  "OPIS".tr,
-                                  style: AppStyles.textStyle(
-                                    weight: FontWeight.w500,
-                                    fontSize: dimen15,
+                                  "OPIS:".tr,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15
                                   ),
                                 ),
                               ),
@@ -411,11 +387,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 padding: const EdgeInsets.only(
                                     left: 10, right: 10, top: 0),
                                 child: Html(
-                                  data: controller.products[0].descriptionHtml!,
-                                  // style: AppStyles.textStyle(
-                                  //   weight: FontWeight.w500,
-                                  //   fontSize: dimen15,
-                                  // ),
+                                  data: controller.htmlDescription.value,
                                 ),
                               ),
 

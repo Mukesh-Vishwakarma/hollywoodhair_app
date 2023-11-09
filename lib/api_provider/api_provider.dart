@@ -624,6 +624,16 @@ class ApiProvider {
     }
   }
 
+  Future getRescheduleSlotsAPI(requestData) async {
+    try {
+      Response response =  await _dio.post(strGetUpdateBookingSchedule, data: jsonEncode(requestData));
+      print("response of otp login >>>${response.data!}");
+      return BookAppointmentModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
   Future getFinalBookingSlots(requestData) async {
     try {
       Response response =  await _dio.post(strGetBooking, data: jsonEncode(requestData));

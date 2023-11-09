@@ -268,7 +268,30 @@ class HomeScreen extends GetView<HomeController> {
               Flexible(
                 child: SizedBox(
                   width: 80,
-                  child: Text(
+                  child: FutureBuilder<String>(
+                    future: controller.translate(categoryItem.title),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data!,
+                            textAlign: TextAlign.center, // Center-align the text
+                            style: AppStyles.textStyle(
+                                weight: FontWeight.w500,
+                                fontSize: 12.5,
+                                color: controller.selectCategories.value == categoryItem
+                                    ? AppColors.lightBackgroundColor
+                                    : AppColors.primaryColor),
+                          );
+                        } else if (snapshot.hasError) {
+                          // Handle error
+                          return Text('Error: ${snapshot.error}');
+                        }
+                      }
+                      return Container();
+                    },
+                  ),
+                  /*child: Text(
                     categoryItem.title,
                     textAlign: TextAlign.center, // Center-align the text
                     style: AppStyles.textStyle(
@@ -277,7 +300,7 @@ class HomeScreen extends GetView<HomeController> {
                         color: controller.selectCategories.value == categoryItem
                             ? AppColors.lightBackgroundColor
                             : AppColors.primaryColor),
-                  ),
+                  ),*/
                 ),
               ),
             ],
@@ -369,15 +392,40 @@ class HomeScreen extends GetView<HomeController> {
                 userProfile: productList.image ?? ""),
           ),
           const SizedBox(height: 5),
-          Text(
-            productList.title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: AppStyles.textStyle(
-              weight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
+          // Text(
+          //   // productList.title,
+          //   controller.translate(productList.title),
+          //   overflow: TextOverflow.ellipsis,
+          //   maxLines: 2,
+          //   style: AppStyles.textStyle(
+          //     weight: FontWeight.w500,
+          //     fontSize: 14.0,
+          //   ),
+          // ),
+
+          FutureBuilder<String>(
+            future: controller.translate(productList.title),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return Text(
+                    snapshot.data!,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: AppStyles.textStyle(
+                      weight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  // Handle error
+                  return Text('Error: ${snapshot.error}');
+                }
+              }
+              return Container();
+            },
           ),
+
           Row(
             children: [
               Text(

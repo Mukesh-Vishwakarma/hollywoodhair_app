@@ -105,7 +105,7 @@ const en_US = {
 
   // Home
   'product_details': 'Product Details',
-  'OPIS': 'OPIS',
+  'OPIS': 'DESCRIPTION',
   'go_to_cart': 'Go to Cart',
   'home': 'Home',
   'booking': 'Booking',

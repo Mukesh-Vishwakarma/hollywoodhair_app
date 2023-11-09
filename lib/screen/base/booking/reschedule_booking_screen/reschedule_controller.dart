@@ -1,14 +1,9 @@
-
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hollywood_hair/util/route/app_pages.dart';
-
 import '../../../../api_provider/api_provider.dart';
-import '../../../../model/all_artist_model.dart';
 import '../../../../model/available_slots_list_model.dart';
+import '../../../../model/book_appointment_model.dart';
 import '../../../../util/common_function.dart';
 
 class RescheduleController extends GetxController {
@@ -29,53 +24,23 @@ class RescheduleController extends GetxController {
     },
   );
 
-
-
-  var nameController = TextEditingController();
   var dateTimeController = TextEditingController();
   final formBookingKey = GlobalKey<FormState>();
-
-
   var dateFocusNode = FocusNode();
-
-  var artistName = "".obs;
-  var artistId = "".obs;
   var dateTime = "".obs;
-  var selectTime = "".obs;
-
-  var name = "".obs;
-  var age = "".obs;
-  var gender = "".obs;
-  var service = "".obs;
-  var serviceId = "".obs;
-  var saloonLocation = "".obs;
-  var phoneNumber = "".obs;
-
   var timeSlot = "".obs;
   var timeSlotId = "".obs;
-
-  var pageLoaderService = true.obs;
-
-  var searchArtistController = TextEditingController();
-  var isArtistSearch = false.obs;
-  var searchArtistText = "".obs;
-  var allArtistList = <AllArtistData>[].obs;
-  var searchArtistList = <AllArtistData>[].obs;
-  var firstTimeScreen = true.obs;
 
   var availableSlotsList = <DataSlots>[].obs;
 
   var isLoading = false.obs;
   var isPageLoad = false.obs;
 
-
-
-    var saloonId = "".obs;
-    var bookingId = "".obs;
+  var saloonId = "".obs;
+  var bookingId = "".obs;
 
   @override
   void onInit() {
-
     try {
       Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
       saloonId.value = args['saloon_id'];
@@ -83,13 +48,8 @@ class RescheduleController extends GetxController {
     } catch (e) {
       print("jhskz==> $e");
     }
-
-    getBackScreen();
     super.onInit();
   }
-
-
-
 
   getAvailableSlotsList(date) async {
     try {
@@ -100,33 +60,55 @@ class RescheduleController extends GetxController {
       };
       print("jsdkz==> $requestBody");
       AvailableSlotsListModel availableSlotsListModel =
-      await ApiProvider.booking().getAvailableSlotsList(requestBody);
-      pageLoaderService.value = false;
+          await ApiProvider.booking().getAvailableSlotsList(requestBody);
       if (availableSlotsListModel.result == 1) {
         availableSlotsList.value = availableSlotsListModel.dataSlots!;
       }
-      print("jhssdfwdgcdhdA==> ${availableSlotsListModel.msg}");
+      print("jhdhdA==> ${availableSlotsListModel.msg}");
       isLoading.value = false;
     } on HttpException catch (exception) {
-      print("jddfdffksx==> ${exception.message}");
-      pageLoaderService.value = false;
-      successToast("Network issue");
+      print("jddfdfsx==> ${exception.message}");
+      successToast("Some issue found");
       isLoading.value = false;
     } catch (exception) {
-      pageLoaderService.value = false;
       availableSlotsList.clear();
-      print("jfksddfdmlcxkcx==> ${exception.toString()}");
-      successToast("Network issue");
+      print("jfksdcxkcx==> ${exception.toString()}");
+      successToast("Some issue found");
       isLoading.value = false;
     }
   }
 
+  getRescheduleSlots(date) async {
+    if (timeSlotId.value != '') {
+      try {
+        isLoading.value = true;
+        final Map<String, dynamic> requestBody = {
+          'booking_id': bookingId.value,
+          'salon_id': saloonId.value,
+          'date': date,
+        };
+        final List<String> slots = [timeSlotId.value.toString()];
+        requestBody['slots'] = slots;
 
-  getBackScreen() async {
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   Get.back();
-    //   Get.back();
-    //   Get.offNamed(AppPages.myAppointmentScreen);
-    // });
+        print("jsdkz==> $requestBody");
+        BookAppointmentModel bookAppointmentModel =
+            await ApiProvider.booking().getRescheduleSlotsAPI(requestBody);
+        if (bookAppointmentModel.result == 1) {
+          Get.back(result: 'Successful');
+        }
+        print("jhssdhdA==> ${bookAppointmentModel.msg}");
+        isLoading.value = false;
+      } on HttpException catch (exception) {
+        print("jddsdksx==> ${exception.message}");
+        successToast("Network issue");
+        isLoading.value = false;
+      } catch (exception) {
+        print("jfklcxkcx==> ${exception.toString()}");
+        successToast("Network issue");
+        isLoading.value = false;
+      }
+    } else {
+      successToast("Please select available slots.");
+    }
   }
 }

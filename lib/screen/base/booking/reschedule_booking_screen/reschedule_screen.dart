@@ -44,7 +44,7 @@ class RescheduleScreen extends GetView<RescheduleController> {
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Obx(
-                    () => Column(
+                () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 30),
@@ -65,13 +65,14 @@ class RescheduleScreen extends GetView<RescheduleController> {
                             focusNode: controller.dateFocusNode,
                             onTap: () async {
                               DateTime? newDateTime =
-                              await showRoundedDatePicker(
+                                  await showRoundedDatePicker(
                                 context: context,
                                 description: "date_journey".tr,
-                                theme: ThemeData(primarySwatch: controller.orange),
+                                theme:
+                                    ThemeData(primarySwatch: controller.orange),
                                 height: 300,
                                 initialDate: (controller
-                                    .dateTime.value.isNotEmpty)
+                                        .dateTime.value.isNotEmpty)
                                     ? DateTime.parse(controller.dateTime.value)
                                     : DateTime.now(),
                                 firstDate: DateTime(DateTime.now().year - 100),
@@ -79,15 +80,15 @@ class RescheduleScreen extends GetView<RescheduleController> {
                                 borderRadius: 30,
                               );
                               final DateFormat formatterView =
-                              DateFormat('d MMMM yyyy');
+                                  DateFormat('d MMMM yyyy');
                               String formattedView =
-                              formatterView.format(newDateTime!);
+                                  formatterView.format(newDateTime!);
                               controller.dateTimeController.text =
                                   formattedView;
                               final DateFormat formatterApi =
-                              DateFormat('yyyy-MM-dd');
+                                  DateFormat('yyyy-MM-dd');
                               String formattedApi =
-                              formatterApi.format(newDateTime);
+                                  formatterApi.format(newDateTime);
                               controller.dateTime.value = formattedApi;
                               print('DateJourney');
                               print(controller.dateTime.value);
@@ -115,7 +116,7 @@ class RescheduleScreen extends GetView<RescheduleController> {
                                 weight: FontWeight.normal,
                               ),
                               suffixIcon:
-                              const Icon(Icons.calendar_month_outlined),
+                                  const Icon(Icons.calendar_month_outlined),
 
                               // labelText: "date".tr,
                               labelStyle: AppStyles.textStyle(
@@ -135,7 +136,7 @@ class RescheduleScreen extends GetView<RescheduleController> {
                               ),
                               focusedErrorBorder: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(8)),
+                                    BorderRadius.all(Radius.circular(8)),
                                 borderSide: BorderSide(
                                   color: Colors.red,
                                 ),
@@ -166,138 +167,139 @@ class RescheduleScreen extends GetView<RescheduleController> {
                     ),
                     (controller.availableSlotsList.isNotEmpty)
                         ? Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Wrap(
-                          spacing: 3.0,
-                          runSpacing: 0.0,
-                          children: List.generate(
-                            controller.availableSlotsList.length,
-                                (index) => Obx(
-                                  () => GestureDetector(
-                                onTap: () {
-                                  if (controller.availableSlotsList[index]
-                                      .isAvail!) {
-                                    controller.timeSlot.value = controller
-                                        .availableSlotsList[index]
-                                        .slotName
-                                        .toString();
-                                    controller.timeSlotId.value =
-                                        controller
-                                            .availableSlotsList[index]
-                                            .slotId
-                                            .toString();
-                                  } else {
-                                    successToast(
-                                        "This slots is already booked.");
-                                  }
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 5, top: 10),
-                                  child: (Chip(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(8),
-                                      side: BorderSide(
-                                          color: controller
-                                              .availableSlotsList[
-                                          index]
-                                              .isAvail!
-                                              ? AppColors.grayDA
-                                              : AppColors.promoborder),
-                                    ),
-                                    backgroundColor: (controller
-                                        .timeSlotId.value
-                                        .toString() !=
-                                        controller
-                                            .availableSlotsList[index]
-                                            .slotId
-                                            .toString())
-                                        ? controller
-                                        .availableSlotsList[index]
-                                        .isAvail!
-                                        ? AppColors.backGroundColor
-                                        : AppColors.promoborder
-                                        : AppColors.primaryColor,
-                                    label: Text(
-                                      controller.availableSlotsList[index]
-                                          .slotName
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          color: (controller
-                                              .timeSlotId.value
-                                              .toString() !=
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Wrap(
+                                spacing: 3.0,
+                                runSpacing: 0.0,
+                                children: List.generate(
+                                  controller.availableSlotsList.length,
+                                  (index) => Obx(
+                                    () => GestureDetector(
+                                      onTap: () {
+                                        if (controller.availableSlotsList[index]
+                                            .isAvail!) {
+                                          controller.timeSlot.value = controller
+                                              .availableSlotsList[index]
+                                              .slotName
+                                              .toString();
+                                          controller.timeSlotId.value =
                                               controller
-                                                  .availableSlotsList[
-                                              index]
+                                                  .availableSlotsList[index]
                                                   .slotId
-                                                  .toString())
+                                                  .toString();
+                                        } else {
+                                          successToast(
+                                              "This slots is already booked.");
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 5, top: 10),
+                                        child: (Chip(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            side: BorderSide(
+                                                color: controller
+                                                        .availableSlotsList[
+                                                            index]
+                                                        .isAvail!
+                                                    ? AppColors.grayDA
+                                                    : AppColors.promoborder),
+                                          ),
+                                          backgroundColor: (controller
+                                                      .timeSlotId.value
+                                                      .toString() !=
+                                                  controller
+                                                      .availableSlotsList[index]
+                                                      .slotId
+                                                      .toString())
                                               ? controller
-                                              .availableSlotsList[
-                                          index]
-                                              .isAvail!
-                                              ? Colors.black
-                                              : AppColors.black84
-                                              : AppColors
-                                              .backGroundColor),
+                                                      .availableSlotsList[index]
+                                                      .isAvail!
+                                                  ? AppColors.backGroundColor
+                                                  : AppColors.promoborder
+                                              : AppColors.primaryColor,
+                                          label: Text(
+                                            controller.availableSlotsList[index]
+                                                .slotName
+                                                .toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                color: (controller
+                                                            .timeSlotId.value
+                                                            .toString() !=
+                                                        controller
+                                                            .availableSlotsList[
+                                                                index]
+                                                            .slotId
+                                                            .toString())
+                                                    ? controller
+                                                            .availableSlotsList[
+                                                                index]
+                                                            .isAvail!
+                                                        ? Colors.black
+                                                        : AppColors.black84
+                                                    : AppColors
+                                                        .backGroundColor),
+                                          ),
+                                        )),
+                                      ),
                                     ),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          ).toList()),
-                    )
+                                  ),
+                                ).toList()),
+                          )
                         : SizedBox(
-                      width: 100.w,
-                      child: const Align(
-                        alignment: Alignment.center,
-                        // child: const Text('No slots found').marginOnly(top: 50),
-                      ),
-                    ),
+                            width: 100.w,
+                            child: const Align(
+                              alignment: Alignment.center,
+                              // child: const Text('No slots found').marginOnly(top: 50),
+                            ),
+                          ),
                     const SizedBox(
                       height: 20,
                     ),
                     Obx(
-                          () => !controller.isPageLoad.value
+                      () => !controller.isPageLoad.value
                           ? GestureDetector(
-                        onTap: () {
-                          if (!controller.formBookingKey.currentState!
-                              .validate()) {
-                            print("not validate");
-                          } else {
-                            // controller.bookingFinal();
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, top: 80, bottom: 10),
-                          child: buttom("Book appointment"),
-                        ),
-                      )
+                              onTap: () {
+                                if (!controller.formBookingKey.currentState!
+                                    .validate()) {
+                                  print("not validate");
+                                } else {
+                                  controller.getRescheduleSlots(
+                                      controller.dateTime.value);
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 80, bottom: 10),
+                                child: buttom("Book appointment"),
+                              ),
+                            )
                           : Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 80, bottom: 10),
-                        child: Container(
-                          width: Get.size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: AppColors.color7C,
-                          ),
-                          child: const Center(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(top: 15, bottom: 15),
-                              child: SpinKitThreeBounce(
-                                color: Colors.white,
-                                size: 20.0,
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 80, bottom: 10),
+                              child: Container(
+                                width: Get.size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: AppColors.color7C,
+                                ),
+                                child: const Center(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 15, bottom: 15),
+                                    child: SpinKitThreeBounce(
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -307,7 +309,7 @@ class RescheduleScreen extends GetView<RescheduleController> {
               ),
             )),
         Obx(
-              () => Visibility(
+          () => Visibility(
             visible: controller.isLoading.value,
             child: Container(
               color: AppColors.transparentBlack,

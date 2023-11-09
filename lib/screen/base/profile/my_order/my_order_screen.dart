@@ -1,19 +1,13 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hollywood_hair/model/shopify_model/user_orders_model.dart';
 import 'package:hollywood_hair/util/app_colors.dart';
 import 'package:hollywood_hair/util/app_style.dart';
-import 'package:hollywood_hair/util/assets.dart';
-import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/src/order/line_item_order/line_item_order.dart';
 import 'package:shopify_flutter/models/src/order/order.dart';
 import '../../../../util/common_function.dart';
-import '../../../../util/theme_service.dart';
 import 'my_order_controller.dart';
 
 class MyOrderScreen extends GetView<MyOrderController> {
@@ -80,11 +74,11 @@ class MyOrderScreen extends GetView<MyOrderController> {
       ),
       body: Obx(
         () => SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: (!controller.orderStatus.value)
               ? ListView.builder(
                   shrinkWrap: true,
-                  reverse: false,
+                  reverse: true,
                   itemCount: controller.orderlist.length,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
@@ -100,8 +94,8 @@ class MyOrderScreen extends GetView<MyOrderController> {
 
   Widget commonListTile({required Order orderItem}) {
     return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-      padding: EdgeInsets.all(15),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+      padding: const EdgeInsets.all(15),
       width: Get.size.width,
       decoration: BoxDecoration(
         border: Border.all(
@@ -235,7 +229,7 @@ class MyOrderScreen extends GetView<MyOrderController> {
               ),
             ),
           ),
-          const Icon(Icons.navigate_next),
+          // const Icon(Icons.navigate_next),
         ],
       ).marginOnly(bottom: 10),
     );

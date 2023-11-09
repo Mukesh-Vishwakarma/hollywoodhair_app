@@ -5,6 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
 
+import '../../../../translater_service/translatter_service.dart';
 import '../../../../util/app_colors.dart';
 import '../../../product_details/product_details_controller.dart';
 
@@ -18,6 +19,7 @@ class SearchProductController extends GetxController {
   final FocusNode focusNode = FocusNode();
   ShopifyStore shopifyStore = ShopifyStore.instance;
   RxList<Product> searchedProduct = <Product>[].obs;
+  final TranslationService translationService =  TranslationService();
 
   @override
   void onInit() {

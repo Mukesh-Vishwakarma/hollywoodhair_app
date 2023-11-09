@@ -31,15 +31,16 @@ class MyAppointmentController extends GetxController {
 
   // Call this method to populate completed and pending item lists
   void updateStatusLists() {
-    if(isUpcomingCompleteStatus.value=='upcoming') {
+    if (isUpcomingCompleteStatus.value == 'upcoming') {
       dataMyAllFilter.value = dataMyAllBooking
           .where((item) =>
-      item.bookingStatus.toString().toUpperCase() != 'COMPLETED')
+              item.bookingStatus.toString().toUpperCase() != 'COMPLETED' &&
+              item.bookingStatus.toString().toUpperCase() != 'CANCELLED')
           .toList();
     } else {
       dataMyAllFilter.value = dataMyAllBooking
           .where((item) =>
-      item.bookingStatus.toString().toUpperCase() == 'COMPLETED')
+              item.bookingStatus.toString().toUpperCase() == 'COMPLETED')
           .toList();
     }
   }
@@ -49,18 +50,21 @@ class MyAppointmentController extends GetxController {
       var status = "";
       MyAllBookAppointmentModel myAllBookAppointmentModel =
           await ApiProvider.booking().getMyAllSlotsList(status);
-      pageLoaderService.value = false;
       if (myAllBookAppointmentModel.result == 1) {
         dataMyAllBooking.value = myAllBookAppointmentModel.dataMyAllBooking!;
         print("xbnzm==> ${dataMyAllBooking.length}");
         updateStatusLists();
       }
+      pageLoaderService.value = false;
+      isLoading.value = false;
       print("jhsdfxgcdhdA==> ${myAllBookAppointmentModel.msg}");
     } on HttpException catch (exception) {
       print(exception.message);
       pageLoaderService.value = false;
+      isLoading.value = false;
     } catch (exception) {
       pageLoaderService.value = false;
+      isLoading.value = false;
       print("sadafgxhzBldksxJNK==> ${exception.toString()}");
     }
   }
@@ -77,7 +81,7 @@ class MyAppointmentController extends GetxController {
       if (bookAppointmentModel.result == 1) {
         print("xbnzm==> ${dataMyAllBooking.length}");
         successToast("Booking cancelled successfully.");
-        updateStatusLists();
+        getAllServicesList();
       }
       isLoading.value = false;
       print("jhsdfxgcdhdA==> ${bookAppointmentModel.msg}");
@@ -183,11 +187,11 @@ class MyAppointmentController extends GetxController {
                             },
                             child: Center(
                               child: Text("no".tr,
-                              style: AppStyles.textStyle(
-                                fontSize: 17.0,
-                                color: AppColors.black,
-                                weight: FontWeight.normal,
-                              )),
+                                  style: AppStyles.textStyle(
+                                    fontSize: 17.0,
+                                    color: AppColors.black,
+                                    weight: FontWeight.normal,
+                                  )),
                             ),
                           ),
                         ),

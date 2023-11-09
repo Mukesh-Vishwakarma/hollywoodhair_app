@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,11 +6,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:hollywood_hair/util/res_dimens.dart';
 import 'package:hollywood_hair/util/theme_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
+import '../translater_service/translatter_service.dart';
 import 'app_colors.dart';
 import 'app_constants.dart';
 import 'app_style.dart';
@@ -529,13 +532,13 @@ successToast(msg) {
       fontSize: 14.0);
 }
 
-successToastDynamic(msg,Color color) {
+successToastDynamic(msg, Color color) {
   return Fluttertoast.showToast(
       msg: msg,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: color??AppColors.primaryColor,
+      backgroundColor: color ?? AppColors.primaryColor,
       textColor: Colors.white,
       fontSize: 14.0);
 }
@@ -734,4 +737,35 @@ textThemeColor() {
   return ThemeService().loadThemeFromBox()
       ? AppColors.lightBackgroundColor
       : AppColors.black;
+}
+
+Future<TranslateLanguage> getLanguage() async {
+  final languageCode = GetStorage().read(AppConstants.languageCode);
+  if (languageCode != null) {
+    if (languageCode == "English") {
+      return TranslateLanguage.english;
+    } else if (languageCode == "Polski") {
+      return TranslateLanguage.polish;
+    } else {
+      return TranslateLanguage.spanish;
+    }
+  } else {
+    return TranslateLanguage.polish;
+  }
+}
+
+Future<String> translate(test, TranslationService translationService) async {
+  final targetLanguage =
+      await getLanguage(); // Wait for getLanguage() to complete.
+
+  final translatedText =
+      await translationService.translate(test, targetLanguage);
+
+  if (translatedText != null) {
+    print("Translated Text: $translatedText");
+    return translatedText;
+  } else {
+    print("Translation failed ");
+    return "inputWord";
+  }
 }

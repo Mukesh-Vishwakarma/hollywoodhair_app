@@ -8,7 +8,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
-
+import '../../translater_service/translatter_service.dart';
 import '../../util/app_colors.dart';
 import '../product_details/product_details_controller.dart';
 
@@ -22,6 +22,10 @@ class AllProductController extends GetxController
   var cateId = "".obs;
   ShopifyStore shopifyStore = ShopifyStore.instance;
   RxList<Product> products = <Product>[].obs;
+
+  final TranslationService translationService =  TranslationService();
+
+
 
   @override
   void onInit() {
