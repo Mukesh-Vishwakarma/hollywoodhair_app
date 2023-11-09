@@ -1,13 +1,9 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hollywood_hair/api_provider/api_provider.dart';
-import 'package:hollywood_hair/model/shopify_model/loginModel.dart';
-import 'package:hollywood_hair/model/user_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
 import 'package:hollywood_hair/util/common_function.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';

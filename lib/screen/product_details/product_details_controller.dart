@@ -53,6 +53,8 @@ class ProductDetailsController extends GetxController
       var checkOutID = await GetStorage().read(AppConstants.checkOutID) ?? "";
       if (checkOutID.toString() != "" && checkOutID != null) {
         checkIfExitsCart();
+      } else {
+        addButtonStatus.value = false;
       }
     } catch (e) {
       print("mdjbsnm $e");
@@ -84,6 +86,7 @@ class ProductDetailsController extends GetxController
       }
     } catch (error) {
       print("sajkjnmz===>  $error");
+
     }
   }
 

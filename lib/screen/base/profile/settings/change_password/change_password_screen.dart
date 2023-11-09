@@ -21,7 +21,8 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
           titleSpacing: 0,
           leading: InkWell(
               customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                borderRadius: BorderRadius.circular(
+                    50), // Set the same rounded border as Material
               ),
               onTap: () {
                 Get.back();
@@ -51,10 +52,6 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                       child: Obx(() => TextFormField(
                             controller: controller.oldPasswordController,
                             obscureText: controller.oldPasswordVisible.value,
-                            onTap: () {
-                              controller.oldPasswordVisible.value =
-                                  !controller.oldPasswordVisible.value;
-                            },
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "plz_enter_old_password".tr;
@@ -73,17 +70,26 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon: Obx(() => Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: !controller.oldPasswordVisible.value
-                                        ? Image.asset(
-                                            Assets.seenPassword,
-                                            height: 5,
-                                          )
-                                        : Image.asset(
-                                            Assets.unseenPassword,
-                                            height: 5,
-                                          ),
+                              suffixIcon: Obx(() => InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                    onTap: () {
+                                      controller.oldPasswordVisible.value =
+                                          !controller.oldPasswordVisible.value;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child:
+                                          !controller.oldPasswordVisible.value
+                                              ? Image.asset(
+                                                  Assets.seenPassword,
+                                                  height: 5,
+                                                )
+                                              : Image.asset(
+                                                  Assets.unseenPassword,
+                                                  height: 5,
+                                                ),
+                                    ),
                                   )),
 
                               labelText: 'old_password'.tr,
@@ -92,11 +98,6 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -136,10 +137,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                       child: Obx(() => TextFormField(
                             controller: controller.newPasswordController,
                             obscureText: controller.newPasswordVisible.value,
-                            onTap: () {
-                              controller.newPasswordVisible.value =
-                                  !controller.newPasswordVisible.value;
-                            },
+
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "plz_enter_new_password".tr;
@@ -158,18 +156,26 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon: Obx(() => Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: !controller.newPasswordVisible.value
-                                        ? Image.asset(
-                                            Assets.seenPassword,
-                                            height: 5,
-                                          )
-                                        : Image.asset(
-                                            Assets.unseenPassword,
-                                            height: 5,
-                                          ),
-                                  )),
+                              suffixIcon: Obx(() => InkWell(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  controller.newPasswordVisible.value =
+                                  !controller.newPasswordVisible.value;
+                                },
+                                child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: !controller.newPasswordVisible.value
+                                          ? Image.asset(
+                                              Assets.seenPassword,
+                                              height: 5,
+                                            )
+                                          : Image.asset(
+                                              Assets.unseenPassword,
+                                              height: 5,
+                                            ),
+                                    ),
+                              )),
 
                               labelText: 'new_password'.tr,
                               labelStyle: AppStyles.textStyle(
@@ -177,11 +183,6 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-
-                              // const TextStyle(
-                              //     color: AppColors.color3D,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -222,10 +223,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                             controller: controller.confirmPasswordController,
                             obscureText:
                                 controller.confirmPasswordVisible.value,
-                            onTap: () {
-                              controller.confirmPasswordVisible.value =
-                                  !controller.confirmPasswordVisible.value;
-                            },
+
                             validator: (value) {
                               if (value.toString().isEmpty) {
                                 return "plz_enter_confirm_password".tr;
@@ -235,11 +233,6 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                               }
                               return null;
                             },
-                            //   if (value.toString().isEmpty) {
-                            //     return "plz_enter_confirm_password".tr;
-                            //   }
-                            //   return null;
-                            // },
                             onChanged: (value) {
                               controller.confirmPassword.value = value;
                             },
@@ -252,19 +245,27 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                                 fontSize: 14.0,
                                 weight: FontWeight.normal,
                               ),
-                              suffixIcon: Obx(() => Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child:
-                                        !controller.confirmPasswordVisible.value
-                                            ? Image.asset(
-                                                Assets.seenPassword,
-                                                height: 5,
-                                              )
-                                            : Image.asset(
-                                                Assets.unseenPassword,
-                                                height: 5,
-                                              ),
-                                  )),
+                              suffixIcon: Obx(() => InkWell(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () {
+                                  controller.confirmPasswordVisible.value =
+                                  !controller.confirmPasswordVisible.value;
+                                },
+                                child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child:
+                                          !controller.confirmPasswordVisible.value
+                                              ? Image.asset(
+                                                  Assets.seenPassword,
+                                                  height: 5,
+                                                )
+                                              : Image.asset(
+                                                  Assets.unseenPassword,
+                                                  height: 5,
+                                                ),
+                                    ),
+                              )),
 
                               labelText: 'confirm_password'.tr,
                               labelStyle: AppStyles.textStyle(

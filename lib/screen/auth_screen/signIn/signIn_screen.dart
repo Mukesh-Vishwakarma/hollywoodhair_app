@@ -63,10 +63,6 @@ class SignInScreen extends GetView<SignInController> {
                             fontSize: 14.0,
                             weight: FontWeight.normal,
                           ),
-                          onTap: () {
-                            controller.passwordVisible.value =
-                                !controller.passwordVisible.value;
-                          },
                           validator: (value) {
                             if (value.toString().isEmpty) {
                               return "plz_enter_password".tr;
@@ -85,18 +81,26 @@ class SignInScreen extends GetView<SignInController> {
                               fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
-                            suffixIcon: Obx(() => Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: !controller.passwordVisible.value
-                                      ? Image.asset(
-                                          Assets.seenPassword,
-                                          height: 5,
-                                        )
-                                      : Image.asset(
-                                          Assets.unseenPassword,
-                                          height: 5,
-                                        ),
-                                )),
+                            suffixIcon: Obx(() => InkWell(
+                              highlightColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              onTap: (){
+                                controller.passwordVisible.value =
+                                !controller.passwordVisible.value;
+                              },
+                              child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: !controller.passwordVisible.value
+                                        ? Image.asset(
+                                            Assets.seenPassword,
+                                            height: 5,
+                                          )
+                                        : Image.asset(
+                                            Assets.unseenPassword,
+                                            height: 5,
+                                          ),
+                                  ),
+                            )),
 
                             labelText: 'password'.tr,
                             labelStyle: AppStyles.textStyle(
@@ -104,11 +108,6 @@ class SignInScreen extends GetView<SignInController> {
                               fontSize: 14.0,
                               weight: FontWeight.normal,
                             ),
-
-                            // const TextStyle(
-                            //     color: AppColors.color3D,
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.w400),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
