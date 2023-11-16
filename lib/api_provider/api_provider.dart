@@ -24,6 +24,7 @@ import '../model/all_saloon_list_model.dart';
 import '../model/all_services_model.dart';
 import '../model/available_slots_list_model.dart';
 import '../model/book_appointment_model.dart';
+import '../model/category_list_model.dart';
 import '../model/change_password_model.dart';
 import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
@@ -569,6 +570,16 @@ class ApiProvider {
       Response response = await _dio.get(strGetAllSalons);
       print("response of otp login >>>${response.data!}");
       return AllSaloonListModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getAllCategoryList() async {
+    try {
+      Response response = await _dio.get(strGetAllCategories);
+      print("response of otp login >>>${response.data!}");
+      return CategoryListModel.fromJson(response.data!);
     } catch (error, stacktrace) {
       handleException(error, stacktrace, _dioError!);
     }

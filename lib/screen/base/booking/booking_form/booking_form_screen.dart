@@ -373,7 +373,7 @@ class BookingFormScreen extends GetView<BookingFormController> {
                           );
                         } else {
                           successToastDynamic(
-                              "Please enter a valid date.", AppColors.black);
+                              "Please enter a valid age.", AppColors.black);
                         }
                       }
                     },

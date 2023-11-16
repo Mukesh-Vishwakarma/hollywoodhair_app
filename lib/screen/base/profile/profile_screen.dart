@@ -53,10 +53,23 @@ class ProfileScreen extends GetView<ProfileController> {
                           Center(
                             child: InkWell(
                               onTap: () {},
-                              child: SizedBox(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.white,
+                                ),
                                 height: 100,
                                 width: 100,
-                                child: Obx(() => getProfileImage()),
+                                child: Center(
+                                  child: Obx(()=> Text(
+                                        controller.shortName.value.toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 30.0,
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w500)),
+                                  ),
+                                ),
+                                // child: Obx(() => getProfileImage()),
                               ),
                             ),
                           ),

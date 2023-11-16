@@ -69,9 +69,9 @@ const pl_PL = {
 
   // Home Screen
   'explore_by_categories': 'Odkrywaj według kategorii',
-  'popular_product': 'Popularne produkty',
+  'popular_product': 'Bestsellery',
   'our_salons': 'Nasze Salony',
-  'featured_products': 'Wyróżnione produkty',
+  'featured_products': 'Najbardziej polecane produkty',
 
   // Favourite screen
   'favourite': 'Ulubione',

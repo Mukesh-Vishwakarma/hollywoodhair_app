@@ -69,9 +69,9 @@ const es_SP = {
 
   // Home Screen
   'explore_by_categories': 'Explorar por categorías',
-  'popular_product': 'Productos populares',
+  'popular_product': 'Más vendidos',
   'our_salons': 'Nuestros Salones',
-  'featured_products': 'Productos Destacados',
+  'featured_products': 'Productos más recomendados',
 
   // Favourite screen
   'favourite': 'Favoritos',

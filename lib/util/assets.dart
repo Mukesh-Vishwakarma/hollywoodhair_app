@@ -6,7 +6,6 @@ class Assets {
   static const String unseenPassword = 'assets/images/unseenPassword.png';
   static const String seenPassword = 'assets/images/seenPassword.png';
   static const String google = 'assets/images/google.png';
-  static const String facebook = 'assets/images/facebook.png';
   static const String back = 'assets/images/back.png';
   static const String editProfile = 'assets/images/edit_profile.png';
 
@@ -16,19 +15,15 @@ class Assets {
   static const String msg = 'assets/images/msg.png';
   static const String phone = 'assets/images/phone.png';
   static const String delete = 'assets/images/delete.png';
-  static const String office = 'assets/images/office.png';
   static const String edit = 'assets/images/edit.png';
   static const String house = 'assets/images/house.png';
   static const String imagesIcLine = 'assets/images/ic_line.png';
   static const String cameraPng = 'assets/images/camera.png';
   static const String upload = 'assets/images/Upload_Image.png';
-  static const String editText = 'assets/images/edit_text.png';
-  // static const String dropDown = 'assets/images/dropDown.png';
   static const String dropDown = 'assets/images/drop_down1.png';
   static const String add = 'assets/images/add.png';
 
   static const String navBar = 'assets/images/nav_bar.png';
-
 
   static const String homeIconUl = 'assets/images/home_icon_ul.svg';
   static const String homeIconSl = 'assets/images/home_icon_sl.svg';
@@ -44,21 +39,18 @@ class Assets {
   static const String profileIconSl = 'assets/images/profile_icon_sl.svg';
 
   static const String scanIcon = 'assets/images/scan_icon.svg';
-  static const String search = 'assets/images/search.png';
-  // static const String demo1 = 'assets/images/demo1.png';
-  // static const String demo2 = 'assets/images/demo2.png';
   static const String demo3 = 'assets/images/demo3.png';
-  static const String arrowRight = 'assets/images/arrow_right.png';
   static const String calender = 'assets/images/calender.png';
-  static const String backBackground = 'assets/images/back_background.png';
   static const String user = 'assets/images/user.png';
   static const String clock = 'assets/images/clock.png';
   static const String whiteArrow = 'assets/images/white_arrow.png';
   static const String menuBar = 'assets/images/Menu_Bar.png';
   static const String profileBackground = 'assets/images/profile_background.svg';
   static const String bookingImgNew = 'assets/images/booking_img_new.png';
+
   // home_scrrens
   static const String dummyBanner = 'assets/dummy_images/home_banner.png';
+  static const String dummyAllCollection = 'assets/dummy_images/all_products.webp';
   static const String p1 = 'assets/dummy_images/p1.png';
   static const String p2 = 'assets/dummy_images/p2.png';
   static const String p3 = 'assets/dummy_images/p3.png';
@@ -66,7 +58,6 @@ class Assets {
   static const String p5 = 'assets/dummy_images/p5.png';
   static const String p6 = 'assets/dummy_images/p6.png';
   static const String notificationIcon = 'assets/images/ic_bell.svg';
-  static const String favouriteIcon = 'assets/images/ic_heart.svg';
   static const String appNameVertical = 'assets/images/app_logo_vertical.png';
   static const String appLogo = 'assets/images/app_logo.png';
   static const String searchIcon = 'assets/images/ic_search.svg';
@@ -76,7 +67,6 @@ class Assets {
   static const String noResult = 'assets/images/no_result_found.png';
   static const String nothingSearch = 'assets/images/nothing_search_yet.png';
   static const String bag = 'assets/images/bag.png';
-  static const String likeCard = 'assets/images/like_card.png';
   static const String notification1 = 'assets/dummy_images/notification1.png';
   static const String notification2 = 'assets/dummy_images/notification2.png';
   static const String notification3 = 'assets/dummy_images/notification3.png';
@@ -87,7 +77,6 @@ class Assets {
   static const String icAllProducts = 'assets/images/ic_all_products.png';
   static const String noDataFound = 'assets/images/no_data_found.png';
 
-
   static const String imagesSelected = 'assets/images/selected.png';
   static const String imagesUnselect = 'assets/images/unselect.svg';
 
@@ -95,6 +84,23 @@ class Assets {
   static const String icConfirm = 'assets/images/ic_confirm.png';
   static const String icPending = 'assets/images/ic_pending.png';
   static const String icRemove = 'assets/images/ic_remove.png';
+
+  static const String icSplash1 = 'assets/images/splash_1.png';
+  static const String icSplash2 = 'assets/images/splash_2.png';
+  static const String icSplash3 = 'assets/images/splash_3.png';
+
+
+  // static const String search = 'assets/images/search.png';
+  // static const String demo1 = 'assets/images/demo1.png';
+  // static const String demo2 = 'assets/images/demo2.png';
+  // static const String arrowRight = 'assets/images/arrow_right.png';
+  // static const String backBackground = 'assets/images/back_background.png';
+  // static const String favouriteIcon = 'assets/images/ic_heart.svg';
+  // static const String likeCard = 'assets/images/like_card.png';
+  // static const String editText = 'assets/images/edit_text.png';
+  // static const String dropDown = 'assets/images/dropDown.png';
+  // static const String facebook = 'assets/images/facebook.png';
+  // static const String office = 'assets/images/office.png';
 
 
   //Try On Screen

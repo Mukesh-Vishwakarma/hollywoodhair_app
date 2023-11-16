@@ -1,3 +1,4 @@
+import 'package:html/parser.dart';
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -43,7 +44,16 @@ class ProductDetailsController extends GetxController
   var targetLanguage = TranslateLanguage.polish.obs;
 
   var htmlDescription = "".obs;
+  var htmlDescriptionNew = "".obs;
   var productTitle = "".obs;
+
+  var totalRating = '0'.obs;
+  var totalRatingDouble = 0.0.obs;
+
+  var htmlResponse;
+
+
+  RxList<Review> reviewList = <Review>[].obs;
 
   @override
   Future<void> onInit() async {
@@ -86,7 +96,6 @@ class ProductDetailsController extends GetxController
       }
     } catch (error) {
       print("sajkjnmz===>  $error");
-
     }
   }
 
@@ -97,9 +106,12 @@ class ProductDetailsController extends GetxController
       products.value = _products!;
 
       productTitle.value = await translate(products.value[0].title.toString());
-      String originalString = await translate(products[0].descriptionHtml!.toString());
-      htmlDescription.value = originalString.replaceAll('/ ', '/'); // Replace '/' with a space
+      String originalString =
+          await translate(products[0].descriptionHtml!.toString());
+      htmlDescription.value =
+          originalString.replaceAll('/ ', '/'); // Replace '/' with a space
 
+      print("ehsdjak==>  ${_products}");
       dataIsLoading.value = false;
     } catch (e) {
       dataIsLoading.value = false;
@@ -120,6 +132,125 @@ class ProductDetailsController extends GetxController
           ))
       .toList()
       .obs;
+
+  //  ****** product Details api
+
+  // shopifyCheckout
+  //     .checkoutCustomerAssociate(
+  //         checkout.id, 'dfa46d08f56c6067d80fd748ed0abad9')
+  //     .then((value) {
+  //   shopifyCheckout
+  //       .getCheckoutInfoQuery(checkout.id,
+  //           getShippingInfo: false, withPaymentId: false)
+  //       .then((value) {
+  //     print(value);
+  //   });
+  // shopifyCheckout
+  //     .getAllOrders("dfa46d08f56c6067d80fd748ed0abad9")
+  //     .then((value) {
+  //   print("kamal");
+  //   print(value!.length);
+  // });
+  //   dio.FormData params =
+  //       dio.FormData.fromMap({'id': varientId.value, 'quantity': "1"});
+  //
+  //   AddCartModel addCartModel =
+  //       await ApiProvider.shopifyCustomer().funAddToCart(params);
+  //   print("add to cart product >>>> ${addCartModel.quantity.toString()}");
+  //
+  //   Get.offAllNamed(AppPages.baseScreen,
+  //       arguments: {"screenType": "product details"});
+  // } on HttpException catch (exception) {
+  //   // progressDialog.dismiss();
+  //   print(exception.message);
+  // isPageLoad.value = false;
+  // failedToast(exception.message);
+
+  productDetailsApi() async {
+    print("dkjsbjkkdshx====> ${productId.value}");
+
+    try {
+      MetaFieldsDetails metaFieldsDetailsModal = await ApiProvider.shopify()
+          .funMetaFieldsDetailsShopify(
+          productId.value.toString().split('/').last);
+
+      metaFieldsDetails.value = metaFieldsDetailsModal;
+
+      try {
+        for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
+          if (metaFieldsDetails.value.metafields![i].key ==
+              "product_features") {
+            parseCode(
+                metaFieldsDetails.value.metafields![i].value.toString());
+          }
+        }
+
+        for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
+          if (metaFieldsDetails.value.metafields![i].key == "rating") {
+            Map<String, dynamic> jsonMap = jsonDecode(
+                metaFieldsDetails.value.metafields![i].value.toString());
+
+            totalRating.value = jsonMap['value'];
+            totalRatingDouble.value = double.parse(totalRating.value);
+          }
+        }
+
+
+        for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
+          if (metaFieldsDetails.value.metafields![i].key == "widget") {
+            // Parse the HTML string using the html package
+            var htmlDocument = parse(metaFieldsDetails.value.metafields![i].value);
+
+            // Select reviews from the parsed document
+            var reviews = htmlDocument.querySelectorAll('.jdgm-rev');
+
+            print("dhjkxlzl==> $reviews");
+
+
+            for (var review in reviews) {
+              var authorName = review.querySelector('.jdgm-rev__author')?.text?.trim();
+              var reviewBody = review.querySelector('.jdgm-rev__body p')?.text?.trim();
+              var reviewTitle = review.querySelector('.jdgm-rev__title')?.text?.trim();
+              var reviewScore = review.querySelector('.jdgm-rev__rating')?.attributes['data-score'];
+
+              print('Author Name: $authorName');
+              print('Review Body: $reviewBody');
+              print('Review Title: $reviewTitle');
+              print('Review Score: $reviewScore');
+
+              if (authorName != null &&
+                  reviewBody != null &&
+                  reviewTitle != null &&
+                  reviewScore != null) {
+                reviewList.add(Review(
+                    authorName: authorName,
+                    reviewBody: reviewBody,
+                    reviewTitle: reviewTitle,
+                    reviewScore: reviewScore));
+              }
+            }
+          }
+        }
+
+
+      } catch (e) {
+        print("ljdfsmkdsmx==> $e");
+      }
+    } on HttpException catch (exception) {
+      print(exception.message);
+    } catch (exception) {
+      print(exception.toString());
+    }
+  }
+
+  // void parseHtmlResponse(String htmlResponse) {
+  //   // Parse the HTML content
+  //   var document = parse(htmlResponse);
+  //
+  //   // Extract and print the text content
+  //   var textContent = document.body!.text;
+  //   print(textContent.trim());
+  // }
 
   // ******* add to cart
 
@@ -189,68 +320,9 @@ class ProductDetailsController extends GetxController
     }
   }
 
-  //  ****** product Details api
-
-  // shopifyCheckout
-  //     .checkoutCustomerAssociate(
-  //         checkout.id, 'dfa46d08f56c6067d80fd748ed0abad9')
-  //     .then((value) {
-  //   shopifyCheckout
-  //       .getCheckoutInfoQuery(checkout.id,
-  //           getShippingInfo: false, withPaymentId: false)
-  //       .then((value) {
-  //     print(value);
-  //   });
-  // shopifyCheckout
-  //     .getAllOrders("dfa46d08f56c6067d80fd748ed0abad9")
-  //     .then((value) {
-  //   print("kamal");
-  //   print(value!.length);
-  // });
-  //   dio.FormData params =
-  //       dio.FormData.fromMap({'id': varientId.value, 'quantity': "1"});
-  //
-  //   AddCartModel addCartModel =
-  //       await ApiProvider.shopifyCustomer().funAddToCart(params);
-  //   print("add to cart product >>>> ${addCartModel.quantity.toString()}");
-  //
-  //   Get.offAllNamed(AppPages.baseScreen,
-  //       arguments: {"screenType": "product details"});
-  // } on HttpException catch (exception) {
-  //   // progressDialog.dismiss();
-  //   print(exception.message);
-  // isPageLoad.value = false;
-  // failedToast(exception.message);
-
-  productDetailsApi() async {
-    print("dkjsbjkkdshx====> ${productId.value}");
-
-    try {
-      MetaFieldsDetails metaFieldsDetailsModal = await ApiProvider.shopify()
-          .funMetaFieldsDetailsShopify(
-              productId.value.toString().split('/').last);
-
-      metaFieldsDetails.value = metaFieldsDetailsModal;
-
-      try {
-        for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
-          if (metaFieldsDetails.value.metafields![i].key ==
-              "product_features") {
-            parseCode(metaFieldsDetails.value.metafields![i].value.toString());
-          }
-        }
-      } catch (e) {
-        print("ljdfsmkdsmx==> $e");
-      }
-    } on HttpException catch (exception) {
-      print(exception.message);
-    } catch (exception) {
-      print(exception.toString());
-    }
-  }
-
   Future<String> translate(test) async {
-    final targetLanguage = await getLanguage(); // Wait for getLanguage() to complete.
+    final targetLanguage =
+        await getLanguage(); // Wait for getLanguage() to complete.
 
     final translatedText =
         await translationService.translate(test, targetLanguage);
@@ -400,4 +472,14 @@ class ProductContent {
       'ingredients': ingredients,
     };
   }
+}
+
+
+class Review {
+  String authorName;
+  String reviewBody;
+  String reviewTitle;
+  String reviewScore;
+
+  Review({required this.authorName, required this.reviewBody, required this.reviewTitle, required this.reviewScore});
 }

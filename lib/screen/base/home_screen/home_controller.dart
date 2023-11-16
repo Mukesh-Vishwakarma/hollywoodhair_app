@@ -14,11 +14,13 @@ import 'package:shopify_flutter/models/src/product/products/products.dart';
 import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../api_provider/api_provider.dart';
+import '../../../model/category_list_model.dart';
 import '../../../model/celebrities_model.dart';
 import '../../../translater_service/translatter_service.dart';
 import '../../../util/app_colors.dart';
 import '../../../util/app_constants.dart';
 import '../../../util/assets.dart';
+import '../../../util/route/app_pages.dart';
 import '../../product_details/product_details_controller.dart';
 import '../../../model/featured_products_model.dart';
 
@@ -49,6 +51,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   var pageLoaderSalon = true.obs;
   var pageLoaderFeaturedStatus = true.obs;
   var allSaloonList = <SaloonData>[].obs;
+  var allCategoryList = <DataCategory>[].obs;
   var allFeaturedProductsList = <FeaturedData>[].obs;
 
   var celebritiesModel = <CelebritiesModel>[].obs;
@@ -80,6 +83,8 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     transformation();
     scrollPressFirst();
     scrollPressSecond();
+    translateNew("Olejki");
+    getAllCategoryListAPI();
     // allTransformationApi();
     // celebritiesScroll();
     super.onInit();
@@ -106,6 +111,25 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     } on HttpException catch (exception) {
       print(exception.message);
     } catch (exception) {
+      print(exception.toString());
+    }
+  }
+
+  ///  Category list model
+  getAllCategoryListAPI() async {
+    try {
+      CategoryListModel allSaloonListModel =
+      await ApiProvider.base().getAllCategoryList();
+      pageLoaderSalon.value = false;
+      if (allSaloonListModel.result == 1) {
+        allCategoryList.value = allSaloonListModel.dataCategory!;
+      }
+      print("dnfmc==> $allCategoryList");
+
+    } on HttpException catch (exception) {
+      print(exception.message);
+    } catch (exception) {
+      pageLoaderSalon.value = false;
       print(exception.toString());
     }
   }
@@ -634,7 +658,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> delayedFunction() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     isLoading.value = false;
   }
 
@@ -655,10 +679,10 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   Future<String> translate(test) async {
     final targetLanguage =
-    await getLanguage(); // Wait for getLanguage() to complete.
+        await getLanguage(); // Wait for getLanguage() to complete.
 
     final translatedText =
-    await translationService.translate(test, targetLanguage);
+        await translationService.translate(test, targetLanguage);
 
     if (translatedText != null) {
       print("Translated Text: $translatedText");
@@ -668,4 +692,41 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       return "inputWord";
     }
   }
+
+  Future<String> translateNew(test) async {
+    final targetLanguage = await getLanguage(); // Wait for getLanguage() to complete.
+
+    print("Transldslkt==> ${targetLanguage.name}");
+
+    final translatedText =
+    await translationService.translate(test, targetLanguage);
+
+    if (translatedText != null) {
+      print("Transldslkt: $translatedText");
+      return translatedText;
+    } else {
+      print("Transldkiled ");
+      return "inputWord";
+    }
+  }
+
+
+  Future<void> openInstagramLinkOrRoute(String instagramLink) async {
+    if (await canLaunch(instagramLink)) {
+      await launch(instagramLink);
+      print("Instagram app is installed, opening link in the app.");
+    } else {
+      // If Instagram app is not installed, navigate to the specified route
+      var result = await Get.toNamed(AppPages.celebritiesDetailsScreen, arguments: [
+        "Celebrities Details",
+        instagramLink,
+      ]);
+      if (result == "backPress") {
+        isLoading.value = true;
+        delayedFunction();
+      }
+    }
+  }
+
+
 }

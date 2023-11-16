@@ -74,9 +74,9 @@ const en_US = {
 
 //home Screen
   'explore_by_categories': 'Explore by Categories',
-  'popular_product': 'Popular product',
+  'popular_product': 'Best Sellers',
   'our_salons': 'Our Salons',
-  'featured_products': 'Featured Products',
+  'featured_products': 'Most Recommended Products',
   'celebrities': 'Celebrities',
   'transformation': 'Transformation',
   'press': 'Press',

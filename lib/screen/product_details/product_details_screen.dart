@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hollywood_hair/screen/base/base_home_controller.dart';
 import 'package:hollywood_hair/screen/base/cart_screen/cart_controller.dart';
@@ -44,11 +46,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
-            title: Text("product_details".tr,
-                style: AppStyles.textStyle(
-                    fontSize: 18.0, weight: FontWeight.w500)),
+            // title: Text("product_details".tr,
+            //     style: AppStyles.textStyle(
+            //         fontSize: 18.0, weight: FontWeight.w500)),
             automaticallyImplyLeading: false,
-            /*actions: const [
+            actions: [
               // GestureDetector(
               //   onTap: () {
               //     Get.toNamed(AppPages.favouriteScreen);
@@ -58,16 +60,16 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               //     child: SvgPicture.asset(Assets.favouriteIcon),
               //   ),
               // ),
-              */ /* InkWell(
+              InkWell(
                 onTap: () {
-                  // controller.addToCartUpdateAddress();
+                  Get.toNamed(AppPages.searchProductScreen);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: SvgPicture.asset(Assets.searchIcon),
                 ),
               ),
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   Get.toNamed(AppPages.allProductScreen);
                 },
@@ -75,8 +77,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: SvgPicture.asset(Assets.notificationIcon),
                 ),
-              ),*/ /*
-            ],*/
+              ),*/
+            ],
           ),
         ),
         body: Stack(
@@ -89,11 +91,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 320,
+                                height: 340,
                                 child: Stack(
                                   children: [
                                     SizedBox(
-                                      height: 320,
+                                      height: 340,
                                       child: CarouselSlider(
                                         // items: controller.imageSliders,
                                         carouselController:
@@ -116,13 +118,14 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                                     .width,
                                                 // margin: EdgeInsets.symmetric(horizontal: 5.0),
                                                 decoration: const BoxDecoration(
-                                                  color: Colors.grey,
+                                                  color: AppColors.primaryColor,
                                                 ),
                                                 child: Image.network(
                                                     url.originalSrc,
-                                                    fit: BoxFit.cover,
+                                                    // fit: BoxFit.cover,
+                                                    fit: BoxFit.fill,
                                                     width: double.infinity,
-                                                    height: 320),
+                                                    height: 340),
                                               );
                                             },
                                           );
@@ -170,20 +173,21 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 ),
                               ),
 
-                              Obx(() => controller.products.value[0].title != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 15, right: 15, top: 10),
-                                      child: Text(
-                                        controller.productTitle.value,
-                                        // controller.products.value[0].title,
-                                        style: AppStyles.textStyle(
-                                          weight: FontWeight.w500,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox()),
+                              Obx(() =>
+                                  controller.products.value[0].title != null
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 15, right: 15, top: 10),
+                                          child: Text(
+                                            controller.productTitle.value,
+                                            // controller.products.value[0].title,
+                                            style: AppStyles.textStyle(
+                                              weight: FontWeight.w500,
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox()),
 
                               Row(
                                 children: [
@@ -283,8 +287,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                       "product_details".tr,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
-                                      ),
+                                          fontSize: 15),
                                     ),
                                   ),
                                   Container(
@@ -312,21 +315,43 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                               children: [
                                                 const SizedBox(height: 8),
                                                 FutureBuilder<List<String>>(
-                                                  future: Future.wait(paragraph.children.map((textInfo) {
-                                                    return controller.translate(textInfo.value);
+                                                  future: Future.wait(paragraph
+                                                      .children
+                                                      .map((textInfo) {
+                                                    return controller.translate(
+                                                        textInfo.value);
                                                   })),
                                                   builder: (context, snapshot) {
-                                                    if (snapshot.connectionState == ConnectionState.done) {
-                                                      final translatedTexts = snapshot.data ?? []; // List of translated texts.
-                                                      final concatenatedText = translatedTexts.join(''); // Join the translated texts with no spaces in between.
+                                                    if (snapshot
+                                                            .connectionState ==
+                                                        ConnectionState.done) {
+                                                      final translatedTexts =
+                                                          snapshot.data ??
+                                                              []; // List of translated texts.
+                                                      final concatenatedText =
+                                                          translatedTexts.join(
+                                                              ''); // Join the translated texts with no spaces in between.
 
                                                       final textSpans =
                                                           <TextSpan>[];
-                                                      for (int i = 0; i < paragraph.children.length; i++) {
-                                                        final textInfo = paragraph.children[i];
-                                                        final translatedText = translatedTexts[i];
+                                                      for (int i = 0;
+                                                          i <
+                                                              paragraph.children
+                                                                  .length;
+                                                          i++) {
+                                                        final textInfo =
+                                                            paragraph
+                                                                .children[i];
+                                                        final translatedText =
+                                                            translatedTexts[i];
 
-                                                        final fontWeight = textInfo.bold ?? false ? FontWeight.bold : FontWeight.normal;
+                                                        final fontWeight =
+                                                            textInfo.bold ??
+                                                                    false
+                                                                ? FontWeight
+                                                                    .bold
+                                                                : FontWeight
+                                                                    .normal;
 
                                                         textSpans.add(
                                                           TextSpan(
@@ -377,9 +402,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                 child: Text(
                                   "OPIS:".tr,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15
-                                  ),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
                                 ),
                               ),
 
@@ -396,103 +420,105 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              /* Padding(
+
+                              Padding(
                                 padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 0),
                                 child: Text(
                                   "Reviews",
                                   style: AppStyles.textStyle(
                                     weight: FontWeight.w500,
-                                    fontSize: dimen15,
+                                    fontSize: 17.0,
                                   ),
                                 ),
-                              ),*/
+                              ),
 
                               SizedBox(height: 10),
-                              // Row(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     controller.productDetails.value.rating![0].rating !=
-                              //             null
-                              //         ? Padding(
-                              //             padding: const EdgeInsets.only(
-                              //                 left: 15, right: 10),
-                              //             child: RatingBar.builder(
-                              //               initialRating: controller.productDetails
-                              //                       .value.rating![0].rating
-                              //                       .toDouble() ??
-                              //                   0.toDouble(),
-                              //               minRating: 1,
-                              //               direction: Axis.horizontal,
-                              //               allowHalfRating: true,
-                              //               itemCount: 5,
-                              //               itemSize: 15.5,
-                              //               itemPadding: EdgeInsets.symmetric(
-                              //                 horizontal: 2.0,
-                              //               ),
-                              //               itemBuilder: (context, _) => Icon(
-                              //                 Icons.star,
-                              //                 color: Colors.amber,
-                              //                 size: 2,
-                              //               ),
-                              //               onRatingUpdate: (rating) {
-                              //                 print(rating);
-                              //               },
-                              //             ),
-                              //           )
-                              //         : Padding(
-                              //             padding: const EdgeInsets.only(
-                              //                 left: 15, right: 10),
-                              //             child: RatingBar.builder(
-                              //               initialRating: 5,
-                              //               minRating: 1,
-                              //               direction: Axis.horizontal,
-                              //               allowHalfRating: true,
-                              //               itemCount: 0,
-                              //               itemSize: 15.5,
-                              //               itemPadding: EdgeInsets.symmetric(
-                              //                 horizontal: 2.0,
-                              //               ),
-                              //               itemBuilder: (context, _) => Icon(
-                              //                 Icons.star,
-                              //                 color: Colors.white,
-                              //                 size: 2,
-                              //               ),
-                              //               onRatingUpdate: (rating) {
-                              //                 print(rating);
-                              //               },
-                              //             ),
-                              //           ),
-                              //     Text(
-                              //       '${controller.productDetails.value.product.variants![p].rating.toString()}/5',
-                              //       style: AppStyles.textStyle(
-                              //         weight: FontWeight.w500,
-                              //         fontSize: 14.0,
-                              //       ),
-                              //     )
-                              //   ],
-                              // ),
-                              const Column(
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: 20,
+                                  // controller.productDetails.value.rating![0].rating != null
+                                  //     ? Padding(
+                                  //         padding: const EdgeInsets.only(
+                                  //             left: 15, right: 10),
+                                  //         child: RatingBar.builder(
+                                  //           initialRating: controller.productDetails
+                                  //                   .value.rating![0].rating
+                                  //                   .toDouble() ??
+                                  //               0.toDouble(),
+                                  //           minRating: 1,
+                                  //           direction: Axis.horizontal,
+                                  //           allowHalfRating: true,
+                                  //           itemCount: 5,
+                                  //           itemSize: 15.5,
+                                  //           itemPadding: EdgeInsets.symmetric(
+                                  //             horizontal: 2.0,
+                                  //           ),
+                                  //           itemBuilder: (context, _) => Icon(
+                                  //             Icons.star,
+                                  //             color: Colors.amber,
+                                  //             size: 2,
+                                  //           ),
+                                  //           onRatingUpdate: (rating) {
+                                  //             print(rating);
+                                  //           },
+                                  //         ),
+                                  //       )
+                                  //     :
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: RatingBar.builder(
+                                      initialRating:
+                                          controller.totalRatingDouble.value,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemSize: 25.0,
+                                      itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 2.0,
+                                      ),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: AppColors.rating,
+                                        size: 2,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
                                   ),
-                                  Divider(),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  // ListView.builder(
-                                  //     shrinkWrap: true,
-                                  //     physics: const BouncingScrollPhysics(),
-                                  //     // scrollDirection: Axis.horizontal,
-                                  //     itemCount: controller.productReviewsList.length,
-                                  //     itemBuilder: (context, index) {
-                                  //       return reviewList(index);
-                                  //     })
+                                  Text(
+                                    '${controller.totalRating.value}/5',
+                                    style: AppStyles.textStyle(
+                                      weight: FontWeight.w500,
+                                      fontSize: 15.0,
+                                    ),
+                                  )
                                 ],
                               ),
-                              SizedBox(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      // scrollDirection: Axis.horizontal,
+                                      itemCount: controller.reviewList.length,
+                                      itemBuilder: (context, index) {
+                                        return reviewList(controller.reviewList[index]);
+                                      })
+                                ],
+                              ),
+                              const SizedBox(
                                 height: 100,
                               ),
                             ],
@@ -505,152 +531,149 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   ? Align(
                       alignment: Alignment.bottomCenter,
                       child: (controller.isLoader.value)
-                          ? InkWell(
-                              onTap: () {
-                                if (controller.addButtonStatus.isTrue) {
-                                  Get.find<BaseHomeController>()
-                                      .selectedIndex
-                                      .value = 3;
-                                  Get.find<CartController>().onInit();
-                                  Get.toNamed(AppPages.baseScreen);
-                                  print("jnxkzmlk==>1");
-                                } else {
-                                  print("jnxkzmlk==>2");
-                                  controller.addToCart(
-                                      title: controller.products[0].title,
-                                      id: controller.products[0].id,
-                                      variantId: controller
-                                          .products[0].productVariants[0].id);
-                                }
-                              },
-                              child: Container(
+                          ? Container(
+                        color: Colors.white,
+                            child: InkWell(
+                                onTap: () {
+                                  if (controller.addButtonStatus.isTrue) {
+                                    Get.find<BaseHomeController>()
+                                        .selectedIndex
+                                        .value = 3;
+                                    Get.find<CartController>().onInit();
+                                    Get.toNamed(AppPages.baseScreen);
+                                    print("jnxkzmlk==>1");
+                                  } else {
+                                    print("jnxkzmlk==>2");
+                                    controller.addToCart(
+                                        title: controller.products[0].title,
+                                        id: controller.products[0].id,
+                                        variantId: controller
+                                            .products[0].productVariants[0].id);
+                                  }
+                                },
+                                child: Container(
+                                  width: 95.w,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    color: AppColors.color7C,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        Assets.bag,
+                                        height: 20,
+                                        width: 20,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        controller.addButtonStatus.isTrue
+                                            ? "go_to_cart".tr
+                                            : "add_to_cart".tr,
+                                        style: AppStyles.textStyle(
+                                          color: AppColors.lightBackgroundColor,
+                                          fontSize: 14.0,
+                                          weight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ).paddingOnly(bottom: 10),
+                          )
+                          : Container(
+                        color: Colors.white,
+                            child: Container(
                                 width: 95.w,
                                 height: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(7),
                                   color: AppColors.color7C,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      Assets.bag,
-                                      height: 20,
-                                      width: 20,
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      controller.addButtonStatus.isTrue
-                                          ? "go_to_cart".tr
-                                          : "add_to_cart".tr,
-                                      style: AppStyles.textStyle(
-                                        color: AppColors.lightBackgroundColor,
-                                        fontSize: 14.0,
-                                        weight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
+                                child: const SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
                               ).paddingOnly(bottom: 1),
-                            )
-                          : Container(
-                              width: 95.w,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: AppColors.color7C,
-                              ),
-                              child: const SpinKitThreeBounce(
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ).paddingOnly(bottom: 1))
-                  : SizedBox(),
+                          ).paddingOnly(bottom: 10))
+                  : const SizedBox(),
             )
           ],
         ));
   }
 
-// reviewList(index) {
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: [
-//       Padding(
-//         padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
-//         child: Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               controller.productDetailsList[index].title.toString() ??
-//                   "".toString(),
-//               style: AppStyles.textStyle(
-//                 weight: FontWeight.w500,
-//                 fontSize: dimen15,
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(left: 7, top: 5),
-//               child: Text(
-//                 "${controller.productReviewsList[index].rating.toString()}/5",
-//                 style: AppStyles.textStyle(
-//                     weight: FontWeight.normal,
-//                     fontSize: 14.0,
-//                     color: AppColors.gray99),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       Padding(
-//         padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
-//         child: Text(
-//           controller.productReviewsList[index].review.toString(),
-//           style: AppStyles.textStyle(
-//               weight: FontWeight.normal,
-//               fontSize: 14.0,
-//               color: AppColors.gray99),
-//         ),
-//       ),
-//       SizedBox(
-//         height: 20,
-//       ),
-//       Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.only(left: 15, right: 10),
-//             child: RatingBar.builder(
-//               initialRating:controller.productReviewsList[index].rating!.toDouble()??0.0,
-//               minRating: 1,
-//               direction: Axis.horizontal,
-//               allowHalfRating: true,
-//               itemCount: 5,
-//               itemSize: 15.5,
-//               itemPadding: EdgeInsets.symmetric(
-//                 horizontal: 2.0,
-//               ),
-//               itemBuilder: (context, _) => Icon(
-//                 Icons.star,
-//                 color: Colors.black,
-//                 size: 2,
-//               ),
-//               onRatingUpdate: (rating) {
-//                 print(rating);
-//               },
-//             ),
-//           ),
-//           Text(
-//             '${controller.productReviewsList[index].rating.toString()}/5',
-//             style: AppStyles.textStyle(
-//               weight: FontWeight.w500,
-//               fontSize: 14.0,
-//             ),
-//           )
-//         ],
-//       ),
-//     ],
-//   );
-// }
+  reviewList(Review reviewList) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                reviewList.authorName ??
+                    "".toString(),
+                style: AppStyles.textStyle(
+                  weight: FontWeight.w500,
+                  fontSize: 15.0,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 7, top: 5),
+                child: Text(
+                  "${reviewList.reviewScore}/5",
+                  style: AppStyles.textStyle(
+                      weight: FontWeight.normal,
+                      fontSize: 13.0,
+                      color: AppColors.gray99),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
+          child: Text(
+            reviewList.reviewBody,
+            style: AppStyles.textStyle(
+                weight: FontWeight.normal,
+                fontSize: 14.0,
+                color: AppColors.gray99),
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 10),
+          child: RatingBar.builder(
+            initialRating: double.parse(reviewList.reviewScore.toString()) ?? 0.0,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemSize: 15.5,
+            itemPadding: const EdgeInsets.symmetric(
+              horizontal: 2.0,
+            ),
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.black,
+              size: 2,
+            ),
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
 
   shimmerDemo() {
     return Padding(

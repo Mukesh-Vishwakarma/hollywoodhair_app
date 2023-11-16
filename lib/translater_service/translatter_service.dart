@@ -21,6 +21,7 @@ class TranslationService  extends GetxController {
 
 
   Future<String?> translate(String sourceText, TranslateLanguage targetLanguage) async {
+
     final onDeviceTranslator = OnDeviceTranslator(
       sourceLanguage: sourceLanguage,
       targetLanguage: targetLanguage,

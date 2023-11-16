@@ -49,7 +49,8 @@ class HomeScreen extends GetView<HomeController> {
               ),
               leading: InkWell(
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50), // Set the same rounded border as Material
+                  borderRadius: BorderRadius.circular(
+                      50), // Set the same rounded border as Material
                 ),
                 child: Container(
                   margin: const EdgeInsets.only(left: 23, right: 10),
@@ -73,7 +74,8 @@ class HomeScreen extends GetView<HomeController> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: InkWell(
                       onTap: () {
-                        Get.toNamed(AppPages.notificationScreen);
+                        controller.translateNew("OILS");
+                        // Get.toNamed(AppPages.notificationScreen);
                       },
                       child: SvgPicture.asset(Assets.notificationIcon)),
                 ),
@@ -259,7 +261,7 @@ class HomeScreen extends GetView<HomeController> {
                           height: 55,
                           width: 55,
                           child: Image.asset(
-                            Assets.dummyBanner,
+                            Assets.dummyAllCollection,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -268,30 +270,32 @@ class HomeScreen extends GetView<HomeController> {
               Flexible(
                 child: SizedBox(
                   width: 80,
-                  child: FutureBuilder<String>(
-                    future: controller.translate(categoryItem.title),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data!,
-                            textAlign: TextAlign.center, // Center-align the text
-                            style: AppStyles.textStyle(
-                                weight: FontWeight.w500,
-                                fontSize: 12.5,
-                                color: controller.selectCategories.value == categoryItem
-                                    ? AppColors.lightBackgroundColor
-                                    : AppColors.primaryColor),
-                          );
-                        } else if (snapshot.hasError) {
-                          // Handle error
-                          return Text('Error: ${snapshot.error}');
-                        }
-                      }
-                      return Container();
-                    },
-                  ),
-                  /*child: Text(
+                  // child: FutureBuilder<String>(
+                  //   future: controller.translate(categoryItem.title),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.done) {
+                  //       if (snapshot.hasData) {
+                  //         return Text(
+                  //           snapshot.data!,
+                  //           textAlign: TextAlign.center,
+                  //           // Center-align the text
+                  //           style: AppStyles.textStyle(
+                  //               weight: FontWeight.w500,
+                  //               fontSize: 12.5,
+                  //               color: controller.selectCategories.value ==
+                  //                       categoryItem
+                  //                   ? AppColors.lightBackgroundColor
+                  //                   : AppColors.primaryColor),
+                  //         );
+                  //       } else if (snapshot.hasError) {
+                  //         // Handle error
+                  //         return Text('Error: ${snapshot.error}');
+                  //       }
+                  //     }
+                  //     return Container();
+                  //   },
+                  // ),
+                  child: Text(
                     categoryItem.title,
                     textAlign: TextAlign.center, // Center-align the text
                     style: AppStyles.textStyle(
@@ -300,7 +304,7 @@ class HomeScreen extends GetView<HomeController> {
                         color: controller.selectCategories.value == categoryItem
                             ? AppColors.lightBackgroundColor
                             : AppColors.primaryColor),
-                  ),*/
+                  ),
                 ),
               ),
             ],
@@ -675,7 +679,10 @@ class HomeScreen extends GetView<HomeController> {
                     (BuildContext context, int indexCarousel, int realIndex) {
                   return InkWell(
                     onTap: () async {
-                      var result = await Get.toNamed(
+                      controller.openInstagramLinkOrRoute(controller
+                          .celebritiesModel[indexCarousel].socialLink);
+
+                      /* var result = await Get.toNamed(
                           AppPages.celebritiesDetailsScreen,
                           arguments: [
                             "Celebrities Details",
@@ -685,7 +692,7 @@ class HomeScreen extends GetView<HomeController> {
                       if (result == "backPress") {
                         controller.isLoading.value = true;
                         controller.delayedFunction();
-                      }
+                      }*/
                     },
                     child: Image.asset(
                       controller.celebritiesModel[indexCarousel].image

@@ -41,6 +41,7 @@ const String strGetBooking = 'salons/booking';
 const String strGetAllBooking = 'salons/allbooking';
 const String strGetUpdateBookingStatus = 'salons/updateBookingStatus';
 const String strGetUpdateBookingSchedule = 'salons/updateBookingSchedule';
+const String strGetAllCategories = 'getAllCategories';
 
 //shopify end points
 

@@ -7,7 +7,7 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
-  var image = Assets.textImage;
+  var image = Assets.icSplash1;
   var isFirstTime = ''.obs;
 
   @override
