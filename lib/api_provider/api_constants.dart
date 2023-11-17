@@ -15,6 +15,9 @@ const shopifyStorefrontUrl = 'https://a02f54.myshopify.com/api/2023-07/';
 const shopifyCustomerUrl = 'https://a02f54.myshopify.com/';
 
 
+const X_Shopify_Storefront_Access_Token = '549578c139b9579e72a9674e7873a1b5';
+
+
 const String strGetRegister = 'user-signup';
 const String strGetOtpLogin = 'otp-login';
 const String strGetOtpVerify = 'otpverify';

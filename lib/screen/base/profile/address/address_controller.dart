@@ -186,8 +186,7 @@ class AddressController extends GetxController {
 
       final input = await GetStorage().read(AppConstants.userId);
       final customerId = input.split('/').last;
-      await ApiProvider.shopify()
-          .deleteAddressShopify(customerId: customerId, addressId: addressId);
+      await ApiProvider.shopify().deleteAddressShopify(customerId: customerId, addressId: addressId);
       getUserAddress();
       noData.value = false;
       isPageLoad.value = false;

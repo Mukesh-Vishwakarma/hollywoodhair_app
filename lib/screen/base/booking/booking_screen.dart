@@ -10,16 +10,17 @@ import 'booking_controller.dart';
 class BookingScreen extends GetView<BookingController> {
   const BookingScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
       Image.asset(
-        Assets.demo3,
-        height: MediaQuery.of(context).size.height / 1.3,
+        // Assets.demo3,
+        Assets.splashButtom,
+        height: MediaQuery.of(context).size.height / 1.6,
         width: MediaQuery.of(context).size.width,
-        fit: BoxFit.cover,
-      ),
+        // fit: BoxFit.cover,
+        fit: BoxFit.fitHeight,
+      ).marginOnly(top: 10),
       Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
@@ -29,26 +30,28 @@ class BookingScreen extends GetView<BookingController> {
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 40),
               child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                      height: 35,
-                      width: 35,
-                      decoration: BoxDecoration(
-                          color: AppColors.black.withOpacity(.35),
-                          shape: BoxShape.circle),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: AppColors.lightBackgroundColor,
-                      ))),
+                // onTap: () {
+                //   Get.back();
+                // },
+                child: Container(
+                  height: 35,
+                  width: 35,
+                  decoration: BoxDecoration(
+                      color: AppColors.black.withOpacity(.35),
+                      shape: BoxShape.circle),
+                  // child: const Icon(
+                  //   Icons.arrow_back,
+                  //   color: AppColors.lightBackgroundColor,
+                  // ),
+                ),
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
                   margin: const EdgeInsets.only(left: 0, right: 0, top: 10),
-                  padding:
-                  const EdgeInsets.only(left: 0, right: 0, top: 15, bottom: 15),
+                  padding: const EdgeInsets.only(
+                      left: 0, right: 0, top: 15, bottom: 15),
                   width: Get.size.width,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
@@ -108,16 +111,16 @@ class BookingScreen extends GetView<BookingController> {
                               // Expanded(child: Container(),),
                               Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 100),
-                                    child: Text(
-                                      "book_consultation".tr,
-                                      style: AppStyles.textStyle(
-                                        color: AppColors.lightBackgroundColor,
-                                        fontSize: 12.0,
-                                        weight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  )),
+                                padding: const EdgeInsets.only(left: 100),
+                                child: Text(
+                                  "book_consultation".tr,
+                                  style: AppStyles.textStyle(
+                                    color: AppColors.lightBackgroundColor,
+                                    fontSize: 12.0,
+                                    weight: FontWeight.normal,
+                                  ),
+                                ),
+                              )),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Image.asset(

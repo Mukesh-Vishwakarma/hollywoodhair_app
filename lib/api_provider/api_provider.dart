@@ -26,9 +26,11 @@ import '../model/available_slots_list_model.dart';
 import '../model/book_appointment_model.dart';
 import '../model/category_list_model.dart';
 import '../model/change_password_model.dart';
+import '../model/collection_by_product_model.dart';
 import '../model/featured_products_model.dart';
 import '../model/metafilds_details_model.dart';
 import '../model/my_all_book_appointment_model.dart';
+import '../model/relacted_product_model.dart';
 import '../model/shopify_model/delete_address_model.dart';
 import '../model/shopify_model/get_address_model.dart';
 import '../model/shopify_model/update_address_model.dart';
@@ -79,7 +81,6 @@ class ApiProvider {
       var accessToken = GetStorage().read(AppConstants.tokenShopify);
       print("Tokennnn>>> $accessToken");
 
-
       // options.headers = {
       //   'Content-Type': 'application/json',
       //   'X-Shopify-Access-Token': "f9605f50addfe070acbc1a29120df7c5"
@@ -87,7 +88,8 @@ class ApiProvider {
 
       options.headers = {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.cookieHeader: '_cmp_a=%7B%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22merchant_geo%22%3A%22PL%22%2C%22sale_of_data_region%22%3Afalse%7D; _s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_y=e413d133-0dfb-448c-af7a-fb395adc1e1b; _y=e413d133-0dfb-448c-af7a-fb395adc1e1b; cart=c1-bb722f835919e2fe1fd3465a1b691d85; cart_sig=df58cb51be74be08f3f5bbd001d48dbc; cart_ts=1694168555; identity-state=BAhbCEkiJTNjOTQxMzc5NWNiNDE3YjkyNjVhYjMxNzFjY2RjZmM5BjoGRUZJIiU2MWRhNDQ3MDkwYTViYmIzNjAyNjkxZmYwNDliODI4MwY7AEZJIiUxZGM2YWJkMmM4NWQwY2EyODlhMDU3NWE1MTM0Njg4NQY7AEY%3D--48cc37caf128d053a3ec7542a2d5d490c9416dbb; identity-state-1dc6abd2c85d0ca289a0575a51346885=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFzE2OTQwODQ2NTYuNjk3Njc0M0kiCm5vbmNlBjsAVEkiJWFmOGQyY2Q2MTAwMzg1YmY4OWM3NDVmNzhmZDljZDExBjsARkkiCnNjb3BlBjsAVFsQSSIKZW1haWwGOwBUSSI3aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9kZXN0aW5hdGlvbnMucmVhZG9ubHkGOwBUSSILb3BlbmlkBjsAVEkiDHByb2ZpbGUGOwBUSSJOaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9wYXJ0bmVycy5jb2xsYWJvcmF0b3ItcmVsYXRpb25zaGlwcy5yZWFkb25seQY7AFRJIjBodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2JhbmtpbmcubWFuYWdlBjsAVEkiQmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvbWVyY2hhbnQtc2V0dXAtZGFzaGJvYXJkLmdyYXBocWwGOwBUSSI8aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9zaG9waWZ5LWNoYXQuYWRtaW4uZ3JhcGhxbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Zsb3cud29ya2Zsb3dzLm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL29yZ2FuaXphdGlvbi1pZGVudGl0eS5tYW5hZ2UGOwBUSSI%2BaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1iYW5rLWFjY291bnQubWFuYWdlBjsAVEkiD2NvbmZpZy1rZXkGOwBUSSIMZGVmYXVsdAY7AFQ%3D--bf44d1324a7ceb2401dcc4c3743673d3259fd2a2; identity-state-3c9413795cb417b9265ab3171ccdcfc9=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1NjcuMjAxMTg5SSIKbm9uY2UGOwBUSSIlOGE3NTMyMTUzMGUyYWQ0NDRlN2NmZWY3ZDhhMWNkYjYGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--f5ae6437b17050c3a1b673c48677e858f620e584; identity-state-61da447090a5bbb3602691ff049b8283=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1ODUuMzgxOTY0SSIKbm9uY2UGOwBUSSIlYjFkMDIyMjNkZmEyNzIzYmYyMzljZDM4NDM5M2Y0MjcGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--2ffec5875ff9f70416dd18abe97d6325719d6721; localization=PL; secure_customer_sig=',
+        HttpHeaders.cookieHeader:
+            '_cmp_a=%7B%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22merchant_geo%22%3A%22PL%22%2C%22sale_of_data_region%22%3Afalse%7D; _s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_y=e413d133-0dfb-448c-af7a-fb395adc1e1b; _y=e413d133-0dfb-448c-af7a-fb395adc1e1b; cart=c1-bb722f835919e2fe1fd3465a1b691d85; cart_sig=df58cb51be74be08f3f5bbd001d48dbc; cart_ts=1694168555; identity-state=BAhbCEkiJTNjOTQxMzc5NWNiNDE3YjkyNjVhYjMxNzFjY2RjZmM5BjoGRUZJIiU2MWRhNDQ3MDkwYTViYmIzNjAyNjkxZmYwNDliODI4MwY7AEZJIiUxZGM2YWJkMmM4NWQwY2EyODlhMDU3NWE1MTM0Njg4NQY7AEY%3D--48cc37caf128d053a3ec7542a2d5d490c9416dbb; identity-state-1dc6abd2c85d0ca289a0575a51346885=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFzE2OTQwODQ2NTYuNjk3Njc0M0kiCm5vbmNlBjsAVEkiJWFmOGQyY2Q2MTAwMzg1YmY4OWM3NDVmNzhmZDljZDExBjsARkkiCnNjb3BlBjsAVFsQSSIKZW1haWwGOwBUSSI3aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9kZXN0aW5hdGlvbnMucmVhZG9ubHkGOwBUSSILb3BlbmlkBjsAVEkiDHByb2ZpbGUGOwBUSSJOaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9wYXJ0bmVycy5jb2xsYWJvcmF0b3ItcmVsYXRpb25zaGlwcy5yZWFkb25seQY7AFRJIjBodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2JhbmtpbmcubWFuYWdlBjsAVEkiQmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvbWVyY2hhbnQtc2V0dXAtZGFzaGJvYXJkLmdyYXBocWwGOwBUSSI8aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9zaG9waWZ5LWNoYXQuYWRtaW4uZ3JhcGhxbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Zsb3cud29ya2Zsb3dzLm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL29yZ2FuaXphdGlvbi1pZGVudGl0eS5tYW5hZ2UGOwBUSSI%2BaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1iYW5rLWFjY291bnQubWFuYWdlBjsAVEkiD2NvbmZpZy1rZXkGOwBUSSIMZGVmYXVsdAY7AFQ%3D--bf44d1324a7ceb2401dcc4c3743673d3259fd2a2; identity-state-3c9413795cb417b9265ab3171ccdcfc9=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1NjcuMjAxMTg5SSIKbm9uY2UGOwBUSSIlOGE3NTMyMTUzMGUyYWQ0NDRlN2NmZWY3ZDhhMWNkYjYGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--f5ae6437b17050c3a1b673c48677e858f620e584; identity-state-61da447090a5bbb3602691ff049b8283=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1ODUuMzgxOTY0SSIKbm9uY2UGOwBUSSIlYjFkMDIyMjNkZmEyNzIzYmYyMzljZDM4NDM5M2Y0MjcGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--2ffec5875ff9f70416dd18abe97d6325719d6721; localization=PL; secure_customer_sig=',
         'X-Shopify-Access-Token': 'f9605f50addfe070acbc1a29120df7c5',
       };
 
@@ -114,9 +116,37 @@ class ApiProvider {
       options.headers = {
         // 'Content-Type': 'application/json',
         //X-Shopify-Storefront-Access-Token:ba3363d79cbeb3554927636e9ee5ea1b
-        HttpHeaders.cookieHeader: '_cmp_a=%7B%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22merchant_geo%22%3A%22PL%22%2C%22sale_of_data_region%22%3Afalse%7D; _s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_y=e413d133-0dfb-448c-af7a-fb395adc1e1b; _y=e413d133-0dfb-448c-af7a-fb395adc1e1b; cart=c1-bb722f835919e2fe1fd3465a1b691d85; cart_sig=df58cb51be74be08f3f5bbd001d48dbc; cart_ts=1694168555; identity-state=BAhbCEkiJTNjOTQxMzc5NWNiNDE3YjkyNjVhYjMxNzFjY2RjZmM5BjoGRUZJIiU2MWRhNDQ3MDkwYTViYmIzNjAyNjkxZmYwNDliODI4MwY7AEZJIiUxZGM2YWJkMmM4NWQwY2EyODlhMDU3NWE1MTM0Njg4NQY7AEY%3D--48cc37caf128d053a3ec7542a2d5d490c9416dbb; identity-state-1dc6abd2c85d0ca289a0575a51346885=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFzE2OTQwODQ2NTYuNjk3Njc0M0kiCm5vbmNlBjsAVEkiJWFmOGQyY2Q2MTAwMzg1YmY4OWM3NDVmNzhmZDljZDExBjsARkkiCnNjb3BlBjsAVFsQSSIKZW1haWwGOwBUSSI3aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9kZXN0aW5hdGlvbnMucmVhZG9ubHkGOwBUSSILb3BlbmlkBjsAVEkiDHByb2ZpbGUGOwBUSSJOaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9wYXJ0bmVycy5jb2xsYWJvcmF0b3ItcmVsYXRpb25zaGlwcy5yZWFkb25seQY7AFRJIjBodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2JhbmtpbmcubWFuYWdlBjsAVEkiQmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvbWVyY2hhbnQtc2V0dXAtZGFzaGJvYXJkLmdyYXBocWwGOwBUSSI8aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9zaG9waWZ5LWNoYXQuYWRtaW4uZ3JhcGhxbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Zsb3cud29ya2Zsb3dzLm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL29yZ2FuaXphdGlvbi1pZGVudGl0eS5tYW5hZ2UGOwBUSSI%2BaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1iYW5rLWFjY291bnQubWFuYWdlBjsAVEkiD2NvbmZpZy1rZXkGOwBUSSIMZGVmYXVsdAY7AFQ%3D--bf44d1324a7ceb2401dcc4c3743673d3259fd2a2; identity-state-3c9413795cb417b9265ab3171ccdcfc9=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1NjcuMjAxMTg5SSIKbm9uY2UGOwBUSSIlOGE3NTMyMTUzMGUyYWQ0NDRlN2NmZWY3ZDhhMWNkYjYGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--f5ae6437b17050c3a1b673c48677e858f620e584; identity-state-61da447090a5bbb3602691ff049b8283=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1ODUuMzgxOTY0SSIKbm9uY2UGOwBUSSIlYjFkMDIyMjNkZmEyNzIzYmYyMzljZDM4NDM5M2Y0MjcGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--2ffec5875ff9f70416dd18abe97d6325719d6721; localization=PL; secure_customer_sig=',
+        HttpHeaders.cookieHeader:
+            '_cmp_a=%7B%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22merchant_geo%22%3A%22PL%22%2C%22sale_of_data_region%22%3Afalse%7D; _s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_s=8ea5bc96-db92-46f4-956f-fda466ece0b0; _shopify_y=e413d133-0dfb-448c-af7a-fb395adc1e1b; _y=e413d133-0dfb-448c-af7a-fb395adc1e1b; cart=c1-bb722f835919e2fe1fd3465a1b691d85; cart_sig=df58cb51be74be08f3f5bbd001d48dbc; cart_ts=1694168555; identity-state=BAhbCEkiJTNjOTQxMzc5NWNiNDE3YjkyNjVhYjMxNzFjY2RjZmM5BjoGRUZJIiU2MWRhNDQ3MDkwYTViYmIzNjAyNjkxZmYwNDliODI4MwY7AEZJIiUxZGM2YWJkMmM4NWQwY2EyODlhMDU3NWE1MTM0Njg4NQY7AEY%3D--48cc37caf128d053a3ec7542a2d5d490c9416dbb; identity-state-1dc6abd2c85d0ca289a0575a51346885=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFzE2OTQwODQ2NTYuNjk3Njc0M0kiCm5vbmNlBjsAVEkiJWFmOGQyY2Q2MTAwMzg1YmY4OWM3NDVmNzhmZDljZDExBjsARkkiCnNjb3BlBjsAVFsQSSIKZW1haWwGOwBUSSI3aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9kZXN0aW5hdGlvbnMucmVhZG9ubHkGOwBUSSILb3BlbmlkBjsAVEkiDHByb2ZpbGUGOwBUSSJOaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9wYXJ0bmVycy5jb2xsYWJvcmF0b3ItcmVsYXRpb25zaGlwcy5yZWFkb25seQY7AFRJIjBodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2JhbmtpbmcubWFuYWdlBjsAVEkiQmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvbWVyY2hhbnQtc2V0dXAtZGFzaGJvYXJkLmdyYXBocWwGOwBUSSI8aHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9zaG9waWZ5LWNoYXQuYWRtaW4uZ3JhcGhxbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Zsb3cud29ya2Zsb3dzLm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL29yZ2FuaXphdGlvbi1pZGVudGl0eS5tYW5hZ2UGOwBUSSI%2BaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1iYW5rLWFjY291bnQubWFuYWdlBjsAVEkiD2NvbmZpZy1rZXkGOwBUSSIMZGVmYXVsdAY7AFQ%3D--bf44d1324a7ceb2401dcc4c3743673d3259fd2a2; identity-state-3c9413795cb417b9265ab3171ccdcfc9=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1NjcuMjAxMTg5SSIKbm9uY2UGOwBUSSIlOGE3NTMyMTUzMGUyYWQ0NDRlN2NmZWY3ZDhhMWNkYjYGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--f5ae6437b17050c3a1b673c48677e858f620e584; identity-state-61da447090a5bbb3602691ff049b8283=BAh7DEkiDnJldHVybi10bwY6BkVUSSIyaHR0cHM6Ly9hMDJmNTQubXlzaG9waWZ5LmNvbS9hZG1pbi9hdXRoL2xvZ2luBjsAVEkiEXJlZGlyZWN0LXVyaQY7AFRJIj5odHRwczovL2EwMmY1NC5teXNob3BpZnkuY29tL2FkbWluL2F1dGgvaWRlbnRpdHkvY2FsbGJhY2sGOwBUSSIQc2Vzc2lvbi1rZXkGOwBUOgxhY2NvdW50SSIPY3JlYXRlZC1hdAY7AFRmFjE2OTQwODQ1ODUuMzgxOTY0SSIKbm9uY2UGOwBUSSIlYjFkMDIyMjNkZmEyNzIzYmYyMzljZDM4NDM5M2Y0MjcGOwBGSSIKc2NvcGUGOwBUWxBJIgplbWFpbAY7AFRJIjdodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL2Rlc3RpbmF0aW9ucy5yZWFkb25seQY7AFRJIgtvcGVuaWQGOwBUSSIMcHJvZmlsZQY7AFRJIk5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3BhcnRuZXJzLmNvbGxhYm9yYXRvci1yZWxhdGlvbnNoaXBzLnJlYWRvbmx5BjsAVEkiMGh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvYmFua2luZy5tYW5hZ2UGOwBUSSJCaHR0cHM6Ly9hcGkuc2hvcGlmeS5jb20vYXV0aC9tZXJjaGFudC1zZXR1cC1kYXNoYm9hcmQuZ3JhcGhxbAY7AFRJIjxodHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL3Nob3BpZnktY2hhdC5hZG1pbi5ncmFwaHFsBjsAVEkiN2h0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvZmxvdy53b3JrZmxvd3MubWFuYWdlBjsAVEkiPmh0dHBzOi8vYXBpLnNob3BpZnkuY29tL2F1dGgvb3JnYW5pemF0aW9uLWlkZW50aXR5Lm1hbmFnZQY7AFRJIj5odHRwczovL2FwaS5zaG9waWZ5LmNvbS9hdXRoL21lcmNoYW50LWJhbmstYWNjb3VudC5tYW5hZ2UGOwBUSSIPY29uZmlnLWtleQY7AFRJIgxkZWZhdWx0BjsAVA%3D%3D--2ffec5875ff9f70416dd18abe97d6325719d6721; localization=PL; secure_customer_sig=',
 
         'X-Shopify-Storefront-Access-Token': 'ba3363d79cbeb3554927636e9ee5ea1b'
+      };
+      DioLogger.onSend(tag, options);
+      return handler.next(options);
+    }, onResponse: (Response response, handler) {
+      DioLogger.onSuccess(tag, response);
+      return handler.next(response);
+    }, onError: (DioError error, handler) {
+      _dioError = error;
+      DioLogger.onError(tag, error);
+      if (_checkSocketException(error)) {
+        // failedToast('Internet connection failed');
+      }
+      return handler.next(error);
+    }));
+  }
+
+  ApiProvider.shopifyWithTokenDynamic() {
+    BaseOptions dioOptions = BaseOptions()..baseUrl = shopifyTokenUrl;
+    _dio = Dio(dioOptions);
+    _dio.interceptors.add(
+        InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
+      var accessToken = GetStorage().read(AppConstants.tokenShopify);
+      print("Tokennnn>>> $accessToken");
+      options.headers = {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'X-Shopify-Storefront-Access-Token':
+            '$X_Shopify_Storefront_Access_Token',
       };
       DioLogger.onSend(tag, options);
       return handler.next(options);
@@ -381,8 +411,6 @@ class ApiProvider {
     }
   }
 
-
-
   //***** faq
 
   Future funFaq(FormData params) async {
@@ -533,7 +561,8 @@ class ApiProvider {
   Future funMetaFieldsDetailsShopify(product) async {
     try {
       //products/8655016329551.json
-      Response response = await _dio.get('api/2023-07/products/$product/metafields.json');
+      Response response =
+          await _dio.get('api/2023-07/products/$product/metafields.json');
       print("response of Collections >>>${response.data!}");
       return MetaFieldsDetails.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -607,7 +636,8 @@ class ApiProvider {
 
   Future getCancelBooking(requestData) async {
     try {
-      Response response = await _dio.post(strGetUpdateBookingStatus,data: jsonEncode(requestData));
+      Response response = await _dio.post(strGetUpdateBookingStatus,
+          data: jsonEncode(requestData));
       print("response of otp login >>>${response.data!}");
       return BookAppointmentModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -627,7 +657,8 @@ class ApiProvider {
 
   Future getAvailableSlotsList(requestData) async {
     try {
-      Response response =  await _dio.post(strGetAvailability, data: jsonEncode(requestData));
+      Response response =
+          await _dio.post(strGetAvailability, data: jsonEncode(requestData));
       print("response of otp login >>>${response.data!}");
       return AvailableSlotsListModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -637,7 +668,8 @@ class ApiProvider {
 
   Future getRescheduleSlotsAPI(requestData) async {
     try {
-      Response response =  await _dio.post(strGetUpdateBookingSchedule, data: jsonEncode(requestData));
+      Response response = await _dio.post(strGetUpdateBookingSchedule,
+          data: jsonEncode(requestData));
       print("response of otp login >>>${response.data!}");
       return BookAppointmentModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -647,7 +679,8 @@ class ApiProvider {
 
   Future getFinalBookingSlots(requestData) async {
     try {
-      Response response =  await _dio.post(strGetBooking, data: jsonEncode(requestData));
+      Response response =
+          await _dio.post(strGetBooking, data: jsonEncode(requestData));
       print("response of booking appointment  >>>${response.data!}");
       return BookAppointmentModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -665,11 +698,10 @@ class ApiProvider {
     }
   }
 
-
   Future getAddressShopify({customerId}) async {
     try {
       Response response =
-      await _dio.get('api/2021-07/customers/$customerId/addresses.json');
+          await _dio.get('api/2021-07/customers/$customerId/addresses.json');
       print("response of Collections >>>${response.data!}");
       return GetAddressModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -680,7 +712,7 @@ class ApiProvider {
   Future getMyOrdersByCustomerId({customerId}) async {
     try {
       Response response =
-      await _dio.get('api/2022-01/orders.json?customer_id=$customerId');
+          await _dio.get('api/2022-01/orders.json?customer_id=$customerId');
       print("response of Collections >>>${response.data!}");
       return UserOrdersModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -688,11 +720,10 @@ class ApiProvider {
     }
   }
 
-
-  Future deleteAddressShopify({customerId,addressId}) async {
+  Future deleteAddressShopify({customerId, addressId}) async {
     try {
-      Response response =
-      await _dio.delete('api/2021-07/customers/$customerId/addresses/$addressId.json');
+      Response response = await _dio.delete(
+          'api/2021-07/customers/$customerId/addresses/$addressId.json');
       print("response of Collections >>>${response.data!}");
       return DeleteAddressModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -700,16 +731,38 @@ class ApiProvider {
     }
   }
 
+  Future getCollectionByProduct({data}) async {
+    try {
+      Response response = await _dio.post(
+          'https://a02f54.myshopify.com/api/2021-07/graphql.json',
+          data: data);
+      print("jhbnkjkmlmlctions >>>${response.data!}");
+      return CollectionByProductModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
+
+  Future getRelatedProduct({data}) async {
+    try {
+      Response response = await _dio.post(
+          'https://a02f54.myshopify.com/api/2021-07/graphql.json',
+          data: data);
+      print("jhbnjdslctions >>>${response.data!}");
+      return RelatedProductModel.fromJson(response.data!);
+    } catch (error, stacktrace) {
+      handleException(error, stacktrace, _dioError!);
+    }
+  }
 
   //                  // https://a02f54.myshopify.com/admin/customers/7301030707535.json
   // const shopifyUrl = 'https://a02f54.myshopify.com/admin/';
   // const shopifyTokenUrl = 'https://a02f54.myshopify.com/';
 
-
-  Future changePasswordShopify({customerId,data}) async {
+  Future changePasswordShopify({customerId, data}) async {
     try {
       Response response =
-      await _dio.put('customers/$customerId.json',data: data);
+          await _dio.put('customers/$customerId.json', data: data);
       print("response of Collections >>>${response.data!}");
       return ChangePasswordModel.fromJson(response.data!);
     } catch (error, stacktrace) {
@@ -743,7 +796,6 @@ class ApiProvider {
       handleException(error, stacktrace, _dioError!);
     }
   }*/
-
 }
 
 bool _checkSocketException(DioError err) {
@@ -751,4 +803,3 @@ bool _checkSocketException(DioError err) {
       err.error != null &&
       err.error is SocketException;
 }
-

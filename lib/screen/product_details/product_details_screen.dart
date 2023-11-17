@@ -14,6 +14,8 @@ import 'package:hollywood_hair/util/assets.dart';
 import 'package:hollywood_hair/util/route/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:shopify_flutter/models/src/product/product.dart';
+import '../../model/relacted_product_model.dart';
 import '../../util/theme_service.dart';
 import 'product_details_controller.dart';
 
@@ -46,9 +48,10 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   Icons.arrow_back,
                   color: AppColors.black,
                 )),
-            // title: Text("product_details".tr,
-            //     style: AppStyles.textStyle(
-            //         fontSize: 18.0, weight: FontWeight.w500)),
+            title: Obx(()=>(controller.title!='')?Text(controller.title.value,
+                  style: AppStyles.textStyle(
+                      fontSize: 18.0, weight: FontWeight.w500)):shimmerDemoTranslate(),
+            ),
             automaticallyImplyLeading: false,
             actions: [
               // GestureDetector(
@@ -91,11 +94,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 340,
+                                // height: 340,
                                 child: Stack(
                                   children: [
                                     SizedBox(
-                                      height: 340,
+                                      height: 400,
                                       child: CarouselSlider(
                                         // items: controller.imageSliders,
                                         carouselController:
@@ -125,7 +128,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                                     // fit: BoxFit.cover,
                                                     fit: BoxFit.fill,
                                                     width: double.infinity,
-                                                    height: 340),
+                                                    height: 400
+                                                ),
                                               );
                                             },
                                           );
@@ -518,6 +522,48 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                                       })
                                 ],
                               ),
+
+
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, right: 15, top: 0),
+                                    child: Text(
+                                      "You may also like",
+                                      style: AppStyles.textStyle(
+                                        weight: FontWeight.w500,
+                                        fontSize: 17.0,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  SizedBox(
+                                    height: 200,
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: const BouncingScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: controller.productsRelated.value.length,
+                                        itemBuilder: (context, index) {
+                                          return commonProductWidget(productsRelated: controller.productsRelated[index]);
+                                        }),
+                                  )
+                                ],
+                              ),
+
+
                               const SizedBox(
                                 height: 100,
                               ),
@@ -674,6 +720,79 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       ],
     );
   }
+
+
+  commonProductWidget({required EdgesThird productsRelated}) {
+    return Container(
+      width: 40.w,
+      height: 40.w,
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(
+            AppPages.allProductDetailsScreen,
+            arguments: {"product_id": productsRelated.nodeThird!.id},
+          );
+          controller.getFindController();
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: controller.networkImageWithLoader(
+                  userProfile: productsRelated.nodeThird!.images!.edgesForth![0].nodeForth!.originalSrc ?? ""),
+            ),
+            const SizedBox(height: 5),
+            FutureBuilder<String>(
+              future: controller.translate(productsRelated.nodeThird!.title),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: AppStyles.textStyle(
+                        weight: FontWeight.w500,
+                        fontSize: 14.0,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    // Handle error
+                    return Text('Error: ${snapshot.error}');
+                  }
+                }
+                return Container();
+              },
+            ),
+
+            Row(
+              children: [
+                Text(
+                  productsRelated.nodeThird!.variants!.edgesFirst![0].nodeFirst!.priceV2!.amount!.toString(),
+                  style: AppStyles.textStyle(
+                    weight: FontWeight.w500,
+                    fontSize: 12.0,
+                  ),
+                ),
+                // const SizedBox(width: 5),
+                // Text(
+                //   productsRelated.compareAtPriceFormatted,
+                //   style: AppStyles.textStyle(
+                //     weight: FontWeight.w300,
+                //     fontSize: 11.0,
+                //     decoration: TextDecoration.lineThrough,
+                //   ),
+                // ),
+              ],
+            ).marginOnly(top: 5),
+          ],
+        ),
+      ),
+    ).marginOnly(left: 10);
+  }
+
 
   shimmerDemo() {
     return Padding(
@@ -968,16 +1087,16 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: SizedBox(
-        width: 100.h,
-        height: 10.0,
+        width: 30.h,
+        height: 15.0,
         child: Shimmer.fromColors(
           baseColor: ThemeService().loadThemeFromBox()
               ? AppColors.color4A
               : Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: Container(
-            width: 100.h,
-            height: 10.0,
+            width: 30.h,
+            height: 15.0,
             color: Colors.white,
           ),
         ),

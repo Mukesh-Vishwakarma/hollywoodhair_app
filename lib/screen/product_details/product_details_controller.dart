@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:hollywood_hair/model/collection_by_product_model.dart';
+import 'package:hollywood_hair/model/relacted_product_model.dart';
 import 'package:html/parser.dart';
 import 'dart:io';
 
@@ -9,12 +12,14 @@ import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:hollywood_hair/api_provider/api_provider.dart';
 import 'package:hollywood_hair/model/product_by_id_model.dart';
 import 'package:hollywood_hair/util/app_constants.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shopify_flutter/models/models.dart';
 import 'package:shopify_flutter/shopify/shopify.dart';
-
 import 'dart:convert';
 import '../../model/metafilds_details_model.dart';
 import '../../translater_service/translatter_service.dart';
+import '../../util/app_colors.dart';
 
 class ProductDetailsController extends GetxController
     with WidgetsBindingObserver {
@@ -30,6 +35,7 @@ class ProductDetailsController extends GetxController
   var productId = "".obs;
   var varientId = 0.obs;
   RxList<Product> products = <Product>[].obs;
+  var productsRelated = <EdgesThird>[].obs;
   ShopifyStore shopifyStore = ShopifyStore.instance;
   ShopifyCheckout shopifyCheckout = ShopifyCheckout.instance;
   var dataIsLoading = true.obs;
@@ -51,7 +57,7 @@ class ProductDetailsController extends GetxController
   var totalRatingDouble = 0.0.obs;
 
   var htmlResponse;
-
+  var title = ''.obs;
 
   RxList<Review> reviewList = <Review>[].obs;
 
@@ -69,6 +75,8 @@ class ProductDetailsController extends GetxController
     } catch (e) {
       print("mdjbsnm $e");
     }
+    getCollectionsIdByProductId(productId.value);
+    getRelatedProductById(productId.value);
     getLanguage();
     productDetailsApi();
     getProductDetails();
@@ -172,7 +180,7 @@ class ProductDetailsController extends GetxController
     try {
       MetaFieldsDetails metaFieldsDetailsModal = await ApiProvider.shopify()
           .funMetaFieldsDetailsShopify(
-          productId.value.toString().split('/').last);
+              productId.value.toString().split('/').last);
 
       metaFieldsDetails.value = metaFieldsDetailsModal;
 
@@ -180,8 +188,7 @@ class ProductDetailsController extends GetxController
         for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
           if (metaFieldsDetails.value.metafields![i].key ==
               "product_features") {
-            parseCode(
-                metaFieldsDetails.value.metafields![i].value.toString());
+            parseCode(metaFieldsDetails.value.metafields![i].value.toString());
           }
         }
 
@@ -195,23 +202,27 @@ class ProductDetailsController extends GetxController
           }
         }
 
-
         for (int i = 0; i < metaFieldsDetails.value.metafields!.length; i++) {
           if (metaFieldsDetails.value.metafields![i].key == "widget") {
             // Parse the HTML string using the html package
-            var htmlDocument = parse(metaFieldsDetails.value.metafields![i].value);
+            var htmlDocument =
+                parse(metaFieldsDetails.value.metafields![i].value);
 
             // Select reviews from the parsed document
             var reviews = htmlDocument.querySelectorAll('.jdgm-rev');
 
             print("dhjkxlzl==> $reviews");
 
-
             for (var review in reviews) {
-              var authorName = review.querySelector('.jdgm-rev__author')?.text?.trim();
-              var reviewBody = review.querySelector('.jdgm-rev__body p')?.text?.trim();
-              var reviewTitle = review.querySelector('.jdgm-rev__title')?.text?.trim();
-              var reviewScore = review.querySelector('.jdgm-rev__rating')?.attributes['data-score'];
+              var authorName =
+                  review.querySelector('.jdgm-rev__author')?.text?.trim();
+              var reviewBody =
+                  review.querySelector('.jdgm-rev__body p')?.text?.trim();
+              var reviewTitle =
+                  review.querySelector('.jdgm-rev__title')?.text?.trim();
+              var reviewScore = review
+                  .querySelector('.jdgm-rev__rating')
+                  ?.attributes['data-score'];
 
               print('Author Name: $authorName');
               print('Review Body: $reviewBody');
@@ -231,8 +242,6 @@ class ProductDetailsController extends GetxController
             }
           }
         }
-
-
       } catch (e) {
         print("ljdfsmkdsmx==> $e");
       }
@@ -406,6 +415,98 @@ class ProductDetailsController extends GetxController
       print("jsbdnzK==> $e");
     }
   }
+
+  getCollectionsIdByProductId(productId) async {
+    try {
+      print("gsdjhjk==> $productId");
+      var data =
+          '''{"query":"{ product(id: \\"$productId\\") { id title collections(first: 10) { edges { node { id title } } } } }","variables":{}}''';
+
+      CollectionByProductModel collectionByProductModel =
+          await ApiProvider.shopifyWithTokenDynamic()
+              .getCollectionByProduct(data: data);
+
+      title.value = await translate(collectionByProductModel
+          .dataCollection!.productCollection!.collections!.edges![0].node!.title
+          .toString());
+    } catch (e) {
+      print("fhsdjk==> $e");
+    }
+  }
+
+  getRelatedProductById(productId) async {
+    try {
+      print("gsdjhjk==> $productId");
+      // var data = '''{"query":"{ product(id: \\"$productId\\") { title collections(first: 1) { edges { node { products(first: 4) { edges { node { id title handle } } } } } } } }","variables":{}}''';
+
+
+      var data = '''{"query":"{\\n  product(id: \\"$productId\\") {\\n    title\\n    variants(first: 1) {\\n      edges {\\n        node {\\n          priceV2 {\\n            amount\\n            currencyCode\\n          }\\n        }\\n      }\\n    }\\n    collections(first: 1) {\\n      edges {\\n        node {\\n          products(first: 4) {\\n            edges {\\n              node {\\n                id\\n                title\\n                handle\\n                images(first: 1) {\\n                  edges {\\n                    node {\\n                      originalSrc\\n                    }\\n                  }\\n                }\\n                variants(first: 1) {\\n                  edges {\\n                    node {\\n                      priceV2 {\\n                        amount\\n                        currencyCode\\n                      }\\n                    }\\n                  }\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n  }\\n}\\n","variables":{}}''';
+
+      RelatedProductModel relatedProductModel =
+          await ApiProvider.shopifyWithTokenDynamic()
+              .getRelatedProduct(data: data);
+
+
+      // print("fjdhjk ${relatedProductModel.data!.product!.collections!.edgesSecond![0].nodeSecond!.products!.edgesThird![0].nodeThird!.title}");
+
+      productsRelated.value = relatedProductModel.data!.product!.collections!.edgesSecond![0].nodeSecond!.products!.edgesThird!;
+
+      // print("fjdhjk ${productsRelated.value[0].nodeThird!.title}");
+
+      // title.value = await translate(collectionByProductModel
+      //     .dataCollection!.productCollection!.collections!.edges![0].node!.title
+      //     .toString());
+    } catch (e) {
+      print("fhsdjk==> $e");
+    }
+  }
+
+
+  networkImageWithLoader({required userProfile, height, width}) {
+    return Image.network(
+      userProfile,
+      fit: BoxFit.cover,
+      width: 50.w,
+      height: 16.h,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Shimmer.fromColors(
+          baseColor: const Color.fromRGBO(191, 191, 191, 0.5254901960784314),
+          highlightColor: Colors.white,
+          child: Container(
+            width: 50.w,
+            height: 17.h,
+            color: Colors.grey,
+          ),
+        );
+      },
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Container(
+          width: 50.w,
+          height: 17.h,
+          color: AppColors.lightGrey,
+          child: const Icon(
+            Icons.image_not_supported,
+            color: Colors.white,
+            size: 30,
+          ), // You can use any widget as a placeholder
+        );
+      },
+    );
+  }
+
+  getFindController() {
+    try {
+      Get.find<ProductDetailsController>().onInit();
+    } catch (e) {
+      print("kjashb $e");
+    }
+  }
+
 }
 
 class TextInfo {
@@ -474,12 +575,15 @@ class ProductContent {
   }
 }
 
-
 class Review {
   String authorName;
   String reviewBody;
   String reviewTitle;
   String reviewScore;
 
-  Review({required this.authorName, required this.reviewBody, required this.reviewTitle, required this.reviewScore});
+  Review(
+      {required this.authorName,
+      required this.reviewBody,
+      required this.reviewTitle,
+      required this.reviewScore});
 }

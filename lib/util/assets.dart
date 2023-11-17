@@ -89,6 +89,8 @@ class Assets {
   static const String icSplash2 = 'assets/images/splash_2.png';
   static const String icSplash3 = 'assets/images/splash_3.png';
 
+  static const String bookingImage = 'assets/dummy_images/booking_image.png';
+
 
   // static const String search = 'assets/images/search.png';
   // static const String demo1 = 'assets/images/demo1.png';
@@ -181,5 +183,4 @@ class Assets {
   static const String trans8 = 'assets/transformations_image/trans8.webp';
   static const String trans9 = 'assets/transformations_image/trans9.webp';
   static const String trans10 = 'assets/transformations_image/trans10.webp';
-
 }
